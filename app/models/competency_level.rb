@@ -6,4 +6,7 @@ class CompetencyLevel < ActiveRecord::Base
 
   belongs_to :competency
   has_many :competency_level_requirements
+
+  has_many :position_competency_levels
+  has_many :positions, :through => :position_competency_levels
 end
