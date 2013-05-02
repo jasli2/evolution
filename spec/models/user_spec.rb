@@ -10,20 +10,20 @@ describe User do
   it { should allow_value("a@b.com").for(:email) }
 
   describe "factory" do
-    it "has a valid factory" do
+    it "should has a valid factory" do
       FactoryGirl.create(:user).should be_valid
     end
   end
 
   describe "validations" do  
-    it "is invalid if email address has been used" do
+    it "should has unique email address" do
       u = FactoryGirl.create(:user)
       FactoryGirl.build(:user, :email => u.email).should_not be_valid
     end
   end
 
-  describe "user helper function" do
-    it "returns a user's full name as 'first_name last_name'" do
+  describe "suser helper function" do
+    it "should returns a user's full name as 'first_name last_name'" do
       u = FactoryGirl.build(:user, :first_name => "hello", :last_name => "world")
       u.fullname.should == "hello world"
     end

@@ -11,7 +11,30 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130502063546) do
+ActiveRecord::Schema.define(:version => 20130502091158) do
+
+  create_table "competencies", :force => true do |t|
+    t.string   "name",        :limit => 40
+    t.string   "description"
+    t.integer  "category_id", :limit => 2
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  create_table "competency_level_requirements", :force => true do |t|
+    t.string   "description"
+    t.integer  "competency_level_id"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
+
+  create_table "competency_levels", :force => true do |t|
+    t.integer  "level",         :limit => 1
+    t.string   "description"
+    t.integer  "competency_id"
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "first_name", :limit => 24,  :null => false
