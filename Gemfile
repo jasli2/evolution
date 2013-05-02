@@ -28,6 +28,7 @@ end
 group :test do 
   gem 'spork', '~> 1.0rc'
   gem 'capybara', '~>1.1.2'
+  gem 'shoulda-matchers'
 end
 
 gem 'jquery-rails'
