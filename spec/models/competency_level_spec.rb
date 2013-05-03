@@ -4,6 +4,7 @@ describe CompetencyLevel do
   it { should validate_presence_of :level }
   it { should validate_presence_of :description }
   it { should have_many :competency_level_requirements }
+  it { should have_many :positions }
   it { should belong_to :competency }
 
   it "should has valid factory" do
