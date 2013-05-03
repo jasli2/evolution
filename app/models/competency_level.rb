@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: competency_levels
+#
+#  id            :integer          not null, primary key
+#  level         :integer
+#  description   :string(255)
+#  competency_id :integer
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#
+
 class CompetencyLevel < ActiveRecord::Base
   attr_accessible :competency_id, :description, :level
 
