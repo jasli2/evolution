@@ -25,10 +25,15 @@ group :development, :test do
   gem 'factory_girl_rails'
 end
 
+group :development do
+  gem 'annotate', ">=2.5.0"
+end
+
 group :test do 
   gem 'spork', '~> 1.0rc'
   gem 'capybara', '~>1.1.2'
   gem 'shoulda-matchers'
+  gem 'faker'
 end
 
 gem 'jquery-rails'

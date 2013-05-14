@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130502091158) do
+ActiveRecord::Schema.define(:version => 20130503005206) do
 
   create_table "competencies", :force => true do |t|
     t.string   "name",        :limit => 40
@@ -36,15 +36,31 @@ ActiveRecord::Schema.define(:version => 20130502091158) do
     t.datetime "updated_at",                 :null => false
   end
 
+  create_table "position_competency_levels", :force => true do |t|
+    t.integer  "standard"
+    t.integer  "position_id"
+    t.integer  "competency_level_id"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
+
+  create_table "positions", :force => true do |t|
+    t.string   "name",        :limit => 40
+    t.string   "description"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
   create_table "users", :force => true do |t|
-    t.string   "first_name", :limit => 24,  :null => false
-    t.string   "last_name",  :limit => 24,  :null => false
-    t.string   "email",      :limit => 128, :null => false
+    t.string   "first_name",  :limit => 24,  :null => false
+    t.string   "last_name",   :limit => 24,  :null => false
+    t.string   "email",       :limit => 128, :null => false
     t.integer  "manager_id"
     t.date     "birthday"
     t.date     "joined_at"
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+    t.integer  "position_id"
   end
 
 end
