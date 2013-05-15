@@ -1,4 +1,7 @@
 Evolution::Application.routes.draw do
+
+  root :to => 'site#login'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
