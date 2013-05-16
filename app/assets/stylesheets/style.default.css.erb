@@ -20,7 +20,7 @@ Created by: Mienard Lumaad (@themepixels)
 @import url('fullcalendar.css');
 @import url('roboto.css');
 @import url('lato.css');
-@import url('font-awesome.min.css');
+/*@import url('font-awesome.min.css');*/
 
 
 /***** RESET BROWSER STYLE *****/
@@ -53,9 +53,9 @@ a, a:link { color: blue; }
 h4 { font-size: 16px; }
 
 body {
-	background: url(../images/leftpanelbg.png) repeat-y 0 0; font-size: 12px;
+	background: url(<%= asset_data_uri 'leftpanelbg.png' %>) repeat-y 0 0; font-size: 12px;
 	font-family: 'RobotoRegular', 'Helvetica Neue', Helvetica, sans-serif; }
-body.errorpage { background: #fff url(../images/bg1.png);  }
+body.errorpage { background: #fff url(<%= asset_data_uri 'bg1.png' %>);  }
 body.loginpage { background: #0866c6; }
 
 a,a:hover,a:link,a:active,a:focus { outline: none; color: #0866c6; text-decoration: none; }
@@ -164,11 +164,11 @@ h1,h2,h3,h4,h5 { font-weight: normal; line-height: normal; }
 .leftmenu .nav-tabs.nav-stacked > li.dropdown ul { background: #eee; display: none; }
 .leftmenu .nav-tabs.nav-stacked > li.dropdown ul li { border-bottom: 1px solid #ddd; border-right: 1px solid #ddd; }
 .leftmenu .nav-tabs.nav-stacked > li.dropdown > a {
-	background-image: url(../images/droparrow.png); background-repeat: no-repeat; background-position: right 19px; }
+	background-image: url(<%= asset_data_uri 'droparrow.png' %>); background-repeat: no-repeat; background-position: right 19px; }
 
 .leftmenu .nav-tabs.nav-stacked .dropdown ul li a  {
 	display: block; font-size: 13px; padding: 7px 10px 7px 50px; color: #333; background-position: 25px 12px;
-	background-image: url(../images/menuarrow.png); background-repeat: no-repeat;  
+	background-image: url(<%= asset_data_uri 'menuarrow.png' %>); background-repeat: no-repeat;  
 }
 .leftmenu .nav-tabs.nav-stacked .dropdown ul li.active a { background-color: #fff; }
 .leftmenu .nav-tabs.nav-stacked .dropdown ul li a:hover { text-decoration: none; background-color: #fff; }
@@ -179,7 +179,7 @@ h1,h2,h3,h4,h5 { font-weight: normal; line-height: normal; }
 
 /*** MAIN PANEL ***/
 
-.rightpanel { margin-left: 260px; background: url(../images/bg1.png); }
+.rightpanel { margin-left: 260px; background: url(<%= asset_data_uri 'bg1.png' %>); }
 .rightpanel:after { clear: both; content: ''; display: block; }
 
 .breadcrumbs {

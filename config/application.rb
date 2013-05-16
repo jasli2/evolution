@@ -65,6 +65,11 @@ module Evolution
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
+    # fontawesome
+    config.assets.paths << Rails.root.join("app", "assets", "fonts")
+    # TODO need this???
+    #config.assets.precompile += %w(.svg .eot .woff .ttf)
+
     # Rspec configuration
     config.generators do |g|
       g.test_framework :rspec,
