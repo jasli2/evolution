@@ -1,4 +1,8 @@
 Evolution::Application.routes.draw do
+
+  match '/home' => 'site#home'
+  root :to => 'site#login'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

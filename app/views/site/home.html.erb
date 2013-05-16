@@ -1,0 +1,627 @@
+<% provide(:title, "home") %>
+<% content_for :javascript do %>
+<script type="text/javascript">
+  $(function() {
+    // tabbed widget
+    //$('.tabbedwidget').tabs();
+    ////content slider
+    //$('#slidercontent1').bxSlider({
+    //    prevText: '',
+    //    nextText: ''
+    //});
+    //$('#slidercontent2').bxSlider({
+    //    prevText: '',
+    //    nextText: ''
+    //});
+    //$('#slidercontent3').bxSlider({
+    //    prevText: '',
+    //    nextText: ''
+    //});
+    //$('#slidercontent4').bxSlider({
+    //    prevText: '',
+    //    nextText: ''
+    //});
+    $('.accordion').accordion({
+        collapsible: true,
+        active: false,
+        heightStyle: "content",
+        header: ".a-header"
+    });
+  });
+</script>
+<% end %>
+
+<div class="mainwrapper">
+    
+    <div class="header">
+        <div class="logo">
+            <%= link_to image_tag('logo.png'), home_path %>
+        </div>
+        <div class="headerinner">
+            <ul class="headmenu">
+                <li class="odd">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <span class="count">5</span>
+                        <span class="head-icon head-message"></span>
+                        <span class="headmenu-label">Messages</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="nav-header">Messages</li>
+                        <li><a href=""><span class="icon-envelope"></span> New message from <strong>Jack</strong> <small class="muted"> - 19 hours ago</small></a></li>
+                        <li><a href=""><span class="icon-envelope"></span> New message from <strong>Daniel</strong> <small class="muted"> - 2 days ago</small></a></li>
+                        <li><a href=""><span class="icon-envelope"></span> New message from <strong>Jane</strong> <small class="muted"> - 3 days ago</small></a></li>
+                        <li><a href=""><span class="icon-envelope"></span> New message from <strong>Tanya</strong> <small class="muted"> - 1 week ago</small></a></li>
+                        <li><a href=""><span class="icon-envelope"></span> New message from <strong>Lee</strong> <small class="muted"> - 1 week ago</small></a></li>
+                        <li class="viewmore"><a href="messages.html">View More Messages</a></li>
+                    </ul>
+                </li>
+                <li class="right">
+                    <div class="userloggedinfo">
+                        <img src="images/photos/thumb1.png" alt="" />
+                        <div class="userinfo">
+                            <h5>John Carter <small>- john.carter@evolve.com</small></h5>
+                            <ul>
+                                <li><a href="editprofile.html">Edit Profile</a></li>
+                                <li><a href="">Account Settings</a></li>
+                                <li><a href="index.html">Sign Out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            </ul><!--headmenu-->
+        </div>
+    </div>
+    
+    <div class="leftpanel">
+        
+        <div class="leftmenu">        
+            <ul class="nav nav-tabs nav-stacked">
+            	<li class="nav-header">Navigator</li>
+                <li class="dropdown active"><a href=""><span class="iconfa-plus"></span> User Actions</a>
+                <ul style="display: block">
+                    <li class="active"><a href="home.html"><span class="iconfa-home"></span> Home</a></li>
+                    <li><a href="#"><span class="iconfa-book"></span> My Courses</a></li>
+                    <li><a href="#"><span class="iconfa-edit"></span> My Exams</a></li>
+                    <li><a href="#"><span class="iconfa-tasks"></span> My Assessmemts</a></li>
+                    <li><a href="#"><span class="iconfa-calendar"></span> Training Calender</a></li>
+                    <li><a href="#"><span class="iconfa-cloud"></span> Competency Library</a></li>
+                    <li><a href="#"><span class="iconfa-briefcase"></span> Course Library</a></li>
+                    <li><a href="#"><span class="iconfa-group"></span> Teachers</a></li>
+                </ul>
+                
+                <li class="dropdown"><a href=""><span class="iconfa-plus"></span> Tearcher Actions</a>
+                <ul>
+                <li><a href="#"><span class="iconfa-certificate"></span> Certifications</a></li>
+                <li><a href="#"><span class="iconfa-briefcase"></span> My Classes</a></li>
+                <li><a href="#"><span class="iconfa-th-large"></span> My Course Development</a></li>
+                <li><a href="#"><span class="iconfa-list"></span> My Records</a></li>
+                <li><a href="#"><span class="iconfa-glass"></span> Teacher Clubs</a></li>
+                </ul>
+
+                <li class="dropdown"><a href=""><span class="iconfa-plus"></span> Manager Actions</a>
+                <ul>
+                <li><a href="#"><span class="iconfa-group"></span> Tean Members</a></li>
+                <li><a href="#"><span class="iconfa-globe"></span> Team Competency</a></li>
+                <li><a href="#"><span class="iconfa-folder-close"></span> Team Learning Records</a></li>
+                <li><a href="#"><span class="iconfa-list-ul"></span> Assessments</a></li>
+                </ul>
+                
+                <li class="dropdown"><a href=""><span class="iconfa-plus"></span> Administrator Actions</a>
+                <ul>
+                <li><a href="#"><span class="iconfa-sitemap"></span> Competency Managememt</a></li>
+                <li><a href="#"><span class="iconfa-folder-open"></span> Course Managememt</a></li>
+                <li><a href="#"><span class="iconfa-user"></span> Teacher Managememt</a></li>
+                <li><a href="#"><span class="iconfa-cogs"></span> Provider Management</a></li>
+                <li><a href="#"><span class="iconfa-star"></span> Learning Plan</a></li>
+                <li><a href="#"><span class="iconfa-flag"></span> Assessments Management</a></li>
+                <li><a href="datamine.html"><span class="iconfa-cloud"></span> Data Analysis</a></li>
+                </ul>
+            </ul>
+        </div><!--leftmenu-->
+        
+    </div><!-- leftpanel -->
+    
+    <div class="rightpanel">
+        
+        <ul class="breadcrumbs">
+            <li><a href="home.html"><i class="iconfa-home"></i></a> <span class="separator"></span></li>
+        </ul>
+        
+        <div class="pageheader">
+            <form action="#" method="post" class="searchbar">
+                <input type="text" name="keyword" placeholder="To search course and hit enter..." />
+            </form>
+            <div class="pageicon"><span class="iconfa-home"></span></div>
+            <div class="pagetitle">
+                <h5>Key Account Manager(Lv2)</h5>
+                <h1>John Carter</h1>
+            </div>
+        </div><!--pageheader-->
+        
+        <div class="maincontent">
+            <div class="maincontentinner">
+                <div class="row-fluid">
+                    <div id="dashboard-left" class="span8">
+                        
+                        <h3 class="subtitle">Competency Model</h3><br/>
+                        <h4 class="widgettitle"><span class="icon-signal icon-white"></span> Competency Summary</h4>
+                        <div class="widgetcontent nopadding">
+                        <div class="accordion">
+                            <div class="a-header">
+                                <a href="#">Explorer New Customers(Lv2) 
+                                    <span class="badge badge-primary pull-right">60%</span>
+                                </a>
+                            </div>
+                            <div class="a-content">
+                                <h4>Description</h4>
+                                <p>
+                                    Capable to develop new customers existing customer relationship.
+                                </p>
+                                <h4>Related Courses (3)</h4><br>
+                                <ul id="slidercontent1">
+                                    <li>
+                                        <div class="slide_wrap">
+                                            <div class="c_slide_img"><img src="images/courses/21.jpg" alt="" /></div>
+                                            <div class="c_slide_content">
+                                                <h4><a href="">21 Critical Lessons for Entrepreneurs</a></h4>
+                                                <small>Submitted by: <a href=""><strong>Docstoc Videos</strong></a> - April 23, 2013</small>
+                                                <p>Key insights to starting and succeeding with your own business...</p>
+                                                <p>
+                                                    <a href="" class="btn btn-primary btn-small"><span class="iconfa-plus icon-white"></span> Add To Learning List</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    
+                                    <li>
+                                        <div class="slide_wrap">
+                                            <div class="c_slide_img"><img src="images/courses/webdesign.jpg" alt="" /></div>
+                                            <div class="c_slide_content">
+                                                <h4><a href="">Become a Web Developer from Scratch! (Complete Course)</a></h4>
+                                                <small>Submitted by: <a href=""><strong>Victor Bastos</strong></a> - April 10, 2013</small>
+                                                <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non...</p>
+                                                <p>
+                                                    <a href="" class="btn btn-primary btn-small"><span class="iconfa-plus icon-white"></span> Add To Learning List</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="slide_wrap">
+                                            <div class="c_slide_img"><img src="images/courses/startup.jpg" alt="" /></div>
+                                            <div class="c_slide_content">
+                                                <h4><a href="">Startup &amp; Go - First Steps to Building a Technology Company</a></h4>
+                                                <small>Submitted by: <a href=""><strong>Founder Institute</strong></a> - April 12, 2013</small>
+                                                <p>A Business Start Up course from world's largest accelerator on generating tech business ideas...</p>
+                                                <p>
+                                                    <a href="" class="btn btn-primary btn-small"><span class="iconfa-plus icon-white"></span> Add To Learning List</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="a-header"><a href="#">Maintain Relationship(Lv3)
+                            <span class="badge badge-success pull-right">100%</span></a></div>
+                            <div class="a-content">
+                                <h4>Description</h4>
+                                <p>
+                                    Building relationship with corresponding customer staff.
+                                </p>
+                            </div>
+                            <div class="a-header"><a href="#">Providing High Quality Services(Lv2)
+                            <span class="badge badge-primary pull-right">75%</span></a></div>
+                            <div class="a-content">
+                                <h4>Description</h4>
+                                <p>
+                                    Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis.
+                                    Phasellus pellentesque purus in massa. Aenean in pede. Phasellus ac libero
+                                    ac tellus pellentesque semper. Sed ac felis. Sed commodo, magna quis
+                                    lacinia ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui.
+                                </p>
+                                <h4>Related Courses (2)</h4><br>
+                                <ul id="slidercontent2">
+                                    <li>
+                                        <div class="slide_wrap">
+                                            <div class="c_slide_img"><img src="images/courses/a.jpg" alt="" /></div>
+                                            <div class="c_slide_content">
+                                                <h4><a href="">Breakthrough to Exam Excellence</a></h4>
+                                                <small>Submitted by: <a href=""><strong>Patrick Sherratt</strong></a> - April 23, 2013</small>
+                                                <p>Tips for Better Results Earn Money as a Udemy Affiliate Promoting The Course to Students...</p>
+                                                <p>
+                                                    <a href="" class="btn btn-primary btn-small"><span class="iconfa-plus icon-white"></span> Add To Learning List</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="slide_wrap">
+                                            <div class="c_slide_img"><img src="images/courses/photography.jpg" alt="" /></div>
+                                            <div class="c_slide_content">
+                                                <h4><a href="">Photography Projects For A Rainy Weekend</a></h4>
+                                                <small>Submitted by: <a href=""><strong>Victor Bastos</strong></a> - April 10, 2013</small>
+                                                <p>Easy indoor photography ideas you can do around the house, from self portraits to food to use of flowers...</p>
+                                                <p>
+                                                    <a href="" class="btn btn-primary btn-small"><span class="iconfa-plus icon-white"></span> Add To Learning List</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="a-header"><a href="#">Deploy projects(Lv1)
+                            <span class="badge badge-primary pull-right">70%</span></a></div>
+                            <div class="a-content">
+                                <h4>Description</h4>
+                                <p>
+                                    Capable to finish a business procedure alone.
+                                </p>
+                                <h4>Related Courses (2)</h4><br>
+                                <ul id="slidercontent3">
+                                    <li>
+                                        <div class="slide_wrap">
+                                            <div class="c_slide_img"><img src="images/courses/ppt2010.jpg" alt="" /></div>
+                                            <div class="c_slide_content">
+                                                <h4><a href="">Microsoft PowerPoint 2010 Tutorial</a></h4>
+                                                <small>Submitted by: <a href=""><strong>Founder Institute</strong></a> - April 12, 2013</small>
+                                                <p>Learn Microsoft PowerPoint 2010 from an Expert Microsoft Trainer...</p>
+                                                <p>
+                                                    <a href="" class="btn btn-primary btn-small"><span class="iconfa-plus icon-white"></span> Add To Learning List</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="slide_wrap">
+                                            <div class="c_slide_img"><img src="images/courses/social.jpg" alt="" /></div>
+                                            <div class="c_slide_content">
+                                                <h4><a href="">Social Media Marketing for Startups</a></h4>
+                                                <small>Submitted by: <a href=""><strong>Dan Martell</strong></a> - April 22, 2013</small>
+                                                <p>Online marketing, social media, technology, startups and working my @ss off to change the world...</p>
+                                                <p>
+                                                    <a href="" class="btn btn-primary btn-small"><span class="iconfa-plus icon-white"></span> Add To Learning List</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="a-header"><a href="#">Avoiding Risks(Lv2)
+                            <span class="badge badge-primary pull-right">90%</span></a></div>
+                            <div class="a-content">
+                                <h4>Description</h4>
+                                <p>
+                                    Capable to discover risks and handle basic ones.
+                                </p>
+                                <h4>Related Courses (2)</h4><br>
+                                <ul id="slidercontent4">
+                                    <li>
+                                        <div class="slide_wrap">
+                                            <div class="c_slide_img"><img src="images/courses/money.jpg" alt="" /></div>
+                                            <div class="c_slide_content">
+                                                <h4><a href="">Making Sense Of Your Money</a></h4>
+                                                <small>Submitted by: <a href=""><strong>Alex Lum</strong></a> - April 14, 2013</small>
+                                                <p>Learn to set S.M.A.R.T. financial goals and work out how much you need for your goals...</p>
+                                                <p>
+                                                    <a href="" class="btn btn-primary btn-small"><span class="iconfa-plus icon-white"></span> Add To Learning List</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="slide_wrap">
+                                            <div class="c_slide_img"><img src="images/courses/human.jpg" alt="" /></div>
+                                            <div class="c_slide_content">
+                                                <h4><a href="">Human Development</a></h4>
+                                                <small>Submitted by: <a href=""><strong>Dr. Patti Beth</strong></a> - April 1, 2013</small>
+                                                <p>Psychology behind how we grow and develop from birth to adulthood, including parenting practices...</p>
+                                                <p>
+                                                    <a href="" class="btn btn-primary btn-small"><span class="iconfa-plus icon-white"></span> Add To Learning List</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="a-header"><a href="#">Consulting(Lv1)
+                            <span class="badge badge-success pull-right">100%</span></a></div>
+                            <div class="a-content">
+                                <h4>Description</h4>
+                                <p>
+                                    Providing basic consulting service.
+                                </p>
+                            </div>
+                        </div><!--#accordion-->
+                        </div><!--widgetcontent-->
+                        
+                        <br />
+
+                        <h4 class="widgettitle"><span class="icon-tasks icon-white"></span> Pending Courses</h4>
+                        <div class="widgetcontent nopadding">
+                            <ul class="courselist">
+                                <li>
+                                    <a href=""><img src="images/courses/excel2010.jpg" alt="" class="pull-left" /></a>
+                                    <div class="course-info">
+                                        <h4><a href="">Microsoft Excel 2010 Course Beginners/ Intermediate Training</a></h4>
+                                        <h5>by <a href="">Infinite Skills</a></h5>
+                                        <p>In this Excel training course, you will learn by watching the author actually perform the operation he is instructing on, as he explains step by step how to perform these functions. The training explains Microsoft Excel 2010 starting with the absolute basics of creating your very first worksheet. <a href="">(learn more)</a></p>
+                                        <p>
+                                        <a href="" class="btn btn-primary btn-small"><span class="icon-play icon-white"></span> Start Now</a>
+                                        </p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href=""><img src="images/courses/discovery1.jpg" alt="" class="pull-left" /></a>
+                                    <div class="course-info">
+                                        <h4><a href="">Discover The 1 Thing You Were Born To Do In 5 Easy Steps!</a></h4>
+                                        <h5>by <a href="">Steve Olsher</a></h5>
+                                        <p>The Reinvention Workshop will teach YOU my proven formula for discovering your WHAT — that is, the ONE thing you were born to do — and create a powerful plan of action for getting paid extraordinarily well sharing your unique gift with the world. Learn how to REINVENT yourself. <a href="">(learn more)</a></p>
+                                        <p>
+                                        <a href="" class="btn btn-primary btn-small"><span class="icon-play icon-white"></span> Start Now</a>
+                                        </p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href=""><img src="images/courses/garageband.jpg" alt="" class="pull-left" /></a>
+                                    <div class="course-info">
+                                        <h4><a href="">Learn how to make a song in GarageBand in 1 hour</a></h4>
+                                        <h5>by <a href="">John Bura</a></h5>
+                                        <p>In this course you will learn how to compose your very own song in Garage Band. This isn't just a simple how to course, this is a course that shows you the ins and outs of songwriting in one jam packed hour. <a href="">(learn more)</a></p>
+                                        <p>
+                                        <a href="" class="btn btn-primary btn-small"><span class="icon-play icon-white"></span> Start Now</a>
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <h4 class="widgettitle"><span class="icon-comment icon-white"></span> Recent Comments</h4>
+                        <div class="widgetcontent nopadding">
+                            <ul class="commentlist">
+                                <li>
+                                    <img src="images/photos/thumb2.png" alt="" class="pull-left" />
+                                    <div class="comment-info">
+                                        <h4><a href="">Sed ut perspiciatis unde omnis iste natus error sit voluptatem</a></h4>
+                                        <h5>in <a href="">Sit Voluptatem</a></h5>
+                                        <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. </p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <img src="images/photos/thumb10.png" alt="" class="pull-left" />
+                                    <div class="comment-info">
+                                        <h4><a href="">But I must explain to you how all this mistaken</a></h4>
+                                        <h5>in <a href="">At vero eos et accusamus et iusto odio dignissimos</a></h5>
+                                        <p>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <img src="images/photos/thumb1.png" alt="" class="pull-left" />
+                                    <div class="comment-info">
+                                        <h4><a href="">On the other hand, we denounce with righteous indignation</a></h4>
+                                        <h5>in <a href="">These cases are perfectly simple and easy to distinguish</a></h5>
+                                        <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia.</p>
+                                    </div>
+                                </li>
+                                <li><a href="">View More Comments</a></li>
+                            </ul>
+                        </div>
+                        
+                        <br />
+                        
+                        
+                    </div><!--span8-->
+                    
+                    <div id="dashboard-right" class="span4">
+                        
+                        <h5 class="subtitle">Announcements</h5>
+                        
+                        <div class="divider15"></div>
+                        
+                        <div class="alert alert-block">
+                              <button data-dismiss="alert" class="close" type="button">&times;</button>
+                              <h4>Notice:</h4>
+                              <p style="margin: 8px 0">Performance review of 2012 year will be expired in May 15, 2013. Make sure you have finished all self-evaluation.</p>
+                        </div><!--alert-->
+                        
+                        <br />
+                        
+                        <h4 class="widgettitle">Event Calendar</h4>
+                        <div class="widgetcontent nopadding">
+                            <div id="datepicker"></div>
+                        </div>
+                        
+                        <div class="tabbedwidget tab-primary">
+                            <ul>
+                                <li><a href="#tabs-1"><span class="iconfa-user"></span></a></li>
+                                <li><a href="#tabs-2"><span class="iconfa-star"></span></a></li>
+                                <li><a href="#tabs-3"><span class="iconfa-comments"></span></a></li>
+                            </ul>
+                            <div id="tabs-1" class="nopadding">
+                                <h5 class="tabtitle">Last Logged In Users</h5>
+                                <ul class="userlist">
+                                    <li>
+                                        <div>
+                                            <img src="images/photos/thumb1.png" alt="" class="pull-left" />
+                                            <div class="uinfo">
+                                                <h5>Draniem Daamul</h5>
+                                                <span class="pos">Software Engineer</span>
+                                                <span>Last Logged In: 04/20/2013 8:40PM</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <img src="images/photos/thumb2.png" alt="" class="pull-left" />
+                                            <div class="uinfo">
+                                                <h5>Therineka Chonpe</h5>
+                                                <span class="pos">Regional Manager</span>
+                                                <span>Last Logged In: 04/20/2013 3:30PM</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <img src="images/photos/thumb3.png" alt="" class="pull-left" />
+                                            <div class="uinfo">
+                                                <h5>Zaham Sindilmaca</h5>
+                                                <span class="pos">Chief Technical Officer</span>
+                                                <span>Last Logged In: 04/19/2013 1:30AM</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <img src="images/photos/thumb4.png" alt="" class="pull-left" />
+                                            <div class="uinfo">
+                                                <h5>Annie Cerona</h5>
+                                                <span class="pos">Engineering Manager</span>
+                                                <span>Last Logged In: 04/19/2013 11:30AM</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <img src="images/photos/thumb5.png" alt="" class="pull-left" />
+                                            <div class="uinfo">
+                                                <h5>Delher Carasbong</h5>
+                                                <span class="pos">Software Engineer</span>
+                                                <span>Last Logged In: 04/19/2013 11:00AM</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div id="tabs-2" class="nopadding">
+                                <h5 class="tabtitle">Favorites</h5>
+                                <ul class="userlist userlist-favorites">
+                                                                        <li>
+                                        <div>
+                                            <img src="images/photos/thumb3.png" alt="" class="pull-left" />
+                                            <div class="uinfo">
+                                                <h5>Zaham Sindilmaca</h5>
+                                                <p class="link">
+                                                    <a href=""><i class="iconfa-envelope"></i> Message</a>
+                                                    <a href=""><i class="iconfa-phone"></i> Call</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <img src="images/photos/thumb4.png" alt="" class="pull-left" />
+                                            <div class="uinfo">
+                                                <h5>Annie Cerona</h5>
+                                                <p class="link">
+                                                    <a href=""><i class="iconfa-envelope"></i> Message</a>
+                                                    <a href=""><i class="iconfa-phone"></i> Call</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <img src="images/photos/thumb5.png" alt="" class="pull-left" />
+                                            <div class="uinfo">
+                                                <h5>Delher Carasbong</h5>
+                                                <p class="link">
+                                                    <a href=""><i class="iconfa-envelope"></i> Message</a>
+                                                    <a href=""><i class="iconfa-phone"></i> Call</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <img src="images/photos/thumb1.png" alt="" class="pull-left" />
+                                            <div class="uinfo">
+                                                <h5>Draniem Daamul</h5>
+                                                <p class="link">
+                                                    <a href=""><i class="iconfa-envelope"></i> Message</a>
+                                                    <a href=""><i class="iconfa-phone"></i> Call</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <img src="images/photos/thumb2.png" alt="" class="pull-left" />
+                                            <div class="uinfo">
+                                                <h5>Therineka Chonpe</h5>
+                                                <p class="link">
+                                                    <a href=""><i class="iconfa-envelope"></i> Message</a>
+                                                    <a href=""><i class="iconfa-phone"></i> Call</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div id="tabs-3" class="nopadding">
+                                <h5 class="tabtitle">Popular Discussion Group</h5>
+                                <ul class="userlist">
+                                    <li>
+                                        <div>
+                                            <img src="images/photos/thumb4.png" alt="" class="pull-left" />
+                                            <div class="uinfo">
+                                                <h5>Annie Cerona</h5>
+                                                <p class="par">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididun</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <img src="images/photos/thumb5.png" alt="" class="pull-left" />
+                                            <div class="uinfo">
+                                                <h5>Delher Carasbong</h5>
+                                                <p class="par">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididun</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <img src="images/photos/thumb1.png" alt="" class="pull-left" />
+                                            <div class="uinfo">
+                                                <h5>Draniem Daamul</h5>
+                                                <p class="par">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididun</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <img src="images/photos/thumb2.png" alt="" class="pull-left" />
+                                            <div class="uinfo">
+                                                <h5>Therineka Chonpe</h5>
+                                                <p class="par">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididun</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <img src="images/photos/thumb3.png" alt="" class="pull-left" />
+                                            <div class="uinfo">
+                                                <h5>Zaham Sindilmaca</h5>
+                                                <p class="par">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididun</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div><!--tabbedwidget-->
+                        
+                        <br />
+                                                
+                    </div><!--span4-->
+                </div><!--row-fluid-->
+                
+                <div class="footer">
+                    <div class="footer-left">
+                        <span>&copy; 2013. Evolve Solution. All Rights Reserved.</span>
+                    </div>
+                </div><!--footer-->
+                
+            </div><!--maincontentinner-->
+        </div><!--maincontent-->
+        
+    </div><!--rightpanel-->
+    
+</div><!--mainwrapper-->
