@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id          :integer          not null, primary key
+#  first_name  :string(24)       not null
+#  last_name   :string(24)       not null
+#  email       :string(128)      not null
+#  manager_id  :integer
+#  birthday    :date
+#  joined_at   :date
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  position_id :integer
+#
+
 require 'spec_helper'
 
 describe User do

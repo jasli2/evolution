@@ -28,6 +28,12 @@ class User < ActiveRecord::Base
   belongs_to :manager, :class_name => "User"
   belongs_to :position
 
+  has_many :competency_users
+  has_many :competencies, :through => :competency_users
+
+  has_many :user_course_progresses
+  has_many :courses, :through => :user_course_progresses
+
   validates :position, :presence => true
 
   def fullname
