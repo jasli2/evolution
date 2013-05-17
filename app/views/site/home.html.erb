@@ -3,7 +3,7 @@
 <script type="text/javascript">
   $(function() {
     // tabbed widget
-    //$('.tabbedwidget').tabs();
+    $('.tabbedwidget').tabs();
     ////content slider
     //$('#slidercontent1').bxSlider({
     //    prevText: '',
@@ -27,6 +27,15 @@
         heightStyle: "content",
         header: ".a-header"
     });
+
+    jQuery('.leftmenu .dropdown > a').click(function(){
+      if(!jQuery(this).next().is(':visible'))
+        jQuery(this).next().slideDown('fast');
+      else
+        jQuery(this).next().slideUp('fast');
+      return false;
+    });
+    
   });
 </script>
 <% end %>
