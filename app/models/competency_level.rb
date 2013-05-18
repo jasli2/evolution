@@ -21,4 +21,8 @@ class CompetencyLevel < ActiveRecord::Base
 
   has_many :position_competency_levels
   has_many :positions, :through => :position_competency_levels
+
+  has_many :competency_level_has_courses
+  has_many :courses, :through => :competency_level_has_courses
+
 end

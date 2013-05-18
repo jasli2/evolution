@@ -17,4 +17,6 @@ class Competency < ActiveRecord::Base
   validates :description, :presence => true
 
   has_many :competency_levels
+  has_many :competency_users
+  has_many :users, :through => :competency_users
 end
