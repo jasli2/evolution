@@ -15,14 +15,19 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :first_name, :last_name, :email
+  attr_accessible :first_name, :last_name, :email, :password, :password_confirmation
+  has_secure_password
 
   validates :first_name, :presence => true
   validates :last_name, :presence => true
-  validates :email, 
+  validate :password, :presence => true, :length => { minimum: 6}
+  validate :password_confirmation, :presence => true
+  validates :email,
     :presence => true, 
-    :uniqueness => true, 
+    :uniqueness => {case_sensitive: false},
     :format => { :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :message => "Not a valid email address!" }
+
+  before_save { |user| user.email = email.downcase}
 
   has_many :subordinates, :class_name => "User", :foreign_key => "manager_id"
   belongs_to :manager, :class_name => "User"
