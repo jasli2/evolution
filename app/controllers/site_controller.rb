@@ -11,4 +11,13 @@ class SiteController < ApplicationController
 
   def home
   end
+
+  def destroy
+
+  end
+  
+  def create
+
+  end
+
 end
