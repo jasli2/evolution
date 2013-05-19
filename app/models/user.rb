@@ -2,20 +2,21 @@
 #
 # Table name: users
 #
-#  id          :integer          not null, primary key
-#  first_name  :string(24)       not null
-#  last_name   :string(24)       not null
-#  email       :string(128)      not null
-#  manager_id  :integer
-#  birthday    :date
-#  joined_at   :date
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  position_id :integer
+#  id              :integer          not null, primary key
+#  first_name      :string(24)       not null
+#  last_name       :string(24)       not null
+#  email           :string(128)      not null
+#  manager_id      :integer
+#  birthday        :date
+#  joined_at       :date
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  position_id     :integer
+#  password_digest :string(255)
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :first_name, :last_name, :email, :password, :password_confirmation
+  attr_accessible :first_name, :last_name, :email, :password, :password_confirmation, :position_id
   has_secure_password
 
   validates :first_name, :presence => true
@@ -39,7 +40,7 @@ class User < ActiveRecord::Base
   has_many :user_course_progresses
   has_many :courses, :through => :user_course_progresses
 
-  validates :position, :presence => true
+  validates :position_id, :presence => true
 
   def fullname
     [first_name, last_name].join " "
