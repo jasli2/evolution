@@ -6,11 +6,11 @@ Evolution::Application.routes.draw do
   match '/home' => 'site#home'
   match  '/about' => 'site#about'
   match  '/help' => 'site#help'
-  match  '/create' => 'sessions#create'
+  match  '/create' => 'sessions#new'
   match  '/destroy' => 'sessions#destroy'
   match  '/signup' => 'users#new'
 
-
+  resources :sessions, only: [:new, :create, :destroy]
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
