@@ -13,3 +13,14 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+
+// for drop dowm manu
+jQuery('.leftmenu .dropdown > a').click(function(){
+    if(!jQuery(this).next().is(':visible'))
+      jQuery(this).next().slideDown('fast');
+    else
+      jQuery(this).next().slideUp('fast');
+    return false;
+});
+
+

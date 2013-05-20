@@ -1,19 +1,43 @@
-<% provide(:title, "Sign in") %>
-<h1>Sign in</h1>
+<% provide(:title, "login") %>
+<% content_for :javascript do %>
+<script type="text/javascript">
+  $(function(){
+    $('#login').submit(function(){
+      var u = $('#username').val();
+      var p = $('#password').val();
+      if(u == '' && p == '') {
+          $('.login-alert').fadeIn();
+          return false;
+      }
+    });
+  });
+</script>
+<% end %>
 
-<div class="row">
-  <div class="span6 offset3">
-    <%= form_for(:session, url: sessions_path) do |f| %>
+<div class="loginpanel">
+  <div class="loginpanelinner">
+    <div class="logo animate0 bounceIn"><%= image_tag('logo.png') %></div>
+      <%= form_tag sessions_path do %>
+      <div class="inputwrapper login-alert" style="display: none">
+        <div class="alert alert-error">Invalid username or password</div>
+      </div>
+      <div class="inputwrapper animate1 bounceIn">
+        <%= text_field_tag :email, params[:email], :class => 'text_field', :placeholder => "Enter username" %>
+      </div>
+      <div class="inputwrapper animate2 bounceIn">
+        <%= password_field_tag :password, params[:password], :class => 'text_field', :placeholder => "Enter password" %>
+      </div>
+      <div class="inputwrapper animate3 bounceIn">
+        <%= submit_tag "Sign in", class: "btn btn-primary" %>
+      </div>
+      <div class="inputwrapper animate4 bounceIn">
+        <label><input type="checkbox" class="remember" name="signin" /> Keep me sign in</label>
+      </div>
+      <% end %>     
+  </div><!--loginpanelinner-->
+</div><!--loginpanel-->
 
-      <%= f.label :email %>
-      <%= f.text_field :email %>
-
-      <%= f.label :password %>
-      <%= f.password_field :password %>
-
-      <%= f.submit "Sign in", class: "btn btn-large btn-primary" %>
-    <% end %>
-
-    <p>New user? <%= link_to "Sign up now!", signup_path %></p>
-  </div>
+<div class="loginfooter">
+  <p>&copy; 2013. Evolve Solution. All Rights Reserved.</p>
 </div>
+

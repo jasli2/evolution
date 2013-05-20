@@ -33,6 +33,7 @@ class User < ActiveRecord::Base
   has_many :subordinates, :class_name => "User", :foreign_key => "manager_id"
   belongs_to :manager, :class_name => "User"
   belongs_to :position
+  attr_accessible :position
 
   has_many :competency_users
   has_many :competencies, :through => :competency_users
@@ -44,5 +45,14 @@ class User < ActiveRecord::Base
 
   def fullname
     [first_name, last_name].join " "
+  end
+
+  def self.auth(email, password)
+    user = User.find_by_email(email.downcase)
+    if user && user.authenticate(password)
+      user
+    else
+      nil
+    end
   end
 end

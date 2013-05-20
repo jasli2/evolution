@@ -72,13 +72,6 @@ ActiveRecord::Schema.define(:version => 20130516143714) do
     t.datetime "updated_at",      :null => false
   end
 
-  create_table "comptetency_level_has_courses", :force => true do |t|
-    t.integer  "competency_level_id"
-    t.integer  "course_id"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
-  end
-
   create_table "courses", :force => true do |t|
     t.string   "title"
     t.string   "author"

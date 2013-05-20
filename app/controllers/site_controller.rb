@@ -1,23 +1,12 @@
 class SiteController < ApplicationController
+  skip_before_filter :authenticate_user!
+  
   def help
   end
 
   def about
   end
 
-  def login
-    @login_page = true
-  end
-
   def home
   end
-
-  def destroy
-
-  end
-  
-  def create
-
-  end
-
 end
