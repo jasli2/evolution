@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id          :integer          not null, primary key
+#  first_name  :string(24)       not null
+#  last_name   :string(24)       not null
+#  email       :string(128)      not null
+#  manager_id  :integer
+#  birthday    :date
+#  joined_at   :date
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  position_id :integer
+#
+
 require 'spec_helper'
 
 describe User do
@@ -10,15 +26,22 @@ describe User do
   it { should_not allow_value("blah").for(:email) }
   it { should allow_value("a@b.com").for(:email) }
 
+  subject {FactoryGirl.create(:user)}
+
+  it { should respond_to :password_digest }
+  it { should respond_to :password }
+  it { should respond_to :password_confirmation }
+
   describe "factory" do
     it "should has a valid factory" do
-      FactoryGirl.create(:user).should be_valid
+      should be_valid
+      puts "test password password_digest is " + subject.password_digest
     end
   end
 
   describe "validations" do  
     it "should has unique email address" do
-      u = FactoryGirl.create(:user)
+      u = subject
       FactoryGirl.build(:user, :email => u.email).should_not be_valid
     end
   end
