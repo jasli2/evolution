@@ -122,7 +122,7 @@ h1,h2,h3,h4,h5 { font-weight: normal; line-height: normal; }
 .headmenu > li > a .head-icon { width: 50px; height: 50px; display: block; margin: auto; opacity: 0.5; }
 .headmenu > li > a:hover .head-icon, .headmenu > li.open a .head-icon { opacity: 1; }
 
-.head-message { background-image: url(../images/icons/message.png); }
+.head-message { background-image: url(<%= asset_data_uri 'message.png' %>); }
 .head-users { background-image: url(../images/icons/users.png); }
 .head-bar { background-image: url(../images/icons/bar.png); }
 
@@ -197,7 +197,7 @@ h1,h2,h3,h4,h5 { font-weight: normal; line-height: normal; }
 .breadcrumbs > li.right > a i { vertical-align: middle; }
 .breadcrumbs > li span.separator {
 	width: 5px; height: 9px; vertical-align: middle; display: inline-block;
-	background: url(../images/bcarrow.png) no-repeat 0 0; margin-left: 2px; }
+	background: url(<%= asset_data_uri 'bcarrow.png' %>) no-repeat 0 0; margin-left: 2px; }
 .breadcrumbs > li:first-child a:hover { text-decoration: none; color: #666; }
 
 .pageheader { padding: 20px; border-bottom: 1px solid #ddd; position: relative; min-height: 68px; background: #fff; }

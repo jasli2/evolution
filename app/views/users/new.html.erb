@@ -15,7 +15,7 @@
     <div class="pageicon"><span class="iconfa-home"></span></div>
     <div class="pagetitle">
         <h5>Key Account Manager(Lv2)</h5>
-        <h1>Crete User</h1>
+        <h1>Create User</h1>
     </div>
 </div><!--pageheader-->
 
@@ -27,49 +27,18 @@
         <div class="divider15"></div>
         <h4 class="widgettitle">Create New User</h4>
         <div class="widgetcontent">
-          <%= form_for @user, :html => {:class => "form-horizontal"} do |f| %>
-            <div class="control-group">
-              <%= f.label :first_name, :class => "control-label" %>
-              <div class="controls">
-                <%= f.text_field :first_name, :class => "input-xlarge"  %>
-              </div>
-            </div>
-            <div class="control-group">
-              <%= f.label :last_name, :class => "control-label" %>
-              <div class="controls">
-                <%= f.text_field :last_name, :class => "input-xlarge"  %>
-              </div>
-            </div>
-            <div class="control-group">
-              <%= f.label :position, :class => "control-label" %>
-              <div class="controls">
-                <%= f.text_field :position, :class => "input-xlarge"  %>
-              </div>
-            </div>
-            <div class="control-group">
-              <%= f.label :email, :class => "control-label" %>
-              <div class="controls">
-                <%= f.text_field :email, :class => "input-xlarge"  %>
-              </div>
-            </div>
-            <div class="control-group">
-              <%= f.label :password, :class => "control-label" %>
-              <div class="controls">
-                <%= f.password_field :password, :class => "input-xlarge"  %>
-              </div>
-            </div>
-            <div class="control-group">
-              <%= f.label :password_confirmation, :class => "control-label" %>
-              <div class="controls">
-                <%= f.password_field :password_confirmation, :class => "input-xlarge"  %>
-              </div>
-            </div>
-      
+          <%= simple_form_for(@user, :html => {:class => 'form-horizontal' }) do |f| %>
+            <%= f.input :first_name %>
+            <%= f.input :last_name %>
+            <%= f.input :email %>
+            <%= f.input :position_id %>
+            <%= f.input :password %>
+            <%= f.input :password_confirmation %>
             <div class="form-actions">
-            <%= f.submit :class => "btn btn-primary" %>
+            <%= f.button :submit, :class => "btn-primary"  %>
             </div>
-      
           <% end %>
+
         </div>
       </div>
       <div id="dashboard-right" class="span4">
