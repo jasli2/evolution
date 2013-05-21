@@ -10,7 +10,10 @@ class ApplicationController < ActionController::Base
     def current_user
       begin
         @current_user ||= User.find(session[:user_id]) if session[:user_id]
+        logger.debug "current_user is " + @current_user.fullname
+        @current_user
       rescue ActiveRecord::RecordNotFound
+        logger.debug "current_user is nil !!!!!!!!!!!"
         nil
       end
     end

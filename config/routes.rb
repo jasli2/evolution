@@ -5,9 +5,10 @@ Evolution::Application.routes.draw do
   match  '/about'   => 'site#about'
   match  '/help'    => 'site#help'
   match  '/login'   => 'sessions#new'
+  match  '/logout'  => 'sessions#destroy'
   match  '/signup'  => 'users#new'
 
-  resources :sessions, only: [:create, :destroy]
+  resources :sessions, only: [:create]
 
   root :to => 'sessions#new'
 

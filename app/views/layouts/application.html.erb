@@ -10,13 +10,14 @@
 <body>
 
 <div class="mainwrapper">
-  <%= render 'shared/header', :locals => {:user => current_user} %>
+  <%= render :partial =>'shared/header' %>
   
   <div class="leftpanel">
-    <%= render 'shared/leftmenu' %>
+    <%= render :partial => 'shared/leftmenu' %>
   </div>
 
   <div class="rightpanel">
+    <%= render :partial => "shared/flash_messages", :locals => {:flash => flash} %>
     <%= yield %>
   </div>
 

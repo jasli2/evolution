@@ -1,0 +1,6 @@
+<% [:success, :notice, :error, :alert].each do |level| %>
+  <% unless flash[level].blank? %>
+    <%= content_tag(:div, content_tag(:button, raw("&times;"), :class => "close", "data-dismiss" => "alert") +
+                  flash[level], :class => "alert fade in " + twitterized_type(level)) %>
+  <% end %>
+<% end %>
