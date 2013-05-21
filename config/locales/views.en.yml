@@ -1,0 +1,34 @@
+en:
+  menu:
+    navigator: 'Navigator'
+    user:
+      action: 'User Actions'
+      mycourse: 'My Courses'
+      myexams: 'My Exams'
+      myassessments: 'My Assessments'
+      calendar: 'Training Calendar'
+      competency: 'Competency Library'
+      courses: 'Courses Library'
+      teacheres: 'Teacheres'
+    teacher:
+      action: 'Teacher Actions'
+      cert: 'Certifications'
+      class: 'My Classes'
+      development: 'My Course Development'
+      records: 'My Records'
+      club: 'Teacher Clubs'
+    manager:
+      action: 'Manager Actions'
+      members: 'Tean Members'
+      competency: 'Team Competency'
+      records: 'Team Learning Records'
+      assessments: 'Assessments'
+    admin:
+      action: 'Administrator Actions'
+      competency: 'Competency Managememt'
+      course: 'Course Managememt'
+      teacher: 'Teacher Managememt'
+      provider: 'Provider Management'
+      plan: 'Learning Plan'
+      assessment: 'Assessments Management'
+      data: 'Data Analysis'
