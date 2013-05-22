@@ -15,8 +15,10 @@
 #  password_digest :string(255)
 #
 
+require 'file_size_validator'
+
 class User < ActiveRecord::Base
-  attr_accessible :name, :email, :password, :password_confirmation, :position_id
+  attr_accessible :name, :email, :password, :password_confirmation, :position_id, :avatar
   has_secure_password
 
   validates :name, :presence => true
@@ -42,6 +44,16 @@ class User < ActiveRecord::Base
 
   validates :position_id, :presence => true
 
+  # custom image sizes: each key is a version name
+  IMAGE_CONFIG = {
+    :crop => [1, 1],
+    :large => [200, 200],
+    :normal => [100, 100],
+    :small => [50, 50]
+  }
+  mount_uploader :avatar, ImageUploader
+  validates :avatar, :file_size => {:maximum => 1.megabytes.to_i }
+
   def admin?
     self.is_admin
   end
@@ -54,4 +66,5 @@ class User < ActiveRecord::Base
       nil
     end
   end
+
 end

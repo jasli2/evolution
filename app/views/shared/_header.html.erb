@@ -22,7 +22,7 @@
       </li>
       <li class="right">
         <div class="userloggedinfo">
-          <img src="images/photos/thumb1.png" alt="" />
+          <%= image_tag user_avatar_path(current_user, :normal) %>
           <div class="userinfo">
             <h5><%= current_user.name %> <small>- <%= current_user.email %></small></h5>
             <ul>

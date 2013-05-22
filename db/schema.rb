@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130522061123) do
+ActiveRecord::Schema.define(:version => 20130522065651) do
 
   create_table "activities", :force => true do |t|
     t.string   "description"
@@ -121,6 +121,7 @@ ActiveRecord::Schema.define(:version => 20130522061123) do
     t.string   "password_digest"
     t.string   "name"
     t.boolean  "is_admin",                       :default => false
+    t.string   "avatar"
   end
 
 end

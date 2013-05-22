@@ -18,4 +18,4 @@ config/database.yml
 Thumbs.db
 .DS_Store
 coverage/*
-
+/public/uploads/

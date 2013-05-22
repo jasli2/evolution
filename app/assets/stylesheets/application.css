@@ -14,6 +14,7 @@
  *= require font-awesome.min
  *= require animate.min
  *= require animate.delay
+ *= require bootstrap-fileupload.min
  *= require style.default
  *= require_self
  *= require_tree .
