@@ -16,13 +16,12 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :first_name, :last_name, :email, :password, :password_confirmation, :position_id
+  attr_accessible :name, :email, :password, :password_confirmation, :position_id
   has_secure_password
 
-  validates :first_name, :presence => true
-  validates :last_name, :presence => true
-  validate :password, :presence => true, :length => { minimum: 6}
-  validate :password_confirmation, :presence => true
+  validates :name, :presence => true
+  validates :password, :presence => true, :length => { minimum: 6}
+  validates :password_confirmation, :presence => true
   validates :email,
     :presence => true, 
     :uniqueness => {case_sensitive: false},
@@ -42,10 +41,6 @@ class User < ActiveRecord::Base
   has_many :courses, :through => :user_course_progresses
 
   validates :position_id, :presence => true
-
-  def fullname
-    [first_name, last_name].join " "
-  end
 
   def self.auth(email, password)
     user = User.find_by_email(email.downcase)

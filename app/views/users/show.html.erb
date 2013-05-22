@@ -1,4 +1,4 @@
-<% provide(:title, current_user.fullname) %>
+<% provide(:title, current_user.name) %>
 <% content_for :javascript do %>
 <script type="text/javascript">
 </script>
@@ -15,7 +15,7 @@
     <div class="pageicon"><span class="iconfa-home"></span></div>
     <div class="pagetitle">
         <h5>Key Account Manager(Lv2)</h5>
-        <h1><%= current_user.fullname %></h1>
+        <h1><%= current_user.name %></h1>
     </div>
 </div><!--pageheader-->
 
