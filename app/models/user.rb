@@ -42,6 +42,10 @@ class User < ActiveRecord::Base
 
   validates :position_id, :presence => true
 
+  def admin?
+    self.is_admin
+  end
+
   def self.auth(email, password)
     user = User.find_by_email(email.downcase)
     if user && user.authenticate(password)

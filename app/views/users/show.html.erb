@@ -1,11 +1,11 @@
-<% provide(:title, current_user.name) %>
+<% provide(:title, @user.name) %>
 <% content_for :javascript do %>
 <script type="text/javascript">
 </script>
 <% end %>
 
 <ul class="breadcrumbs">
-    <li><%= link_to content_tag(:i, '', :class => 'iconfa-home' ), user_path(current_user)  %><span class="separator"></span></li>
+    <li><%= link_to content_tag(:i, '', :class => 'iconfa-home' ), user_path(@user)  %><span class="separator"></span></li>
 </ul>
 
 <div class="pageheader">
@@ -15,7 +15,7 @@
     <div class="pageicon"><span class="iconfa-home"></span></div>
     <div class="pagetitle">
         <h5>Key Account Manager(Lv2)</h5>
-        <h1><%= current_user.name %></h1>
+        <h1><%= @user.name %></h1>
     </div>
 </div><!--pageheader-->
 
