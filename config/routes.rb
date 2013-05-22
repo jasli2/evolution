@@ -1,5 +1,10 @@
 Evolution::Application.routes.draw do
-  resources :users
+  resources :users do
+    collection { post :import }
+  end
+  resources :competencies do
+    collection { post :import}
+  end
 
   match  '/home'    => 'site#home'
   match  '/about'   => 'site#about'

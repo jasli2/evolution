@@ -7,10 +7,11 @@
 #  competency_level_id :integer
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
+#  weight              :integer
 #
 
 class CompetencyLevelRequirement < ActiveRecord::Base
-  attr_accessible :competency_level_id, :description
+  attr_accessible :competency_level_id, :description, :weight
 
   validates :description, :presence => true
 

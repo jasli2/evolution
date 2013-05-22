@@ -10,7 +10,9 @@ class ApplicationController < ActionController::Base
     def current_user
       begin
         @current_user ||= User.find(session[:user_id]) if session[:user_id]
-        logger.debug "current_user is " + @current_user.fullname
+        if @current_user
+          logger.debug "current_user is " + @current_user.fullname
+        end
         @current_user
       rescue ActiveRecord::RecordNotFound
         logger.debug "current_user is nil !!!!!!!!!!!"
@@ -31,7 +33,7 @@ class ApplicationController < ActionController::Base
 
     def authenticate_user!
       if !current_user
-        redirect_to root_url, :alert => 'You need to sign in for access to this page.'
+        #redirect_to root_url, :alert => 'You need to sign in for access to this page.'
       end
     end
 end

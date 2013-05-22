@@ -1,13 +1,19 @@
 class UsersController < ApplicationController
   #attr_accessible :tags_attributes
+  #POST /users/import
+  def import
+      User.import(params[:file])
+      redirect_to users_path, notice: "Products imported."
+  end
+
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
-
+    @users = User.order(:position_id)
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @users }
+      format.csv { send_data @users.to_csv }
+      #format.xls
     end
   end
 

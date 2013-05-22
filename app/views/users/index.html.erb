@@ -1,0 +1,27 @@
+<p>
+  Download:
+  <%= link_to "CSV", users_path(format: "csv") %> |
+  <%= link_to "Excel", users_path(format: "xls") %>
+</p>
+
+<table id="users">
+  <tr>
+    <th> Name </th>
+    <th> Email </th>
+    <th> Position_id </th>
+  </tr>
+  <% @users.each do |user| %>
+    <tr>
+      <td><%= user.name %></td>
+      <td><%= user.email %></td>
+      <td><%= user.position_id %></td>
+    </tr>
+  <% end %>
+</table>
+
+<h2>Import Products</h2>
+
+<%= form_tag import_users_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Import" %>
+<% end %>
