@@ -27,12 +27,13 @@
         <div class="divider15"></div>
         <h4 class="widgettitle">Create New User</h4>
         <div class="widgetcontent">
+          <div class="divider15"></div>
           <%= simple_form_for(@user, :html => {:class => 'form-horizontal' }) do |f| %>
             <%= f.input :first_name %>
             <%= f.input :last_name %>
             <%= f.input :email %>
             <%= f.input :position_id %>
-            <%= f.input :password %>
+            <%= f.input :password, hint: 'No special characters.'%>
             <%= f.input :password_confirmation %>
             <div class="form-actions">
             <%= f.button :submit, :class => "btn-primary"  %>
