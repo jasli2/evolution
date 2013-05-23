@@ -3,6 +3,10 @@
 <% provide(:page_sub_title, "Dashboard") %>
 <% provide(:page_icon, "iconfa-plus") %>
 
+<% content_for :breadcrumbs do %>
+<%= content_tag(:li, "User Profile") %>
+<% end %>
+
 <% content_for :javascript do %>
 <script type="text/javascript">
 </script>

@@ -21,10 +21,9 @@
     <%= render :partial => "shared/flash_messages", :locals => {:flash => flash} %>
     <div class="maincontent">
       <div class="maincontentinner">
-        <%= yield %>
-
-        <%= render :partial => "shared/footer" %>
+        <%= yield %>        
       </div>
+      <%= render :partial => "shared/footer" %>
     </div>
   </div>
 

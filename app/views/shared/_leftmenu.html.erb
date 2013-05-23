@@ -35,7 +35,7 @@
       <% if current_user.admin? %>
       <li class="<%= category == 'admin' ? "dropdown active" : "dropdown" %>"><a href=""><span class="iconfa-plus"></span> <%= t('menu.admin.action') %></a>
       <ul style="<%= "display: block" if category == 'admin' %>">
-        <li class="<%= "active" if active == 'dashboard' %>"><a href="<%= admin_dashboard_path(current_user) %>"><span class="iconfa-home"></span> <%= t('menu.admin.dashboard') %></a></li>
+        <li class="<%= "active" if active == 'dashboard' %>"><a href="<%= admin_dashboard_path %>"><span class="iconfa-home"></span> <%= t('menu.admin.dashboard') %></a></li>
         <li class="<%= "active" if active == 'competency' %>"><a href="#"><span class="iconfa-sitemap"></span> <%= t('menu.admin.competency') %></a></li>
         <li class="<%= "active" if active == 'courses' %>"><a href="#"><span class="iconfa-folder-open"></span> <%= t('menu.admin.course') %></a></li>
         <li class="<%= "active" if active == 'teacheres' %>"><a href="#"><span class="iconfa-user"></span> <%= t('menu.admin.teacher') %></a></li>

@@ -1,5 +1,6 @@
 <ul class="breadcrumbs">
   <li><%= link_to content_tag(:i, '', :class => 'iconfa-home' ), dashboard_user_path(current_user)  %><span class="separator"></span></li>
+  <%= yield :breadcrumbs %>
 </ul>
 
 <div class="pageheader">
