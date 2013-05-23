@@ -25,6 +25,7 @@ en:
       assessments: 'Assessments'
     admin:
       action: 'Administrator Actions'
+      dashboard: "Dashboard"
       competency: 'Competency Managememt'
       course: 'Course Managememt'
       teacher: 'Teacher Managememt'

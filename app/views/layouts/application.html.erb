@@ -13,7 +13,7 @@
   <%= render :partial =>'shared/header' %>
   
   <div class="leftpanel">
-    <%= render :partial => 'shared/leftmenu' %>
+    <%= render :partial => 'shared/leftmenu', :locals => {:category => @menu_category, :active => @menu_active } %>
   </div>
 
   <div class="rightpanel">

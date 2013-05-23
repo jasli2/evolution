@@ -5,22 +5,357 @@
 
 <% content_for :javascript do %>
 <script type="text/javascript">
+  $(function() {
+    $('.accordion').accordion({
+        collapsible: true,
+        active: false,
+        heightStyle: "content",
+        header: ".a-header"
+    });
+  });
 </script>
 <% end %>
 
 <div class="row-fluid">
   <div id="dashboard-left" class="span8">
+                        
     <h3 class="subtitle">Competency Model</h3>
     <div class="divider15"></div>
-    <h4 class="widgettitle"><span class="iconfa-home"></span> Competency Summary</h4>
+    <h4 class="widgettitle"><span class="iconfa-signal"></span> Competency Summary</h4>
     <div class="widgetcontent nopadding">
-      competency model for user.
-    </div>
-  </div>
-  <div id="dashboard-right" class="span4">
-    <h4 class="widgettitle"> Side Content</h4>
-    <div class="widgetcontent">
-      Side content
-    </div>
-  </div>
+    <div class="accordion">
+      <div class="a-header">
+          <a href="#">Explorer New Customers(Lv2) 
+              <span class="badge badge-primary pull-right">60%</span>
+          </a>
+      </div>
+      <div class="a-content">
+          <h4>Description</h4>
+          <p>
+              Capable to develop new customers existing customer relationship.
+          </p>
+      </div>
+      <div class="a-header"><a href="#">Maintain Relationship(Lv3)
+      <span class="badge badge-success pull-right">100%</span></a></div>
+      <div class="a-content">
+          <h4>Description</h4>
+          <p>
+              Building relationship with corresponding customer staff.
+          </p>
+      </div>
+      <div class="a-header"><a href="#">Providing High Quality Services(Lv2)
+      <span class="badge badge-primary pull-right">75%</span></a></div>
+      <div class="a-content">
+          <h4>Description</h4>
+          <p>
+              Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis.
+              Phasellus pellentesque purus in massa. Aenean in pede. Phasellus ac libero
+              ac tellus pellentesque semper. Sed ac felis. Sed commodo, magna quis
+              lacinia ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui.
+          </p>
+      </div>
+      <div class="a-header"><a href="#">Deploy projects(Lv1)
+      <span class="badge badge-primary pull-right">70%</span></a></div>
+      <div class="a-content">
+          <h4>Description</h4>
+          <p>
+              Capable to finish a business procedure alone.
+          </p>
+      </div>
+      <div class="a-header"><a href="#">Avoiding Risks(Lv2)
+      <span class="badge badge-primary pull-right">90%</span></a></div>
+      <div class="a-content">
+          <h4>Description</h4>
+          <p>
+              Capable to discover risks and handle basic ones.
+          </p>
+      </div>
+      <div class="a-header"><a href="#">Consulting(Lv1)
+      <span class="badge badge-success pull-right">100%</span></a></div>
+      <div class="a-content">
+          <h4>Description</h4>
+          <p>
+              Providing basic consulting service.
+          </p>
+      </div>
+    </div><!--#accordion-->
+    </div><!--widgetcontent-->
+                        
+    <div class="divider15"></div>
+
+                        <h4 class="widgettitle"><span class="icon-tasks icon-white"></span> Pending Courses</h4>
+                        <div class="widgetcontent nopadding">
+                            <ul class="courselist">
+                                <li>
+                                    <a href=""><img src="images/courses/excel2010.jpg" alt="" class="pull-left" /></a>
+                                    <div class="course-info">
+                                        <h4><a href="">Microsoft Excel 2010 Course Beginners/ Intermediate Training</a></h4>
+                                        <h5>by <a href="">Infinite Skills</a></h5>
+                                        <p>In this Excel training course, you will learn by watching the author actually perform the operation he is instructing on, as he explains step by step how to perform these functions. The training explains Microsoft Excel 2010 starting with the absolute basics of creating your very first worksheet. <a href="">(learn more)</a></p>
+                                        <p>
+                                        <a href="" class="btn btn-primary btn-small"><span class="icon-play icon-white"></span> Start Now</a>
+                                        </p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href=""><img src="images/courses/discovery1.jpg" alt="" class="pull-left" /></a>
+                                    <div class="course-info">
+                                        <h4><a href="">Discover The 1 Thing You Were Born To Do In 5 Easy Steps!</a></h4>
+                                        <h5>by <a href="">Steve Olsher</a></h5>
+                                        <p>The Reinvention Workshop will teach YOU my proven formula for discovering your WHAT — that is, the ONE thing you were born to do — and create a powerful plan of action for getting paid extraordinarily well sharing your unique gift with the world. Learn how to REINVENT yourself. <a href="">(learn more)</a></p>
+                                        <p>
+                                        <a href="" class="btn btn-primary btn-small"><span class="icon-play icon-white"></span> Start Now</a>
+                                        </p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href=""><img src="images/courses/garageband.jpg" alt="" class="pull-left" /></a>
+                                    <div class="course-info">
+                                        <h4><a href="">Learn how to make a song in GarageBand in 1 hour</a></h4>
+                                        <h5>by <a href="">John Bura</a></h5>
+                                        <p>In this course you will learn how to compose your very own song in Garage Band. This isn't just a simple how to course, this is a course that shows you the ins and outs of songwriting in one jam packed hour. <a href="">(learn more)</a></p>
+                                        <p>
+                                        <a href="" class="btn btn-primary btn-small"><span class="icon-play icon-white"></span> Start Now</a>
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <h4 class="widgettitle"><span class="icon-comment icon-white"></span> Recent Comments</h4>
+                        <div class="widgetcontent nopadding">
+                            <ul class="commentlist">
+                                <li>
+                                    <img src="images/photos/thumb2.png" alt="" class="pull-left" />
+                                    <div class="comment-info">
+                                        <h4><a href="">Sed ut perspiciatis unde omnis iste natus error sit voluptatem</a></h4>
+                                        <h5>in <a href="">Sit Voluptatem</a></h5>
+                                        <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. </p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <img src="images/photos/thumb10.png" alt="" class="pull-left" />
+                                    <div class="comment-info">
+                                        <h4><a href="">But I must explain to you how all this mistaken</a></h4>
+                                        <h5>in <a href="">At vero eos et accusamus et iusto odio dignissimos</a></h5>
+                                        <p>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <img src="images/photos/thumb1.png" alt="" class="pull-left" />
+                                    <div class="comment-info">
+                                        <h4><a href="">On the other hand, we denounce with righteous indignation</a></h4>
+                                        <h5>in <a href="">These cases are perfectly simple and easy to distinguish</a></h5>
+                                        <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia.</p>
+                                    </div>
+                                </li>
+                                <li><a href="">View More Comments</a></li>
+                            </ul>
+                        </div>
+                        
+                        <br />
+                        
+                        
+                    </div><!--span8-->
+                    
+                    <div id="dashboard-right" class="span4">
+                        
+                        <h5 class="subtitle">Announcements</h5>
+                        
+                        <div class="divider15"></div>
+                        
+                        <div class="alert alert-block">
+                              <button data-dismiss="alert" class="close" type="button">&times;</button>
+                              <h4>Notice:</h4>
+                              <p style="margin: 8px 0">Performance review of 2012 year will be expired in May 15, 2013. Make sure you have finished all self-evaluation.</p>
+                        </div><!--alert-->
+                        
+                        <br />
+                        
+                        <h4 class="widgettitle">Event Calendar</h4>
+                        <div class="widgetcontent nopadding">
+                            <div id="datepicker"></div>
+                        </div>
+                        
+                        <div class="tabbedwidget tab-primary">
+                            <ul>
+                                <li><a href="#tabs-1"><span class="iconfa-user"></span></a></li>
+                                <li><a href="#tabs-2"><span class="iconfa-star"></span></a></li>
+                                <li><a href="#tabs-3"><span class="iconfa-comments"></span></a></li>
+                            </ul>
+                            <div id="tabs-1" class="nopadding">
+                                <h5 class="tabtitle">Last Logged In Users</h5>
+                                <ul class="userlist">
+                                    <li>
+                                        <div>
+                                            <img src="images/photos/thumb1.png" alt="" class="pull-left" />
+                                            <div class="uinfo">
+                                                <h5>Draniem Daamul</h5>
+                                                <span class="pos">Software Engineer</span>
+                                                <span>Last Logged In: 04/20/2013 8:40PM</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <img src="images/photos/thumb2.png" alt="" class="pull-left" />
+                                            <div class="uinfo">
+                                                <h5>Therineka Chonpe</h5>
+                                                <span class="pos">Regional Manager</span>
+                                                <span>Last Logged In: 04/20/2013 3:30PM</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <img src="images/photos/thumb3.png" alt="" class="pull-left" />
+                                            <div class="uinfo">
+                                                <h5>Zaham Sindilmaca</h5>
+                                                <span class="pos">Chief Technical Officer</span>
+                                                <span>Last Logged In: 04/19/2013 1:30AM</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <img src="images/photos/thumb4.png" alt="" class="pull-left" />
+                                            <div class="uinfo">
+                                                <h5>Annie Cerona</h5>
+                                                <span class="pos">Engineering Manager</span>
+                                                <span>Last Logged In: 04/19/2013 11:30AM</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <img src="images/photos/thumb5.png" alt="" class="pull-left" />
+                                            <div class="uinfo">
+                                                <h5>Delher Carasbong</h5>
+                                                <span class="pos">Software Engineer</span>
+                                                <span>Last Logged In: 04/19/2013 11:00AM</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div id="tabs-2" class="nopadding">
+                                <h5 class="tabtitle">Favorites</h5>
+                                <ul class="userlist userlist-favorites">
+                                                                        <li>
+                                        <div>
+                                            <img src="images/photos/thumb3.png" alt="" class="pull-left" />
+                                            <div class="uinfo">
+                                                <h5>Zaham Sindilmaca</h5>
+                                                <p class="link">
+                                                    <a href=""><i class="iconfa-envelope"></i> Message</a>
+                                                    <a href=""><i class="iconfa-phone"></i> Call</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <img src="images/photos/thumb4.png" alt="" class="pull-left" />
+                                            <div class="uinfo">
+                                                <h5>Annie Cerona</h5>
+                                                <p class="link">
+                                                    <a href=""><i class="iconfa-envelope"></i> Message</a>
+                                                    <a href=""><i class="iconfa-phone"></i> Call</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <img src="images/photos/thumb5.png" alt="" class="pull-left" />
+                                            <div class="uinfo">
+                                                <h5>Delher Carasbong</h5>
+                                                <p class="link">
+                                                    <a href=""><i class="iconfa-envelope"></i> Message</a>
+                                                    <a href=""><i class="iconfa-phone"></i> Call</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <img src="images/photos/thumb1.png" alt="" class="pull-left" />
+                                            <div class="uinfo">
+                                                <h5>Draniem Daamul</h5>
+                                                <p class="link">
+                                                    <a href=""><i class="iconfa-envelope"></i> Message</a>
+                                                    <a href=""><i class="iconfa-phone"></i> Call</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <img src="images/photos/thumb2.png" alt="" class="pull-left" />
+                                            <div class="uinfo">
+                                                <h5>Therineka Chonpe</h5>
+                                                <p class="link">
+                                                    <a href=""><i class="iconfa-envelope"></i> Message</a>
+                                                    <a href=""><i class="iconfa-phone"></i> Call</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div id="tabs-3" class="nopadding">
+                                <h5 class="tabtitle">Popular Discussion Group</h5>
+                                <ul class="userlist">
+                                    <li>
+                                        <div>
+                                            <img src="images/photos/thumb4.png" alt="" class="pull-left" />
+                                            <div class="uinfo">
+                                                <h5>Annie Cerona</h5>
+                                                <p class="par">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididun</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <img src="images/photos/thumb5.png" alt="" class="pull-left" />
+                                            <div class="uinfo">
+                                                <h5>Delher Carasbong</h5>
+                                                <p class="par">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididun</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <img src="images/photos/thumb1.png" alt="" class="pull-left" />
+                                            <div class="uinfo">
+                                                <h5>Draniem Daamul</h5>
+                                                <p class="par">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididun</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <img src="images/photos/thumb2.png" alt="" class="pull-left" />
+                                            <div class="uinfo">
+                                                <h5>Therineka Chonpe</h5>
+                                                <p class="par">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididun</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <img src="images/photos/thumb3.png" alt="" class="pull-left" />
+                                            <div class="uinfo">
+                                                <h5>Zaham Sindilmaca</h5>
+                                                <p class="par">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididun</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div><!--tabbedwidget-->
+                        
+                        <br />
+                                                
+                    </div><!--span4-->
 </div> <!--row-fluid-->

@@ -1,47 +1,48 @@
 <div class="leftmenu">        
   <ul class="nav nav-tabs nav-stacked">
     <li class="nav-header"><%= t('menu.navigator') %></li>
-      <% unless current_user.admin? %>
-      <li class="dropdown active"><a href=""><span class="iconfa-plus"></span> <%= t('menu.user.action') %></a>
-      <ul style="display: block">
-        <li class="active"><a href="<%= dashboard_user_path(current_user) %>"><span class="iconfa-home"></span> <%= t('menu.user.home') %></a></li>
-        <li><a href="#"><span class="iconfa-book"></span> <%= t('menu.user.mycourse') %></a></li>
-        <li><a href="#"><span class="iconfa-edit"></span> <%= t('menu.user.myexams') %></a></li>
-        <li><a href="#"><span class="iconfa-tasks"></span> <%= t('menu.user.myassessments') %></a></li>
-        <li><a href="#"><span class="iconfa-calendar"></span> <%= t('menu.user.calendar') %></a></li>
-        <li><a href="#"><span class="iconfa-cloud"></span> <%= t('menu.user.competency') %></a></li>
-        <li><a href="#"><span class="iconfa-briefcase"></span> <%= t('menu.user.courses') %></a></li>
-        <li><a href="#"><span class="iconfa-group"></span> <%= t('menu.user.teacheres') %></a></li>
+      <%# unless current_user.admin? %>
+      <li class="<%= category == 'user' ? "dropdown active" : "dropdown" %>"><a href=""><span class="iconfa-plus"></span> <%= t('menu.user.action') %></a>
+      <ul style="<%= "display: block" if category == 'user' %>">
+        <li class="<%= "active" if active == 'dashboard' %>"><a href="<%= dashboard_user_path(current_user) %>"><span class="iconfa-home"></span> <%= t('menu.user.home') %></a></li>
+        <li class="<%= "active" if active == 'user_courses' %>"><a href="<%= user_courses_path(current_user) %>"><span class="iconfa-book"></span> <%= t('menu.user.mycourse') %></a></li>
+        <li class="<%= "active" if active == 'user_exams' %>"><a href="#"><span class="iconfa-edit"></span> <%= t('menu.user.myexams') %></a></li>
+        <li class="<%= "active" if active == 'user_assessments' %>"><a href="#"><span class="iconfa-tasks"></span> <%= t('menu.user.myassessments') %></a></li>
+        <li class="<%= "active" if active == 'calendar' %>"><a href="#"><span class="iconfa-calendar"></span> <%= t('menu.user.calendar') %></a></li>
+        <li class="<%= "active" if active == 'competency' %>"><a href="<%= competencies_path %>"><span class="iconfa-cloud"></span> <%= t('menu.user.competency') %></a></li>
+        <li class="<%= "active" if active == 'courses' %>"><a href="<%= courses_path(current_user) %>"><span class="iconfa-briefcase"></span> <%= t('menu.user.courses') %></a></li>
+        <li class="<%= "active" if active == 'teacher' %>"><a href="#"><span class="iconfa-group"></span> <%= t('menu.user.teacheres') %></a></li>
       </ul>
       
-      <li class="dropdown"><a href=""><span class="iconfa-plus"></span> <%= t('menu.teacher.action') %></a>
-      <ul>
-        <li><a href="#"><span class="iconfa-certificate"></span> <%= t('menu.teacher.cert') %></a></li>
-        <li><a href="#"><span class="iconfa-briefcase"></span> <%= t('menu.teacher.class') %></a></li>
-        <li><a href="#"><span class="iconfa-th-large"></span> <%= t('menu.teacher.development') %></a></li>
-        <li><a href="#"><span class="iconfa-list"></span> <%= t('menu.teacher.records') %></a></li>
-        <li><a href="#"><span class="iconfa-glass"></span> <%= t('menu.teacher.club') %></a></li>
+      <li class="<%= category == 'teacher' ? "dropdown active" : "dropdown" %>"><a href=""><span class="iconfa-plus"></span> <%= t('menu.teacher.action') %></a>
+      <ul style="<%= "display: block" if category == 'teacher' %>">
+        <li class="<%= "active" if active == 'cert' %>"><a href="#"><span class="iconfa-certificate"></span> <%= t('menu.teacher.cert') %></a></li>
+        <li class="<%= "active" if active == 'class' %>"><a href="#"><span class="iconfa-briefcase"></span> <%= t('menu.teacher.class') %></a></li>
+        <li class="<%= "active" if active == 'course_dev' %>"><a href="#"><span class="iconfa-th-large"></span> <%= t('menu.teacher.development') %></a></li>
+        <li class="<%= "active" if active == 'teacher_records' %>"><a href="#"><span class="iconfa-list"></span> <%= t('menu.teacher.records') %></a></li>
+        <li class="<%= "active" if active == 'club' %>"><a href="#"><span class="iconfa-glass"></span> <%= t('menu.teacher.club') %></a></li>
       </ul>
     
-      <li class="dropdown"><a href=""><span class="iconfa-plus"></span> <%= t('menu.manager.action') %></a>
-      <ul>
-        <li><a href="#"><span class="iconfa-group"></span> <%= t('menu.manager.members') %></a></li>
-        <li><a href="#"><span class="iconfa-globe"></span> <%= t('menu.manager.competency') %></a></li>
-        <li><a href="#"><span class="iconfa-folder-close"></span> <%= t('menu.manager.records') %></a></li>
-        <li><a href="#"><span class="iconfa-list-ul"></span> <%= t('menu.manager.assessments') %></a></li>
+      <li class="<%= category == 'manager' ? "dropdown active" : "dropdown" %>"><a href=""><span class="iconfa-plus"></span> <%= t('menu.manager.action') %></a>
+      <ul style="<%= "display: block" if category == 'manager' %>">
+        <li class="<%= "active" if active == 'member' %>"><a href="#"><span class="iconfa-group"></span> <%= t('menu.manager.members') %></a></li>
+        <li class="<%= "active" if active == 'competency' %>"><a href="#"><span class="iconfa-globe"></span> <%= t('menu.manager.competency') %></a></li>
+        <li class="<%= "active" if active == 'manager_records' %>"><a href="#"><span class="iconfa-folder-close"></span> <%= t('menu.manager.records') %></a></li>
+        <li class="<%= "active" if active == 'manager_assessments' %>"><a href="#"><span class="iconfa-list-ul"></span> <%= t('menu.manager.assessments') %></a></li>
       </ul>
-      <% end %>
+      <%# end %>
       
       <% if current_user.admin? %>
-      <li class="dropdown"><a href=""><span class="iconfa-plus"></span> <%= t('menu.admin.action') %></a>
-      <ul>
-        <li><a href="#"><span class="iconfa-sitemap"></span> <%= t('menu.admin.competency') %></a></li>
-        <li><a href="#"><span class="iconfa-folder-open"></span> <%= t('menu.admin.course') %></a></li>
-        <li><a href="#"><span class="iconfa-user"></span> <%= t('menu.admin.teacher') %></a></li>
-        <li><a href="#"><span class="iconfa-cogs"></span> <%= t('menu.admin.provider') %></a></li>
-        <li><a href="#"><span class="iconfa-star"></span> <%= t('menu.admin.plan') %></a></li>
-        <li><a href="#"><span class="iconfa-flag"></span> <%= t('menu.admin.assessment') %></a></li>
-        <li><a href="datamine.html"><span class="iconfa-cloud"></span> <%= t('menu.admin.data') %></a></li>
+      <li class="<%= category == 'admin' ? "dropdown active" : "dropdown" %>"><a href=""><span class="iconfa-plus"></span> <%= t('menu.admin.action') %></a>
+      <ul style="<%= "display: block" if category == 'admin' %>">
+        <li class="<%= "active" if active == 'dashboard' %>"><a href="<%= admin_dashboard_path(current_user) %>"><span class="iconfa-home"></span> <%= t('menu.admin.dashboard') %></a></li>
+        <li class="<%= "active" if active == 'competency' %>"><a href="#"><span class="iconfa-sitemap"></span> <%= t('menu.admin.competency') %></a></li>
+        <li class="<%= "active" if active == 'courses' %>"><a href="#"><span class="iconfa-folder-open"></span> <%= t('menu.admin.course') %></a></li>
+        <li class="<%= "active" if active == 'teacheres' %>"><a href="#"><span class="iconfa-user"></span> <%= t('menu.admin.teacher') %></a></li>
+        <li class="<%= "active" if active == 'providers' %>"><a href="#"><span class="iconfa-cogs"></span> <%= t('menu.admin.provider') %></a></li>
+        <li class="<%= "active" if active == 'plan' %>"><a href="#"><span class="iconfa-star"></span> <%= t('menu.admin.plan') %></a></li>
+        <li class="<%= "active" if active == 'assessment' %>"><a href="#"><span class="iconfa-flag"></span> <%= t('menu.admin.assessment') %></a></li>
+        <li class="<%= "active" if active == 'data' %>"><a href="datamine.html"><span class="iconfa-cloud"></span> <%= t('menu.admin.data') %></a></li>
       </ul>
       <% end %>
   </ul>

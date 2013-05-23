@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
 
   def dashboard
-    
+    @menu_category = 'user'
+    @menu_active = 'dashboard'   
   end
 
   # GET /users

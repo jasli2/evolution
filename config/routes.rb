@@ -6,8 +6,8 @@ Evolution::Application.routes.draw do
   end
   resources :courses, :only => [:index]
 
-  resources :competency
-  resources :position
+  resources :competencies
+  resources :positions
 
   match  '/home'    => 'site#home', :via => :get
   match  '/about'   => 'site#about', :via => :get
