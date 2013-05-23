@@ -6,6 +6,13 @@ class ApplicationController < ActionController::Base
   helper_method :user_signed_in?
   helper_method :correct_user?
 
+  unless Rails.application.config.consider_all_requests_local
+    rescue_from Exception, with: lambda { |exception| render_error 500, exception }
+    rescue_from ActionController::RoutingError, ActionController::UnknownController, ::AbstractController::ActionNotFound, ActiveRecord::RecordNotFound, with: lambda { 
+      |exception| render_error 404, exception 
+    }
+  end
+
   private
     def current_user
       begin
@@ -27,9 +34,30 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    def not_found
+      raise ActionController::RoutingError.new('Not Found')
+    end
+
+    def forbidden
+      raise ActionController::RoutingError.new('Forbidden')
+    end
+
+    def render_error(status, exception)
+      respond_to do |format|
+        format.html { render :template => "errors/error_#{status}", :status => status }
+        format.all { render :nothing => true, :status => status }
+      end
+    end
+
     def authenticate_user!
       if !current_user
-        redirect_to root_url, :alert => 'You need to sign in for access to this page.'
+        not_found
+      end
+    end
+
+    def need_admin!
+      if !current_user.admin?
+        forbidden
       end
     end
 end

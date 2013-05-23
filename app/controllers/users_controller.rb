@@ -1,5 +1,9 @@
 class UsersController < ApplicationController
-  #attr_accessible :tags_attributes
+
+  def dashboard
+    
+  end
+
   # GET /users
   # GET /users.json
   def index

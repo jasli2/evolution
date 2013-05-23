@@ -1,0 +1,19 @@
+<% provide(:title, "500 Server Error") %>
+<div class="mainwrapper">
+  <div class="errortitle">
+        <h4 class="animate0 fadeInUp">Internal Server Error Occured.</h4>
+        <span class="animate1 bounceIn">5</span>
+        <span class="animate2 bounceIn">0</span>
+        <span class="animate3 bounceIn">0</span>
+        <div class="errorbtns animate4 fadeInUp">
+            <a onclick="history.back()" class="btn btn-primary btn-large">Go to Previous Page</a>
+            <% if !current_user %>
+            <a href="/" class="btn btn-large">Go to Home Page</a>
+            <% elsif current_user.admin? %>
+            <a href="<%= admin_dashboard_path %>" class="btn btn-large">Go to Dashboard</a>
+            <% else %>
+            <a href="<%= dashboard_user(current_user) %>" class="btn btn-large">Go to Dashboard</a>
+            <% end %>
+        </div>
+    </div>
+</div>

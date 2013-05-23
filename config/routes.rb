@@ -1,16 +1,36 @@
 Evolution::Application.routes.draw do
-  resources :users
 
-  match  '/home'    => 'site#home'
-  match  '/about'   => 'site#about'
-  match  '/help'    => 'site#help'
-  match  '/login'   => 'sessions#new'
-  match  '/logout'  => 'sessions#destroy'
-  match  '/signup'  => 'users#new'
+  resources :users, :shallow => true do
+    get 'dashboard', :on => :member
+    resource :courses
+  end
+  resources :courses, :only => [:index]
+
+  resources :competency
+  resources :position
+
+  match  '/home'    => 'site#home', :via => :get
+  match  '/about'   => 'site#about', :via => :get
+  match  '/help'    => 'site#help', :via => :get
+  match  '/login'   => 'sessions#new', :via => :get
+  match  '/logout'  => 'sessions#destroy', :via => :get
+  match  '/signup'  => 'users#new', :via => :get
 
   resources :sessions, only: [:create]
 
+  namespace :admin do
+    match '/dashboard'          => 'admin#dashboard', :via => :get
+    match '/manage_users'       => 'admin#user', :via => :get
+    match '/manage_competency'  => 'admin#competency', :via => :get
+    match '/manage_course'      => 'admin#course', :via => :get
+    match '/manage_position'    => 'admin#position', :via => :get
+  end
+
   root :to => 'sessions#new'
+
+  unless Rails.application.config.consider_all_requests_local
+    match '*not_found', to: 'errors#error_404'
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
