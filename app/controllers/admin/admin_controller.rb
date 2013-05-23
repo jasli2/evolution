@@ -1,6 +1,6 @@
 class Admin::AdminController < ApplicationController
-  before_filter :authenticate_user!
-  
+  before_filter :need_admin!
+
   def dashboard
   end
 

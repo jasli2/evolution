@@ -1,0 +1,14 @@
+<ul class="breadcrumbs">
+  <li><%= link_to content_tag(:i, '', :class => 'iconfa-home' ), dashboard_user_path(current_user)  %><span class="separator"></span></li>
+</ul>
+
+<div class="pageheader">
+  <form action="#" method="post" class="searchbar">
+    <input type="text" name="keyword" placeholder="To search course and hit enter..." />
+  </form>
+  <div class="pageicon"><span class="<%= yield(:page_icon) %>"></span></div>
+  <div class="pagetitle">
+    <h5><%= yield(:page_sub_title) %></h5>
+    <h1><%= yield(:page_title) %></h1>
+  </div>
+</div><!--pageheader-->

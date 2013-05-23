@@ -1,1 +1,26 @@
-<p>find me in app/views/users/dashboard.html.erb.</p>
+<% provide(:title, 'dashboard') %>
+<% provide(:page_title, "Dashboard") %>
+<% provide(:page_sub_title, "Dashboard") %>
+<% provide(:page_icon, "iconfa-home") %>
+
+<% content_for :javascript do %>
+<script type="text/javascript">
+</script>
+<% end %>
+
+<div class="row-fluid">
+  <div id="dashboard-left" class="span8">
+    <h3 class="subtitle">Competency Model</h3>
+    <div class="divider15"></div>
+    <h4 class="widgettitle"><span class="iconfa-home"></span> Competency Summary</h4>
+    <div class="widgetcontent nopadding">
+      competency model for user.
+    </div>
+  </div>
+  <div id="dashboard-right" class="span4">
+    <h4 class="widgettitle"> Side Content</h4>
+    <div class="widgetcontent">
+      Side content
+    </div>
+  </div>
+</div> <!--row-fluid-->

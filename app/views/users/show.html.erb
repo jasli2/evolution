@@ -1,47 +1,26 @@
 <% provide(:title, @user.name) %>
+<% provide(:page_title, "User Profile") %>
+<% provide(:page_sub_title, "Dashboard") %>
+<% provide(:page_icon, "iconfa-plus") %>
+
 <% content_for :javascript do %>
 <script type="text/javascript">
 </script>
 <% end %>
 
-<ul class="breadcrumbs">
-    <li><%= link_to content_tag(:i, '', :class => 'iconfa-home' ), user_path(@user)  %><span class="separator"></span></li>
-</ul>
-
-<div class="pageheader">
-    <form action="#" method="post" class="searchbar">
-        <input type="text" name="keyword" placeholder="To search course and hit enter..." />
-    </form>
-    <div class="pageicon"><span class="iconfa-home"></span></div>
-    <div class="pagetitle">
-        <h5>Key Account Manager(Lv2)</h5>
-        <h1><%= @user.name %></h1>
+<div class="row-fluid">
+  <div id="dashboard-left" class="span8">
+    <h3 class="subtitle">Competency Model</h3>
+    <div class="divider15"></div>
+    <h4 class="widgettitle"><span class="iconfa-home"></span> Competency Summary</h4>
+    <div class="widgetcontent nopadding">
+      competency model for user.
     </div>
-</div><!--pageheader-->
-
-<div class="maincontent">
-  <div class="maincontentinner">
-    <div class="row-fluid">
-      <div id="dashboard-left" class="span8">
-        <h3 class="subtitle">Competency Model</h3>
-        <div class="divider15"></div>
-        <h4 class="widgettitle"><span class="iconfa-home"></span> Competency Summary</h4>
-        <div class="widgetcontent nopadding">
-          competency model for user.
-        </div>
-      </div>
-      <div id="dashboard-right" class="span4">
-        <h4 class="widgettitle"> Side Content</h4>
-        <div class="widgetcontent">
-          Side content
-        </div>
-      </div>
-    </div> <!--row-fluid-->
-
-    <div class="footer">
-      <div class="footer-left">
-        <span>&copy; 2013. Evolve Solution. All Rights Reserved.</span>
-      </div>
-    </div><!--footer-->
   </div>
-</div>
+  <div id="dashboard-right" class="span4">
+    <h4 class="widgettitle"> Side Content</h4>
+    <div class="widgetcontent">
+      Side content
+    </div>
+  </div>
+</div> <!--row-fluid-->

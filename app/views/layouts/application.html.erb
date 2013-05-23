@@ -17,8 +17,15 @@
   </div>
 
   <div class="rightpanel">
+    <%= render :partial => "shared/pageheader" %>
     <%= render :partial => "shared/flash_messages", :locals => {:flash => flash} %>
-    <%= yield %>
+    <div class="maincontent">
+      <div class="maincontentinner">
+        <%= yield %>
+
+        <%= render :partial => "shared/footer" %>
+      </div>
+    </div>
   </div>
 
 </div>
