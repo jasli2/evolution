@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130524032640) do
+ActiveRecord::Schema.define(:version => 20130524052313) do
 
   create_table "activities", :force => true do |t|
     t.string   "description"
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(:version => 20130524032640) do
     t.integer  "competency_level_id"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
+    t.integer  "weight"
   end
 
   create_table "competency_levels", :force => true do |t|
@@ -100,6 +101,7 @@ ActiveRecord::Schema.define(:version => 20130524032640) do
     t.string   "description"
     t.datetime "created_at",                :null => false
     t.datetime "updated_at",                :null => false
+    t.integer  "standard"
   end
 
   create_table "user_course_progresses", :force => true do |t|

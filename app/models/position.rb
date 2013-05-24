@@ -10,7 +10,7 @@
 #
 
 class Position < ActiveRecord::Base
-  attr_accessible :description, :name
+  attr_accessible :description, :name, :standard
 
   validates :name, :presence => true, :uniqueness => true
 
@@ -45,15 +45,19 @@ class Position < ActiveRecord::Base
       position.name = row[0]
       position.description = row[1]
       position.standard = row[2]
-      save!(position)
+      #save!(position)
+      position.save!
 
       i = 3
       while i < length do
         competency = Competency.find_by_name(row[i])
-        competency_level =competency.competency_levels.find_by_level(row[i.next])
+        competency_level = competency.competency_levels.find_by_level(row[i.next])
+        
         pcl = position.position_competency_levels.build(:position_id => position.id, :standard => row[i.next.next],\
-                                                        :competency_level_id=> competency_level.id)
-        save!(pcl)
+                                                        :competency_level_id => competency_level.id)
+        #save!(pcl)
+        pcl.save!
+
         i += 3
       end
     end

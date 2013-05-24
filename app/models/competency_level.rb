@@ -13,7 +13,7 @@
 class CompetencyLevel < ActiveRecord::Base
   attr_accessible :competency_id, :description, :level
 
-  validates :level, :presence => true, :uniqueness => true
+  validates :level, :presence => true
   validates :description, :presence => true
 
   belongs_to :competency

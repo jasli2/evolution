@@ -95,8 +95,8 @@ class User < ActiveRecord::Base
 
       position = Position.find_by_name(row[8])
 
-      user.password = "12345"
-      user.password_confirmation = "12345"
+      user.password = "123456"
+      user.password_confirmation = "123456"
       user.name = row[0]
       user.email = row[2]
       user.position_id = position.id

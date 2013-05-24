@@ -10,9 +10,10 @@
 #
 
 class CompetencyLevelRequirement < ActiveRecord::Base
-  attr_accessible :competency_level_id, :description
+  attr_accessible :competency_level_id, :description, :weight
 
   validates :description, :presence => true
+  validates :weight, :presence => true
 
   belongs_to :competency_level
 end
