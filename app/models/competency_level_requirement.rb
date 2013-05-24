@@ -7,6 +7,7 @@
 #  competency_level_id :integer
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
+#  weight              :integer
 #
 
 class CompetencyLevelRequirement < ActiveRecord::Base

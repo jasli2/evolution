@@ -8,6 +8,11 @@
 #  filter_item :string(255)
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  creator_id  :integer
+#  duration    :integer
+#  course_type :string(255)
+#  teacher_id  :integer
+#  description :string(255)
 #
 
 require 'spec_helper'
