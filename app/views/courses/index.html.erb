@@ -1,2 +1,29 @@
-<h1>CoursesController#index</h1>
-<p>Find me in app/views/courses_controller/index.html.erb</p>
+<p>
+  Download:
+  <%= link_to "CSV", courses_path(format: "csv") %> |
+  <%= link_to "Excel", courses_path(format: "xls") %>
+</p>
+
+<table id="competencies">
+  <tr>
+    <th>&nbsp;title &nbsp;&nbsp;&nbsp;</th>
+    <th>&nbsp;&nbsp;&nbsp; author &nbsp;&nbsp;&nbsp;</th>
+    <th>&nbsp;&nbsp;&nbsp; ID &nbsp;&nbsp;&nbsp;</th>
+    <th>&nbsp;&nbsp;&nbsp; ID &nbsp;&nbsp;&nbsp;&nbsp;</th>
+  </tr>
+  <% @courses.each do |mcourse| %>
+    <tr>
+      <td>    <%= mcourse.title   %>    </td>
+      <td><%=  mcourse.author    %></td>
+      <td><%=  mcourse.id    %></td>
+      <td><%= mcourse.id    %></td>
+    </tr>
+  <% end %>
+</table>
+
+<h2>Import Products</h2>
+
+<%= form_tag import_courses_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Import" %>
+<% end %>

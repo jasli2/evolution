@@ -2,17 +2,23 @@
 #
 # Table name: users
 #
-#  id              :integer          not null, primary key
-#  first_name      :string(24)       not null
-#  last_name       :string(24)       not null
-#  email           :string(128)      not null
-#  manager_id      :integer
-#  birthday        :date
-#  joined_at       :date
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  position_id     :integer
-#  password_digest :string(255)
+#  id               :integer          not null, primary key
+#  email            :string(128)      not null
+#  manager_id       :integer
+#  birthday         :date
+#  joined_at        :date
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  position_id      :integer
+#  password_digest  :string(255)
+#  name             :string(255)
+#  is_admin         :boolean          default(FALSE)
+#  avatar           :string(255)
+#  staff_id         :integer
+#  phone_num        :integer
+#  mobile_phone     :integer
+#  department       :string(255)
+#  department_level :integer
 #
 
 require 'spec_helper'
