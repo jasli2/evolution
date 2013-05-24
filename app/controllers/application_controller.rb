@@ -51,7 +51,7 @@ class ApplicationController < ActionController::Base
 
     def authenticate_user!
       if !current_user
-        not_found
+        #not_found
       end
     end
 

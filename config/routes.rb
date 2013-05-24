@@ -2,12 +2,21 @@ Evolution::Application.routes.draw do
 
   resources :users, :shallow => true do
     get 'dashboard', :on => :member
+    collection {post :import}
     resource :courses
   end
-  resources :courses, :only => [:index]
 
-  resources :competencies
-  resources :positions
+  resources :courses do
+    collection {post :import}
+  end
+
+  resources :competencies do
+    collection {post :import}
+  end
+
+  resources :positions do
+    collection {post :import}
+  end
 
   match  '/home'    => 'site#home', :via => :get
   match  '/about'   => 'site#about', :via => :get

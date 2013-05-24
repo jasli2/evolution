@@ -1,0 +1,29 @@
+<p>
+  Download:
+  <%= link_to "CSV", positions_path(format: "csv") %> |
+  <%= link_to "Excel", positions_path(format: "xls") %>
+</p>
+
+<table id="competencies">
+  <tr>
+    <th>&nbsp;Name &nbsp;&nbsp;&nbsp;</th>
+    <th>&nbsp;&nbsp;&nbsp; Description &nbsp;&nbsp;&nbsp;</th>
+    <th>&nbsp;&nbsp;&nbsp; ID &nbsp;&nbsp;&nbsp;</th>
+    <th>&nbsp;&nbsp;&nbsp; ID &nbsp;&nbsp;&nbsp;&nbsp;</th>
+  </tr>
+  <% @positions.each do |mposition| %>
+    <tr>
+      <td>    <%= mposition.name   %>    </td>
+      <td><%=  mposition.description    %></td>
+      <td><%=  mposition.id    %></td>
+      <td><%= mposition.id    %></td>
+    </tr>
+  <% end %>
+</table>
+
+<h2>Import Products</h2>
+
+<%= form_tag import_positions_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Import" %>
+<% end %>
