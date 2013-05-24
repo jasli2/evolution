@@ -1,2 +1,30 @@
-<h1>Admin::Admin#user</h1>
-<p>Find me in app/views/admin/admin/user.html.erb</p>
+<% provide(:title, "user management") %>
+<% provide(:page_title, "User Management") %>
+<% provide(:page_sub_title, "manage user records") %>
+<% provide(:page_icon, "iconfa-group") %>
+
+<% content_for :breadcrumbs do %>
+<%= content_tag(:li, "User Management") %>
+<% end %>
+
+<% content_for :javascript do %>
+<script type="text/javascript">
+</script>
+<% end %>
+
+<div class="row-fluid">
+  <div id="dashboard-left" class="span8">
+    <h3 class="subtitle">Competency Model</h3>
+    <div class="divider15"></div>
+    <h4 class="widgettitle"><span class="iconfa-home"></span> Competency Summary</h4>
+    <div class="widgetcontent nopadding">
+      competency model for user.
+    </div>
+  </div>
+  <div id="dashboard-right" class="span4">
+    <h4 class="widgettitle"> Side Content</h4>
+    <div class="widgetcontent">
+      Side content
+    </div>
+  </div>
+</div> <!--row-fluid-->

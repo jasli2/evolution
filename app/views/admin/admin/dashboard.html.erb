@@ -1,2 +1,103 @@
-<h1>Admin::Admin#dashboard</h1>
-<p>Find me in app/views/admin/admin/dashboard.html.erb</p>
+<% provide(:title, "Dashboard") %>
+<% provide(:page_title, "Dashboard") %>
+<% provide(:page_sub_title, "System Overview") %>
+<% provide(:page_icon, "iconfa-dashboard") %>
+
+<% content_for :breadcrumbs do %>
+<%= content_tag(:li, "Dashboard") %>
+<% end %>
+
+<% content_for :javascript do %>
+<script type="text/javascript">
+  $(function() {
+    $('.accordion').accordion({
+        collapsible: true,
+        active: false,
+        heightStyle: "content",
+        header: ".a-header"
+    });
+  });
+</script>
+<% end %>
+
+<div class="row-fluid">
+  <div id="dashboard-left" class="span8">
+    <h5 class="subtitle">Overview</h5>
+    <ul class="shortcuts">
+      <li class="events">
+        <a href="<%= admin_manage_users_path %>">
+          <span class="counter"><%= @users.size %></span>
+          <span class="shortcuts-icon iconfa-group"></span>
+          <span class="shortcuts-label">Users</span>
+        </a>
+      </li>
+      <li class="events">
+        <a href="<%= admin_manage_competency_path %>">
+          <span class="counter"><%= @competencies.size %></span>
+          <span class="shortcuts-icon iconfa-sitemap"></span>
+          <span class="shortcuts-label">Competencies</span>
+        </a>
+      </li>
+      <li class="events">
+        <a href="<%= admin_manage_course_path %>">
+          <span class="counter"><%= @courses.size %></span>
+          <span class="shortcuts-icon iconfa-folder-open"></span>
+          <span class="shortcuts-label">Courses</span>
+        </a>
+      </li>
+      <li class="events">
+        <a href="<%= admin_manage_position_path %>">
+          <span class="counter"><%= @positions.size %></span>
+          <span class="shortcuts-icon iconfa-reorder"></span>
+          <span class="shortcuts-label">Positions</span>
+        </a>
+      </li>
+    </ul>
+    <div class="divider30"></div>
+
+    <h3 class="subtitle">Competency Model</h3>
+    <div class="divider15"></div>
+
+    <div class="widgetbox">
+      <div class="headtitle">
+        <h4 class="widgettitle"><span class="iconfa-sitemap"></span> Competency Models <span class="pull-right"><a herf="#">foo</a></span></h4>
+      </div>
+      <% if @competencies.size == 0 %>
+      <div class="widgetcontent">
+        <p>No Competency Model setup yet. please setup it first. </p>
+      </div>
+      <% else %>
+      <div class="widgetcontent nopadding">
+        
+        <div class="accordion">
+          <% @competencies.each do |c| %>
+          <div class="a-header">
+            <a href="#"><%= c.name %></a>
+          </div>
+          <div class="a-content">
+            <%= content_tag(:h5, "Competency description: " + c.description) %>
+            <% c.competency_levels.each do |cl| %>
+              <%= content_tag(:h6, "Level " + cl.level.to_s + ": " + cl.description) %>
+              <%= content_tag(:p, "Detail Requirements:") %>
+              <ul>
+              <% cl.competency_level_requirements.each do |clr| %>
+              <%= content_tag(:li, clr.description) %>
+              <% end %>
+              </ul>
+            <% end %>
+          </div>
+          <% end %>
+        </div>
+        
+      </div>
+      <% end %>
+    </div>
+
+  </div> <!--span8-->
+  <div id="dashboard-right" class="span4">
+    <h4 class="widgettitle"> Side Content</h4>
+    <div class="widgetcontent">
+      Side content
+    </div>
+  </div>
+</div> <!--row-fluid-->
