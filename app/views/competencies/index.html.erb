@@ -1,2 +1,29 @@
-<h1>CompetencyController#index</h1>
-<p>Find me in app/views/competency_controller/index.html.erb</p>
+<p>
+  Download:
+  <%= link_to "CSV", competencies_path(format: "csv") %> |
+  <%= link_to "Excel", competencies_path(format: "xls") %>
+</p>
+
+<table id="competencies">
+  <tr>
+    <th>&nbsp;Name &nbsp;&nbsp;&nbsp;</th>
+    <th>&nbsp;&nbsp;&nbsp; Description &nbsp;&nbsp;&nbsp;</th>
+    <th>&nbsp;&nbsp;&nbsp; ID &nbsp;&nbsp;&nbsp;</th>
+    <th>&nbsp;&nbsp;&nbsp; Category_Id &nbsp;&nbsp;&nbsp;&nbsp;</th>
+  </tr>
+  <% @competencies.each do |mCompetency| %>
+    <tr>
+      <td>    <%= mCompetency.name   %>    </td>
+      <td><%=  mCompetency.description    %></td>
+      <td><%=  mCompetency.id    %></td>
+      <td><%= mCompetency.category_id    %></td>
+    </tr>
+  <% end %>
+</table>
+
+<h2>Import Products</h2>
+
+<%= form_tag import_competencies_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Import" %>
+<% end %>

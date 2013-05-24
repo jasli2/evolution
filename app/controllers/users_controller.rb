@@ -86,4 +86,10 @@ class UsersController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  #POST /users/import
+  def import
+    User.import(params[:file])
+    redirect_to users_path, notice: "Products imported."
+  end
 end
