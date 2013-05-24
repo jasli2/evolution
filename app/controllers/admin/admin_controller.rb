@@ -3,18 +3,34 @@ class Admin::AdminController < ApplicationController
 
   def dashboard
     @menu_category = 'admin'
-    @menu_active = 'dashboard'   
+    @menu_active = 'dashboard'
+    @users = User.all
+    @competencies = Competency.all
+    @courses = Course.all
+    @positions = Position.all
+
+    respond_to do |format|
+      format.html
+    end
   end
 
   def user
+    @menu_category = 'admin'
+    @menu_active = 'users'
   end
 
   def competency
+    @menu_category = 'admin'
+    @menu_active = 'competency'
   end
 
   def course
+    @menu_category = 'admin'
+    @menu_active = 'courses'
   end
 
   def position
+    @menu_category = 'admin'
+    @menu_active = 'positions'
   end
 end

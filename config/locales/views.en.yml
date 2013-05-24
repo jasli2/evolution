@@ -26,10 +26,12 @@ en:
     admin:
       action: 'Administrator Actions'
       dashboard: "Dashboard"
+      users: 'Users Managememt'
       competency: 'Competency Managememt'
       course: 'Course Managememt'
       teacher: 'Teacher Managememt'
       provider: 'Provider Management'
+      position: 'Positions Management'
       plan: 'Learning Plan'
       assessment: 'Assessments Management'
       data: 'Data Analysis'

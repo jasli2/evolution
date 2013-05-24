@@ -21,12 +21,11 @@
       <% if current_user.admin? %>
       <li class="<%= category == 'admin' ? "dropdown active" : "dropdown" %>"><a href=""><span class="iconfa-plus"></span> <%= t('menu.admin.action') %></a>
       <ul style="<%= "display: block" if category == 'admin' %>">
-        <li class="<%= "active" if active == 'dashboard' %>"><a href="<%= admin_dashboard_path %>"><span class="iconfa-home"></span> <%= t('menu.admin.dashboard') %></a></li>
-        <li class="<%= "active" if active == 'users' %>"><a href="<%= users_path %>"><span class="iconfa-group"></span> <%= t('menu.admin.users') %></a></li>
-        <li class="<%= "active" if active == 'competency' %>"><a href="<%= competencies_path %>"><span class="iconfa-sitemap"></span> <%= t('menu.admin.competency') %></a></li>
-        <li class="<%= "active" if active == 'courses' %>"><a href="<%= courses_path %>"><span class="iconfa-folder-open"></span> <%= t('menu.admin.course') %></a></li>
-        <li class="<%= "active" if active == 'teacheres' %>"><a href="<%= users_path(:category => 'teacher') %>"><span class="iconfa-user"></span> <%= t('menu.admin.teacher') %></a></li>
-        <li class="<%= "active" if active == 'position' %>"><a href="<%= positions_path %>"><span class="iconfa-user"></span> <%= t('menu.admin.position') %></a></li>
+        <li class="<%= "active" if active == 'dashboard' %>"><a href="<%= admin_dashboard_path %>"><span class="iconfa-dashboard"></span> <%= t('menu.admin.dashboard') %></a></li>
+        <li class="<%= "active" if active == 'users' %>"><a href="<%= admin_manage_users_path %>"><span class="iconfa-group"></span> <%= t('menu.admin.users') %></a></li>
+        <li class="<%= "active" if active == 'competency' %>"><a href="<%= admin_manage_competency_path %>"><span class="iconfa-sitemap"></span> <%= t('menu.admin.competency') %></a></li>
+        <li class="<%= "active" if active == 'courses' %>"><a href="<%= admin_manage_course_path %>"><span class="iconfa-folder-open"></span> <%= t('menu.admin.course') %></a></li>
+        <li class="<%= "active" if active == 'positions' %>"><a href="<%= admin_manage_position_path %>"><span class="iconfa-reorder"></span> <%= t('menu.admin.position') %></a></li>
       </ul>
       <% end %>
   </ul>
