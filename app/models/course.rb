@@ -45,7 +45,7 @@ class Course < ActiveRecord::Base
     :small => [100, 75]
   }
   mount_uploader :cover_image, ImageUploader
-  validates :cover_image, :file_size => {:maximum => 1.megabytes.to_i }
+  validates :cover_image, :file_size => {:maximum => 2.megabytes.to_i }
 
   def self.to_csv(options = {})
     CSV.generate(options) do |csv|
