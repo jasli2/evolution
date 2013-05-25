@@ -91,7 +91,9 @@ class User < ActiveRecord::Base
     end
 
     c.sort! { |x,y| x.id <=> y.id }
-    c[0..number-1]
+
+    last = number > c.size ? c.size : number
+    c[0..last-1]
   end
 
   def self.to_csv(options = {})
