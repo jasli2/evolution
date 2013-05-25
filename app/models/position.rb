@@ -20,10 +20,26 @@ class Position < ActiveRecord::Base
   has_many :users
 
   def self.to_csv(options = {})
+    header = ["name", "description", "Standard"]
+    i = 1
+    while i < 7 do
+      header << "competency_" + i.to_s
+      header << "level_" + i.to_s
+      i += 1
+    end
+
     CSV.generate(options) do |csv|
-      csv << column_names
+      csv << header
       all.each do |position|
-        csv << position.attributes.values_at(*column_names)
+        row_data = []
+        row_data << position.name
+        row_data << position.description
+        row_data << position.standard
+        position.competency_levels.each do |levels|
+          row_data << levels.competency.name
+          row_data << levels.level
+        end
+        csv << row_data
       end
     end
   end
@@ -52,10 +68,9 @@ class Position < ActiveRecord::Base
 
       i = 1
       num = (length - 3) / 3
-      while i < num do
+      while i <= num do
         competency = Competency.find_by_name(row["competency_" + i.to_s ])
         competency_level = competency.competency_levels.find_by_level(row["level_" + i.to_s])
-
 
         pcl = position.position_competency_levels.build(:position_id => position.id, :standard => row["Standard_" + i.to_s],\
                                                         :competency_level_id => competency_level.id)

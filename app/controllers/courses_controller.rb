@@ -5,15 +5,19 @@ class CoursesController < ApplicationController
     redirect_to courses_path, notice: "Products imported."
   end
 
-  def index
+  def export
     @courses = Course.order(:id)
     if @courses
       respond_to do |format|
-        format.html # index.html.erb
+        format.html {redirect_to courses_path, notice: "export open" }
         format.csv { send_data @courses.to_csv }
         #format.xls
       end
     end
+  end
+
+  def index
+    @courses = Course.order(:id)
   end
 
   def show

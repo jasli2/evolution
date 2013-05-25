@@ -1,5 +1,7 @@
 class CompetenciesController < ApplicationController
   def index
+    @competencies = Competency.order(:name)
+  end
   end
 
   def show
@@ -23,26 +25,26 @@ class CompetenciesController < ApplicationController
   #POST /competency/import
   def import
     Competency.import(params[:file])
+
     redirect_to competencies_path, notice: "Products imported."
   end
 
   def export
-    logger.info "herer............"
-    @user = User.find(2)
-    send_file "#{Rails.root}/app/assets/images/logo.png", :type => 'image/png'
-    #redirect_to competencies_path, notice: "you just found export action......"
+    @competencies = Competency.order(:name)
+    if @competencies
+      respond_to do |format|
+        format.html {redirect_to competencies_path, notice: "export open" }
+        format.csv { send_data @competencies.to_csv, :type => "text/csv" }
+        #format.xls
+      end
   end
 
   # GET /competency
   # GET /competency.json
   def index
     @competencies = Competency.order(:name)
-    if @competencies
-      respond_to do |format|
-        format.html # index.html.erb
-        format.csv { send_data @competencies.to_csv }
-        #format.xls
-      end
+    respond_to do |format|
+      format.html
     end
   end
 

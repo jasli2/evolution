@@ -3,11 +3,13 @@ Evolution::Application.routes.draw do
   resources :users, :shallow => true do
     get 'dashboard', :on => :member
     collection {post :import}
+    collection {get :export}
     resources :courses
   end
 
   resources :courses, :only => [:index] do
     collection {post :import}
+    collection {get :export}
   end
 
   resources :competencies do
@@ -17,6 +19,7 @@ Evolution::Application.routes.draw do
 
   resources :positions do
     collection {post :import}
+    collection {get :export}
   end
 
   match  '/home'    => 'site#home', :via => :get
