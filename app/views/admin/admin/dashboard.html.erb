@@ -9,14 +9,15 @@
 
 <% content_for :javascript do %>
 <script type="text/javascript">
-  $(function() {
-    $('.accordion').accordion({
-        collapsible: true,
-        active: false,
-        heightStyle: "content",
-        header: ".a-header"
-    });
+$(function() {
+  $('#datepicker').datepicker();
+  $('.accordion').accordion({
+      collapsible: true,
+      active: false,
+      heightStyle: "content",
+      header: ".a-header"
   });
+});
 </script>
 <% end %>
 
@@ -26,28 +27,28 @@
     <ul class="shortcuts">
       <li class="events">
         <a href="<%= admin_manage_users_path %>">
-          <span class="counter"><%= @users.size %></span>
+          <span class="counter"><%= @users_count %></span>
           <span class="shortcuts-icon iconfa-group"></span>
           <span class="shortcuts-label">Users</span>
         </a>
       </li>
       <li class="events">
         <a href="<%= admin_manage_competency_path %>">
-          <span class="counter"><%= @competencies.size %></span>
+          <span class="counter"><%= @competencies_count %></span>
           <span class="shortcuts-icon iconfa-sitemap"></span>
           <span class="shortcuts-label">Competencies</span>
         </a>
       </li>
       <li class="events">
         <a href="<%= admin_manage_course_path %>">
-          <span class="counter"><%= @courses.size %></span>
+          <span class="counter"><%= @courses_count %></span>
           <span class="shortcuts-icon iconfa-folder-open"></span>
           <span class="shortcuts-label">Courses</span>
         </a>
       </li>
       <li class="events">
         <a href="<%= admin_manage_position_path %>">
-          <span class="counter"><%= @positions.size %></span>
+          <span class="counter"><%= @positions_count %></span>
           <span class="shortcuts-icon iconfa-reorder"></span>
           <span class="shortcuts-label">Positions</span>
         </a>
@@ -60,7 +61,7 @@
 
     <div class="widgetbox">
       <div class="headtitle">
-        <h4 class="widgettitle"><span class="iconfa-sitemap"></span> Competency Models <span class="pull-right"><%= link_to "see all &#8594;".html_safe, admin_manage_competency_path %></span></h4>
+        <h4 class="widgettitle"><span class="iconfa-sitemap"></span> Latest Added Competency Models <span class="pull-right"><%= link_to "see all &#8594;".html_safe, admin_manage_competency_path %></span></h4>
       </div>
       <% if @competencies.size == 0 %>
       <div class="widgetcontent">
@@ -92,12 +93,77 @@
       </div>
       <% end %>
     </div>
+    <div class="divider15"></div>
+
+    <h3 class="subtitle">Courses</h3>
+    <div class="divider15"></div>
+    <div class="widgetbox">
+      <div class="headtitle">
+        <h4 class="widgettitle"><span class="iconfa-folder-open"></span> Latest Added Course <span class="pull-right"><%= link_to "see all &#8594;".html_safe, admin_manage_course_path %></span></h4>
+      </div>
+      <% if @courses.size == 0 %>
+      <div class="widgetcontent">
+        <p>No user setup yet. please setup it first. </p>
+      </div>
+      <% else %>
+      <div class="widgetcontent nopadding">
+        <ul class="courselist">
+          <% @courses.each do |c| %>
+          <li>
+            <%= image_tag course_cover_path(c, :normal), :class => "pull-left" %>
+            <div class="course-info">
+              <h4><%= link_to c.title, course_path(c) %></h4>
+              <h6>created by <%= link_to c.teacher.name, user_path(c.teacher) %> at <%= distance_of_time_in_words_to_now(c.created_at) + ' ago' %></h6>
+              <p><%= c.description %></p>
+              <a href="<%= course_path(c) %>" class="btn btn-primary btn-small"><span class="iconfa-info-sign icon-white"></span> View Details</a>
+            </div>
+          </li>
+          <% end %>
+        </ul>
+      </div>
+      <% end %>
+    </div>
 
   </div> <!--span8-->
+
   <div id="dashboard-right" class="span4">
-    <h4 class="widgettitle"> Side Content</h4>
-    <div class="widgetcontent">
-      Side content
+    <h3 class="subtitle">Calender</h3>
+    <div class="divider15"></div>
+
+    <h4 class="widgettitle"> Calender</h4>
+    <div class="widgetcontent nopadding">
+      <div id="datepicker"></div>
+    </div>
+    <div class="divider15"></div>
+
+    <h3 class="subtitle">Users</h3>
+    <div class="divider15"></div>
+    <div class="widgetbox">
+      <div class="headtitle">
+        <h4 class="widgettitle"><span class="iconfa-group"></span> Last Added Users <span class="pull-right"><%= link_to "see all &#8594;".html_safe, admin_manage_users_path %></span></h4>
+      </div>
+      <% if @users.size == 0 %>
+      <div class="widgetcontent">
+        <p>No user setup yet. please setup it first. </p>
+      </div>
+      <% else %>
+      <div class="widgetcontent nopadding">
+        <ul class="userlist">
+          <% @users.each do |u| %>
+          <li>
+            <div>
+              <%= image_tag user_avatar_path(u, :normal), :class => "pull-left" %>
+              <div class="uinfo">
+                <h5><%= link_to u.name, user_path(u) %></h5>
+                <span class="pos"><%= u.position.name if u.position %></span>
+                <span><%= "Created at " + distance_of_time_in_words_to_now(u.created_at) + ' ago' %></span>
+              </div>
+            </div>
+          </li>
+          <% end %>
+        </ul>
+      </div>
+      <% end %>
     </div>
   </div>
 </div> <!--row-fluid-->

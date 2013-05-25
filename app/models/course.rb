@@ -15,6 +15,8 @@
 #  description :string(255)
 #
 
+require 'file_size_validator'
+
 class Course < ActiveRecord::Base
   attr_accessible :author, :filter_item, :title, :cover_image
 
@@ -43,7 +45,7 @@ class Course < ActiveRecord::Base
     :small => [100, 75]
   }
   mount_uploader :cover_image, ImageUploader
-  validates :cover_image, :file_size => {:maximum => 1.megabytes.to_i }
+  validates :cover_image, :file_size => {:maximum => 2.megabytes.to_i }
 
   def self.to_csv(options = {})
     header = ["title", "description", "creator", "creator ID", "duration", "course type", \

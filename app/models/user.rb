@@ -32,8 +32,8 @@ class User < ActiveRecord::Base
   has_secure_password
 
   validates :name, :presence => true
-  validates :password, :presence => true, :length => { minimum: 6}
-  validates :password_confirmation, :presence => true
+  validates :password, :presence => true, :length => { minimum: 6}, :on => :create
+  validates :password_confirmation, :presence => true, :on => :create
   validates :email,
     :presence => true, 
     :uniqueness => {case_sensitive: false},
@@ -82,6 +82,18 @@ class User < ActiveRecord::Base
     else
       nil
     end
+  end
+
+  def get_position_courses(number)
+    c = []
+    self.position.competency_levels.each do |cl|
+      c = ( c + cl.courses ).uniq
+    end
+
+    c.sort! { |x,y| x.id <=> y.id }
+
+    last = number > c.size ? c.size : number
+    c[0..last-1]
   end
 
   def self.to_csv(options = {})
@@ -148,6 +160,7 @@ class User < ActiveRecord::Base
       user.save!
       position.users << user
 
+      #user.positoin.competency_levels
 
     end
   end

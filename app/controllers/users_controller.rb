@@ -1,8 +1,10 @@
 class UsersController < ApplicationController
+  before_filter :need_admin!, :only => [:new, :create]
 
   def dashboard
     @menu_category = 'user'
-    @menu_active = 'dashboard'   
+    @menu_active = 'home' 
+    @pending_courses = current_user.get_position_courses(3)
   end
 
   # GET /users
@@ -25,14 +27,17 @@ class UsersController < ApplicationController
     puts @user.email
     respond_to do |format|
       format.html # show.html.erb
-      #format.json { render json: @user }
+      format.json { render json: @user }
     end
   end
 
   # GET /users/new
   # GET /users/new.json
   def new
+    @menu_category = 'admin'
+    @menu_active = 'users'
     @user = User.new
+    session[:return_to] ||= request.referer
 
     respond_to do |format|
       format.html # new.html.erb
@@ -42,7 +47,15 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    if current_user.admin?
+      @menu_category = 'admin'
+      @menu_active = 'users'
+    else
+      @menu_category = 'user'
+      @menu_active = 'user_courses'
+    end
     @user = User.find(params[:id])
+    session[:return_to] ||= request.referer
   end
 
   # POST /users
@@ -52,7 +65,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        format.html { redirect_to session.delete(:return_to), notice: 'User was successfully created.' }
         format.json { render json: @user, status: :created, location: @user }
       else
         format.html { render 'new' }
@@ -68,7 +81,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+        format.html { redirect_to session.delete(:return_to), notice: 'User was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

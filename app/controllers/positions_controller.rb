@@ -27,7 +27,11 @@ class PositionsController < ApplicationController
   end
 
   def show
-
+    @position = Posistion.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.json { render }
+    end
   end
 
   def create

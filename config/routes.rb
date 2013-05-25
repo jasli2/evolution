@@ -4,10 +4,10 @@ Evolution::Application.routes.draw do
     get 'dashboard', :on => :member
     collection {post :import}
     collection {get :export}
-    resource :courses
+    resources :courses
   end
 
-  resources :courses do
+  resources :courses, :only => [:index] do
     collection {post :import}
     collection {get :export}
   end

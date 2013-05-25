@@ -1,5 +1,7 @@
 class CompetenciesController < ApplicationController
   def index
+    @competencies = Competency.order(:name)
+  end
   end
 
   def show
@@ -30,14 +32,11 @@ class CompetenciesController < ApplicationController
   def export
     @competencies = Competency.order(:name)
     if @competencies
-      #send_file @competencies.to_csv
       respond_to do |format|
         format.html {redirect_to competencies_path, notice: "export open" }
         format.csv { send_data @competencies.to_csv, :type => "text/csv" }
         #format.xls
       end
-
-    end
   end
 
   # GET /competency
