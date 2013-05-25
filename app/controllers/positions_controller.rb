@@ -5,17 +5,21 @@ class PositionsController < ApplicationController
     redirect_to positions_path, notice: "Products imported."
   end
 
-  # GET /competency
-  # GET /competency.json
-  def index
+  def export
     @positions = Position.order(:id)
     if @positions
       respond_to do |format|
-        format.html # index.html.erb
+        format.html {redirect_to positions_path, notice: "export open" }
         format.csv { send_data @positions.to_csv }
         #format.xls
       end
     end
+  end
+
+  # GET /competency
+  # GET /competency.json
+  def index
+    @positions = Position.order(:id)
   end
 
   def new

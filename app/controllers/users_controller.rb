@@ -11,11 +11,13 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     @users = User.all
+=begin
 
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @users }
     end
+=end
   end
 
   # GET /users/1
@@ -104,5 +106,14 @@ class UsersController < ApplicationController
   def import
     User.import(params[:file])
     redirect_to users_path, notice: "Products imported."
+  end
+
+  def export
+    @users = User.order(:staff_id)
+    puts "*************************"
+    respond_to do |format|
+      format.html {redirect_to users_path, notice: "export open" }
+      format.csv { send_data @users.to_csv, :type => "text/csv" }
+    end
   end
 end
