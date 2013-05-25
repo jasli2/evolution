@@ -40,26 +40,29 @@ class Position < ActiveRecord::Base
     header = spreadsheet.row(1)
     length = header.length
     (2..spreadsheet.last_row).each do |i|
-      row = spreadsheet.row(i);
+      row = Hash[[header,spreadsheet.row(i)].transpose]
+      name = row.first[0]
 
-      position = find_by_name(row[0]) || new
-      position.name = row[0]
-      position.description = row[1]
-      position.standard = row[2]
-      #save!(position)
-      position.save!
+      position = find_by_name(row[name]) || new
+      position.name = row[name]
+      position.description = row["description"]
+      position.standard = row["Standard"]
+      save!(position)
+      #position.save!
 
-      i = 3
-      while i < length do
-        competency = Competency.find_by_name(row[i])
-        competency_level = competency.competency_levels.find_by_level(row[i.next])
-        
-        pcl = position.position_competency_levels.build(:position_id => position.id, :standard => row[i.next.next],\
+      i = 1
+      num = (length - 3) / 3
+      while i < num do
+        competency = Competency.find_by_name(row["competency_" + i.to_s ])
+        competency_level = competency.competency_levels.find_by_level(row["level_" + i.to_s])
+
+
+        pcl = position.position_competency_levels.build(:position_id => position.id, :standard => row["Standard_" + i.to_s],\
                                                         :competency_level_id => competency_level.id)
         #save!(pcl)
         pcl.save!
 
-        i += 3
+        i += 1
       end
     end
 

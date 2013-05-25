@@ -24,9 +24,11 @@
 require 'file_size_validator'
 
 class User < ActiveRecord::Base
+
   attr_accessible :name, :email, :password, :password_confirmation, :position_id, :avatar
   attr_accessible :manager_id,:birthday, :joined_at, :phone_num, :mobile_phone, :staff_id
   attr_accessible :department, :department_level
+
   has_secure_password
 
   validates :name, :presence => true
@@ -45,6 +47,9 @@ class User < ActiveRecord::Base
 
   belongs_to :position
   attr_accessible :position
+
+  has_many :course, :foreign_key => "creator_id"
+  has_many :course, :foreign_key =>  "teacher_id"
 
   has_many :competency_users
   has_many :competencies, :through => :competency_users
@@ -94,6 +99,7 @@ class User < ActiveRecord::Base
     spreadsheet = open_spreadsheet(file)
     header = spreadsheet.row(1)
     (2..spreadsheet.last_row).each do |i|
+      #row = Hash[[header,spreadsheet.row(i)].transpose]
       row = spreadsheet.row(i)
       user = find_by_email(row[2]) || new
 
