@@ -26,6 +26,13 @@ class CompetenciesController < ApplicationController
     redirect_to competencies_path, notice: "Products imported."
   end
 
+  def export
+    logger.info "herer............"
+    @user = User.find(2)
+    send_file "#{Rails.root}/app/assets/images/logo.png", :type => 'image/png'
+    #redirect_to competencies_path, notice: "you just found export action......"
+  end
+
   # GET /competency
   # GET /competency.json
   def index

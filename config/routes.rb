@@ -3,15 +3,16 @@ Evolution::Application.routes.draw do
   resources :users, :shallow => true do
     get 'dashboard', :on => :member
     collection {post :import}
-    resource :courses
+    resources :courses
   end
 
-  resources :courses do
+  resources :courses, :only => [:index] do
     collection {post :import}
   end
 
   resources :competencies do
     collection {post :import}
+    collection {get :export}
   end
 
   resources :positions do

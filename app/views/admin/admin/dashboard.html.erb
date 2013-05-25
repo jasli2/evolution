@@ -95,53 +95,11 @@ $(function() {
     </div>
     <div class="divider15"></div>
 
-    <h3 class="subtitle">Users</h3>
-    <div class="divider15"></div>
-    <div class="widgetbox">
-      <div class="headtitle">
-        <h4 class="widgettitle"><span class="iconfa-group"></span> Latest Added Users <span class="pull-right"><%= link_to "see all &#8594;".html_safe, admin_manage_users_path %></span></h4>
-      </div>
-      <% if @users.size == 0 %>
-      <div class="widgetcontent">
-        <p>No user setup yet. please setup it first. </p>
-      </div>
-      <% else %>
-      <table class="table table-bordered responsive">
-        <thead>
-          <tr>
-            <th class="center">Name</th>
-            <th class="center">Staff ID</th>
-            <th class="center">Email</th>
-            <th class="center">Telephone</th>
-            <th class="center">Mobile Phone</th>
-            <th class="center">Manager</th>
-            <th class="center">Department</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @users.each do |u| %>
-          <tr>
-            <td class="center"><%= u.name %></td>
-            <td class="center"><%= u.staff_id %></td>
-            <td class="center"><%= u.email %></td>
-            <td class="center"><%= u.phone_num %></td>
-            <td class="center"><%= u.mobile_phone %></td>
-            <td class="center"><%= u.manager.name %></td>
-            <td class="center"><%= u.department %></td>
-          </tr>
-          <% end %>
-        </tbody>
-      </table>
-      <% end %>
-    </div>
-
-    <div class="divider15"></div>
-
     <h3 class="subtitle">Courses</h3>
     <div class="divider15"></div>
     <div class="widgetbox">
       <div class="headtitle">
-        <h4 class="widgettitle"><span class="iconfa-group"></span> Latest Added Course <span class="pull-right"><%= link_to "see all &#8594;".html_safe, admin_manage_course_path %></span></h4>
+        <h4 class="widgettitle"><span class="iconfa-folder-open"></span> Latest Added Course <span class="pull-right"><%= link_to "see all &#8594;".html_safe, admin_manage_course_path %></span></h4>
       </div>
       <% if @courses.size == 0 %>
       <div class="widgetcontent">
@@ -154,7 +112,10 @@ $(function() {
           <li>
             <%= image_tag course_cover_path(c, :normal), :class => "pull-left" %>
             <div class="course-info">
-              <h4><%= link_to c.name, course_path(c) %></h4>
+              <h4><%= link_to c.title, course_path(c) %></h4>
+              <h6>created by <%= link_to c.teacher.name, user_path(c.teacher) %> at <%= distance_of_time_in_words_to_now(c.created_at) + ' ago' %></h6>
+              <p><%= c.description %></p>
+              <a href="<%= course_path(c) %>" class="btn btn-primary btn-small"><span class="iconfa-info-sign icon-white"></span> View Details</a>
             </div>
           </li>
           <% end %>
@@ -164,6 +125,7 @@ $(function() {
     </div>
 
   </div> <!--span8-->
+
   <div id="dashboard-right" class="span4">
     <h3 class="subtitle">Calender</h3>
     <div class="divider15"></div>
@@ -171,6 +133,37 @@ $(function() {
     <h4 class="widgettitle"> Calender</h4>
     <div class="widgetcontent nopadding">
       <div id="datepicker"></div>
+    </div>
+    <div class="divider15"></div>
+
+    <h3 class="subtitle">Users</h3>
+    <div class="divider15"></div>
+    <div class="widgetbox">
+      <div class="headtitle">
+        <h4 class="widgettitle"><span class="iconfa-group"></span> Last Added Users <span class="pull-right"><%= link_to "see all &#8594;".html_safe, admin_manage_users_path %></span></h4>
+      </div>
+      <% if @users.size == 0 %>
+      <div class="widgetcontent">
+        <p>No user setup yet. please setup it first. </p>
+      </div>
+      <% else %>
+      <div class="widgetcontent nopadding">
+        <ul class="userlist">
+          <% @users.each do |u| %>
+          <li>
+            <div>
+              <%= image_tag user_avatar_path(u, :normal), :class => "pull-left" %>
+              <div class="uinfo">
+                <h5><%= link_to u.name, user_path(u) %></h5>
+                <span class="pos"><%= u.position.name if u.position %></span>
+                <span><%= "Created at " + distance_of_time_in_words_to_now(u.created_at) + ' ago' %></span>
+              </div>
+            </div>
+          </li>
+          <% end %>
+        </ul>
+      </div>
+      <% end %>
     </div>
   </div>
 </div> <!--row-fluid-->

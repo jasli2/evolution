@@ -1,22 +1,22 @@
 <div class="leftmenu">        
   <ul class="nav nav-tabs nav-stacked">
     <li class="nav-header"><%= t('menu.navigator') %></li>
-      <% unless current_user.admin? %>
+      <%# unless current_user.admin? %>
       <li class="<%= category == 'user' ? "dropdown active" : "dropdown" %>"><a href=""><span class="iconfa-plus"></span> <%= t('menu.user.action') %></a>
       <ul style="<%= "display: block" if category == 'user' %>">
-        <li class="<%= "active" if active == 'dashboard' %>"><a href="<%= dashboard_user_path(current_user) %>"><span class="iconfa-home"></span> <%= t('menu.user.home') %></a></li>
+        <li class="<%= "active" if active == 'home' %>"><a href="<%= dashboard_user_path(current_user) %>"><span class="iconfa-home"></span> <%= t('menu.user.home') %></a></li>
         <li class="<%= "active" if active == 'user_courses' %>"><a href="<%= user_courses_path(current_user) %>"><span class="iconfa-book"></span> <%= t('menu.user.mycourse') %></a></li>
         <li class="<%= "active" if active == 'competency' %>"><a href="<%= competencies_path %>"><span class="iconfa-cloud"></span> <%= t('menu.user.competency') %></a></li>
         <li class="<%= "active" if active == 'courses' %>"><a href="<%= courses_path %>"><span class="iconfa-briefcase"></span> <%= t('menu.user.courses') %></a></li>
       </ul>
       
-      <% if current_user.subordinates.size %>  
+      <% if current_user.subordinates.size > 0 %>  
       <li class="<%= category == 'manager' ? "dropdown active" : "dropdown" %>"><a href=""><span class="iconfa-plus"></span> <%= t('menu.manager.action') %></a>
       <ul style="<%= "display: block" if category == 'manager' %>">
         <li class="<%= "active" if active == 'member' %>"><a href="#"><span class="iconfa-group"></span> <%= t('menu.manager.members') %></a></li>
       </ul>
       <% end %>
-      <% end %>
+      <%# end %>
       
       <% if current_user.admin? %>
       <li class="<%= category == 'admin' ? "dropdown active" : "dropdown" %>"><a href=""><span class="iconfa-plus"></span> <%= t('menu.admin.action') %></a>
