@@ -15,6 +15,8 @@
 #  description :string(255)
 #
 
+require 'file_size_validator'
+
 class Course < ActiveRecord::Base
   attr_accessible :author, :filter_item, :title, :cover_image
 
