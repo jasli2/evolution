@@ -18,9 +18,10 @@
 class Course < ActiveRecord::Base
   attr_accessible :author, :filter_item, :title, :cover_image
 
-  validate :author
-  validate :filter_item
   validates :title, :presence => true
+
+  belongs_to :creator, :class_name => "User"
+  belongs_to :teacher, :class_name => "User"
 
   has_many :activity_has_courses
   has_many :activities, :through => :activity_has_courses
@@ -70,10 +71,12 @@ class Course < ActiveRecord::Base
       course = Course.find_by_title(row[0]) || new
       course.title = row[0]
       course.description = row[1]
-      course.creator_id  = row[3]
+      creator = User.find_by_staff_id(row[3])
+      course.creator_id  = creator.id
       course.duration = row[4]
       course.course_type = row[5]
-      course.teacher_id = row[7]
+      teacher = User.find_by_staff_id(row[7])
+      course.teacher_id = teacher.id
       save!(course)
       competency = Competency.find_by_name(row[8])
       competency_level = competency.competency_levels.find_by_level(row[9])

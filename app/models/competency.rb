@@ -39,26 +39,31 @@ class Competency < ActiveRecord::Base
   def self.import(file)
     spreadsheet = open_spreadsheet(file)
     header = spreadsheet.row(1)
+    length = header.length
     competency = Competency.new
     (2..spreadsheet.last_row).each do |i|
-      row = spreadsheet.row(i);
-      length = row.length
-      unless (row[0].nil? || row[0].empty?)
-        competency = Competency.find_by_name(row[0]) || Competency.new
-        competency.name = row[0]
-        competency.description = row[1]
+      row = Hash[[header,spreadsheet.row(i)].transpose]
+      name = row.first[0]
+
+      unless (row[name].nil? || row[name].empty?)
+        competency = Competency.find_by_name(row[name]) || Competency.new
+        competency.name = row[name]
+        competency.description = row["description"]
         save!(competency)
       end
 
-      competency_level = competency.competency_levels.new(:level => row[2], :description => row[3])
+      competency_level = competency.competency_levels.new(:level => row["level"], :description => row["level_description"])
       save!(competency_level)
-      ptr = 4
-      while ptr < length  do
-        unless (row[ptr].nil? || row[ptr].empty? || row[ptr.next].nil? || row[ptr.next].empty?)
-          competency_level_requirement =  competency_level.competency_level_requirements.new(:description => row[ptr], :weight => row[ptr.next])
+      ptr = 1
+      num = (length - 4) / 2
+      while ptr < num  do
+        unless (row["level_requirement_" + ptr.to_s ].nil? || row["level_requirement_" + ptr.to_s].empty? \
+                || row["Weight_" + ptr.to_s].nil? || row["Weight_" + ptr.to_s].empty?)
+          competency_level_requirement =  competency_level.competency_level_requirements.new(:description => row["level_requirement_" + ptr.to_s],\
+                                                                                              :weight => row["Weight_" + ptr.to_s])
           save!(competency_level_requirement)
         end
-        ptr += 2
+        ptr += 1
       end
 
     end
