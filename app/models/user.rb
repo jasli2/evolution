@@ -59,6 +59,8 @@ class User < ActiveRecord::Base
 
   validates :position_id, :presence => true
 
+  scope :staff, where(:is_admin => false)
+
   # custom image sizes: each key is a version name
   IMAGE_CONFIG = {
     :crop => [1, 1],

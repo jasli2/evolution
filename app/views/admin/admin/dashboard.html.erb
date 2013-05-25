@@ -60,7 +60,7 @@
 
     <div class="widgetbox">
       <div class="headtitle">
-        <h4 class="widgettitle"><span class="iconfa-sitemap"></span> Competency Models <span class="pull-right"><a herf="#">foo</a></span></h4>
+        <h4 class="widgettitle"><span class="iconfa-sitemap"></span> Competency Models <span class="pull-right"><%= link_to "see all &#8594;".html_safe, admin_manage_competency_path %></span></h4>
       </div>
       <% if @competencies.size == 0 %>
       <div class="widgetcontent">
@@ -72,7 +72,7 @@
         <div class="accordion">
           <% @competencies.each do |c| %>
           <div class="a-header">
-            <a href="#"><%= c.name %></a>
+            <a href="#"><%= c.name %><span class="pull-right"><%= "created at " + distance_of_time_in_words_to_now(c.created_at) + ' ago' %></span></a>
           </div>
           <div class="a-content">
             <%= content_tag(:h5, "Competency description: " + c.description) %>
