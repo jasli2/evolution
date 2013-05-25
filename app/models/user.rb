@@ -85,14 +85,39 @@ class User < ActiveRecord::Base
   end
 
   def self.to_csv(options = {})
+    puts "***************************"
+    puts "to csv is open"
+    puts "****************************"
+    header = ["name","Staff Id", "email", "Tel", "Mobile", "manager_name","manager_id" , "birthday", "position_name", "department", "department level"]
+    header <<  "Enroll Date"
+    puts header
+
     CSV.generate(options) do |csv|
-      column_names.delete("password_digest")
-      csv << column_names
-      all.each do |user|
-        #puts *column_names
-        csv << user.attributes.values_at(*column_names)
+      csv << header
+      all.each do |mUser|
+        unless mUser.name == "admin"
+          row_data = []
+          row_data << mUser.name
+          row_data << mUser.staff_id
+          row_data << mUser.email
+          row_data << mUser.phone_num
+          row_data << mUser.mobile_phone
+          row_data << mUser.manager.name
+          row_data << mUser.manager.manager_id
+          row_data << mUser.birthday
+          row_data << mUser.position.name
+          row_data << mUser.department
+          row_data << mUser.department_level
+          row_data << mUser.joined_at
+          csv << row_data
+          end
       end
+
     end
+  end
+
+  def self.test
+    User.all
   end
 
   def self.import(file)
@@ -105,8 +130,8 @@ class User < ActiveRecord::Base
 
       position = Position.find_by_name(row[8])
 
-      user.password = "123456"
-      user.password_confirmation = "123456"
+      user.password = row[9]
+      user.password_confirmation = row[9]
       user.name = row[0]
       user.email = row[2]
       user.position_id = position.id

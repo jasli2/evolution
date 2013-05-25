@@ -30,7 +30,6 @@ class CompetenciesController < ApplicationController
   def export
     @competencies = Competency.order(:name)
     if @competencies
-
       #send_file @competencies.to_csv
       respond_to do |format|
         format.html {redirect_to competencies_path, notice: "export open" }

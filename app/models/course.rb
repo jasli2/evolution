@@ -46,10 +46,25 @@ class Course < ActiveRecord::Base
   validates :cover_image, :file_size => {:maximum => 1.megabytes.to_i }
 
   def self.to_csv(options = {})
+    header = ["title", "description", "creator", "creator ID", "duration", "course type", \
+              "Teacher", "TeacherID", "competency", "level"]
     CSV.generate(options) do |csv|
-      csv << column_names
+      csv << header
       all.each do |course|
-        csv << course.attributes.values_at(*column_names)
+        row_data = []
+        row_data << course.title
+        row_data << course.description
+        row_data << course.creator.name
+        row_data << course.creator.staff_id
+        row_data << course.duration
+        row_data << course.course_type
+        row_data << course.teacher.name
+        row_data << course.teacher.staff_id
+        levels = course.competency_levels
+        row_data << levels.first.competency.name
+        row_data << levels.first.level
+
+        csv << row_data
       end
     end
   end
