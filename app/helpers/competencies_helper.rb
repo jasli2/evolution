@@ -1,2 +1,2 @@
-module CompetencyControllerHelper
+module CompetenciesHelper
 end
