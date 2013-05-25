@@ -13,7 +13,7 @@
 <% end %>
 
 <div class="row-fluid">
-  <div id="dashboard-left" class="span8">
+  <div id="dashboard-left" class="span12">
     <h3 class="subtitle">All Users</h3>
     <div class="divider15"></div>
     <div class="widgetbox">
@@ -23,6 +23,7 @@
       <table class="table table-bordered responsive">
         <thead>
           <tr>
+            <th class="center">Action</th>
             <th class="center">Name</th>
             <th class="center">Staff ID</th>
             <th class="center">Email</th>
@@ -30,18 +31,30 @@
             <th class="center">Mobile Phone</th>
             <th class="center">Manager</th>
             <th class="center">Department</th>
+            <th class="center">Department Level</th>
+            <th class="center">Title</th>
+            <th class="center">Eroll Date</th>
+            <th class="center">Birthday</th>
           </tr>
         </thead>
         <tbody>
           <% @users.each do |u| %>
           <tr>
+            <td class="center">
+              <%= link_to "Delete", "#", {:class => "btn btn-danger disabled"} %>
+              <%= link_to "Edit", edit_user_path(u), {:class => "btn btn-primary"} %>
+            </td>
             <td class="center"><%= u.name %></td>
             <td class="center"><%= u.staff_id %></td>
             <td class="center"><%= u.email %></td>
             <td class="center"><%= u.phone_num %></td>
             <td class="center"><%= u.mobile_phone %></td>
-            <td class="center"><%= u.manager.name %></td>
+            <td class="center"><%= u.manager.name if u.manager %></td>
             <td class="center"><%= u.department %></td>
+            <td class="center"><%= u.department_level %></td>
+            <td class="center"><%= u.position.name if u.position %></td>
+            <td class="center"><%= u.joined_at %></td>
+            <td class="center"><%= u.birthday %></td>
           </tr>
           <% end %>
         </tbody>
@@ -54,11 +67,6 @@
       <a href="<%= import_users_path %>" class="btn btn-primary"><i class="iconfa-file icon-white"></i> Import User</a>
       <a href="<%= import_users_path %>" class="btn btn-warning"><i class="iconfa-download-alt icon-white"></i> Export CSV</a>
     </div>
-</div>
-  <div id="dashboard-right" class="span4">
-    <h4 class="widgettitle"> Side Content</h4>
-    <div class="widgetcontent">
-      Side content
-    </div>
   </div>
+  
 </div> <!--row-fluid-->

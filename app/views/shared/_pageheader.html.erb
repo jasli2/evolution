@@ -1,5 +1,9 @@
 <ul class="breadcrumbs">
+  <% if current_user.admin? %>
+  <li><%= link_to content_tag(:i, '', :class => 'iconfa-dashboard' ), admin_dashboard_path %><span class="separator"></span></li>
+  <% else %>
   <li><%= link_to content_tag(:i, '', :class => 'iconfa-home' ), dashboard_user_path(current_user)  %><span class="separator"></span></li>
+  <% end %>
   <%= yield :breadcrumbs %>
 </ul>
 
