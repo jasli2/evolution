@@ -8,10 +8,12 @@ Evolution::Application.routes.draw do
 
   resources :courses do
     collection {post :import}
+    collection {get :export}
   end
 
   resources :competencies do
     collection {post :import}
+    collection {get :export}
   end
 
   resources :positions do
