@@ -16,7 +16,7 @@
 #
 
 class Course < ActiveRecord::Base
-  attr_accessible :author, :filter_item, :title
+  attr_accessible :author, :filter_item, :title, :cover_image
 
   validate :author
   validate :filter_item
@@ -33,6 +33,16 @@ class Course < ActiveRecord::Base
 
   has_many :user_course_progresses
   has_many :users, :through => :user_course_progresses
+
+  # custom image sizes: each key is a version name
+  IMAGE_CONFIG = {
+    :crop => [4, 3],
+    :large => [400, 300],
+    :normal => [200, 150],
+    :small => [100, 75]
+  }
+  mount_uploader :cover_image, ImageUploader
+  validates :cover_image, :file_size => {:maximum => 1.megabytes.to_i }
 
   def self.to_csv(options = {})
     CSV.generate(options) do |csv|

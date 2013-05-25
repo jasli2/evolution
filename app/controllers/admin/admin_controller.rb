@@ -4,7 +4,7 @@ class Admin::AdminController < ApplicationController
   def dashboard
     @menu_category = 'admin'
     @menu_active = 'dashboard'
-    @users = User.all
+    @users = User.staff
     @competencies = Competency.all
     @courses = Course.all
     @positions = Position.all
@@ -17,6 +17,11 @@ class Admin::AdminController < ApplicationController
   def user
     @menu_category = 'admin'
     @menu_active = 'users'
+    @users = User.staff
+
+    respond_to do |format|
+      format.html
+    end
   end
 
   def competency
