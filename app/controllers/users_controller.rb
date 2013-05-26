@@ -11,13 +11,11 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     @users = User.all
-=begin
 
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @users }
     end
-=end
   end
 
   # GET /users/1
@@ -52,7 +50,7 @@ class UsersController < ApplicationController
       @menu_active = 'users'
     else
       @menu_category = 'user'
-      @menu_active = 'user_courses'
+      @menu_active = 'dashboard'
     end
     @user = User.find(params[:id])
     session[:return_to] ||= request.referer
@@ -105,7 +103,10 @@ class UsersController < ApplicationController
   #POST /users/import
   def import
     User.import(params[:file])
-    redirect_to users_path, notice: "Products imported."
+    redirect_to :back, notice: "Users has successfully imported."
+    rescue ActionController::RedirectBackError
+      redirect_to root_path
+    
   end
 
   def export

@@ -14,17 +14,63 @@
 
 <div class="row-fluid">
   <div id="dashboard-left" class="span8">
-    <h3 class="subtitle">Competency Model</h3>
+    <h3 class="subtitle">Courses</h3>
     <div class="divider15"></div>
-    <h4 class="widgettitle"><span class="iconfa-home"></span> Competency Summary</h4>
-    <div class="widgetcontent nopadding">
-      competency model for user.
+    <div class="widgetbox">
+      <div class="headtitle">
+        <h4 class="widgettitle"><span class="iconfa-folder-open"></span> Courses</h4>
+      </div>
+      <% if @courses.size == 0 %>
+      <div class="widgetcontent">
+        <p>No Competency Model setup yet. please setup it first. </p>
+      </div>
+      <% else %>
+      <div class="widgetcontent nopadding">
+        <ul class="courselist">
+          <% @courses.each do |c| %>
+          <li>
+            <%= image_tag course_cover_path(c, :normal), :class => "pull-left" %>
+            <div class="course-info">
+              <h4><%= link_to c.title, course_path(c) %></h4>
+              <h6>created by <%= link_to c.teacher.name, user_path(c.teacher) %> at <%= distance_of_time_in_words_to_now(c.created_at) + ' ago' %></h6>
+              <p><%= c.description %></p>
+              <a href="<%= course_path(c) %>" class="btn btn-primary btn-small"><span class="iconfa-info-sign icon-white"></span> View Details</a>
+            </div>
+          </li>
+          <% end %>
+        </ul>
+        <div class="page-wrapper"><%= paginate @courses %></div>
+      </div>
+      <% end %>
     </div>
+
+    <div class="well">
+      <a href="<%= new_course_path %>" class="btn btn-primary"><i class="iconfa-plus icon-white"></i> Create New Course</a>
+      <a href="<%= export_courses_path(format: "csv") %>" class="btn btn-warning"><i class="iconfa-download-alt icon-white"></i> Export As CSV</a>
+    </div>
+  
   </div>
+
   <div id="dashboard-right" class="span4">
-    <h4 class="widgettitle"> Side Content</h4>
+    <h3 class="subtitle">Manage Courses</h3>
+    <div class="divider15"></div>
+    <h4 class="widgettitle"> Import Courses</h4>
     <div class="widgetcontent">
-      Side content
+      <%= form_tag import_courses_path, multipart: true do %>
+      <div class="fileupload fileupload-new" data-provides="fileupload">
+        <div class="input-append">
+          <div class="uneditable-input span3">
+          <i class="iconfa-file fileupload-exists"></i>
+          <span class="fileupload-preview"></span>
+          </div>
+          <span class="btn btn-file"><span class="fileupload-new">Select file</span>
+          <span class="fileupload-exists">Change</span>
+          <input class="file optional" id="file" name="file" type="file" /></span>
+          <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+        </div>
+      </div>
+      <%= submit_tag "Import Courses".html_safe, :class => "btn btn-primary submit-import" %>
+      <% end %>
     </div>
   </div>
 </div> <!--row-fluid-->

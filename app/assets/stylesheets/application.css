@@ -23,3 +23,7 @@
 form p.help-block { 
   font-style:italic;
 }
+
+.page-wrapper {
+  padding: 10px 20px;
+}

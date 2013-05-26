@@ -1,32 +1,29 @@
 class CompetenciesController < ApplicationController
-  def index
-    @competencies = Competency.order(:name)
-  end
-  end
+ #def show
+ #end
 
-  def show
-  end
+ #def new
+ #end
 
-  def new
-  end
+ #def edit
+ #end
 
-  def edit
-  end
+ #def create
+ #end
 
-  def create
-  end
+ #def update
+ #end
 
-  def update
-  end
-
-  def destroy
-  end
+ #def destroy
+ #end
 
   #POST /competency/import
   def import
     Competency.import(params[:file])
-
-    redirect_to competencies_path, notice: "Products imported."
+    
+    redirect_to :back, notice: "Competencies has successfully imported."
+    rescue ActionController::RedirectBackError
+      redirect_to root_path
   end
 
   def export
@@ -37,6 +34,7 @@ class CompetenciesController < ApplicationController
         format.csv { send_data @competencies.to_csv, :type => "text/csv" }
         #format.xls
       end
+    end
   end
 
   # GET /competency

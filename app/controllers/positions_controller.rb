@@ -2,7 +2,9 @@ class PositionsController < ApplicationController
 
   def import
     Position.import(params[:file])
-    redirect_to positions_path, notice: "Products imported."
+    redirect_to :back, notice: "Positions has successfully imported."
+    rescue ActionController::RedirectBackError
+      redirect_to root_path
   end
 
   def export

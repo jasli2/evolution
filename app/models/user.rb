@@ -24,6 +24,7 @@
 require 'file_size_validator'
 
 class User < ActiveRecord::Base
+  paginates_per 15
 
   attr_accessible :name, :email, :password, :password_confirmation, :position_id, :avatar
   attr_accessible :manager_id,:birthday, :joined_at, :phone_num, :mobile_phone, :staff_id
@@ -60,6 +61,7 @@ class User < ActiveRecord::Base
   validates :position_id, :presence => true
 
   scope :staff, where(:is_admin => false)
+
 
   # custom image sizes: each key is a version name
   IMAGE_CONFIG = {

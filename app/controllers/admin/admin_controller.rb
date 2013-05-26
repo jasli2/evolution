@@ -31,15 +31,18 @@ class Admin::AdminController < ApplicationController
   def competency
     @menu_category = 'admin'
     @menu_active = 'competency'
+    @competencies = Competency.all
   end
 
   def course
     @menu_category = 'admin'
     @menu_active = 'courses'
+    @courses = Course.order(:id).page params[:page]
   end
 
   def position
     @menu_category = 'admin'
     @menu_active = 'positions'
+    @positions = Position.all
   end
 end
