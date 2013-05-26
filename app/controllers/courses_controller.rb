@@ -23,6 +23,14 @@ class CoursesController < ApplicationController
   end
 
   def show
+    @menu_category = current_user.admin? ? 'admin' : 'user'
+    @menu_active = current_user.admin? ? 'courses' : 'user_courses'
+    @course = Course.find(params[:id])
+
+    respond_to do |format|
+      format.html 
+      format.json { render json: @course }
+    end
   end
 
   def new
