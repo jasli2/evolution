@@ -19,5 +19,6 @@ Thumbs.db
 .DS_Store
 coverage/*
 /public/uploads/
+/public/assets/
 
 .sass-cache/
