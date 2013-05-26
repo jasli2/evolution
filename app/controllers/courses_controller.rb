@@ -19,7 +19,15 @@ class CoursesController < ApplicationController
   end
 
   def index
-    @courses = Course.order(:id).page params[:page]
+    @menu_category = 'user'
+    @menu_active = params[:user_id] ? 'user_courses' : 'courses'
+
+    @user = User.find(params[:user_id]) if params[:user_id]
+    if @user
+      @courses = Course.order(:id).page params[:page] #TODO : fix it:  @courses = @user.get_position_courses.page params[:page]
+    else
+      @courses = Course.order(:id).page params[:page]
+    end
   end
 
   def show

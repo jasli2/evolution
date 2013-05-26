@@ -86,7 +86,7 @@ class User < ActiveRecord::Base
     end
   end
 
-  def get_position_courses(number)
+  def get_position_courses(number = 0)
     c = []
     self.position.competency_levels.each do |cl|
       c = ( c + cl.courses ).uniq
@@ -94,8 +94,12 @@ class User < ActiveRecord::Base
 
     c.sort! { |x,y| x.id <=> y.id }
 
-    last = number > c.size ? c.size : number
-    c[0..last-1]
+    if number != 0
+      last = number > c.size ? c.size : number
+      c[0..last-1]
+    else
+      c
+    end
   end
 
   def self.to_csv(options = {})
