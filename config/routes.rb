@@ -1,5 +1,10 @@
 Evolution::Application.routes.draw do
 
+  resources :courses, :only => [:index] do
+    collection {post :import}
+    collection {get :export}
+  end
+
   resources :users, :shallow => true do
     get 'dashboard', :on => :member
     collection {post :import}
@@ -7,10 +12,6 @@ Evolution::Application.routes.draw do
     resources :courses
   end
 
-  resources :courses, :only => [:index] do
-    collection {post :import}
-    collection {get :export}
-  end
 
   resources :competencies do
     collection {post :import}
