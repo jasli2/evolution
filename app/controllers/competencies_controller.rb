@@ -2,7 +2,6 @@ class CompetenciesController < ApplicationController
   def index
     @competencies = Competency.order(:name)
   end
-  end
 
   def show
   end
@@ -37,14 +36,6 @@ class CompetenciesController < ApplicationController
         format.csv { send_data @competencies.to_csv, :type => "text/csv" }
         #format.xls
       end
-  end
-
-  # GET /competency
-  # GET /competency.json
-  def index
-    @competencies = Competency.order(:name)
-    respond_to do |format|
-      format.html
     end
   end
 
