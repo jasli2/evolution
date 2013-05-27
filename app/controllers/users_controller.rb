@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   def dashboard
     @menu_category = 'user'
     @menu_active = 'home' 
-    @pending_courses = current_user.get_position_courses(3)
+    @pending_courses = Course.for_position(current_user.position).first(3)
   end
 
   # GET /users

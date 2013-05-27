@@ -114,6 +114,7 @@ class Course < ActiveRecord::Base
     end
   end
 
-
-
+  def self.for_position(p)
+    includes(:competency_levels).where(:competency_levels => {:id => p.competency_level_ids}) if p
+  end
 end

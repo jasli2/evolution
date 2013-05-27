@@ -24,7 +24,7 @@ class CoursesController < ApplicationController
 
     @user = User.find(params[:user_id]) if params[:user_id]
     if @user
-      @courses = Course.order(:id).page params[:page] #TODO : fix it:  @courses = @user.get_position_courses.page params[:page]
+      @courses = Course.for_position(@user.position).page params[:page]
     else
       @courses = Course.order(:id).page params[:page]
     end
