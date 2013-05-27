@@ -21,8 +21,11 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    @menu_category = current_user.admin? ? 'admin' : 'user'
+    @menu_active = current_user.admin? ? 'users' : 'dashboard' 
+
     @user = User.find(params[:id])
-    puts @user.email
+    @courses = Course.for_position(@user.position).page(params[:page])
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @user }
@@ -95,7 +98,7 @@ class UsersController < ApplicationController
     @user.destroy
 
     respond_to do |format|
-      format.html { redirect_to users_url }
+      format.html { redirect_to :back, :notice => "user has been deleted."}
       format.json { head :no_content }
     end
   end
@@ -113,7 +116,7 @@ class UsersController < ApplicationController
     @users = User.order(:staff_id)
     puts "*************************"
     respond_to do |format|
-      format.html {redirect_to users_path, notice: "export open" }
+      format.html {redirect_to :back, notice: "Export format not currect. Support: CSV, Excel." }
       format.csv { send_data @users.to_csv, :type => "text/csv" }
     end
   end

@@ -27,3 +27,7 @@ form p.help-block {
 .page-wrapper {
   padding: 10px 20px;
 }
+
+.well {
+  background-color: #fff;
+}

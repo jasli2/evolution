@@ -56,7 +56,7 @@
     <h3 class="subtitle">about the teacher</h3>
     <div class="well about-teacher">
       <%= image_tag user_avatar_path(@course.teacher, :normal), :class => "pull-left" %>
-      <div class="teacher-info"
+      <div class="teacher-info">
         <h4><%= link_to @course.teacher.name, user_path(@course.teacher) %></h4>
         <p>No teacher introdution yet</p>
       </div>

@@ -18,7 +18,7 @@
 require 'file_size_validator'
 
 class Course < ActiveRecord::Base
-  paginates_per 10
+  paginates_per 5
 
   attr_accessible :title, :cover_image, :description, :duration, :creator_id, :teacher_id
 

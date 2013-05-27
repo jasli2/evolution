@@ -1,14 +1,26 @@
 <% provide(:title, @user.name) %>
-<% provide(:page_title, "User Profile") %>
-<% provide(:page_sub_title, "Dashboard") %>
+<% provide(:page_title, @user.name) %>
+<% provide(:page_sub_title, @user.position.name) %>
 <% provide(:page_icon, "iconfa-user") %>
 
 <% content_for :breadcrumbs do %>
-<%= content_tag(:li, "User Profile") %>
+<% if current_user.admin? %>
+<li><%= link_to " Users Managerment ", admin_manage_users_path %> <span class="separator"></span></li>
+<% end %>
+<%= content_tag(:li, @user.name) %>
 <% end %>
 
 <% content_for :javascript do %>
 <script type="text/javascript">
+  $(function() {
+    $('.accordion').accordion({
+        collapsible: true,
+        active: false,
+        heightStyle: "content",
+        header: ".a-header"
+    });
+    $('.tabbedwidget').tabs();
+  });
 </script>
 <% end %>
 
@@ -16,15 +28,103 @@
   <div id="dashboard-left" class="span8">
     <h3 class="subtitle">Competency Model</h3>
     <div class="divider15"></div>
-    <h4 class="widgettitle"><span class="iconfa-home"></span> Competency Summary</h4>
+    <h4 class="widgettitle"><span class="iconfa-signal"></span> Competency Summary</h4>
     <div class="widgetcontent nopadding">
-      competency model for user.
+      <div class="accordion">
+        <% @user.position.competency_levels.each do |cl| %>
+        <div class="a-header">
+          <a href="#"><%= cl.competency.name + "(Lv" + cl.level.to_s + ")" %>
+            <span class="badge badge-primary pull-right">0%</span>
+          </a>
+        </div>
+        <div class="a-content">
+          <h4>Description</h4>
+          <p><%= cl.description %></p>
+        </div>
+        <% end %>
+      </div><!--#accordion-->
     </div>
-  </div>
-  <div id="dashboard-right" class="span4">
-    <h4 class="widgettitle"> Side Content</h4>
+    <div class="divider15"></div>
+
+    <h4 class="widgettitle"><span class="iconfa-tasks icon-white"></span> Pending Courses </h4>
+    <% if @courses.size == 0 %>
     <div class="widgetcontent">
-      Side content
+      <p>No user setup yet. please setup it first. </p>
     </div>
+    <% else %>
+    <div class="widgetcontent nopadding">
+      <ul class="courselist">
+        <% @courses.each do |c| %>
+        <li>
+          <%= image_tag course_cover_path(c, :normal), :class => "pull-left" %>
+          <div class="course-info">
+            <h4><%= link_to c.title, course_path(c) %></h4>
+            <h6>created by <%= link_to c.teacher.name, user_path(c.teacher) %> at <%= distance_of_time_in_words_to_now(c.created_at) + ' ago' %></h6>
+            <p><%= c.description %></p>
+            <a href="<%= course_path(c) %>" class="btn btn-primary btn-small"><span class="iconfa-info-sign icon-white"></span> View Details</a>
+          </div>
+        </li>
+        <% end %>
+      </ul>
+      <div class="page-wrapper"><%= paginate @courses %></div>
+    </div>
+    <% end %>
+
+  </div><!-- span 8 -->
+
+  <div id="dashboard-right" class="span4">
+    <h3 class="subtitle">User Informations</h3>
+    <div class="divider15"></div>
+    <div class="well user-info-box">
+      <%= image_tag user_avatar_path(@user, :normal), :class => "pull-left" %>
+      <div class="user-info">
+        <h4><%= link_to @user.name, user_path(@user) %></h4>
+        <ul class="info-details">
+          <li>Dept.: <%= @user.department %></li>
+          <li>Title: <%= @user.position.name %></li>
+          <li>Phone: <%= @user.phone_num %></li>
+          <li>Mobile: <%= @user.mobile_phone %></li>
+        </ul>
+      </div>
+    </div>
+
+    <% if @user.manager and @user.manager.id != @user.id  %>
+    <h3 class="subtitle">Manager</h3>
+    <div class="well user-manager">
+      <%= link_to image_tag(user_avatar_path(@user.manager, :small)), user_path(@user.manager), {:title => "#{@user.manager.name}"} %>
+    </div>
+    <% end %>
+
+    <% if @user.subordinates %>
+    <h3 class="subtitle">Subordinates</h3>
+    <div class="well user-subordinates">
+      <ul>
+      <% @user.subordinates.each do |s| %>
+        <li><%= link_to image_tag(user_avatar_path(s, :small)), user_path(s), {:title => "#{s.name}"} %></li>
+      <% end %>
+      </ul>
+    </div>
+    <% end %>
+    <div class="divider30"></div>
+    
+    <h3 class="subtitle">Social Networks</h3>
+    <div class="divider15"></div>
+    <div class="tabbedwidget tab-primary">
+      <ul>
+        <li><a href="#tabs-1">Followings</a></li>
+        <li><a href="#tabs-2">Follower</a></li>
+        <li><a href="#tabs-3">Recent Activity</a></li>
+      </ul>
+      <div id="tabs-1" class="">
+        None
+      </div>
+      <div id="tabs-2" class="">
+        None
+      </div>
+      <div id="tabs-3" class="">
+        None
+      </div>
+    </div>
+
   </div>
 </div> <!--row-fluid-->
