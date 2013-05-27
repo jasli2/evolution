@@ -4,27 +4,28 @@ class UsersController < ApplicationController
   def dashboard
     @menu_category = 'user'
     @menu_active = 'home' 
-    @pending_courses = current_user.get_position_courses(3)
+    @pending_courses = Course.for_position(current_user.position).first(3)
   end
 
   # GET /users
   # GET /users.json
   def index
     @users = User.all
-=begin
 
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @users }
     end
-=end
   end
 
   # GET /users/1
   # GET /users/1.json
   def show
+    @menu_category = current_user.admin? ? 'admin' : 'user'
+    @menu_active = current_user.admin? ? 'users' : 'dashboard' 
+
     @user = User.find(params[:id])
-    puts @user.email
+    @courses = Course.for_position(@user.position).page(params[:page])
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @user }
@@ -52,7 +53,7 @@ class UsersController < ApplicationController
       @menu_active = 'users'
     else
       @menu_category = 'user'
-      @menu_active = 'user_courses'
+      @menu_active = 'dashboard'
     end
     @user = User.find(params[:id])
     session[:return_to] ||= request.referer
@@ -97,7 +98,7 @@ class UsersController < ApplicationController
     @user.destroy
 
     respond_to do |format|
-      format.html { redirect_to users_url }
+      format.html { redirect_to :back, :notice => "user has been deleted."}
       format.json { head :no_content }
     end
   end
@@ -105,14 +106,17 @@ class UsersController < ApplicationController
   #POST /users/import
   def import
     User.import(params[:file])
-    redirect_to users_path, notice: "Products imported."
+    redirect_to :back, notice: "Users has successfully imported."
+    rescue ActionController::RedirectBackError
+      redirect_to root_path
+    
   end
 
   def export
     @users = User.order(:staff_id)
     puts "*************************"
     respond_to do |format|
-      format.html {redirect_to users_path, notice: "export open" }
+      format.html {redirect_to :back, notice: "Export format not currect. Support: CSV, Excel." }
       format.csv { send_data @users.to_csv, :type => "text/csv" }
     end
   end

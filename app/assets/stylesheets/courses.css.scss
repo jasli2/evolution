@@ -1,3 +1,22 @@
 // Place all the styles related to the CoursesController controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.class-course { }
+.class-course img { width: 300px }
+.course-banner { margin-left: 310px; padding: 10px 0; text-align: center; min-height: 200px; }
+.course-banner h3 { margin: 20px 0; }
+.course-banner h4 { margin: 20px 0; color: #555; }
+.course-banner button { margin: 18px 0;}
+
+.course-introduction { color: #333; }
+.course-introduction p { margin: 5px 0; }
+
+.about-teacher { background-color: #fff; }
+.about-teacher img { width: 60px; }
+.about-teacher .teacher-info { margin-left: 80px; min-height: 60px; }
+
+.course-students { background-color: #fff; }
+.course-students ul { list-style-type: none; padding: 0px; margin: 0px; }
+.course-students ul li { display: inline; }
+.course-students ul li img { width: 30px; height: 30px; }

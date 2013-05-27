@@ -28,19 +28,19 @@
     <div class="divider15"></div>
     <h4 class="widgettitle"><span class="iconfa-signal"></span> Competency Summary</h4>
     <div class="widgetcontent nopadding">
-    <div class="accordion">
-      <% current_user.position.competency_levels.each do |cl| %>
-      <div class="a-header">
-        <a href="#"><%= cl.competency.name + "(Lv" + cl.level.to_s + ")" %>
-          <span class="badge badge-primary pull-right">0%</span>
-        </a>
-      </div>
-      <div class="a-content">
-        <h4>Description</h4>
-        <p><%= cl.description %></p>
-      </div>
-      <% end %>
-    </div><!--#accordion-->
+      <div class="accordion">
+        <% current_user.position.competency_levels.each do |cl| %>
+        <div class="a-header">
+          <a href="#"><%= cl.competency.name + "(Lv" + cl.level.to_s + ")" %>
+            <span class="badge badge-primary pull-right">0%</span>
+          </a>
+        </div>
+        <div class="a-content">
+          <h4>Description</h4>
+          <p><%= cl.description %></p>
+        </div>
+        <% end %>
+      </div><!--#accordion-->
     </div><!--widgetcontent-->
                         
     <div class="divider15"></div>

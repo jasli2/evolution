@@ -21,7 +21,7 @@ class Admin::AdminController < ApplicationController
   def user
     @menu_category = 'admin'
     @menu_active = 'users'
-    @users = User.staff
+    @users = User.staff.page params[:page]
 
     respond_to do |format|
       format.html
@@ -31,15 +31,18 @@ class Admin::AdminController < ApplicationController
   def competency
     @menu_category = 'admin'
     @menu_active = 'competency'
+    @competencies = Competency.all
   end
 
   def course
     @menu_category = 'admin'
     @menu_active = 'courses'
+    @courses = Course.order(:id).page params[:page]
   end
 
   def position
     @menu_category = 'admin'
     @menu_active = 'positions'
+    @positions = Position.all
   end
 end

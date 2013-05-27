@@ -20,6 +20,11 @@
       <div class="headtitle">
         <h4 class="widgettitle"><span class="iconfa-group"></span> All Users</h4>
       </div>
+      <% if @users.size == 0 %>
+      <div class="widgetcontent">
+        <p>No Competency Model setup yet. please setup it first. </p>
+      </div>
+      <% else %>
       <table class="table table-bordered responsive">
         <thead>
           <tr>
@@ -28,10 +33,10 @@
             <th class="center">Staff ID</th>
             <th class="center">Email</th>
             <th class="center">Telephone</th>
-            <th class="center">Mobile Phone</th>
+            <th class="center">Mobile</th>
             <th class="center">Manager</th>
             <th class="center">Department</th>
-            <th class="center">Department Level</th>
+            <th class="center">Dept Level</th>
             <th class="center">Title</th>
             <th class="center">Eroll Date</th>
             <th class="center">Birthday</th>
@@ -59,14 +64,38 @@
           <% end %>
         </tbody>
       </table>
+      <% end %>
     </div>
+  </div>
+</div> <!--row-fluid-->
 
-    <h3 class="subtitle">Manage Users</h3>
+<div class="row-fluid">
+  <div id="dashboard-left" class="span4">
     <div class="well">
       <a href="<%= new_user_path %>" class="btn btn-primary"><i class="iconfa-plus icon-white"></i> Create New User</a>
-      <a href="<%= import_users_path %>" class="btn btn-primary"><i class="iconfa-file icon-white"></i> Import User</a>
-      <a href="<%= import_users_path %>" class="btn btn-warning"><i class="iconfa-download-alt icon-white"></i> Export CSV</a>
+      <a href="<%= export_users_path(format: "csv") %>" class="btn btn-warning"><i class="iconfa-download-alt icon-white"></i> Export As CSV</a>
     </div>
+  </div>
+
+  <div id="dashboard-right" class="span8">
+    <div class="well">
+      <%= form_tag import_users_path, :multipart => true do %>
+      <div class="fileupload fileupload-new" data-provides="fileupload">
+        <div class="input-append">
+          <div class="uneditable-input span2">
+          <i class="iconfa-file fileupload-exists"></i>
+          <span class="fileupload-preview"></span>
+          </div>
+          <span class="btn btn-file"><span class="fileupload-new">Select file</span>
+          <span class="fileupload-exists">Change</span>
+          <input class="file optional" id="file" name="file" type="file" /></span>
+          <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+        </div>
+      </div>
+      <%= submit_tag "Import User".html_safe, :class => "btn btn-primary submit-import-test" %>
+      <% end %>
+    </div>
+    
   </div>
   
 </div> <!--row-fluid-->

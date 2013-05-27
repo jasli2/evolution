@@ -1,7 +1,7 @@
 <div class="leftmenu">        
   <ul class="nav nav-tabs nav-stacked">
     <li class="nav-header"><%= t('menu.navigator') %></li>
-      <%# unless current_user.admin? %>
+      <% unless current_user.admin? %>
       <li class="<%= category == 'user' ? "dropdown active" : "dropdown" %>"><a href=""><span class="iconfa-plus"></span> <%= t('menu.user.action') %></a>
       <ul style="<%= "display: block" if category == 'user' %>">
         <li class="<%= "active" if active == 'home' %>"><a href="<%= dashboard_user_path(current_user) %>"><span class="iconfa-home"></span> <%= t('menu.user.home') %></a></li>
@@ -16,7 +16,7 @@
         <li class="<%= "active" if active == 'member' %>"><a href="#"><span class="iconfa-group"></span> <%= t('menu.manager.members') %></a></li>
       </ul>
       <% end %>
-      <%# end %>
+      <% end %>
       
       <% if current_user.admin? %>
       <li class="<%= category == 'admin' ? "dropdown active" : "dropdown" %>"><a href=""><span class="iconfa-plus"></span> <%= t('menu.admin.action') %></a>

@@ -1,2 +1,72 @@
-<h1>CoursesController#show</h1>
-<p>Find me in app/views/courses_controller/show.html.erb</p>
+<% provide(:title, @course.title) %>
+<% provide(:page_title, @course.title) %>
+<% provide(:page_sub_title, "Course Details") %>
+<% provide(:page_icon, "iconfa-edit") %>
+
+<% content_for :breadcrumbs do %>
+<% if current_user.admin? %>
+<li><%= link_to " Course Managerment ", admin_manage_course_path %> <span class="separator"></span></li>
+<% else %>
+<li><%= link_to " My Courses ", user_courses_path(current_user) %> <span class="separator"></span></li>
+<% end %>
+<%= content_tag(:li, @course.title) %>
+<% end %>
+
+<% content_for :javascript do %>
+<script type="text/javascript">
+  $(function() {
+    // tabbed widget
+    $('.tabbedwidget').tabs();
+  });
+</script>
+<% end %>
+
+<div class="row-fluid">
+  <div id="dashboard-left" class="span8">
+    <div class="class-course">
+      <%= image_tag course_cover_path(@course, :large), :class => "pull-left" %>
+      <div class="course-banner">
+        <h3><%= @course.title %></h3>
+        <button class="btn btn-warning disabled">Join this class now!</button>
+        <h5>Created by <%= link_to @course.creator.name, user_path(@course.creator) %> at <%= distance_of_time_in_words_to_now(@course.created_at) + ' ago' %></h5>
+      </div>
+    </div>
+    <div class="divider30"></div>
+    <div class="clearfix"></div>
+
+
+    <div class="tabbedwidget tab-primary">
+      <ul>
+        <li><a href="#tabs-1"><span class="iconfa-info-sign"></span> Infomation</a></li>
+        <li><a href="#tabs-2"><span class="iconfa-file"></span> Class Material</a></li>
+        <li><a href="#tabs-3"><span class="iconfa-comments-alt"></span> Discussion</a></li>
+      </ul>
+      <div id="tabs-1" class="course-introduction">
+        <h6><%= @course.description %></h6>
+      </div>
+      <div id="tabs-2" class="course-material">
+        <p>No course material yet</p>
+      </div>
+      <div id="tabs-3" class="course-discussion">
+        <p>No discusstion yet</p>
+      </div>
+    </div>
+  </div>
+  <div id="dashboard-right" class="span4">
+    <h3 class="subtitle">about the teacher</h3>
+    <div class="well about-teacher">
+      <%= image_tag user_avatar_path(@course.teacher, :normal), :class => "pull-left" %>
+      <div class="teacher-info">
+        <h4><%= link_to @course.teacher.name, user_path(@course.teacher) %></h4>
+        <p>No teacher introdution yet</p>
+      </div>
+    </div>
+
+    <div class="divider15"></div>
+    <h3 class="subtitle">students</h3>
+      <div class="well course-students">
+        <p>No Students yet.</p>
+      </div>
+    
+  </div>
+</div>

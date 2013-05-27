@@ -18,7 +18,9 @@
 require 'file_size_validator'
 
 class Course < ActiveRecord::Base
-  attr_accessible :author, :filter_item, :title, :cover_image
+  paginates_per 5
+
+  attr_accessible :title, :cover_image, :description, :duration, :creator_id, :teacher_id
 
   validates :title, :presence => true
 
@@ -36,6 +38,7 @@ class Course < ActiveRecord::Base
 
   has_many :user_course_progresses
   has_many :users, :through => :user_course_progresses
+
 
   # custom image sizes: each key is a version name
   IMAGE_CONFIG = {
@@ -111,6 +114,7 @@ class Course < ActiveRecord::Base
     end
   end
 
-
-
+  def self.for_position(p)
+    includes(:competency_levels).where(:competency_levels => {:id => p.competency_level_ids}) if p
+  end
 end

@@ -24,6 +24,7 @@
 require 'file_size_validator'
 
 class User < ActiveRecord::Base
+  paginates_per 15
 
   attr_accessible :name, :email, :password, :password_confirmation, :position_id, :avatar
   attr_accessible :manager_id,:birthday, :joined_at, :phone_num, :mobile_phone, :staff_id
@@ -61,6 +62,7 @@ class User < ActiveRecord::Base
 
   scope :staff, where(:is_admin => false)
 
+
   # custom image sizes: each key is a version name
   IMAGE_CONFIG = {
     :crop => [1, 1],
@@ -82,18 +84,6 @@ class User < ActiveRecord::Base
     else
       nil
     end
-  end
-
-  def get_position_courses(number)
-    c = []
-    self.position.competency_levels.each do |cl|
-      c = ( c + cl.courses ).uniq
-    end
-
-    c.sort! { |x,y| x.id <=> y.id }
-
-    last = number > c.size ? c.size : number
-    c[0..last-1]
   end
 
   def self.to_csv(options = {})

@@ -1,31 +1,36 @@
 class CompetenciesController < ApplicationController
   def index
     @competencies = Competency.order(:name)
+    respond_to do |format|
+      format.html
+    end
   end
 
   def show
   end
-
+  
   def new
   end
-
+  
   def edit
   end
-
+  
   def create
   end
-
+  
   def update
   end
-
+  
   def destroy
   end
 
   #POST /competency/import
   def import
     Competency.import(params[:file])
-
-    redirect_to competencies_path, notice: "Products imported."
+    
+    redirect_to :back, notice: "Competencies has successfully imported."
+    rescue ActionController::RedirectBackError
+      redirect_to root_path
   end
 
   def export

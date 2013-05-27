@@ -1,2 +1,37 @@
-<h1>CoursesController#new</h1>
-<p>Find me in app/views/courses_controller/new.html.erb</p>
+<% provide(:title, 'create course') %>
+<% provide(:page_title, "Create Course") %>
+<% provide(:page_sub_title, "New Course") %>
+<% provide(:page_icon, "iconfa-edit") %>
+
+<% content_for :breadcrumbs do %>
+<% if current_user.admin? %>
+<li><%= link_to " Course Managerment ", admin_manage_course_path %> <span class="separator"></span></li>
+<% else %>
+<li><%= link_to " My Courses ", user_courses_path(current_user) %> <span class="separator"></span></li>
+<% end %>
+<%= content_tag(:li, "Create Course") %>
+<% end %>
+
+<% content_for :javascript do %>
+
+<% end %>
+
+<div class="row-fluid">
+  <div id="dashboard-left" class="span8">
+    <h3 class="subtitle">Courses</h3>
+    <div class="divider15"></div>
+    <h4 class="widgettitle">Create New Course</h4>
+    <div class="widgetcontent">
+      <div class="divider15"></div>
+      <%= render :partial => 'form' %>
+    </div>
+  </div>
+  <div id="dashboard-right" class="span4">
+    <h3 class="subtitle">sidebar here</h3>
+    <div class="divider15"></div>
+    <h4 class="widgettitle"> Side Content</h4>
+    <div class="widgetcontent">
+      content
+    </div>
+  </div>
+</div>

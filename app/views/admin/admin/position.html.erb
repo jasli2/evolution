@@ -1,7 +1,7 @@
 <% provide(:title, "positions management") %>
 <% provide(:page_title, "Positions Management") %>
 <% provide(:page_sub_title, "manage company positions") %>
-<% provide(:page_icon, "iconfa-map-marker") %>
+<% provide(:page_icon, "iconfa-reorder") %>
 
 <% content_for :breadcrumbs do %>
 <%= content_tag(:li, "Positions Management") %>
@@ -14,18 +14,68 @@
 
 <div class="row-fluid">
   <div id="dashboard-left" class="span8">
-    <h3 class="subtitle">Competency Model</h3>
+    <h3 class="subtitle">Position</h3>
     <div class="divider15"></div>
-    <h4 class="widgettitle"><span class="iconfa-home"></span> Competency Summary</h4>
-    <div class="widgetcontent nopadding">
-      competency model for user.
+    <div class="widgetbox">
+      <div class="headtitle">
+        <h4 class="widgettitle"><span class="iconfa-reorder"></span> Positions</h4>
+      </div>
+      <% if @positions.size == 0 %>
+      <div class="widgetcontent">
+        <p>No Competency Model setup yet. please setup it first. </p>
+      </div>
+      <% else %>
+      <table class="table table-bordered responsive">
+        <thead>
+          <tr>
+            <th class="center">Action</th>
+            <th class="center">Name</th>
+            <th class="center">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @positions.each do |p| %>
+          <tr>
+            <td class="center">
+              <%= link_to "Delete", "#", {:class => "btn btn-danger disabled"} %>
+              <%= link_to "Edit", edit_position_path(p), {:class => "btn btn-primary"} %>
+            </td>
+            <td class="center"><%= p.name %></td>
+            <td class="center"><%= p.description %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <% end %>
     </div>
+
+    <div class="well">
+      <a href="#" class="btn btn-primary disabled"><i class="iconfa-plus icon-white"></i> Create New Position</a>
+      <a href="<%= export_positions_path(format: "csv") %>" class="btn btn-warning"><i class="iconfa-download-alt icon-white"></i> Export As CSV</a>
+    </div>
+  
   </div>
+
   <div id="dashboard-right" class="span4">
-    <h4 class="widgettitle"> Side Content</h4>
+    <h3 class="subtitle">Manage Position</h3>
+    <div class="divider15"></div>
+    <h4 class="widgettitle"> Import Position</h4>
     <div class="widgetcontent">
-      Side content
+      <%= form_tag import_positions_path, multipart: true do %>
+      <div class="fileupload fileupload-new" data-provides="fileupload">
+        <div class="input-append">
+          <div class="uneditable-input span2">
+          <i class="iconfa-file fileupload-exists"></i>
+          <span class="fileupload-preview"></span>
+          </div>
+          <span class="btn btn-file"><span class="fileupload-new">Select file</span>
+          <span class="fileupload-exists">Change</span>
+          <input class="file optional" id="file" name="file" type="file" /></span>
+          <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+        </div>
+      </div>
+      <%= submit_tag "Import Positions".html_safe, :class => "btn btn-primary submit-import" %>
+      <% end %>
     </div>
   </div>
-</div> <!--row-fluid--><h1>Admin::Admin#position</h1>
-<p>Find me in app/views/admin/admin/position.html.erb</p>
+</div> <!--row-fluid-->
