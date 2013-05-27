@@ -1,29 +1,71 @@
-<p>
-  Download:
-  <%= link_to "CSV", export_competencies_path(format: "csv") %> |
-  <%= link_to "Excel", export_competencies_path(format: "xls") %>
-</p>
+<% provide(:title, "competency library") %>
+<% provide(:page_title, "Competency Library") %>
+<% provide(:page_sub_title, "find out competency models") %>
+<% provide(:page_icon, "iconfa-sitemap") %>
 
-<table id="competencies">
-  <tr>
-    <th>&nbsp;Name &nbsp;&nbsp;&nbsp;</th>
-    <th>&nbsp;&nbsp;&nbsp; Description &nbsp;&nbsp;&nbsp;</th>
-    <th>&nbsp;&nbsp;&nbsp; ID &nbsp;&nbsp;&nbsp;</th>
-    <th>&nbsp;&nbsp;&nbsp; Category_Id &nbsp;&nbsp;&nbsp;&nbsp;</th>
-  </tr>
-  <% @competencies.each do |mCompetency| %>
-    <tr>
-      <td>    <%= mCompetency.name   %>    </td>
-      <td><%=  mCompetency.description    %></td>
-      <td><%=  mCompetency.id    %></td>
-      <td><%= mCompetency.category_id    %></td>
-    </tr>
-  <% end %>
-</table>
-
-<h2>Import Products</h2>
-
-<%= form_tag import_competencies_path, multipart: true do %>
-  <%= file_field_tag :file %>
-  <%= submit_tag "Import" %>
+<% content_for :breadcrumbs do %>
+<%= content_tag(:li, "Competency Library") %>
 <% end %>
+
+<% content_for :javascript do %>
+<script type="text/javascript">
+$(function() {
+  $('.accordion').accordion({
+      collapsible: true,
+      active: false,
+      heightStyle: "content",
+      header: ".a-header"
+  });
+});
+</script>
+<% end %>
+
+<div class="row-fluid">
+  <div id="dashboard-left" class="span8">
+    <h3 class="subtitle">Competency Model</h3>
+    <div class="divider15"></div>
+    <h4 class="widgettitle"><span class="iconfa-home"></span> Competency Summary</h4>
+    <% if @competencies.size == 0 %>
+    <div class="widgetcontent">
+      <p>No Competency Model setup yet. please setup it first. </p>
+    </div>
+    <% else %>
+    <div class="widgetcontent nopadding">
+      <div class="accordion">
+        <% @competencies.each do |c| %>
+        <div class="a-header">
+          <a href="#"><%= c.name %><span class="pull-right"><%= "created at " + distance_of_time_in_words_to_now(c.created_at) + ' ago' %></span></a>
+        </div>
+        <div class="a-content">
+          <%= content_tag(:h5, "Competency description: " + c.description) %>
+          <% c.competency_levels.each do |cl| %>
+            <%= content_tag(:h6, "Level " + cl.level.to_s + ": " + cl.description) %>
+            <%= content_tag(:p, "Detail Requirements:") %>
+            <ul>
+            <% cl.competency_level_requirements.each do |clr| %>
+            <%= content_tag(:li, clr.description) %>
+            <% end %>
+            </ul>
+          <% end %>
+        </div>
+        <% end %>
+      </div>
+    </div>
+    <% end %>
+
+    <div class="well">
+      <a href="<%= export_competencies_path(format: "csv") %>" class="btn btn-warning"><i class="iconfa-download-alt icon-white"></i> Export As CSV</a>
+    </div>
+
+  </div> <!--span 8-->
+
+  <div id="dashboard-right" class="span4">
+    <h3 class="subtitle">Side Bar</h3>
+    <div class="divider15"></div>
+    <h4 class="widgettitle"> Side Bar</h4>
+    <div class="widgetcontent">
+      None
+    </div>
+  </div>
+
+</div> <!--row-fluid-->

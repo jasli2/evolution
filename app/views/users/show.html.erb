@@ -95,16 +95,18 @@
     </div>
     <% end %>
 
-    <% if @user.subordinates %>
     <h3 class="subtitle">Subordinates</h3>
     <div class="well user-subordinates">
+      <% unless @user.subordinates.size > 0 %>
+      None
+      <% else %>
       <ul>
       <% @user.subordinates.each do |s| %>
         <li><%= link_to image_tag(user_avatar_path(s, :small)), user_path(s), {:title => "#{s.name}"} %></li>
       <% end %>
       </ul>
+      <% end %>
     </div>
-    <% end %>
     <div class="divider30"></div>
     
     <h3 class="subtitle">Social Networks</h3>

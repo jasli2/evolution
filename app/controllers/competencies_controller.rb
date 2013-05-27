@@ -1,22 +1,4 @@
 class CompetenciesController < ApplicationController
- #def show
- #end
-
- #def new
- #end
-
- #def edit
- #end
-
- #def create
- #end
-
- #def update
- #end
-
- #def destroy
- #end
-
   #POST /competency/import
   def import
     Competency.import(params[:file])
@@ -40,6 +22,9 @@ class CompetenciesController < ApplicationController
   # GET /competency
   # GET /competency.json
   def index
+    @menu_category = 'user'
+    @menu_active = 'competency' 
+
     @competencies = Competency.order(:name)
     respond_to do |format|
       format.html

@@ -31,6 +31,7 @@
             <th class="center">Action</th>
             <th class="center">Name</th>
             <th class="center">Description</th>
+            <th class="center">Related Courses</th>
           </tr>
         </thead>
         <tbody>
@@ -42,6 +43,15 @@
             </td>
             <td class="center"><%= p.name %></td>
             <td class="center"><%= p.description %></td>
+            <td class="" id="related-course">
+              <ul>
+                <% p.competency_levels.each do |cl| %>
+                  <% cl.courses.each do |c| %>
+                  <li><%= link_to c.title, course_path(c) %></li>
+                  <% end %>
+                <% end %>
+              </ul>
+            </td>
           </tr>
           <% end %>
         </tbody>

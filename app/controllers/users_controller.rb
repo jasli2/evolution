@@ -22,7 +22,7 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @menu_category = current_user.admin? ? 'admin' : 'user'
-    @menu_active = current_user.admin? ? 'users' : 'dashboard' 
+    @menu_active = current_user.admin? ? 'users' : 'profile' 
 
     @user = User.find(params[:id])
     @courses = Course.for_position(@user.position).page(params[:page])
@@ -53,7 +53,7 @@ class UsersController < ApplicationController
       @menu_active = 'users'
     else
       @menu_category = 'user'
-      @menu_active = 'dashboard'
+      @menu_active = 'profile'
     end
     @user = User.find(params[:id])
     session[:return_to] ||= request.referer

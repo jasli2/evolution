@@ -6,18 +6,13 @@
     <ul class="headmenu">
       <li class="odd">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-          <span class="count">5</span>
+          <span class="count">0</span>
           <span class="head-icon head-message"></span>
           <span class="headmenu-label">Messages</span>
         </a>
         <ul class="dropdown-menu">
           <li class="nav-header">Messages</li>
-          <li><a href=""><span class="iconfa-envelope"></span> New message from <strong>Jack</strong> <small class="muted"> - 19 hours ago</small></a></li>
-          <li><a href=""><span class="iconfa-envelope"></span> New message from <strong>Daniel</strong> <small class="muted"> - 2 days ago</small></a></li>
-          <li><a href=""><span class="iconfa-envelope"></span> New message from <strong>Jane</strong> <small class="muted"> - 3 days ago</small></a></li>
-          <li><a href=""><span class="iconfa-envelope"></span> New message from <strong>Tanya</strong> <small class="muted"> - 1 week ago</small></a></li>
-          <li><a href=""><span class="iconfa-envelope"></span> New message from <strong>Lee</strong> <small class="muted"> - 1 week ago</small></a></li>
-          <li class="viewmore"><a href="#">View More Messages</a></li>
+          <li class="viewmore"><a href="#">No New Messages</a></li>
         </ul>
       </li>
       <li class="right">
@@ -26,8 +21,13 @@
           <div class="userinfo">
             <h5><%= current_user.name %> <small>- <%= current_user.email %></small></h5>
             <ul>
+              <% unless current_user.admin? %>
+              <li><a href="<%= edit_user_path(current_user) %>">Edit Profile</a></li>
+              <li><a href="">Account Settings</a></li>
+              <% else %>
               <li><a href="">Edit Profile</a></li>
               <li><a href="">Account Settings</a></li>
+              <% end %>
               <li><%= link_to "Sign out", logout_path %></li>
             </ul>
           </div>
