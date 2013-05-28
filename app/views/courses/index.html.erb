@@ -1,6 +1,6 @@
-<% provide(:title, "courses library") %>
-<% provide(:page_title, "Courses Library") %>
-<% provide(:page_sub_title, "all courses") %>
+<% provide(:title, @menu_active == 'courses' ? "Courses Library" : "My Courses") %>
+<% provide(:page_title, @menu_active == 'courses' ? "Courses Library" : "My Courses") %>
+<% provide(:page_sub_title, @menu_active == 'courses' ? "Find all courses" : "Your pending courses") %>
 <% provide(:page_icon, "iconfa-folder-open") %>
 
 <% content_for :breadcrumbs do %>
@@ -14,11 +14,15 @@
 
 <div class="row-fluid">
   <div id="dashboard-left" class="span8">
-    <h3 class="subtitle">Courses</h3>
+    <div class="well">
+      <a href="<%= new_course_path %>" class="btn btn-primary"><i class="iconfa-plus icon-white"></i> Create New Course</a>
+    </div>
+
+    <h3 class="subtitle">Courses <%= @courses.total_count %></h3>
     <div class="divider15"></div>
     <div class="widgetbox">
       <div class="headtitle">
-        <h4 class="widgettitle"><span class="iconfa-folder-open"></span> Courses</h4>
+        <h4 class="widgettitle"><span class="iconfa-folder-open"></span> Find Courses (<%= @courses.total_count %>)</h4>
       </div>
       <% if @courses.size == 0 %>
       <div class="widgetcontent">
@@ -44,19 +48,32 @@
       <% end %>
     </div>
 
-    <div class="well">
-      <a href="<%= new_course_path %>" class="btn btn-primary"><i class="iconfa-plus icon-white"></i> Create New Course</a>
-      <a href="<%= export_courses_path(format: "csv") %>" class="btn btn-warning"><i class="iconfa-download-alt icon-white"></i> Export As CSV</a>
-    </div>
-  
   </div>
 
   <div id="dashboard-right" class="span4">
-    <h3 class="subtitle">Side Bar</h3>
+    <h3 class="subtitle">Filter</h3>
     <div class="divider15"></div>
-    <h4 class="widgettitle"> Side Bar</h4>
+    <h4 class="widgettitle"> Filter</h4>
     <div class="widgetcontent">
-      None
+      <%= form_tag courses_path, :method => 'get' do %>
+        <% unless @user %>
+        <div>
+          <%= label_tag :teacher_id, "Teacher:" %>
+          <%= collection_select(nil, :teacher_id, User.teacher, :id, :name, {:include_blank => '请选择'}) %>
+        </div>
+        <div>
+          <%= label_tag :position_id, 'Position:' %>
+          <%= collection_select(nil, :position_id, Position.all, :id, :name, {:include_blank => '请选择'}) %>
+        </div>
+        <% else %>
+        <div>
+          <%= label_tag :teacher_id, "Teacher:" %>
+          <%= collection_select(nil, :teacher_id, User.teacher, :id, :name, {:include_blank => '请选择'}) %>
+        </div>
+        <% end %>
+          <%= submit_tag "Filter Courses".html_safe, :class => "btn btn-primary" %>
+          <%= link_to "Clear Filter",  courses_path %>
+      <% end %>
     </div>
   </div>
 </div> <!--row-fluid-->

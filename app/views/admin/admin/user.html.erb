@@ -13,7 +13,7 @@
 <% end %>
 
 <div class="row-fluid">
-  <div id="dashboard-left" class="span12">
+  <div id="dashboard-left" class="span9">
     <h3 class="subtitle">All Users</h3>
     <div class="divider15"></div>
     <div class="widgetbox">
@@ -67,17 +67,16 @@
       <% end %>
     </div>
   </div>
-</div> <!--row-fluid-->
 
-<div class="row-fluid">
-  <div id="dashboard-left" class="span4">
+  <div id="dashboard-right" class="span3">
+    <h3 class="subtitle">Manage Users</h3>
+    <div class="divider15"></div>
+
     <div class="well">
       <a href="<%= new_user_path %>" class="btn btn-primary"><i class="iconfa-plus icon-white"></i> Create New User</a>
       <a href="<%= export_users_path(format: "csv") %>" class="btn btn-warning"><i class="iconfa-download-alt icon-white"></i> Export As CSV</a>
     </div>
-  </div>
 
-  <div id="dashboard-right" class="span8">
     <div class="well">
       <%= form_tag import_users_path, :multipart => true do %>
       <div class="fileupload fileupload-new" data-provides="fileupload">

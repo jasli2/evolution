@@ -26,7 +26,13 @@ class CoursesController < ApplicationController
     if @user
       @courses = Course.for_position(@user.position).page params[:page]
     else
-      @courses = Course.order(:id).page params[:page]
+      if params[:teacher_id] or params[:position_id]
+        @courses = Course.for_teacher(User.find(params[:teacher_id])) unless params[:teacher_id].blank?
+        @courses = @courses.for_position(Position.find(params[:position_id])) unless params[:position_id].blank?
+        @courses = @courses.page params[:page]
+      else
+        @courses = Course.order(:id).page params[:page]
+      end
     end
   end
 

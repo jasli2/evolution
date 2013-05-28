@@ -25,7 +25,9 @@ class UsersController < ApplicationController
     @menu_active = current_user.admin? ? 'users' : 'profile' 
 
     @user = User.find(params[:id])
-    @courses = Course.for_position(@user.position).page(params[:page])
+    @pending_courses = Course.for_position(@user.position).page(params[:page])
+    @teach_courses = Course.for_teacher(@user).page(params[:page])
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @user }

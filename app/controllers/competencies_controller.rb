@@ -25,7 +25,13 @@ class CompetenciesController < ApplicationController
     @menu_category = 'user'
     @menu_active = 'competency' 
 
-    @competencies = Competency.order(:name)
+    if params[:position_id]
+      @position = Position.find(params[:position_id])
+    else
+      @competencies = Competency.order(:name)
+    end
+
+    logger.info "position_id: " + params[:position_id].to_s
     respond_to do |format|
       format.html
     end

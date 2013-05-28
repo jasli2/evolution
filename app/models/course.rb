@@ -50,6 +50,13 @@ class Course < ActiveRecord::Base
   mount_uploader :cover_image, ImageUploader
   validates :cover_image, :file_size => {:maximum => 2.megabytes.to_i }
 
+  #scopes
+  scope :for_teacher, lambda { |u| where( :teacher_id => u.id ) if u }
+  def self.for_position(p)
+    includes(:competency_levels).where(:competency_levels => {:id => p.competency_level_ids}) if p
+  end
+
+
   def self.to_csv(options = {})
     header = ["title", "description", "creator", "creator ID", "duration", "course type", \
               "Teacher", "TeacherID", "competency", "level"]
@@ -114,7 +121,4 @@ class Course < ActiveRecord::Base
     end
   end
 
-  def self.for_position(p)
-    includes(:competency_levels).where(:competency_levels => {:id => p.competency_level_ids}) if p
-  end
 end
