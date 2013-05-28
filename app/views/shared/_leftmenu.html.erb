@@ -5,16 +5,35 @@
       <li class="<%= category == 'user' ? "dropdown active" : "dropdown" %>"><a href=""><span class="iconfa-plus"></span> <%= t('menu.user.action') %></a>
       <ul style="<%= "display: block" if category == 'user' %>">
         <li class="<%= "active" if active == 'home' %>"><a href="<%= dashboard_user_path(current_user) %>"><span class="iconfa-home"></span> <%= t('menu.user.home') %></a></li>
+        <li class="<%= "active" if active == 'profile' %>"><a href="<%= user_path(current_user) %>"><span class="iconfa-file"></span> <%= t('menu.user.myprofile') %></a></li>
         <li class="<%= "active" if active == 'user_courses' %>"><a href="<%= user_courses_path(current_user) %>"><span class="iconfa-book"></span> <%= t('menu.user.mycourse') %></a></li>
         <li class="<%= "active" if active == 'competency' %>"><a href="<%= competencies_path %>"><span class="iconfa-cloud"></span> <%= t('menu.user.competency') %></a></li>
-        <li class="<%= "active" if active == 'courses' %>"><a href="<%= courses_path %>"><span class="iconfa-briefcase"></span> <%= t('menu.user.courses') %></a></li>
+        <li class="<%= "active" if active == 'courses' %>"><a href="<%= courses_path %>"><span class="iconfa-bookmark-empty"></span> 我的博客</a></li>
+        <li class="<%= "active" if active == 'member' %>"><a href="#"><span class="iconfa-question-sign"></span> 我的问答</a></li>
+        <li class="<%= "active" if active == 'member' %>"><a href="#"><span class="iconfa-briefcase"></span> 我的案例</a></li>
+        <li class="<%= "active" if active == 'member' %>"><a href="#"><span class="iconfa-upload"></span> 我的成长记录</a></li>
+        <li class="<%= "active" if active == 'member' %>"><a href="#"><span class="iconfa-trophy"></span> 我的荣誉</a></li>
       </ul>
+      </li>
       
+      <% if current_user.teach_courses.size > 0 %>
+      <li class="<%= category == 'manager' ? "dropdown active" : "dropdown" %>"><a href=""><span class="iconfa-plus"></span> <%= t('menu.teacher.action') %></a>
+      <ul style="<%= "display: block" if category == 'manager' %>">
+        <li class="<%= "active" if active == 'member' %>"><a href="#"><span class="iconfa-group"></span> 我的课程管理</a></li>
+        <li class="<%= "active" if active == 'member' %>"><a href="#"><span class="iconfa-rss"></span> 我的班级管理</a></li>
+        <li class="<%= "active" if active == 'member' %>"><a href="#"><span class="iconfa-certificate"></span> 我的讲师生涯</a></li>
+      </ul>
+      </li>
+      <% end %>
+
       <% if current_user.subordinates.size > 0 %>  
       <li class="<%= category == 'manager' ? "dropdown active" : "dropdown" %>"><a href=""><span class="iconfa-plus"></span> <%= t('menu.manager.action') %></a>
       <ul style="<%= "display: block" if category == 'manager' %>">
         <li class="<%= "active" if active == 'member' %>"><a href="#"><span class="iconfa-group"></span> <%= t('menu.manager.members') %></a></li>
+        <li class="<%= "active" if active == 'member' %>"><a href="#"><span class="iconfa-tasks"></span> 团队学习记录</a></li>
+        <li class="<%= "active" if active == 'member' %>"><a href="#"><span class="iconfa-check"></span> 团队认证评估</a></li>
       </ul>
+      </li>
       <% end %>
       <% end %>
       
@@ -26,7 +45,14 @@
         <li class="<%= "active" if active == 'competency' %>"><a href="<%= admin_manage_competency_path %>"><span class="iconfa-sitemap"></span> <%= t('menu.admin.competency') %></a></li>
         <li class="<%= "active" if active == 'courses' %>"><a href="<%= admin_manage_course_path %>"><span class="iconfa-folder-open"></span> <%= t('menu.admin.course') %></a></li>
         <li class="<%= "active" if active == 'positions' %>"><a href="<%= admin_manage_position_path %>"><span class="iconfa-reorder"></span> <%= t('menu.admin.position') %></a></li>
+        <li class="<%= "active" if active == 'member' %>"><a href="#"><span class="iconfa-check"></span> 考试管理</a></li>
+        <li class="<%= "active" if active == 'member' %>"><a href="#"><span class="iconfa-check"></span> 讲师管理</a></li>
+        <li class="<%= "active" if active == 'member' %>"><a href="#"><span class="iconfa-check"></span> 培训计划管理</a></li>
+        <li class="<%= "active" if active == 'member' %>"><a href="#"><span class="iconfa-check"></span> 能力评估管理</a></li>
+        <li class="<%= "active" if active == 'member' %>"><a href="#"><span class="iconfa-check"></span> 社区管理</a></li>
+        <li class="<%= "active" if active == 'member' %>"><a href="#"><span class="iconfa-check"></span> 统计中心</a></li>
       </ul>
+      </li>
       <% end %>
   </ul>
 </div><!--leftmenu-->

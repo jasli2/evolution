@@ -1,3 +1,37 @@
 zh-CN:
   menu:
     navigator: '导航栏'
+    user:
+      actions: '用户操作'
+      mycourse: '我的课程'
+      myexams:  '我的考试'
+      myassessments: '个人评估'
+      calendar: '我的培训日程表'
+      competency: '能力库'
+      courses: '课程库'
+      teacheres: '我的老师'
+    teacher:
+      action: '教师操作'
+      cert: '资格认证'
+      class: '教师课程'
+      development: '开发课程'
+      records: '课程记录'
+      club: '教师俱乐部'
+    manager:
+      action: '领导操作'
+      members: '团队成员'
+      competency: '团队能力'
+      records: '团队学习记录'
+      assessments: '团队评估'
+    admin:
+      action: '管理员操作'
+      dashboard: '仪表板'
+      users: '用户管理'
+      competency: '能力模型管理'
+      course:  '课程模型管理'
+      teacher: '教师管理'
+      provider: '供应商管理'
+      position: '职位管理'
+      plan: '学习计划'
+      assessments: '评估管理'
+      data: '数据分析'

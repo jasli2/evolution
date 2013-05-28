@@ -5,20 +5,52 @@
   <div class="headerinner">
     <ul class="headmenu">
       <li class="odd">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-          <span class="count">5</span>
-          <span class="head-icon head-message"></span>
-          <span class="headmenu-label">Messages</span>
+        <a href="">
+          <span class="head-icon iconfa-certificate"></span>
+          <span class="headmenu-label">考试中心</span>
         </a>
-        <ul class="dropdown-menu">
-          <li class="nav-header">Messages</li>
-          <li><a href=""><span class="iconfa-envelope"></span> New message from <strong>Jack</strong> <small class="muted"> - 19 hours ago</small></a></li>
-          <li><a href=""><span class="iconfa-envelope"></span> New message from <strong>Daniel</strong> <small class="muted"> - 2 days ago</small></a></li>
-          <li><a href=""><span class="iconfa-envelope"></span> New message from <strong>Jane</strong> <small class="muted"> - 3 days ago</small></a></li>
-          <li><a href=""><span class="iconfa-envelope"></span> New message from <strong>Tanya</strong> <small class="muted"> - 1 week ago</small></a></li>
-          <li><a href=""><span class="iconfa-envelope"></span> New message from <strong>Lee</strong> <small class="muted"> - 1 week ago</small></a></li>
-          <li class="viewmore"><a href="#">View More Messages</a></li>
-        </ul>
+      </li>
+      <li>
+        <a href="<%= current_user.admin? ?  admin_manage_competency_path : competencies_path %>">
+          <span class="head-icon iconfa-signal"></span>
+          <span class="headmenu-label">能力中心</span>
+        </a>
+      </li>
+      <li class="odd">
+        <a href="<%= current_user.admin? ?  admin_manage_course_path : courses_path %>">
+          <span class="head-icon iconfa-tasks"></span>
+          <span class="headmenu-label">课程中心</span>
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <span class="head-icon iconfa-group"></span>
+          <span class="headmenu-label">讲师中心</span>
+        </a>
+      </li>
+      <li class="odd">
+        <a href="#">
+          <span class="head-icon iconfa-question-sign"></span>
+          <span class="headmenu-label">问答中心</span>
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <span class="head-icon iconfa-book"></span>
+          <span class="headmenu-label">图书馆</span>
+        </a>
+      </li>
+      <li class="odd">
+        <a href="#">
+          <span class="head-icon iconfa-briefcase"></span>
+          <span class="headmenu-label">案例中心</span>
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <span class="head-icon iconfa-rss"></span>
+          <span class="headmenu-label">学习社区</span>
+        </a>
       </li>
       <li class="right">
         <div class="userloggedinfo">
@@ -26,8 +58,13 @@
           <div class="userinfo">
             <h5><%= current_user.name %> <small>- <%= current_user.email %></small></h5>
             <ul>
+              <% unless current_user.admin? %>
+              <li><a href="<%= edit_user_path(current_user) %>">Edit Profile</a></li>
+              <li><a href="">Account Settings</a></li>
+              <% else %>
               <li><a href="">Edit Profile</a></li>
               <li><a href="">Account Settings</a></li>
+              <% end %>
               <li><%= link_to "Sign out", logout_path %></li>
             </ul>
           </div>

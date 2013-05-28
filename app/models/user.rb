@@ -44,13 +44,12 @@ class User < ActiveRecord::Base
 
   has_many :subordinates, :class_name => "User", :foreign_key => "manager_id"
   belongs_to :manager, :class_name => "User"
-  belongs_to :teacher
 
   belongs_to :position
   attr_accessible :position
 
-  has_many :course, :foreign_key => "creator_id"
-  has_many :course, :foreign_key =>  "teacher_id"
+  has_many :create_courses, :foreign_key => "creator_id", :class_name => 'Course'
+  has_many :teach_courses, :foreign_key => "teacher_id", :class_name => 'Course'
 
   has_many :competency_users
   has_many :competencies, :through => :competency_users
@@ -61,7 +60,14 @@ class User < ActiveRecord::Base
   validates :position_id, :presence => true
 
   scope :staff, where(:is_admin => false)
-
+  scope :teacher, lambda { {:joins => :teach_courses, :group => "courses.teacher_id", :having => ["count(courses.teacher_id) > 0"]} }
+  #def self.teacher_for_position(p)
+  #  if p
+  #    c = Course.for_position(p)
+  #    cids = c.map {|c| c.id}
+  #    includes(:teach_courses).where(:courses => {:id => cids})
+  #  end
+  #end
 
   # custom image sizes: each key is a version name
   IMAGE_CONFIG = {

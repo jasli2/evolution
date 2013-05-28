@@ -31,13 +31,25 @@ class Admin::AdminController < ApplicationController
   def competency
     @menu_category = 'admin'
     @menu_active = 'competency'
-    @competencies = Competency.all
+    if params[:position_id]
+      @position = Position.find(params[:position_id])
+    else
+      @competencies = Competency.order(:name)
+    end
   end
 
   def course
     @menu_category = 'admin'
     @menu_active = 'courses'
-    @courses = Course.order(:id).page params[:page]
+
+    if params[:teacher_id] or params[:position_id]
+        @courses = Course.for_teacher(User.find(params[:teacher_id])) unless params[:teacher_id].blank?
+        @courses = @courses.for_position(Position.find(params[:position_id])) unless params[:position_id].blank?
+        @courses = @courses.page params[:page]
+    else
+        @courses = Course.order(:id).page params[:page]
+    end
+
   end
 
   def position

@@ -26,35 +26,17 @@
 
 <div class="row-fluid">
   <div id="dashboard-left" class="span8">
-    <h3 class="subtitle">Competency Model</h3>
+    <h3 class="subtitle">Courses</h3>
     <div class="divider15"></div>
-    <h4 class="widgettitle"><span class="iconfa-signal"></span> Competency Summary</h4>
-    <div class="widgetcontent nopadding">
-      <div class="accordion">
-        <% @user.position.competency_levels.each do |cl| %>
-        <div class="a-header">
-          <a href="#"><%= cl.competency.name + "(Lv" + cl.level.to_s + ")" %>
-            <span class="badge badge-primary pull-right">0%</span>
-          </a>
-        </div>
-        <div class="a-content">
-          <h4>Description</h4>
-          <p><%= cl.description %></p>
-        </div>
-        <% end %>
-      </div><!--#accordion-->
-    </div>
-    <div class="divider15"></div>
-
-    <h4 class="widgettitle"><span class="iconfa-tasks icon-white"></span> Pending Courses </h4>
-    <% if @courses.size == 0 %>
+    <h4 class="widgettitle"><span class="iconfa-tasks icon-white"></span> Teach Courses </h4>
+    <% if @teach_courses.size == 0 %>
     <div class="widgetcontent">
-      <p>No user setup yet. please setup it first. </p>
+      <p>None</p>
     </div>
     <% else %>
     <div class="widgetcontent nopadding">
       <ul class="courselist">
-        <% @courses.each do |c| %>
+        <% @teach_courses.each do |c| %>
         <li>
           <%= image_tag course_cover_path(c, :normal), :class => "pull-left" %>
           <div class="course-info">
@@ -66,7 +48,32 @@
         </li>
         <% end %>
       </ul>
-      <div class="page-wrapper"><%= paginate @courses %></div>
+      <div class="page-wrapper"><%= paginate @teach_courses %></div>
+    </div>
+    <% end %>
+    <div class="divider15"></div>
+
+    <h4 class="widgettitle"><span class="iconfa-tasks icon-white"></span> Pending Courses </h4>
+    <% if @pending_courses.size == 0 %>
+    <div class="widgetcontent">
+      <p>None</p>
+    </div>
+    <% else %>
+    <div class="widgetcontent nopadding">
+      <ul class="courselist">
+        <% @pending_courses.each do |c| %>
+        <li>
+          <%= image_tag course_cover_path(c, :normal), :class => "pull-left" %>
+          <div class="course-info">
+            <h4><%= link_to c.title, course_path(c) %></h4>
+            <h6>created by <%= link_to c.teacher.name, user_path(c.teacher) %> at <%= distance_of_time_in_words_to_now(c.created_at) + ' ago' %></h6>
+            <p><%= c.description %></p>
+            <a href="<%= course_path(c) %>" class="btn btn-primary btn-small"><span class="iconfa-info-sign icon-white"></span> View Details</a>
+          </div>
+        </li>
+        <% end %>
+      </ul>
+      <div class="page-wrapper"><%= paginate @pending_courses %></div>
     </div>
     <% end %>
 
@@ -95,16 +102,23 @@
     </div>
     <% end %>
 
-    <% if @user.subordinates %>
     <h3 class="subtitle">Subordinates</h3>
     <div class="well user-subordinates">
+      <% unless @user.subordinates.size > 0 %>
+      None
+      <% else %>
       <ul>
       <% @user.subordinates.each do |s| %>
-        <li><%= link_to image_tag(user_avatar_path(s, :small)), user_path(s), {:title => "#{s.name}"} %></li>
+        <li>
+          <div class="user-image-name">
+            <%= link_to image_tag(user_avatar_path(s, :small)), user_path(s), {:title => "#{s.name}"} %>
+            <%= s.name %>
+          </div>
+        </li>
       <% end %>
       </ul>
+      <% end %>
     </div>
-    <% end %>
     <div class="divider30"></div>
     
     <h3 class="subtitle">Social Networks</h3>
@@ -125,6 +139,23 @@
         None
       </div>
     </div>
+    <div class="divider30"></div>
+
+    <h3 class="subtitle">Blogs</h3>
+    <div class="divider15"></div>
+    <h4 class="widgettitle">My Blog</h4>
+    <div class="widgetcontent">
+      None
+    </div>
+    <div class="divider30"></div>
+
+    <h3 class="subtitle">Knowledge Center</h3>
+    <div class="divider15"></div>
+    <h4 class="widgettitle">Follwing Questions</h4>
+    <div class="widgetcontent">
+      None
+    </div>
+
 
   </div>
 </div> <!--row-fluid-->

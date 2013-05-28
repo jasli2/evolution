@@ -11,6 +11,7 @@
 <script type="text/javascript">
   $(function() {
     $('#datepicker').datepicker();
+    
     $('.accordion').accordion({
         collapsible: true,
         active: false,
@@ -31,13 +32,29 @@
       <div class="accordion">
         <% current_user.position.competency_levels.each do |cl| %>
         <div class="a-header">
-          <a href="#"><%= cl.competency.name + "(Lv" + cl.level.to_s + ")" %>
-            <span class="badge badge-primary pull-right">0%</span>
-          </a>
+          <a href="#"><%= cl.competency.name + "（" + level_name(cl.level) + "）" %></a>
         </div>
         <div class="a-content">
-          <h4>Description</h4>
-          <p><%= cl.description %></p>
+          <div class="competency-level-details">
+            <%= content_tag(:h6, "级别描述：" + cl.description) %>
+            <ul id="cl-requirements">
+            <% cl.competency_level_requirements.each do |clr| %>
+            <%= content_tag(:li, clr.description) %>
+            <% end %>
+            </ul>
+            <div class="divider15"></div>
+            <%= content_tag(:h6, "相关课程（" + cl.courses.size.to_s + "）：") %>
+            <ul id="cl-courses">
+              <% cl.courses.each do |course| %>
+              <li>
+                <div class="cl-course-banner">
+                  <%= link_to image_tag(course_cover_path(course, :small)), course_path(course), {:title => "#{course.title}"} %>
+                  <%= link_to course.title, course_path(course) %>
+                </div>
+              </li>
+              <% end %>
+            </ul>
+          </div>
         </div>
         <% end %>
       </div><!--#accordion-->

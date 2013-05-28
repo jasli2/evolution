@@ -11,9 +11,8 @@
 <script type="text/javascript">
 $(function() {
   $('#datepicker').datepicker();
+  $('.tabbedwidget').tabs();
   $('.accordion').accordion({
-      collapsible: true,
-      active: false,
       heightStyle: "content",
       header: ".a-header"
   });
@@ -76,17 +75,39 @@ $(function() {
             <a href="#"><%= c.name %><span class="pull-right"><%= "created at " + distance_of_time_in_words_to_now(c.created_at) + ' ago' %></span></a>
           </div>
           <div class="a-content">
-            <%= content_tag(:h5, "Competency description: " + c.description) %>
-            <% c.competency_levels.each do |cl| %>
-              <%= content_tag(:h6, "Level " + cl.level.to_s + ": " + cl.description) %>
-              <%= content_tag(:p, "Detail Requirements:") %>
+            <%= content_tag(:h5, "胜任力描述： " + c.description) %>
+            <div class="divider15"></div>
+            <div class="tabbedwidget">
               <ul>
+                <li><a href="#tabs-1"><%= level_name 1 %></a></li>
+                <li><a href="#tabs-2"><%= level_name 2 %></a></li>
+                <li><a href="#tabs-3"><%= level_name 3 %></a></li>
+                <li><a href="#tabs-4"><%= level_name 4 %></a></li>
+              </ul>
+            <% c.competency_levels.each_with_index do |cl, i| %>
+            <div class="competency-level-details" id="<%= 'tabs-' + (i+1).to_s %>">
+              <%= content_tag(:h6, "级别描述：" + cl.description) %>
+              <ul id="cl-requirements">
               <% cl.competency_level_requirements.each do |clr| %>
               <%= content_tag(:li, clr.description) %>
               <% end %>
               </ul>
+              <div class="divider15"></div>
+              <%= content_tag(:h6, "相关课程（" + cl.courses.size.to_s + "）：") %>
+              <ul id="cl-courses">
+                <% cl.courses.each do |course| %>
+                <li>
+                  <div class="cl-course-banner">
+                    <%= link_to image_tag(course_cover_path(course, :small)), course_path(course), {:title => "#{course.title}"} %>
+                    <%= link_to course.title, course_path(course) %>
+                  </div>
+                </li>
+                <% end %>
+              </ul>
+            </div>
             <% end %>
           </div>
+        </div>
           <% end %>
         </div>
         

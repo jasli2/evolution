@@ -3,6 +3,8 @@ en:
     navigator: 'Navigator'
     user:
       action: 'User Actions'
+      home: 'My Home'
+      myprofile: 'My Profile'
       mycourse: 'My Courses'
       myexams: 'My Exams'
       myassessments: 'My Assessments'

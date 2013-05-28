@@ -1,3 +1,30 @@
 // Place all the styles related to the CompetencyController controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.competency-level-details {
+  ul#cl-requirements {
+    padding: 5px 30px;
+  }
+
+  ul#cl-courses {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    li {
+      display: inline-block;
+      margin-right: 10px;
+      margin-top: 10px;
+      vertical-align: top;
+      .cl-course-banner {
+        width: 120px;
+        text-align: center;
+        img { 
+          display: block; 
+          width: 100px;
+          margin:auto; 
+        }
+      }
+    }
+  }
+}
