@@ -9,7 +9,7 @@ class CompetenciesController < ApplicationController
   end
 
   def export
-    @competencies = Competency.order(:name)
+    @competencies = Competency.order('id DESC')
     if @competencies
       respond_to do |format|
         format.html {redirect_to competencies_path, notice: "export open" }
@@ -28,7 +28,7 @@ class CompetenciesController < ApplicationController
     if params[:position_id]
       @position = Position.find(params[:position_id])
     else
-      @competencies = Competency.order(:name)
+      @competencies = Competency.order('id DESC')
     end
 
     logger.info "position_id: " + params[:position_id].to_s

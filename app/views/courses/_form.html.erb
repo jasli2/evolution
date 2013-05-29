@@ -1,7 +1,7 @@
-<%= simple_form_for(@course, :html => {:class => 'form-horizontal', :multipart => true }) do |f| %>
+<%= simple_form_for(shallow_args(current_user, @course), :html => {:class => 'form-horizontal', :multipart => true }) do |f| %>
   <%= f.input :title, :input_html => { :class => "span5" } %>
   <%= f.input :description, :as => :text, :input_html => { :class => "span5",  :cols => 50, :rows => 3 } %>
-  <%= f.association :creator, collection: User.staff, label_method: :name, value_method: :id, include_blank: false %>
+  <%# f.association :creator, collection: User.staff, label_method: :name, value_method: :id, include_blank: false %>
   <%= f.association :teacher, collection: User.staff, label_method: :name, value_method: :id, include_blank: false %>
   <%= f.input :duration %>
   <%= f.input :teach_type, :collection => [['授课', '授课'] ,['讨论', '讨论']], :label_method => :last, :value_method => :first, :as => :select %>

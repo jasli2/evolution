@@ -47,7 +47,7 @@ class Admin::AdminController < ApplicationController
         @courses = @courses.for_position(Position.find(params[:position_id])) unless params[:position_id].blank?
         @courses = @courses.page params[:page]
     else
-        @courses = Course.order(:id).page params[:page]
+        @courses = Course.order('id DESC').page params[:page]
     end
 
   end

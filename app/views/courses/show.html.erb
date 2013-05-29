@@ -18,6 +18,22 @@
     // tabbed widget
     $('.tabbedwidget').tabs();
   });
+  function loadSWF(url, id){
+    var flashvars = {};
+    var swfwidth = $("#swf-content").width();
+    console.log(swfwidth);
+    var swfheigth = Math.floor(swfwidth * 3 / 4);
+    console.log(swfheigth);
+    flashvars.autoPlay = "true";
+    var params = {};
+    params.play = "true";
+    params.menu = "false";
+    params.quality = "high";
+    params.allowfullscreen = "true";
+    var attributes = {};
+    attributes.align = "middle";
+    swfobject.embedSWF(url, "swf-content", swfwidth.toString(), swfheigth.toString(), "9.0.0", false, flashvars, params, attributes);
+  }
 </script>
 <% end %>
 
@@ -31,9 +47,13 @@
         <h5>Created by <%= link_to @course.creator.name, user_path(@course.creator) %> at <%= distance_of_time_in_words_to_now(@course.created_at) + ' ago' %></h5>
       </div>
     </div>
-    <div class="divider30"></div>
+    <div class="divider15"></div>
     <div class="clearfix"></div>
 
+    <div id="swf-content">
+      <a class="btn btn-success btn-small" href="<%= @course.lesson.url %>" onclick="loadSWF(this.href, 1); return false;">Click to watch</a>
+    </div>
+    <div class="divider15"></div>
 
     <div class="tabbedwidget tab-primary">
       <ul>
@@ -53,12 +73,14 @@
     </div>
   </div>
   <div id="dashboard-right" class="span4">
-    <% if current_user.admin? or @course.teacher?(current_user) %>
     <div class="well">
+    <% if current_user.admin? or @course.teacher?(current_user) %>
       <a href="<%= edit_course_path(@course) %>" class="btn btn-success"><i class="iconfa-edit icon-white"></i> Edit</a>
-    </div>
+    <% else %>
+      <a href="#" class="btn btn-warning disabled"><i class="iconfa-plus icon-white"></i> Join this class now!</a>
     <% end %>
-
+    </div>
+    
     <h3 class="subtitle">about the teacher</h3>
     <div class="well about-teacher">
       <%= image_tag user_avatar_path(@course.teacher, :normal), :class => "pull-left" %>

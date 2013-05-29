@@ -46,7 +46,6 @@
           <% @users.each do |u| %>
           <tr>
             <td class="center">
-              <%= link_to "Delete", "#", {:class => "btn btn-danger disabled"} %>
               <%= link_to "Edit", edit_user_path(u), {:class => "btn btn-primary"} %>
             </td>
             <td class="center"><%= link_to u.name, user_path(u) %></td>

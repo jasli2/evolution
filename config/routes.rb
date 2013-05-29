@@ -1,5 +1,5 @@
 Evolution::Application.routes.draw do
-  resources :courses, :only => [:index, :new, :create, :edit, :update] do
+  resources :courses, :only => [:index] do
     collection {post :import}
     collection {get :export}
   end

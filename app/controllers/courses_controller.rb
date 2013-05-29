@@ -8,7 +8,7 @@ class CoursesController < ApplicationController
   end
 
   def export
-    @courses = Course.order(:id)
+    @courses = Course.order('id DESC')
     if @courses
       respond_to do |format|
         format.html {redirect_to courses_path, notice: "export open" }
@@ -31,7 +31,7 @@ class CoursesController < ApplicationController
         @courses = @courses.for_position(Position.find(params[:position_id])) unless params[:position_id].blank?
         @courses = @courses.page params[:page]
       else
-        @courses = Course.order(:id).page params[:page]
+        @courses = Course.order('id DESC').page params[:page]
       end
     end
   end
@@ -72,7 +72,8 @@ class CoursesController < ApplicationController
   end
 
   def create
-    @course = Course.new(params[:course])
+    @user = User.find(params[:user_id]) if params[:user_id]
+    @course = @user.teach_courses.build(params[:course])
 
     respond_to do |format|
       if @course.save
