@@ -56,7 +56,10 @@ class Course < ActiveRecord::Base
     includes(:competency_levels).where(:competency_levels => {:id => p.competency_level_ids}) if p
   end
 
-
+  def teacher?(u)
+    teacher_id == u.id
+  end
+  
   def self.to_csv(options = {})
     header = ["title", "description", "creator", "creator ID", "duration", "course type", \
               "Teacher", "TeacherID", "competency", "level"]
