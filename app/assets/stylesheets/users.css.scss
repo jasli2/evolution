@@ -24,7 +24,9 @@
   } 
 }
 
-.user-manager {
+.user-image-name {
+  text-align: center;
+  width: 40px;
   img { width: 40px; }
 }
 
@@ -36,12 +38,6 @@
     li {
       display: inline-block;
       margin-right: 5px;
-      .user-image-name {
-        text-align: center;
-        width: 40px;
-
-        img { width: 40px; }
-      }
     }
   }
 }

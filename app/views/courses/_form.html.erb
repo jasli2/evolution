@@ -1,30 +1,54 @@
 <%= simple_form_for(@course, :html => {:class => 'form-horizontal', :multipart => true }) do |f| %>
-        <%= f.input :title, :input_html => { :class => "span5" } %>
-        <%= f.input :description, :as => :text, :input_html => { :class => "span5",  :cols => 50, :rows => 3 } %>
-        <%= f.association :creator, collection: User.staff, label_method: :name, value_method: :id, include_blank: false %>
-        <%= f.association :teacher, collection: User.staff, label_method: :name, value_method: :id, include_blank: false %>
-        <%= f.input :duration %>
+  <%= f.input :title, :input_html => { :class => "span5" } %>
+  <%= f.input :description, :as => :text, :input_html => { :class => "span5",  :cols => 50, :rows => 3 } %>
+  <%= f.association :creator, collection: User.staff, label_method: :name, value_method: :id, include_blank: false %>
+  <%= f.association :teacher, collection: User.staff, label_method: :name, value_method: :id, include_blank: false %>
+  <%= f.input :duration %>
+  <%= f.input :teach_type, :collection => [['授课', '授课'] ,['讨论', '讨论']], :label_method => :last, :value_method => :first, :as => :select %>
+  <%= f.input :source_type, :collection => [['内部讲师', '内部讲师'] ,['外部讲师', '外部讲师']], :label_method => :last, :value_method => :first, :as => :select %>
+  <%= f.input :course_type, :collection => [['面授课程', '面授课程'] ,['在线课程', '在线课程']], :label_method => :last, :value_method => :first, :as => :select %>
+  <%= f.input :audience, :input_html => { :class => "span5" } %>
+  <%= f.input :target, :as => :text, :input_html => { :class => "span5",  :cols => 50, :rows => 3 } %>
 
-        <div class="control-group file optional">
-          <label class="file optional control-label" for="user_avatar">Cover Image</label>
-          <div class="controls">
-            <div class="fileupload fileupload-new" data-provides="fileupload">
-            <div class="input-append">
-              <div class="uneditable-input span3">
-              <i class="iconfa-file fileupload-exists"></i>
-              <span class="fileupload-preview"></span>
-              </div>
-              <span class="btn btn-file"><span class="fileupload-new">Select file</span>
-              <span class="fileupload-exists">Change</span>
-              <input class="file optional" id="course_cover_image" name="course[cover_image]" type="file" /></span>
-              <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
-            </div>
-            <p class="help-block">No special characters.</p>
-            </div>
-          </div>
+  <div class="control-group file optional">
+    <label class="file optional control-label" for="user_avatar">Cover Image</label>
+    <div class="controls">
+      <div class="fileupload fileupload-new" data-provides="fileupload">
+      <div class="input-append">
+        <div class="uneditable-input span3">
+        <i class="iconfa-file fileupload-exists"></i>
+        <span class="fileupload-preview"></span>
         </div>
+        <span class="btn btn-file"><span class="fileupload-new">Select file</span>
+        <span class="fileupload-exists">Change</span>
+        <input class="file optional" id="course_cover_image" name="course[cover_image]" type="file" /></span>
+        <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+      </div>
+      <p class="help-block">No special characters.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="control-group file optional">
+    <label class="file optional control-label" for="user_avatar">上传课件：</label>
+    <div class="controls">
+      <div class="fileupload fileupload-new" data-provides="fileupload">
+      <div class="input-append">
+        <div class="uneditable-input span3">
+        <i class="iconfa-file fileupload-exists"></i>
+        <span class="fileupload-preview"></span>
+        </div>
+        <span class="btn btn-file"><span class="fileupload-new">Select file</span>
+        <span class="fileupload-exists">Change</span>
+        <input class="file optional" id="course_lesson" name="course[lesson]" type="file" /></span>
+        <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+      </div>
+      <p class="help-block">Support SWF format only</p>
+      </div>
+    </div>
+  </div>
   
-        <div class="form-actions">
-        <%= f.button :submit, :class => "btn-primary"  %>
-        </div>
-      <% end %>
+  <div class="form-actions">
+  <%= f.button :submit, :class => "btn-primary"  %>
+  </div>
+<% end %>

@@ -85,7 +85,7 @@
     <div class="well user-info-box">
       <div class="user-info-image">
         <%= image_tag user_avatar_path(@user, :normal) %>
-        <% unless @user.id == current_user.id %>
+        <% unless @user.id == current_user.id and current_user.admin? %>
           <% unless current_user.following?(@user) %>
             <%= form_for(current_user.user_relations.build(leader_id: @user.id)) do |f| %>
             <%= f.hidden_field :leader_id %>
@@ -112,7 +112,10 @@
     <% if @user.manager and @user.manager.id != @user.id  %>
     <h3 class="subtitle">Manager</h3>
     <div class="well user-manager">
-      <%= link_to image_tag(user_avatar_path(@user.manager, :small)), user_path(@user.manager), {:title => "#{@user.manager.name}"} %>
+      <div class="user-image-name">
+        <%= link_to image_tag(user_avatar_path(@user.manager, :small)), user_path(@user.manager), {:title => "#{@user.manager.name}"} %>
+        <%= link_to @user.manager.name, user_path(@user.manager) %>
+      </div>
     </div>
     <% end %>
 
@@ -126,7 +129,7 @@
         <li>
           <div class="user-image-name">
             <%= link_to image_tag(user_avatar_path(s, :small)), user_path(s), {:title => "#{s.name}"} %>
-            <%= s.name %>
+            <%= link_to s.name, user_path(s) %>
           </div>
         </li>
       <% end %>

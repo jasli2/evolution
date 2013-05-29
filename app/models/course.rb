@@ -4,15 +4,19 @@
 #
 #  id          :integer          not null, primary key
 #  title       :string(255)
-#  author      :string(255)
-#  filter_item :string(255)
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  creator_id  :integer
 #  duration    :integer
 #  course_type :string(255)
 #  teacher_id  :integer
-#  description :string(255)
+#  description :text
+#  cover_image :string(255)
+#  audience    :string(255)
+#  target      :string(255)
+#  teach_type  :string(255)
+#  source_type :string(255)
+#  lesson      :string(255)
 #
 
 require 'file_size_validator'
@@ -21,6 +25,7 @@ class Course < ActiveRecord::Base
   paginates_per 5
 
   attr_accessible :title, :cover_image, :description, :duration, :creator_id, :teacher_id
+  attr_accessible :course_type, :audience, :target, :teach_type, :source_type, :lesson
 
   validates :title, :presence => true
 
@@ -39,6 +44,7 @@ class Course < ActiveRecord::Base
   has_many :user_course_progresses
   has_many :users, :through => :user_course_progresses
 
+  mount_uploader :lesson, FileUploader
 
   # custom image sizes: each key is a version name
   IMAGE_CONFIG = {

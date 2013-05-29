@@ -28,6 +28,7 @@
         <%= f.input :department %>
         <%= f.input :department_level %>
         <%= f.input :staff_id %>
+        <%= f.input :self_intro, :as => :text, :input_html => { :class => "span5",  :cols => 50, :rows => 5 } %>
         <%= f.input :joined_at, as: :date, start_year: Date.today.year - 90,
                               end_year: Date.today.year,
                               order: [:year, :month, :day] %>
@@ -60,11 +61,11 @@
     </div>
   </div>
   <div id="dashboard-right" class="span4">
-    <h3 class="subtitle">sidebar here</h3>
+    <h3 class="subtitle">TIPS</h3>
     <div class="divider15"></div>
-    <h4 class="widgettitle"> Side Content</h4>
+    <h4 class="widgettitle"> Tips</h4>
     <div class="widgetcontent">
-      content
+      None
     </div>
   </div>
 </div>
