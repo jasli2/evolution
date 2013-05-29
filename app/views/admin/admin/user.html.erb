@@ -1,10 +1,10 @@
-<% provide(:title, "user management") %>
-<% provide(:page_title, "User Management") %>
-<% provide(:page_sub_title, "manage user records") %>
+<% provide(:title, t('users.page.title')) %>
+<% provide(:page_title, t('users.page.title')) %>
+<% provide(:page_sub_title, t('users.page.sub_title')) %>
 <% provide(:page_icon, "iconfa-group") %>
 
 <% content_for :breadcrumbs do %>
-<%= content_tag(:li, "User Management") %>
+<%= content_tag(:li, t('users.page.title')) %>
 <% end %>
 
 <% content_for :javascript do %>
@@ -14,11 +14,11 @@
 
 <div class="row-fluid">
   <div id="dashboard-left" class="span9">
-    <h3 class="subtitle">All Users</h3>
+    <h3 class="subtitle"><%= t('users.all.title') %></h3>
     <div class="divider15"></div>
     <div class="widgetbox">
       <div class="headtitle">
-        <h4 class="widgettitle"><span class="iconfa-group"></span> All Users</h4>
+        <h4 class="widgettitle"><span class="iconfa-group"></span> <%= t('users.all.title') %></h4>
       </div>
       <% if @users.size == 0 %>
       <div class="widgetcontent">
@@ -28,26 +28,26 @@
       <table class="table table-bordered responsive">
         <thead>
           <tr>
-            <th class="center">Action</th>
-            <th class="center">Name</th>
-            <th class="center">Staff ID</th>
-            <th class="center">Email</th>
-            <th class="center">Telephone</th>
-            <th class="center">Mobile</th>
-            <th class="center">Manager</th>
-            <th class="center">Department</th>
-            <th class="center">Dept Level</th>
-            <th class="center">Title</th>
-            <th class="center">Eroll Date</th>
-            <th class="center">Birthday</th>
+            <th class="center"><%= t('users.all.action') %></th>
+            <th class="center"><%= t('users.all.name') %></th>
+            <th class="center"><%= t('users.all.staff_id') %></th>
+            <th class="center"><%= t('users.all.email')  %></th>
+            <th class="center"><%= t('users.all.telephone') %></th>
+            <th class="center"><%= t('users.all.mobile') %></th>
+            <th class="center"><%= t('users.all.manager')%></th>
+            <th class="center"><%= t('users.all.department')%></th>
+            <th class="center"><%= t('users.all.dept_level') %></th>
+            <th class="center"><%= t('users.all.position') %></th>
+            <th class="center"><%= t('users.all.enroll')%></th>
+            <th class="center"><%= t('users.all.birthday') %></th>
           </tr>
         </thead>
         <tbody>
           <% @users.each do |u| %>
           <tr>
             <td class="center">
-              <%= link_to "Delete", "#", {:class => "btn btn-danger disabled"} %>
-              <%= link_to "Edit", edit_user_path(u), {:class => "btn btn-primary"} %>
+              <%= link_to t('users.all.delete'), "#", {:class => "btn btn-danger disabled"} %>
+              <%= link_to t('users.all.edit'), edit_user_path(u), {:class => "btn btn-primary"} %>
             </td>
             <td class="center"><%= u.name %></td>
             <td class="center"><%= u.staff_id %></td>
@@ -69,12 +69,12 @@
   </div>
 
   <div id="dashboard-right" class="span3">
-    <h3 class="subtitle">Manage Users</h3>
+    <h3 class="subtitle"><%= t('users.all.manage') %></h3>
     <div class="divider15"></div>
 
     <div class="well">
-      <a href="<%= new_user_path %>" class="btn btn-primary"><i class="iconfa-plus icon-white"></i> Create New User</a>
-      <a href="<%= export_users_path(format: "csv") %>" class="btn btn-warning"><i class="iconfa-download-alt icon-white"></i> Export As CSV</a>
+      <a href="<%= new_user_path %>" class="btn btn-primary"><i class="iconfa-plus icon-white"></i><%= t('users.all.create')%></a>
+      <a href="<%= export_users_path(format: "csv") %>" class="btn btn-warning"><i class="iconfa-download-alt icon-white"></i> <%= t('users.all.export') %></a>
     </div>
 
     <div class="well">
@@ -85,13 +85,13 @@
           <i class="iconfa-file fileupload-exists"></i>
           <span class="fileupload-preview"></span>
           </div>
-          <span class="btn btn-file"><span class="fileupload-new">Select file</span>
-          <span class="fileupload-exists">Change</span>
+          <span class="btn btn-file"><span class="fileupload-new"><%= t("users.all.select") %></span>
+          <span class="fileupload-exists"><%= t('users.all.change')%></span>
           <input class="file optional" id="file" name="file" type="file" /></span>
-          <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+          <a href="#" class="btn fileupload-exists" data-dismiss="fileupload"><%= t('users.all.remove') %></a>
         </div>
       </div>
-      <%= submit_tag "Import User".html_safe, :class => "btn btn-primary submit-import-test" %>
+      <%= submit_tag t('users.all.import').html_safe, :class => "btn btn-primary submit-import-test" %>
       <% end %>
     </div>
     

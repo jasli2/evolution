@@ -37,3 +37,62 @@ en:
       plan: 'Learning Plan'
       assessment: 'Assessments Management'
       data: 'Data Analysis'
+  dashboard:
+    common:
+      sub_title1: 'see all'
+      create: 'create at '
+      ago: ' ago'
+    page:
+      title: "Dashboard"
+      sub_title: 'System Overview'
+    overview:
+      title: "Overview"
+      users: 'Users'
+      competencies: 'Competencies'
+      courses: 'Courses'
+      positions: 'Positions'
+    competency:
+      title: 'Competency Model'
+      sub_title: 'Latest Added Competency Models'
+      null_competency: 'No Competency Model setup yet. Plesse setup it first'
+    course:
+      title: 'Courses'
+      sub_title: 'Latest Added Course'
+      details: 'View Details'
+      null_course: 'No Couese setup yet. Please setup it first'
+    user:
+      title: 'Users'
+      sub_title: 'Last Added Users'
+      null_users: 'No user setup yet, Please setup it first'
+    calender:
+      title: 'Calender'
+  users:
+    page:
+      title: 'User Managerment'
+      sub_title: 'manage user records'
+    all:
+      title: "All Users"
+      action: 'Action'
+      name: 'Name'
+      staff_id: 'Staff ID'
+      email: 'Email'
+      telephone: 'Telephone'
+      mobile: 'Mobile'
+      manager: 'Manager'
+      department: 'Department'
+      dept_level: 'Dept Level'
+      position: 'Position'
+      enroll: 'Enroll Date'
+      birthday: 'Birthday'
+      delete: 'Delete'
+      edit: 'Edit'
+      create: 'Create New User'
+      export: 'Export As Csv'
+      import: 'Import User'
+      select: 'Select file'
+      manage: 'Manage Users'
+      change: 'Change'
+      remove: 'Remove'
+  competency:
+    page:
+

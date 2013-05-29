@@ -1,3 +1,4 @@
+#encoding:utf-8
 zh-CN:
   menu:
     navigator: '导航栏'
@@ -27,11 +28,67 @@ zh-CN:
       action: '管理员操作'
       dashboard: '仪表板'
       users: '用户管理'
-      competency: '能力模型管理'
-      course:  '课程模型管理'
+      competency: '能力管理'
+      course:  '课程管理'
       teacher: '教师管理'
       provider: '供应商管理'
       position: '职位管理'
       plan: '学习计划'
       assessments: '评估管理'
       data: '数据分析'
+  dashboard:
+    common:
+      sub_title1: '查看所有'
+      create: '创建于'
+      ago:  '前'
+    page:
+      title: '展示板'
+      sub_title: '系统概述'
+    overview:
+      title: '概述'
+      users: '用户'
+      competencies: '能力'
+      courses: '课程'
+      positions: '职位'
+    competency:
+      title: '能力模型'
+      sub_title: '最近新添加能力模型'
+      null_competency: '目前能力模型为空，请先添加'
+    course:
+      title: '课程'
+      sub_title: '最近新添加课程'
+      details: '查看详情'
+      null_course: '目前课程为空，请先添加'
+    user:
+      title: '用户'
+      sub_title: '最近新添加用户'
+      null_users: '目前用户为空，请先添加'
+    calender:
+      title: '日历'
+  users:
+    page:
+      title: '用户管理'
+      sub_title: '管理用户记录'
+    all:
+      title: '所有用户'
+      action: '操作'
+      name: '名字'
+      staff_id: '员工号'
+      email: '邮箱'
+      telephone: '固定电话'
+      mobile: '移动电话'
+      manager: '领导'
+      department: '部门'
+      dept_level: '级别'
+      position: '职位'
+      enroll:   '入职日期'
+      birthday: '出生日期'
+      delete: '删除'
+      edit: '修改'
+      create: '创建新用户'
+      export: '导出用户'
+      import: '导入用户'
+      select: '选择文件'
+      manage: '管理用户'
+      change: '重新选择'
+      remove: '移除文件'

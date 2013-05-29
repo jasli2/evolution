@@ -1,10 +1,10 @@
-<% provide(:title, "Dashboard") %>
-<% provide(:page_title, "Dashboard") %>
-<% provide(:page_sub_title, "System Overview") %>
+<% provide(:title,  t('dashboard.page.title')) %>
+<% provide(:page_title, t('dashboard.page.title')) %>
+<% provide(:page_sub_title, t('dashboard.page.sub_title')) %>
 <% provide(:page_icon, "iconfa-dashboard") %>
 
 <% content_for :breadcrumbs do %>
-<%= content_tag(:li, "Dashboard") %>
+<%= content_tag(:li,  t('dashboard.page.title')) %>
 <% end %>
 
 <% content_for :javascript do %>
@@ -22,49 +22,49 @@ $(function() {
 
 <div class="row-fluid">
   <div id="dashboard-left" class="span8">
-    <h5 class="subtitle">Overview</h5>
+    <h5 class="subtitle"> <%= t('dashboard.overview.title') %> </h5>
     <ul class="shortcuts">
       <li class="events">
         <a href="<%= admin_manage_users_path %>">
           <span class="counter"><%= @users_count %></span>
           <span class="shortcuts-icon iconfa-group"></span>
-          <span class="shortcuts-label">Users</span>
+          <span class="shortcuts-label"><%= t('dashboard.overview.users') %></span>
         </a>
       </li>
       <li class="events">
         <a href="<%= admin_manage_competency_path %>">
           <span class="counter"><%= @competencies_count %></span>
           <span class="shortcuts-icon iconfa-sitemap"></span>
-          <span class="shortcuts-label">Competencies</span>
+          <span class="shortcuts-label"><%= t('dashboard.overview.competencies') %></span>
         </a>
       </li>
       <li class="events">
         <a href="<%= admin_manage_course_path %>">
           <span class="counter"><%= @courses_count %></span>
           <span class="shortcuts-icon iconfa-folder-open"></span>
-          <span class="shortcuts-label">Courses</span>
+          <span class="shortcuts-label"><%= t('dashboard.overview.courses') %></span>
         </a>
       </li>
       <li class="events">
         <a href="<%= admin_manage_position_path %>">
           <span class="counter"><%= @positions_count %></span>
           <span class="shortcuts-icon iconfa-reorder"></span>
-          <span class="shortcuts-label">Positions</span>
+          <span class="shortcuts-label"><%= t('dashboard.overview.positions') %></span>
         </a>
       </li>
     </ul>
     <div class="divider30"></div>
 
-    <h3 class="subtitle">Competency Model</h3>
+    <h3 class="subtitle"><%= t("dashboard.competency.title") %></h3>
     <div class="divider15"></div>
 
     <div class="widgetbox">
       <div class="headtitle">
-        <h4 class="widgettitle"><span class="iconfa-sitemap"></span> Latest Added Competency Models <span class="pull-right"><%= link_to "see all &#8594;".html_safe, admin_manage_competency_path %></span></h4>
+        <h4 class="widgettitle"><span class="iconfa-sitemap"></span> <%= t('dashboard.competency.sub_title') %> <span class="pull-right"><%= link_to (t('dashboard.common.sub_title1') + "&#8594;").html_safe, admin_manage_competency_path %></span></h4>
       </div>
       <% if @competencies.size == 0 %>
       <div class="widgetcontent">
-        <p>No Competency Model setup yet. please setup it first. </p>
+        <p><%= t('dashboard.competency.null_competency') %> </p>
       </div>
       <% else %>
       <div class="widgetcontent nopadding">
@@ -72,7 +72,7 @@ $(function() {
         <div class="accordion">
           <% @competencies.each do |c| %>
           <div class="a-header">
-            <a href="#"><%= c.name %><span class="pull-right"><%= "created at " + distance_of_time_in_words_to_now(c.created_at) + ' ago' %></span></a>
+            <a href="#"><%= c.name %><span class="pull-right"><%= t('dashboard.common.create') + distance_of_time_in_words_to_now(c.created_at) + t('dashboard.common.ago') %></span></a>
           </div>
           <div class="a-content">
             <%= content_tag(:h5, "胜任力描述： " + c.description) %>
@@ -116,15 +116,15 @@ $(function() {
     </div>
     <div class="divider15"></div>
 
-    <h3 class="subtitle">Courses</h3>
+    <h3 class="subtitle"><%= t('dashboard.course.title') %></h3>
     <div class="divider15"></div>
     <div class="widgetbox">
       <div class="headtitle">
-        <h4 class="widgettitle"><span class="iconfa-folder-open"></span> Latest Added Course <span class="pull-right"><%= link_to "see all &#8594;".html_safe, admin_manage_course_path %></span></h4>
+        <h4 class="widgettitle"><span class="iconfa-folder-open"></span> <%= t('dashboard.course.sub_title') %> <span class="pull-right"><%= link_to (t('dashboard.common.sub_title1') +  "&#8594;").html_safe, admin_manage_course_path %></span></h4>
       </div>
       <% if @courses.size == 0 %>
       <div class="widgetcontent">
-        <p>No user setup yet. please setup it first. </p>
+        <p><%= t('dashboard.course.null_course') %>t. </p>
       </div>
       <% else %>
       <div class="widgetcontent nopadding">
@@ -134,9 +134,9 @@ $(function() {
             <%= image_tag course_cover_path(c, :normal), :class => "pull-left" %>
             <div class="course-info">
               <h4><%= link_to c.title, course_path(c) %></h4>
-              <h6>created by <%= link_to c.teacher.name, user_path(c.teacher) %> at <%= distance_of_time_in_words_to_now(c.created_at) + ' ago' %></h6>
+              <h6><%= link_to c.teacher.name, user_path(c.teacher) %> <%=t('dashboard.common.create') %> <%= distance_of_time_in_words_to_now(c.created_at) + t('dashboard.common.ago') %></h6>
               <p><%= c.description %></p>
-              <a href="<%= course_path(c) %>" class="btn btn-primary btn-small"><span class="iconfa-info-sign icon-white"></span> View Details</a>
+              <a href="<%= course_path(c) %>" class="btn btn-primary btn-small"><span class="iconfa-info-sign icon-white"></span><%= t('dashboard.course.details') %></a>
             </div>
           </li>
           <% end %>
@@ -148,20 +148,20 @@ $(function() {
   </div> <!--span8-->
 
   <div id="dashboard-right" class="span4">
-    <h3 class="subtitle">Calender</h3>
+    <h3 class="subtitle"><%= t('dashboard.calender.title') %></h3>
     <div class="divider15"></div>
 
-    <h4 class="widgettitle"> Calender</h4>
+    <h4 class="widgettitle"><%= t('dashboard.calender.title') %></h4>
     <div class="widgetcontent nopadding">
       <div id="datepicker"></div>
     </div>
     <div class="divider15"></div>
 
-    <h3 class="subtitle">Users</h3>
+    <h3 class="subtitle"><%= t('dashboard.user.title') %></h3>
     <div class="divider15"></div>
     <div class="widgetbox">
       <div class="headtitle">
-        <h4 class="widgettitle"><span class="iconfa-group"></span> Last Added Users <span class="pull-right"><%= link_to "see all &#8594;".html_safe, admin_manage_users_path %></span></h4>
+        <h4 class="widgettitle"><span class="iconfa-group"></span><%= t('dashboard.user.sub_title') %><span class="pull-right"><%= link_to (t('dashboard.common.sub_title1') +  "&#8594;").html_safe, admin_manage_users_path %></span></h4>
       </div>
       <% if @users.size == 0 %>
       <div class="widgetcontent">
