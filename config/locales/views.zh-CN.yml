@@ -92,3 +92,68 @@ zh-CN:
       manage: '管理用户'
       change: '重新选择'
       remove: '移除文件'
+  position:
+    page:
+      title: '职位管理'
+      sub_title: '管理公司职位'
+    all:
+      title: '职位'
+      action: '操作'
+      name: '名字'
+      description: "描述"         
+      relate_competency: "相关的能力"
+      relate_couse: "相关的课程"
+      delete: '删除'
+      edit: '修改'
+      create: '创建新职位'
+      export: '导出职位'
+      import: '导入职位'
+      select: '选择文件'
+      manage: '管理职位'
+      change: '重新选择'
+      remove: '移除文件'
+  competency:
+    page:
+      title: '能力管理'
+      sub_title: '管理能力模型'
+    all:
+      title: '能力模型'
+      sub_title: '能力模型总结'
+      requiremnet: '能力需求'
+      new: '创建新能力项'
+      export: '导出能力项'
+      import_title: '导入能力模型'
+      import: '导入能力模型'
+      select: '选择文件'
+      change: '重新选择'
+      remove: '移除文件'
+      create: '创建于'
+      ago: '前'
+      manage: '能力管理'
+      filter: "过滤"
+      position: "职位:"
+      filter_condition: "过滤能力项"
+      clear_filter: '清除过滤'
+  course:
+    page:
+      title: "课程管理"
+      sub_title: "全部课程管理"
+    all:
+      title: "课程"
+      sub_title: "课程"
+      details: "查看详情"
+      new: '创建新课程'
+      export: '导出课程'
+      import_title: "导入课程"
+      import: '导入课程'
+      select: '选择文件'
+      change: '重新选择'
+      remove: '移除文件'
+      create: '创建于'
+      ago: '前'
+      manage: '课程管理'
+      filter: '过滤'
+      teacher: "教师"
+      position: "职位:"
+      filter_condition: "过滤课程"
+      clear_filter: "清除过滤"

@@ -93,6 +93,68 @@ en:
       manage: 'Manage Users'
       change: 'Change'
       remove: 'Remove'
+  position:
+    page:
+      title: 'Position Management'
+      sub_title: 'manage company position'
+    all:
+      title: "Position"
+      action: 'Action'
+      name: 'Name'
+      description: "Description"
+      relate_competency: "Related Competency"
+      relate_couse: "Related Courses"
+      delete: 'Delete'
+      edit: 'Edit'
+      create: 'Create New Position'
+      export: 'Export As Csv'
+      import: 'Import Position'
+      select: 'Select file'
+      manage: 'Manage Position'
+      change: 'Change'
+      remove: 'Remove'
   competency:
     page:
-
+      title: 'Competency Management'
+      sub_title: 'manage competency models'
+    all:
+      title: 'Competency Model'
+      sub_title: 'Competency Model summary'
+      requiremnet: 'Competency Requirements for '
+      new: 'Create New Competency'
+      export: 'Export As Csv'
+      import_title: 'Import Competency Model'
+      import: 'Import Competency'
+      select: 'Select file'
+      change: 'Change'
+      remove: 'Remove'
+      create: 'Create at '
+      ago: ' ago'
+      manage: 'Manage Competency'
+      filter: "Filter"
+      position: "Position:"
+      filter_condition: "Filter Competency"
+      clear_filter: 'Clear Filter'
+  course:
+    page:
+      title: 'Courses Management'
+      sub_title: 'manage  all courses'
+    all:
+      title: 'Courses'
+      sub_title: 'Course'
+      details: "View Details"
+      new: 'Create New Course'
+      export: 'Export As Csv'
+      import_title: 'Import Course'
+      import: 'Import Course'
+      select: 'Select file'
+      change: 'Change'
+      remove: 'Remove'
+      create: 'Create at '
+      ago: ' ago'
+      manage: 'Manage Coureses'
+      filter: "Filter"
+      teacher: 'Teacher:'
+      position: "Position:"
+      filter_condition: "Filter Courses"
+      clear_filter: 'Clear Filter'
