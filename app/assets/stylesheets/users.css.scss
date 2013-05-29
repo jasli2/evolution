@@ -3,10 +3,14 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .user-info-box {
-  //background-color: #fff;
-
-  img {
+  min-height: 120px;
+  .user-info-image {
     width: 80px;
+    float: left;
+    text-align: center;
+    img {
+      width: 80px;
+    }
   }
 
   .user-info {

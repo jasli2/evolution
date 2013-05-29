@@ -57,6 +57,14 @@ class User < ActiveRecord::Base
   has_many :user_course_progresses
   has_many :courses, :through => :user_course_progresses
 
+  #relations - for followed
+  has_many :user_relations, :foreign_key => 'follower_id', :dependent => :destroy
+  has_many :followed_users, :through => :user_relations, :source => :leader
+  # for fans
+  has_many :reverse_user_relations, :class_name => 'UserRelation', :foreign_key => 'leader_id', :dependent => :destroy
+  has_many :fans, :through => :reverse_user_relations, :source => :follower
+
+
   validates :position_id, :presence => true
 
   scope :staff, where(:is_admin => false)
@@ -78,6 +86,19 @@ class User < ActiveRecord::Base
   }
   mount_uploader :avatar, ImageUploader
   validates :avatar, :file_size => {:maximum => 1.megabytes.to_i }
+
+  #user relattionship
+  def following?(other_user)
+    user_relations.find_by_leader_id(other_user.id)
+  end
+
+  def follow!(other_user)
+    user_relations.create!(leader_id: other_user.id)
+  end
+
+  def unfollow!(other_user)
+    user_relations.find_by_leader_id(other_user.id).destroy
+  end
 
   def admin?
     self.is_admin

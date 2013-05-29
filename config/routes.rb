@@ -10,6 +10,7 @@ Evolution::Application.routes.draw do
     collection {get :export}
     resources :courses
   end
+  resources :user_relations, only: [:create, :destroy]
 
   resources :competencies do
     collection {post :import}

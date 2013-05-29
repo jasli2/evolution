@@ -49,12 +49,12 @@
               <%= link_to "Delete", "#", {:class => "btn btn-danger disabled"} %>
               <%= link_to "Edit", edit_user_path(u), {:class => "btn btn-primary"} %>
             </td>
-            <td class="center"><%= u.name %></td>
+            <td class="center"><%= link_to u.name, user_path(u) %></td>
             <td class="center"><%= u.staff_id %></td>
             <td class="center"><%= u.email %></td>
             <td class="center"><%= u.phone_num %></td>
             <td class="center"><%= u.mobile_phone %></td>
-            <td class="center"><%= u.manager.name if u.manager %></td>
+            <td class="center"><%= link_to(u.manager.name, user_path(u.manager)) if u.manager %></td>
             <td class="center"><%= u.department %></td>
             <td class="center"><%= u.department_level %></td>
             <td class="center"><%= u.position.name if u.position %></td>

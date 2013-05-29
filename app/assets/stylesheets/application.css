@@ -31,3 +31,7 @@ form p.help-block {
 .well {
   background-color: #fff;
 }
+
+a.btn {
+  color: #fff;
+}
