@@ -19,20 +19,22 @@
     $('.tabbedwidget').tabs();
   });
   function loadSWF(url, id){
-    var flashvars = {};
-    var swfwidth = $("#swf-content").width();
-    console.log(swfwidth);
-    var swfheigth = Math.floor(swfwidth * 3 / 4);
-    console.log(swfheigth);
-    flashvars.autoPlay = "true";
-    var params = {};
-    params.play = "true";
-    params.menu = "false";
-    params.quality = "high";
-    params.allowfullscreen = "true";
-    var attributes = {};
-    attributes.align = "middle";
-    swfobject.embedSWF(url, "swf-content", swfwidth.toString(), swfheigth.toString(), "9.0.0", false, flashvars, params, attributes);
+    if(url) {
+      var flashvars = {};
+      var swfwidth = $("#swf-content").width();
+      console.log(swfwidth);
+      var swfheigth = Math.floor(swfwidth * 3 / 4);
+      console.log(swfheigth);
+      flashvars.autoPlay = "true";
+      var params = {};
+      params.play = "true";
+      params.menu = "false";
+      params.quality = "high";
+      params.allowfullscreen = "true";
+      var attributes = {};
+      attributes.align = "middle";
+      swfobject.embedSWF(url, "swf-content", swfwidth.toString(), swfheigth.toString(), "9.0.0", false, flashvars, params, attributes);
+    }
   }
 </script>
 <% end %>
@@ -47,13 +49,15 @@
         <h5><%= link_to @course.creator.name, user_path(@course.creator) %> <%= t("course.all.create") %> <%= distance_of_time_in_words_to_now(@course.created_at) + t("course.all.ago") %></h5>
       </div>
     </div>
-    <div class="divider15"></div>
+    <div class="divider30"></div>
     <div class="clearfix"></div>
 
+    <% unless @course.lesson.url.nil? %>
     <div id="swf-content">
       <a class="btn btn-success btn-small" href="<%= @course.lesson.url %>" onclick="loadSWF(this.href, 1); return false;"> <%= t("course.all.clik_watch") %></a>
     </div>
     <div class="divider15"></div>
+    <% end %>
 
     <div class="tabbedwidget tab-primary">
       <ul>
