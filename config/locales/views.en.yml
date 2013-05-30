@@ -42,6 +42,7 @@ en:
       sub_title1: 'see all'
       create: 'create at '
       ago: ' ago'
+      none: 'None'
     page:
       title: "Dashboard"
       sub_title: 'System Overview'
@@ -73,6 +74,16 @@ en:
     all:
       title: "All Users"
       action: 'Action'
+      social: "Social Networks"
+      followings: "Followings"
+      follower: "Follower"
+      recent: "Recent Activity"
+      blog: "Blogs"
+      myblog: "My Blog"
+      knowledge: "Knowledge Center"
+      question: "Follwing Questions"
+      infor: "User Informations"
+      subordinates: "Subordinates"
       name: 'Name'
       staff_id: 'Staff ID'
       email: 'Email'
@@ -142,6 +153,8 @@ en:
     all:
       title: 'Courses'
       sub_title: 'Course'
+      sub_title1: "Teach Courses"
+      sub_title2: "Pending Courses"
       details: "View Details"
       new: 'Create New Course'
       export: 'Export As Csv'
@@ -158,3 +171,8 @@ en:
       position: "Position:"
       filter_condition: "Filter Courses"
       clear_filter: 'Clear Filter'
+  share:
+    header:
+      edit: "Edit Profile"
+      setting: "Account Settings"
+      out: "Sign Out"

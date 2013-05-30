@@ -41,6 +41,7 @@ zh-CN:
       sub_title1: '查看所有'
       create: '创建于'
       ago:  '前'
+      none: '没有任何信息'
     page:
       title: '展示板'
       sub_title: '系统概述'
@@ -72,6 +73,16 @@ zh-CN:
     all:
       title: '所有用户'
       action: '操作'
+      social: "社交网络"
+      followings: "关注"
+      follower: "粉丝"
+      recent: "最近的活动"
+      blog: "博客"
+      myblog: "我的博客"
+      knowledge: "知识中心"
+      question: "下面的问题"
+      infor: "用户信息"
+      subordinates: "属下"
       name: '名字'
       staff_id: '员工号'
       email: '邮箱'
@@ -141,6 +152,8 @@ zh-CN:
     all:
       title: "课程"
       sub_title: "课程"
+      sub_title1: "培训课程"
+      sub_title2: "待培训课程"
       details: "查看详情"
       new: '创建新课程'
       export: '导出课程'

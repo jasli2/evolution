@@ -4,7 +4,7 @@
 <% provide(:page_icon, "iconfa-edit") %>
 
 <% content_for :breadcrumbs do %>
-<li><%= link_to " Users Managerment ", admin_manage_users_path %> <span class="separator"></span></li>
+<li><%= link_to t("users.page.title"), admin_manage_users_path %> <span class="separator"></span></li>
 <%= content_tag(:li, "Create User") %>
 <% end %>
 
