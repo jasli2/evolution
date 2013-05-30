@@ -73,6 +73,9 @@ zh-CN:
     all:
       title: '所有用户'
       action: '操作'
+      student: "学生"
+      aboutteacher: "教师简介"
+      nointruduction: "没有教师相关信息"
       social: "社交网络"
       followings: "关注"
       follower: "粉丝"
@@ -103,6 +106,7 @@ zh-CN:
       manage: '管理用户'
       change: '重新选择'
       remove: '移除文件'
+      notice: "目前还没有学生"
   position:
     page:
       title: '职位管理'
@@ -115,7 +119,7 @@ zh-CN:
       relate_competency: "相关的能力"
       relate_couse: "相关的课程"
       delete: '删除'
-      edit: '修改'
+      edit: '编辑'
       create: '创建新职位'
       export: '导出职位'
       import: '导入职位'
@@ -154,7 +158,13 @@ zh-CN:
       sub_title: "课程"
       sub_title1: "培训课程"
       sub_title2: "待培训课程"
+      newcourse: "新课程"
       details: "查看详情"
+      detail: "课程详情"
+      join: "参加课程"
+      info: "课程信息"
+      material: "课程资料"
+      discussion: "课程讨论"
       new: '创建新课程'
       export: '导出课程'
       import_title: "导入课程"
@@ -170,6 +180,11 @@ zh-CN:
       position: "职位:"
       filter_condition: "过滤课程"
       clear_filter: "清除过滤"
+      clik_watch: "点击播放"
+      tip: "提示"
+      tips: "提示"
+      notic1: "目前没有课程资料"
+      notic2: "目前没有讨论"
   share:
     header:
       edit: "修改资料"

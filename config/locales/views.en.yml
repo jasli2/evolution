@@ -74,6 +74,9 @@ en:
     all:
       title: "All Users"
       action: 'Action'
+      student: "Students"
+      aboutteacher: "about the teacher"
+      nointruduction: "No teacher intruduction yet"
       social: "Social Networks"
       followings: "Followings"
       follower: "Follower"
@@ -104,6 +107,7 @@ en:
       manage: 'Manage Users'
       change: 'Change'
       remove: 'Remove'
+      notice: "No Students yet"
   position:
     page:
       title: 'Position Management'
@@ -156,6 +160,11 @@ en:
       sub_title1: "Teach Courses"
       sub_title2: "Pending Courses"
       details: "View Details"
+      detail: "Course Details"
+      join: "Join this class new!"
+      info: "Infomation"
+      material: "Class Material"
+      discussion: "Discussion"
       new: 'Create New Course'
       export: 'Export As Csv'
       import_title: 'Import Course'
@@ -171,6 +180,11 @@ en:
       position: "Position:"
       filter_condition: "Filter Courses"
       clear_filter: 'Clear Filter'
+      clik_watch: "Click to watch"
+      tip:  "TIPS"
+      tips: "Tips"
+      notic1: "No course material yet"
+      notic2: "No discusstion yet"
   share:
     header:
       edit: "Edit Profile"
