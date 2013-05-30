@@ -51,8 +51,8 @@
     <div class="divider15"></div>
 
     <div class="well">
-      <a href="<%= new_user_course_path(current_user) %>" class="btn btn-primary"><i class="iconfa-plus icon-white"></i> Create New Course</a>
-      <a href="<%= export_courses_path(format: "csv") %>" class="btn btn-warning"><i class="iconfa-download-alt icon-white"></i> Export As CSV</a>
+      <a href="<%= new_user_course_path(current_user) %>" class="btn btn-primary"><i class="iconfa-plus icon-white"></i><%= t("course.all.new") %></a>
+      <a href="<%= export_courses_path(format: "csv") %>" class="btn btn-warning"><i class="iconfa-download-alt icon-white"></i><%= t("course.all.export") %></a>
     </div>
 
     <h4 class="widgettitle"> <%= t("course.all.import_title") %></h4>
