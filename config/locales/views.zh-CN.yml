@@ -134,6 +134,7 @@ zh-CN:
     all:
       title: '能力模型'
       sub_title: '能力模型总结'
+      sub_title1: "查找能力模型"
       requiremnet: '能力需求'
       new: '创建新能力项'
       export: '导出能力项'

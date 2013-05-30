@@ -135,6 +135,7 @@ en:
     all:
       title: 'Competency Model'
       sub_title: 'Competency Model summary'
+      sub_title1: "Find Out Competency Models"
       requiremnet: 'Competency Requirements for '
       new: 'Create New Competency'
       export: 'Export As Csv'
@@ -159,6 +160,7 @@ en:
       sub_title: 'Course'
       sub_title1: "Teach Courses"
       sub_title2: "Pending Courses"
+      newcourse: "New Course"
       details: "View Details"
       detail: "Course Details"
       join: "Join this class new!"
