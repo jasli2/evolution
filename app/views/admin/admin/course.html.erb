@@ -1,10 +1,10 @@
-<% provide(:title, "courses management") %>
-<% provide(:page_title, "Courses Management") %>
-<% provide(:page_sub_title, "manage all courses") %>
+<% provide(:title, t("course.page.title")) %>
+<% provide(:page_title, t("course.page.title")) %>
+<% provide(:page_sub_title, t("course.page.sub_title")) %>
 <% provide(:page_icon, "iconfa-folder-open") %>
 
 <% content_for :breadcrumbs do %>
-<%= content_tag(:li, "Courses Management") %>
+<%= content_tag(:li, t("course.page.title")) %>
 <% end %>
 
 <% content_for :javascript do %>
@@ -14,11 +14,11 @@
 
 <div class="row-fluid">
   <div id="dashboard-left" class="span8">
-    <h3 class="subtitle">Courses</h3>
+    <h3 class="subtitle"><%= t("course.all.title") %></h3>
     <div class="divider15"></div>
     <div class="widgetbox">
       <div class="headtitle">
-        <h4 class="widgettitle"><span class="iconfa-folder-open"></span> Courses (<%= @courses.total_count %>)</h4>
+        <h4 class="widgettitle"><span class="iconfa-folder-open"></span> <%= t("course.all.sub_title") %> (<%= @courses.total_count %>)</h4>
       </div>
       <% if @courses.size == 0 %>
       <div class="widgetcontent">
@@ -32,9 +32,9 @@
             <%= image_tag course_cover_path(c, :normal), :class => "pull-left" %>
             <div class="course-info">
               <h4><%= link_to c.title, course_path(c) %></h4>
-              <h6>created by <%= link_to c.teacher.name, user_path(c.teacher) %> at <%= distance_of_time_in_words_to_now(c.created_at) + ' ago' %></h6>
+              <h6> <%= link_to c.teacher.name, user_path(c.teacher) %> <%= t("course.all.create") %> <%= distance_of_time_in_words_to_now(c.created_at) + t("course.all.ago") %></h6>
               <p><%= c.description %></p>
-              <a href="<%= course_path(c) %>" class="btn btn-primary btn-small"><span class="iconfa-info-sign icon-white"></span> View Details</a>
+              <a href="<%= course_path(c) %>" class="btn btn-primary btn-small"><span class="iconfa-info-sign icon-white"></span> <%= t("course.all.details") %></a>
             </div>
           </li>
           <% end %>
@@ -47,7 +47,7 @@
   </div>
 
   <div id="dashboard-right" class="span4">
-    <h3 class="subtitle">Manage Courses</h3>
+    <h3 class="subtitle"><%= t("course.all.manage")%></h3>
     <div class="divider15"></div>
 
     <div class="well">
@@ -55,7 +55,7 @@
       <a href="<%= export_courses_path(format: "csv") %>" class="btn btn-warning"><i class="iconfa-download-alt icon-white"></i> Export As CSV</a>
     </div>
 
-    <h4 class="widgettitle"> Import Courses</h4>
+    <h4 class="widgettitle"> <%= t("course.all.import_title") %></h4>
     <div class="widgetcontent">
       <%= form_tag import_courses_path, multipart: true do %>
       <div class="fileupload fileupload-new" data-provides="fileupload">
@@ -64,31 +64,31 @@
           <i class="iconfa-file fileupload-exists"></i>
           <span class="fileupload-preview"></span>
           </div>
-          <span class="btn btn-file"><span class="fileupload-new">Select file</span>
-          <span class="fileupload-exists">Change</span>
+          <span class="btn btn-file"><span class="fileupload-new"><%= t("course.all.select")%></span>
+          <span class="fileupload-exists"><%= t("course.all.change") %></span>
           <input class="file optional" id="file" name="file" type="file" /></span>
-          <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+          <a href="#" class="btn fileupload-exists" data-dismiss="fileupload"><%= t("course.all.remove") %></a>
         </div>
       </div>
-      <%= submit_tag "Import Courses".html_safe, :class => "btn btn-primary submit-import" %>
+      <%= submit_tag t("course.all.import").html_safe, :class => "btn btn-primary submit-import" %>
       <% end %>
     </div>
 
-    <h3 class="subtitle">Filter</h3>
+    <h3 class="subtitle"><%= t("course.all.filter") %></h3>
     <div class="divider15"></div>
-    <h4 class="widgettitle"> Filter</h4>
+    <h4 class="widgettitle"> <%= t("course.all.filter") %></h4>
     <div class="widgetcontent">
       <%= form_tag admin_manage_course_path, :method => 'get' do %>
         <div>
-          <%= label_tag :teacher_id, "Teacher:" %>
+          <%= label_tag :teacher_id, t("course.all.teacher") %>
           <%= collection_select(nil, :teacher_id, User.teacher, :id, :name, {:include_blank => '请选择'}) %>
         </div>
         <div>
-          <%= label_tag :position_id, 'Position:' %>
+          <%= label_tag :position_id, t("course.all.position") %>
           <%= collection_select(nil, :position_id, Position.all, :id, :name, {:include_blank => '请选择'}) %>
         </div>
-          <%= submit_tag "Filter Courses".html_safe, :class => "btn btn-primary" %>
-          <%= link_to "Clear Filter",  admin_manage_course_path %>
+          <%= submit_tag t("course.all.filter_condition").html_safe, :class => "btn btn-primary" %>
+          <%= link_to t("course.all.clear_filter"),  admin_manage_course_path %>
       <% end %>
     </div>
   </div>

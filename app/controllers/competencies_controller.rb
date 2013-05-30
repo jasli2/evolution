@@ -1,4 +1,5 @@
 class CompetenciesController < ApplicationController
+
   #POST /competency/import
   def import
     Competency.import(params[:file])

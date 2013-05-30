@@ -12,6 +12,7 @@ Evolution::Application.routes.draw do
   end
   resources :user_relations, only: [:create, :destroy]
 
+
   resources :competencies do
     collection {post :import}
     collection {get :export}

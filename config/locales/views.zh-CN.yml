@@ -1,3 +1,159 @@
+#encoding:utf-8
 zh-CN:
   menu:
     navigator: '导航栏'
+    user:
+      actions: '用户操作'
+      mycourse: '我的课程'
+      myexams:  '我的考试'
+      myassessments: '个人评估'
+      calendar: '我的培训日程表'
+      competency: '能力库'
+      courses: '课程库'
+      teacheres: '我的老师'
+    teacher:
+      action: '教师操作'
+      cert: '资格认证'
+      class: '教师课程'
+      development: '开发课程'
+      records: '课程记录'
+      club: '教师俱乐部'
+    manager:
+      action: '领导操作'
+      members: '团队成员'
+      competency: '团队能力'
+      records: '团队学习记录'
+      assessments: '团队评估'
+    admin:
+      action: '管理员操作'
+      dashboard: '仪表板'
+      users: '用户管理'
+      competency: '能力管理'
+      course:  '课程管理'
+      teacher: '教师管理'
+      provider: '供应商管理'
+      position: '职位管理'
+      plan: '学习计划'
+      assessments: '评估管理'
+      data: '数据分析'
+  dashboard:
+    common:
+      sub_title1: '查看所有'
+      create: '创建于'
+      ago:  '前'
+    page:
+      title: '展示板'
+      sub_title: '系统概述'
+    overview:
+      title: '概述'
+      users: '用户'
+      competencies: '能力'
+      courses: '课程'
+      positions: '职位'
+    competency:
+      title: '能力模型'
+      sub_title: '最近新添加能力模型'
+      null_competency: '目前能力模型为空，请先添加'
+    course:
+      title: '课程'
+      sub_title: '最近新添加课程'
+      details: '查看详情'
+      null_course: '目前课程为空，请先添加'
+    user:
+      title: '用户'
+      sub_title: '最近新添加用户'
+      null_users: '目前用户为空，请先添加'
+    calender:
+      title: '日历'
+  users:
+    page:
+      title: '用户管理'
+      sub_title: '管理用户记录'
+    all:
+      title: '所有用户'
+      action: '操作'
+      name: '名字'
+      staff_id: '员工号'
+      email: '邮箱'
+      telephone: '固定电话'
+      mobile: '移动电话'
+      manager: '领导'
+      department: '部门'
+      dept_level: '级别'
+      position: '职位'
+      enroll:   '入职日期'
+      birthday: '出生日期'
+      delete: '删除'
+      edit: '修改'
+      create: '创建新用户'
+      export: '导出用户'
+      import: '导入用户'
+      select: '选择文件'
+      manage: '管理用户'
+      change: '重新选择'
+      remove: '移除文件'
+  position:
+    page:
+      title: '职位管理'
+      sub_title: '管理公司职位'
+    all:
+      title: '职位'
+      action: '操作'
+      name: '名字'
+      description: "描述"         
+      relate_competency: "相关的能力"
+      relate_couse: "相关的课程"
+      delete: '删除'
+      edit: '修改'
+      create: '创建新职位'
+      export: '导出职位'
+      import: '导入职位'
+      select: '选择文件'
+      manage: '管理职位'
+      change: '重新选择'
+      remove: '移除文件'
+  competency:
+    page:
+      title: '能力管理'
+      sub_title: '管理能力模型'
+    all:
+      title: '能力模型'
+      sub_title: '能力模型总结'
+      requiremnet: '能力需求'
+      new: '创建新能力项'
+      export: '导出能力项'
+      import_title: '导入能力模型'
+      import: '导入能力模型'
+      select: '选择文件'
+      change: '重新选择'
+      remove: '移除文件'
+      create: '创建于'
+      ago: '前'
+      manage: '能力管理'
+      filter: "过滤"
+      position: "职位:"
+      filter_condition: "过滤能力项"
+      clear_filter: '清除过滤'
+  course:
+    page:
+      title: "课程管理"
+      sub_title: "全部课程管理"
+    all:
+      title: "课程"
+      sub_title: "课程"
+      details: "查看详情"
+      new: '创建新课程'
+      export: '导出课程'
+      import_title: "导入课程"
+      import: '导入课程'
+      select: '选择文件'
+      change: '重新选择'
+      remove: '移除文件'
+      create: '创建于'
+      ago: '前'
+      manage: '课程管理'
+      filter: '过滤'
+      teacher: "教师"
+      position: "职位:"
+      filter_condition: "过滤课程"
+      clear_filter: "清除过滤"
