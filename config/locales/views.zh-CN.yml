@@ -157,3 +157,8 @@ zh-CN:
       position: "职位:"
       filter_condition: "过滤课程"
       clear_filter: "清除过滤"
+  share:
+    header:
+      edit: "修改资料"
+      setting: "账户设置"
+      out: "退出"
