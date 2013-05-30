@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130529085705) do
+ActiveRecord::Schema.define(:version => 20130530075722) do
 
   create_table "activities", :force => true do |t|
     t.string   "description"
@@ -151,6 +151,7 @@ ActiveRecord::Schema.define(:version => 20130529085705) do
     t.integer  "department_level"
     t.string   "self_intro"
     t.integer  "teacher_rate"
+    t.boolean  "is_assessed",                     :default => false
   end
 
 end

@@ -6,6 +6,9 @@ Evolution::Application.routes.draw do
 
   resources :users, :shallow => true do
     get 'dashboard', :on => :member
+    get 'mgr_assessments', :on => :member
+    get 'assessment', :on => :member
+    put 'assessment', :action => :update_assessment, :on => :member
     collection {post :import}
     collection {get :export}
     resources :courses
