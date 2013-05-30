@@ -1,11 +1,11 @@
-<% provide(:title, 'create user') %>
-<% provide(:page_title, "Create User") %>
-<% provide(:page_sub_title, "New User") %>
+<% provide(:title, t("users.all.create")) %>
+<% provide(:page_title, t("users.all.create")) %>
+<% provide(:page_sub_title, t("users.all.create")) %>
 <% provide(:page_icon, "iconfa-user") %>
 
 <% content_for :breadcrumbs do %>
 <li><%= link_to t("users.page.title"), admin_manage_users_path %> <span class="separator"></span></li>
-<%= content_tag(:li, "Create User") %>
+<%= content_tag(:li, t("users.all.create")) %>
 <% end %>
 
 <% content_for :javascript do %>
@@ -14,9 +14,9 @@
 
 <div class="row-fluid">
   <div id="dashboard-left" class="span8">
-    <h3 class="subtitle">Competency Model</h3>
+    <h3 class="subtitle"><%= t("competency.all.title") %></h3>
     <div class="divider15"></div>
-    <h4 class="widgettitle">Create New User</h4>
+    <h4 class="widgettitle"><%= t("users.all.create")%></h4>
     <div class="widgetcontent">
       <div class="divider15"></div>
       <%= simple_form_for(@user, :html => {:class => 'form-horizontal', :multipart => true }) do |f| %>
@@ -45,10 +45,10 @@
               <i class="iconfa-file fileupload-exists"></i>
               <span class="fileupload-preview"></span>
               </div>
-              <span class="btn btn-file"><span class="fileupload-new">Select file</span>
-              <span class="fileupload-exists">Change</span>
+              <span class="btn btn-file"><span class="fileupload-new"><%= t("course.all.select") %></span>
+              <span class="fileupload-exists"><%= t("course.all.change") %></span>
               <input class="file optional" id="user_avatar" name="user[avatar]" type="file" /></span>
-              <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+              <a href="#" class="btn fileupload-exists" data-dismiss="fileupload"><%= t("course.all.remove") %></a>
             </div>
             <p class="help-block">No special characters.</p>
             </div>
@@ -62,11 +62,11 @@
     </div>
   </div>
   <div id="dashboard-right" class="span4">
-    <h3 class="subtitle">TIPS</h3>
+    <h3 class="subtitle"><%= t("course.all.tip") %></h3>
     <div class="divider15"></div>
-    <h4 class="widgettitle"> Tips</h4>
+    <h4 class="widgettitle"> <%= t("course.all.tips") %></h4>
     <div class="widgetcontent">
-      None
+      <%= t("dashboard.common.none") %>
     </div>
   </div>
 </div>
