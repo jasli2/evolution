@@ -86,9 +86,18 @@
       <%= submit_tag "提交评估".html_safe, :class => "btn btn-primary", :id => "submit-assessment" %>
     <% end %>
 
-    <%# link_to "提交评估", update_assessment_user_path(@user), :class => "btn btn-primary", :id => "submit-assessment" %>
-
   </div>
+
   <div id="dashboard-right" class="span4">
+    <h4 class="widgettitle">评估对象</h4>
+    <div class="widgetcontent nopadding">
+      <div class="assessing-user-box">
+        <%= image_tag user_avatar_path(@user, :normal) %>
+        <div class="user-info">
+          <h5><%= @user.name %></h5>
+          <span class="position"><%= @user.position.name %></span>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

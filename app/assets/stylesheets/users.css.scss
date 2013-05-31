@@ -52,7 +52,6 @@ ul.pedding-assessment-list {
     //font-size: 15px;
     &:last-child { border-bottom: 0; }
     img { width: 30px; vertical-align:middle; margin-right: 15px; }
-    a { float: right; }
   }
 }
 
@@ -70,4 +69,17 @@ ul.assessment-list {
 div.assessment-error {
   display: none;
   margin-bottom: 10px;
+}
+
+.assessing-user-box {
+  padding: 10px 20px;
+  min-height: 50px;
+  img {
+    float: left;
+    width: 50px;
+  }
+  .user-info {
+    margin-left: 60px;
+    h5 { margin: 5px 0; }
+  }
 }

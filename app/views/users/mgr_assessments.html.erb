@@ -22,8 +22,8 @@
         <% @user.subordinates.assessing.each do |s| %>
         <li>
           <%= image_tag user_avatar_path(s, :small) %>
-          <span><%= s.name %>（<%= s.position.name %>）</span>
-          <span><%= link_to "<i class='iconfa-check'></i> 开始评估".html_safe, assessment_user_path(s), :class => "btn btn-warning" %></span>
+          <%= link_to s.name, user_path(s) %><span>（<%= s.position.name %>）</span>
+          <span><%= link_to "<i class='iconfa-check'></i> 开始评估".html_safe, assessment_user_path(s), :class => "btn btn-warning pull-right" %></span>
         </li>
         <% end %>
       </ul>
