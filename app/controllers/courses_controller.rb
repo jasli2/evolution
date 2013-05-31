@@ -51,7 +51,7 @@ class CoursesController < ApplicationController
     @menu_category = current_user.admin? ? 'admin' : 'user'
     @menu_active = current_user.admin? ? 'courses' : 'user_courses'
     @course = Course.new
-    session[:return_to] ||= request.referer
+    session[:return_to] = request.referer
 
     respond_to do |format|
       format.html # new.html.erb
@@ -68,7 +68,7 @@ class CoursesController < ApplicationController
       @menu_active = 'user_courses'
     end
     @course = Course.find(params[:id])
-    session[:return_to] ||= request.referer
+    session[:return_to] = request.referer
   end
 
   def create

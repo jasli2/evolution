@@ -1,7 +1,7 @@
 <div class="leftmenu">        
   <ul class="nav nav-tabs nav-stacked">
     <li class="nav-header"><%= t('menu.navigator') %></li>
-      <% unless current_user.admin? %>
+      <%# unless current_user.admin? %>
       <li class="<%= category == 'user' ? "dropdown active" : "dropdown" %>"><a href=""><span class="iconfa-plus"></span> <%= t('menu.user.action') %></a>
       <ul style="<%= "display: block" if category == 'user' %>">
         <li class="<%= "active" if active == 'home' %>"><a href="<%= dashboard_user_path(current_user) %>"><span class="iconfa-home"></span> <%= t('menu.user.home') %></a></li>
@@ -16,26 +16,26 @@
       </ul>
       </li>
       
-      <% if current_user.teach_courses.size > 0 %>
-      <li class="<%= category == 'manager' ? "dropdown active" : "dropdown" %>"><a href=""><span class="iconfa-plus"></span> <%= t('menu.teacher.action') %></a>
-      <ul style="<%= "display: block" if category == 'manager' %>">
+      <%# if current_user.teach_courses.size > 0 %>
+      <li class="<%= category == 'teacher' ? "dropdown active" : "dropdown" %>"><a href=""><span class="iconfa-plus"></span> <%= t('menu.teacher.action') %></a>
+      <ul style="<%= "display: block" if category == 'teacher' %>">
         <li class="<%= "active" if active == 'member' %>"><a href="#"><span class="iconfa-group"></span> 我的课程管理</a></li>
         <li class="<%= "active" if active == 'member' %>"><a href="#"><span class="iconfa-rss"></span> 我的班级管理</a></li>
         <li class="<%= "active" if active == 'member' %>"><a href="#"><span class="iconfa-certificate"></span> 我的讲师生涯</a></li>
       </ul>
       </li>
-      <% end %>
+      <%# end %>
 
-      <% if current_user.subordinates.size > 0 %>  
+      <%# if current_user.subordinates.size > 0 %>  
       <li class="<%= category == 'manager' ? "dropdown active" : "dropdown" %>"><a href=""><span class="iconfa-plus"></span> <%= t('menu.manager.action') %></a>
       <ul style="<%= "display: block" if category == 'manager' %>">
         <li class="<%= "active" if active == 'member' %>"><a href="#"><span class="iconfa-group"></span> <%= t('menu.manager.members') %></a></li>
         <li class="<%= "active" if active == 'member' %>"><a href="#"><span class="iconfa-tasks"></span> 团队学习记录</a></li>
-        <li class="<%= "active" if active == 'member' %>"><a href="#"><span class="iconfa-check"></span> 团队认证评估</a></li>
+        <li class="<%= "active" if active == 'assess' %>"><a href="<%= mgr_assessments_user_path(current_user) %>"><span class="iconfa-check"></span> 团队认证评估</a></li>
       </ul>
       </li>
-      <% end %>
-      <% end %>
+      <%# end %>
+      <%# end %>
       
       <% if current_user.admin? %>
       <li class="<%= category == 'admin' ? "dropdown active" : "dropdown" %>"><a href=""><span class="iconfa-plus"></span> <%= t('menu.admin.action') %></a>

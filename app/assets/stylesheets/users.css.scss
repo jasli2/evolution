@@ -41,3 +41,33 @@
     }
   }
 }
+
+ul.pedding-assessment-list {
+  list-style-type: none;
+
+  li {
+    display: block;
+    border-bottom: 1px dashed #ddd;
+    padding: 15px 20px;
+    //font-size: 15px;
+    &:last-child { border-bottom: 0; }
+    img { width: 30px; vertical-align:middle; margin-right: 15px; }
+    a { float: right; }
+  }
+}
+
+ul.assessment-list {
+  list-style-type: disc;
+  padding-left: 20px;
+  li {
+    padding: 5px 0;
+  }
+  li.err {
+    color: red;
+  }
+}
+
+div.assessment-error {
+  display: none;
+  margin-bottom: 10px;
+}

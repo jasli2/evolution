@@ -1,6 +1,34 @@
 class UsersController < ApplicationController
   before_filter :need_admin!, :only => [:new, :create]
 
+  # for demo assessment process TODO: revisit it
+  def mgr_assessments
+    @menu_category = 'manager'
+    @menu_active = 'assess'
+
+    @user = User.find(params[:id])
+  end
+
+  def assessment
+    @menu_category = 'manager'
+    @menu_active = 'assess'
+
+    @user = User.find(params[:id])
+    session[:return_to] = request.referer
+  end
+
+  def update_assessment
+    @user = User.find(params[:id])
+    @user.is_assessed = true
+    respond_to do |format|
+      if @user.save
+        format.html { redirect_to session.delete(:return_to), notice: 'User assessment is finished.'}
+      else
+        format.html { redirect_to :back, notice: 'Update user assessment error.'}
+      end
+    end
+  end
+
   def dashboard
     @menu_category = 'user'
     @menu_active = 'home' 
@@ -40,7 +68,7 @@ class UsersController < ApplicationController
     @menu_category = 'admin'
     @menu_active = 'users'
     @user = User.new
-    session[:return_to] ||= request.referer
+    session[:return_to] = request.referer
 
     respond_to do |format|
       format.html # new.html.erb
@@ -58,7 +86,7 @@ class UsersController < ApplicationController
       @menu_active = 'profile'
     end
     @user = User.find(params[:id])
-    session[:return_to] ||= request.referer
+    session[:return_to] = request.referer
   end
 
   # POST /users

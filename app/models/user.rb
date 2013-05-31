@@ -21,6 +21,7 @@
 #  department_level :integer
 #  self_intro       :string(255)
 #  teacher_rate     :integer
+#  is_assessed      :boolean          default(FALSE)
 #
 
 require 'file_size_validator'
@@ -71,6 +72,8 @@ class User < ActiveRecord::Base
 
   scope :staff, where(:is_admin => false)
   scope :teacher, lambda { {:joins => :teach_courses, :group => "courses.teacher_id", :having => ["count(courses.teacher_id) > 0"]} }
+  scope :assessed, where(:is_assessed => true)
+  scope :assessing, where(:is_assessed => false)
   #def self.teacher_for_position(p)
   #  if p
   #    c = Course.for_position(p)
