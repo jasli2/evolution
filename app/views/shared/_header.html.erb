@@ -41,13 +41,13 @@
             <h5><%= current_user.name %> <small>- <%= current_user.email %></small></h5>
             <ul>
               <% unless current_user.admin? %>
-              <li><a href="<%= edit_user_path(current_user) %>">Edit Profile</a></li>
-              <li><a href="">Account Settings</a></li>
+              <li><a href="<%= edit_user_path(current_user) %>"><%= t("share.header.edit") %></a></li>
+              <li><a href=""><%= t("share.header.setting") %></a></li>
               <% else %>
-              <li><a href="">Edit Profile</a></li>
-              <li><a href="">Account Settings</a></li>
+              <li><a href=""><%= t("share.header.edit") %></a></li>
+              <li><a href=""><%= t("share.header.setting") %></a></li>
               <% end %>
-              <li><%= link_to "Sign out", logout_path %></li>
+              <li><%= link_to t("share.header.out"), logout_path %></li>
             </ul>
           </div>
         </div>

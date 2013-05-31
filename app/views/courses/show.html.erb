@@ -1,13 +1,13 @@
 <% provide(:title, @course.title) %>
 <% provide(:page_title, @course.title) %>
-<% provide(:page_sub_title, "Course Details") %>
+<% provide(:page_sub_title, t("course.all.detail")) %>
 <% provide(:page_icon, "iconfa-edit") %>
 
 <% content_for :breadcrumbs do %>
 <% if current_user.admin? %>
-<li><%= link_to " Course Managerment ", admin_manage_course_path %> <span class="separator"></span></li>
+<li><%= link_to t("course.page.title"), admin_manage_course_path %> <span class="separator"></span></li>
 <% else %>
-<li><%= link_to " My Courses ", user_courses_path(current_user) %> <span class="separator"></span></li>
+<li><%= link_to t("menu.user.mycourse"), user_courses_path(current_user) %> <span class="separator"></span></li>
 <% end %>
 <%= content_tag(:li, @course.title) %>
 <% end %>
@@ -45,8 +45,8 @@
       <%= image_tag course_cover_path(@course, :large), :class => "pull-left" %>
       <div class="course-banner">
         <h3><%= @course.title %></h3>
-        <button class="btn btn-warning disabled">Join this class now!</button>
-        <h5>Created by <%= link_to @course.creator.name, user_path(@course.creator) %> at <%= distance_of_time_in_words_to_now(@course.created_at) + ' ago' %></h5>
+        <button class="btn btn-warning disabled"><%= t("course.all.join") %></button>
+        <h5><%= link_to @course.creator.name, user_path(@course.creator) %> <%= t("course.all.create") %> <%= distance_of_time_in_words_to_now(@course.created_at) + t("course.all.ago") %></h5>
       </div>
     </div>
     <div class="divider30"></div>
@@ -54,50 +54,50 @@
 
     <% unless @course.lesson.url.nil? %>
     <div id="swf-content">
-      <a class="btn btn-success btn-small" href="<%= @course.lesson.url %>" onclick="loadSWF(this.href, 1); return false;">Click to watch</a>
+      <a class="btn btn-success btn-small" href="<%= @course.lesson.url %>" onclick="loadSWF(this.href, 1); return false;"> <%= t("course.all.clik_watch") %></a>
     </div>
     <div class="divider15"></div>
     <% end %>
 
     <div class="tabbedwidget tab-primary">
       <ul>
-        <li><a href="#tabs-1"><span class="iconfa-info-sign"></span> Infomation</a></li>
-        <li><a href="#tabs-2"><span class="iconfa-file"></span> Class Material</a></li>
-        <li><a href="#tabs-3"><span class="iconfa-comments-alt"></span> Discussion</a></li>
+        <li><a href="#tabs-1"><span class="iconfa-info-sign"></span> <%= t("course.all.info") %></a></li>
+        <li><a href="#tabs-2"><span class="iconfa-file"></span>  <%= t("course.all.material") %></a></li>
+        <li><a href="#tabs-3"><span class="iconfa-comments-alt"></span>  <%= t("course.all.discussion") %></a></li>
       </ul>
       <div id="tabs-1" class="course-introduction">
         <h6><%= @course.description %></h6>
       </div>
       <div id="tabs-2" class="course-material">
-        <p>No course material yet</p>
+        <p> <%= t("course.all.notic1") %></p>
       </div>
       <div id="tabs-3" class="course-discussion">
-        <p>No discusstion yet</p>
+        <p> <%= t("course.all.notic2") %></p>
       </div>
     </div>
   </div>
   <div id="dashboard-right" class="span4">
     <div class="well">
     <% if current_user.admin? or @course.teacher?(current_user) %>
-      <a href="<%= edit_course_path(@course) %>" class="btn btn-success"><i class="iconfa-edit icon-white"></i> Edit</a>
+      <a href="<%= edit_course_path(@course) %>" class="btn btn-success"><i class="iconfa-edit icon-white"></i>  <%= t("position.all.edit") %></a>
     <% else %>
-      <a href="#" class="btn btn-warning disabled"><i class="iconfa-plus icon-white"></i> Join this class now!</a>
+      <a href="#" class="btn btn-warning disabled"><i class="iconfa-plus icon-white"></i> <%= t("course.all.join")%></a>
     <% end %>
     </div>
     
-    <h3 class="subtitle">about the teacher</h3>
+    <h3 class="subtitle"> <%= t("users.all.aboutteacher") %></h3>
     <div class="well about-teacher">
       <%= image_tag user_avatar_path(@course.teacher, :normal), :class => "pull-left" %>
       <div class="teacher-info">
         <h4><%= link_to @course.teacher.name, user_path(@course.teacher) %></h4>
-        <p>No teacher introdution yet</p>
+        <p> <%= t("users.all.nointruduction") %></p>
       </div>
     </div>
 
     <div class="divider15"></div>
-    <h3 class="subtitle">students</h3>
+    <h3 class="subtitle"> <%= t("users.all.student") %></h3>
       <div class="well course-students">
-        <p>No Students yet.</p>
+        <p> <%= t("users.all.notice") %></p>
       </div>
     
   </div>

@@ -42,6 +42,7 @@ en:
       sub_title1: 'see all'
       create: 'create at '
       ago: ' ago'
+      none: 'None'
     page:
       title: "Dashboard"
       sub_title: 'System Overview'
@@ -73,6 +74,19 @@ en:
     all:
       title: "All Users"
       action: 'Action'
+      student: "Students"
+      aboutteacher: "about the teacher"
+      nointruduction: "No teacher intruduction yet"
+      social: "Social Networks"
+      followings: "Followings"
+      follower: "Follower"
+      recent: "Recent Activity"
+      blog: "Blogs"
+      myblog: "My Blog"
+      knowledge: "Knowledge Center"
+      question: "Follwing Questions"
+      infor: "User Informations"
+      subordinates: "Subordinates"
       name: 'Name'
       staff_id: 'Staff ID'
       email: 'Email'
@@ -93,6 +107,7 @@ en:
       manage: 'Manage Users'
       change: 'Change'
       remove: 'Remove'
+      notice: "No Students yet"
   position:
     page:
       title: 'Position Management'
@@ -120,6 +135,7 @@ en:
     all:
       title: 'Competency Model'
       sub_title: 'Competency Model summary'
+      sub_title1: "Find Out Competency Models"
       requiremnet: 'Competency Requirements for '
       new: 'Create New Competency'
       export: 'Export As Csv'
@@ -142,7 +158,15 @@ en:
     all:
       title: 'Courses'
       sub_title: 'Course'
+      sub_title1: "Teach Courses"
+      sub_title2: "Pending Courses"
+      newcourse: "New Course"
       details: "View Details"
+      detail: "Course Details"
+      join: "Join this class new!"
+      info: "Infomation"
+      material: "Class Material"
+      discussion: "Discussion"
       new: 'Create New Course'
       export: 'Export As Csv'
       import_title: 'Import Course'
@@ -158,3 +182,13 @@ en:
       position: "Position:"
       filter_condition: "Filter Courses"
       clear_filter: 'Clear Filter'
+      clik_watch: "Click to watch"
+      tip:  "TIPS"
+      tips: "Tips"
+      notic1: "No course material yet"
+      notic2: "No discusstion yet"
+  share:
+    header:
+      edit: "Edit Profile"
+      setting: "Account Settings"
+      out: "Sign Out"

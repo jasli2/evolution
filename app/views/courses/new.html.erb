@@ -1,15 +1,15 @@
-<% provide(:title, 'create course') %>
-<% provide(:page_title, "Create Course") %>
-<% provide(:page_sub_title, "New Course") %>
+<% provide(:title, t("course.all.new"))%>
+<% provide(:page_title, t("course.all.new")) %>
+<% provide(:page_sub_title, t("course.all.newcourse")) %>
 <% provide(:page_icon, "iconfa-edit") %>
 
 <% content_for :breadcrumbs do %>
 <% if current_user.admin? %>
-<li><%= link_to " Course Managerment ", admin_manage_course_path %> <span class="separator"></span></li>
+<li><%= link_to t("course.page.title"), admin_manage_course_path %> <span class="separator"></span></li>
 <% else %>
-<li><%= link_to " My Courses ", user_courses_path(current_user) %> <span class="separator"></span></li>
+<li><%= link_to t("menu.user.mycourse"), user_courses_path(current_user) %> <span class="separator"></span></li>
 <% end %>
-<%= content_tag(:li, "Create Course") %>
+<%= content_tag(:li, t("course.all.new")) %>
 <% end %>
 
 <% content_for :javascript do %>
@@ -18,20 +18,20 @@
 
 <div class="row-fluid">
   <div id="dashboard-left" class="span8">
-    <h3 class="subtitle">Courses</h3>
+    <h3 class="subtitle"><%= t("course.all.sub_title") %></h3>
     <div class="divider15"></div>
-    <h4 class="widgettitle">Create New Course</h4>
+    <h4 class="widgettitle"><%= t("course.all.new") %></h4>
     <div class="widgetcontent">
       <div class="divider15"></div>
       <%= render :partial => 'form' %>
     </div>
   </div>
   <div id="dashboard-right" class="span4">
-    <h3 class="subtitle">TIPS</h3>
+    <h3 class="subtitle"><%s t("course.all.tip") %></h3>
     <div class="divider15"></div>
-    <h4 class="widgettitle"> Tips</h4>
+    <h4 class="widgettitle"> <%s t("course.all.tips") %></h4>
     <div class="widgetcontent">
-      None
+      <%= t("dashboard.common.none") %>
     </div>
   </div>
 </div>
