@@ -1,0 +1,103 @@
+<% provide(:title, '胜任力评估') %>
+<% provide(:page_title, '胜任力评估') %>
+<% provide(:page_sub_title, '胜任力评估') %>
+<% provide(:page_icon, "iconfa-check") %>
+
+<% content_for :breadcrumbs do %>
+<li><%= link_to '团队认证评估', mgr_assessments_user_path(current_user) %> <span class="separator"></span></li>
+<%= content_tag(:li, '胜任力评估-' + @user.name) %>
+<% end %>
+
+<% content_for :javascript do %>
+<script type="text/javascript">
+  $(function() {
+    $('.accordion').accordion({
+      heightStyle: "content",
+      header: ".a-header"
+    });
+  });
+
+  $("#submit-assessment").click(function () {
+    var name, a_index;
+    $(":radio").each(function() {
+      if(name === $(this).attr("name")) return;
+      name = $(this).attr("name");
+      var checked = $(":radio[name="+name+"]:checked").val();
+      if( typeof checked === "undefined" ) {
+        $(this).closest("li").addClass("err");
+        if( typeof a_index === "undefined") {
+          a_index = $(this).parents("div:eq(0)").attr("index");
+        }
+      } else {
+        $(this).closest("li").removeClass("err");
+      }
+    });
+
+    console.log("aindex  herer: " + a_index);
+    if( typeof a_index === "undefined" ) {
+      //all set
+      return true;
+    } else {
+      $(".accordion").accordion('destroy');
+      $(".accordion").accordion({
+        active: parseInt(a_index, 10),
+        heightStyle: "content",
+        header: ".a-header"
+      })
+      $("div.assessment-error").append("有未勾选的评估项，请核查。")
+      $("div.assessment-error").css("display", "block");
+      return false;
+    }
+  });
+</script>
+<% end %>
+
+<div class="row-fluid">
+  <div id="dashboard-left" class="span8">
+    <div class="alert alert-error assessment-error">
+      <button data-dismiss="alert" class="close" type="button">&times;</button>
+    </div>
+    <h4 class="widgettitle"><span class="iconfa-check icon-white"></span> 员工胜任力评估</h4>
+    <div class="widgetcontent nopadding">
+      <div class="accordion">
+        <% @user.position.competency_levels.each_with_index do |cl, i| %>
+        <div class="a-header">
+          <a href="#"><%= cl.competency.name %>（<%= level_name(cl.level) %>）</a>
+        </div>
+        <div class="a-content" index="<%= i %>">
+          <h6><%= cl.description %></h6>
+          <ul class="assessment-list">
+            <% cl.competency_level_requirements.each_with_index do |clr, index| %>
+            <li>
+              <span><%= clr.description %></span>
+              <span class="pull-right">
+              <input id="<%= 'c'+i.to_s+'_q'+index.to_s+'_yes' %>" name="<%= 'c'+i.to_s+'q'+index.to_s %>" type="radio" value="yes" /> 通过 &nbsp; &nbsp;
+              <input id="<%= 'c'+i.to_s+'_q'+index.to_s+'_no' %>" name="<%= 'c'+i.to_s+'q'+index.to_s %>" type="radio" value="no" /> 不通过
+              </span>
+            </li>
+            <% end %>
+          </ul>
+        </div>
+        <% end %>
+      </div>
+    </div>   
+
+    <%= form_tag update_assessment_user_path(@user) do %>
+      <%= submit_tag "提交评估".html_safe, :class => "btn btn-primary", :id => "submit-assessment" %>
+    <% end %>
+
+  </div>
+
+  <div id="dashboard-right" class="span4">
+    <h4 class="widgettitle">评估对象</h4>
+    <div class="widgetcontent nopadding">
+      <div class="assessing-user-box">
+        <%= image_tag user_avatar_path(@user, :normal) %>
+        <div class="user-info">
+          <h5><%= @user.name %></h5>
+          <span class="position"><%= @user.position.name %></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

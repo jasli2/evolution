@@ -1,27 +1,20 @@
-<p>
-  Download:
-  <%= link_to "CSV", export_users_path(format: "csv") %> |
-  <%= link_to "Excel", export_users_path(format: "xls") %>
-</p>
+<% provide(:title, t("users.all.create")) %>
+<% provide(:page_title, t("users.all.create")) %>
+<% provide(:page_sub_title, t("users.all.create")) %>
+<% provide(:page_icon, "iconfa-user") %>
 
-<table id="users">
-  <tr>
-    <th> Name </th>
-    <th> Email </th>
-    <th> Position_id </th>
-  </tr>
-  <% @users.each do |user| %>
-    <tr>
-      <td><%= user.name %></td>
-      <td><%= user.email %></td>
-      <td><%= user.position_id %></td>
-    </tr>
-  <% end %>
-</table>
-
-<h2>Import Products</h2>
-
-<%= form_tag import_users_path, multipart: true do %>
-  <%= file_field_tag :file %>
-  <%= submit_tag "Import" %>
+<% content_for :breadcrumbs do %>
+<li><%= link_to t("users.page.title"), admin_manage_users_path %> <span class="separator"></span></li>
+<%= content_tag(:li, t("users.all.create")) %>
 <% end %>
+
+<% content_for :javascript do %>
+
+<% end %>
+
+<div class="row-fluid">
+  <div id="dashboard-left" class="span8">
+  </div>
+  <div id="dashboard-right" class="span4">
+  </div>
+</div>

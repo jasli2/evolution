@@ -8,7 +8,7 @@ Evolution::Application.routes.draw do
     get 'dashboard', :on => :member
     get 'mgr_assessments', :on => :member
     get 'assessment', :on => :member
-    put 'assessment', :action => :update_assessment, :on => :member
+    post 'assessment', :action => :update_assessment, :as => :update_assessment, :on => :member
     collection {post :import}
     collection {get :export}
     resources :courses

@@ -1,0 +1,67 @@
+<% provide(:title, "团队认证评估") %>
+<% provide(:page_title, "团队认证评估") %>
+<% provide(:page_sub_title, "评估团队胜任力") %>
+<% provide(:page_icon, "iconfa-check") %>
+
+<% content_for :breadcrumbs do %>
+<%= content_tag(:li, "团队认证评估") %>
+<% end %>
+
+<% content_for :javascript do %>
+
+<% end %>
+
+<div class="row-fluid">
+  <div id="dashboard-left" class="span8">
+    <h3 class="subtitle">员工胜任力评估</h3>
+    <div class="divider15"></div>
+    <h4 class="widgettitle"> 待评估员工（<%= @user.subordinates.assessing.size %>）</h4>
+    <% if @user.subordinates.assessing.size > 0 %>
+    <div class="widgetcontent nopadding">
+      <ul class="pedding-assessment-list">
+        <% @user.subordinates.assessing.each do |s| %>
+        <li>
+          <%= image_tag user_avatar_path(s, :small) %>
+          <%= link_to s.name, user_path(s) %><span>（<%= s.position.name %>）</span>
+          <span><%= link_to "<i class='iconfa-check'></i> 开始评估".html_safe, assessment_user_path(s), :class => "btn btn-warning pull-right" %></span>
+        </li>
+        <% end %>
+      </ul>
+    </div>
+    <% else %>
+    <div class="widgetcontent">
+      <%= t("dashboard.common.none") %>
+    </div>
+    <% end %>
+    <div class="divider30"></div>
+
+    <h4 class="widgettitle"> 已评估员工（<%= @user.subordinates.assessed.size %>）</h4>
+    <% if @user.subordinates.assessed.size > 0 %>
+    <div class="widgetcontent nopadding">
+      <ul class="pedding-assessment-list">
+        <% @user.subordinates.assessed.each do |s| %>
+        <li>
+          <%= image_tag user_avatar_path(s, :small) %>
+          <span><%= s.name %>（<%= s.position.name %>）</span>
+          <span><%= link_to "<i class='iconfa-check'></i> 已完成评估".html_safe, '#', :class => "btn btn-primary disabled" %></span>
+        </li>
+        <% end %>
+      </ul>
+    </div>
+    <% else %>
+    <div class="widgetcontent">
+      <%= t("dashboard.common.none") %>
+    </div>    
+    <% end %>
+  
+  </div>
+
+  <div id="dashboard-right" class="span4">
+    <h3 class="subtitle"><%= t("course.all.tip") %></h3>
+    <div class="divider15"></div>
+    <h4 class="widgettitle"> <%= t("course.all.tips") %></h4>
+    <div class="widgetcontent">
+      <%= t("dashboard.common.none") %>
+    </div>
+  </div>
+</div>
