@@ -32,7 +32,7 @@ class UsersController < ApplicationController
   def dashboard
     @menu_category = 'user'
     @menu_active = 'home' 
-    @pending_courses = Course.for_position(current_user.position).first(3) unless @user.position.blank?
+    @pending_courses = Course.for_position(current_user.position).first(3) unless current_user.position.blank?
   end
 
   # GET /users
