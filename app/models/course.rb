@@ -48,10 +48,10 @@ class Course < ActiveRecord::Base
 
   # custom image sizes: each key is a version name
   IMAGE_CONFIG = {
-    :crop => [4, 3],
-    :large => [400, 300],
-    :normal => [200, 150],
-    :small => [100, 75]
+      :crop => [4, 3],
+      :large => [400, 300],
+      :normal => [200, 150],
+      :small => [100, 75]
   }
   mount_uploader :cover_image, ImageUploader
   validates :cover_image, :file_size => {:maximum => 2.megabytes.to_i }
@@ -65,7 +65,7 @@ class Course < ActiveRecord::Base
   def teacher?(u)
     teacher_id == u.id
   end
-  
+
   def self.to_csv(options = {})
     header = ["title", "description", "creator", "creator ID", "duration", "course type", \
               "Teacher", "TeacherID", "competency", "level"]
@@ -101,22 +101,34 @@ class Course < ActiveRecord::Base
     spreadsheet = open_spreadsheet(file)
     header = spreadsheet.row(1)
     length = header.length
-    course = Course.new
+    #course = Course.new
     (2..spreadsheet.last_row).each do |i|
-      row = spreadsheet.row(i)
-      course = Course.find_by_title(row[0]) || new
-      course.title = row[0]
-      course.description = row[1]
-      creator = User.find_by_staff_id(row[3])
-      course.creator_id  = creator.id
+      #row = spreadsheet.row(i)
+      row = Hash[[header,spreadsheet.row(i)].transpose]
+      title = row.first[0]
+
+
+      course = Course.find_by_title(row[title]) || new
+      course.title = row[title]
+      course.audience = row["audience"]
+      course.teach_type = row["type"]
+      course.source_type = row["sourcetype"]
+      course.course_type = row["coursetype"]
+      #course.description = row[1]
+      #creator = User.find_by_staff_id(row["creatorID"])
+      creator = User.find_by_name(row["creator"])
+      unless (creator.nil?)
+        course.creator_id  = creator.id
+      end
       course.duration = row[4]
-      course.course_type = row[5]
-      teacher = User.find_by_staff_id(row[7])
+      teacher = User.find_by_name(row["Teacher"])
       course.teacher_id = teacher.id
       save!(course)
-      competency = Competency.find_by_name(row[8])
-      competency_level = competency.competency_levels.find_by_level(row[9])
-      course.competency_level_has_courses.new(:competency_level_id=>competency_level.id,:course_id => course.id )
+      competency = Competency.find_by_name(row["competency"])
+      unless (competency.nil?)
+        competency_level = competency.competency_levels.find_by_level(row["level"])
+        course.competency_level_has_courses.new(:competency_level_id=>competency_level.id,:course_id => course.id )
+      end
       save!(course)
     end
   end
