@@ -194,6 +194,7 @@ zh-CN:
       tips: "提示"
       notic1: "目前没有课程资料"
       notic2: "目前没有讨论"
+      notic3: "输入课程名并回车"
   share:
     header:
       edit: "修改资料"
