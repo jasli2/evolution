@@ -78,6 +78,7 @@ en:
       title: "All Users"
       action: 'Action'
       student: "Students"
+      editprof: "Edit User Profile"
       aboutteacher: "about the teacher"
       nointruduction: "No teacher intruduction yet"
       social: "Social Networks"
@@ -186,10 +187,13 @@ en:
       filter_condition: "Filter Courses"
       clear_filter: 'Clear Filter'
       clik_watch: "Click to watch"
+      findcouse: "Find Courses"
+      falcourse: "Find All Courses"
       tip:  "TIPS"
       tips: "Tips"
       notic1: "No course material yet"
       notic2: "No discusstion yet"
+      notic3: "To search course and hit enter...."
   share:
     header:
       edit: "Edit Profile"

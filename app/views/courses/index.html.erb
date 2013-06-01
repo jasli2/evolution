@@ -1,10 +1,10 @@
-<% provide(:title, @menu_active == 'courses' ? "Courses Library" : "My Courses") %>
-<% provide(:page_title, @menu_active == 'courses' ? "Courses Library" : "My Courses") %>
-<% provide(:page_sub_title, @menu_active == 'courses' ? "Find all courses" : "Your pending courses") %>
+<% provide(:title, @menu_active == 'courses' ? t("menu.user.courses") : t("menu.user.mycourse")) %>
+<% provide(:page_title, @menu_active == 'courses' ? t("menu.user.courses") : t("menu.user.mycourse")) %>
+<% provide(:page_sub_title, @menu_active == 'courses' ? t("course.all.falcourse") : t("course.all.sub_title2")) %>
 <% provide(:page_icon, "iconfa-folder-open") %>
 
 <% content_for :breadcrumbs do %>
-<li>Courses Library</li>
+<li><%= t("menu.user.courses") %></li>
 <% end %>
 
 <% content_for :javascript do %>
@@ -14,15 +14,15 @@
 
 <div class="row-fluid">
   <div id="dashboard-left" class="span8">
-    <h3 class="subtitle">Courses <%= @courses.total_count %></h3>
+    <h3 class="subtitle"><%= t("dashboard.overview.courses") %> <%= @courses.total_count %></h3>
     <div class="divider15"></div>
     <div class="widgetbox">
       <div class="headtitle">
-        <h4 class="widgettitle"><span class="iconfa-folder-open"></span> Find Courses (<%= @courses.total_count %>)</h4>
+        <h4 class="widgettitle"><span class="iconfa-folder-open"></span> <%= t("course.all.findcouse") %> (<%= @courses.total_count %>)</h4>
       </div>
       <% if @courses.size == 0 %>
       <div class="widgetcontent">
-        <p>No Competency Model setup yet. please setup it first. </p>
+        <p><%= t("dashboard.competency.null_competency") %> </p>
       </div>
       <% else %>
       <div class="widgetcontent nopadding">
@@ -48,31 +48,31 @@
 
   <div id="dashboard-right" class="span4">
     <div class="well">
-      <a href="<%= new_user_course_path(current_user) %>" class="btn btn-primary"><i class="iconfa-plus icon-white"></i> Create New Course</a>
+      <a href="<%= new_user_course_path(current_user) %>" class="btn btn-primary"><i class="iconfa-plus icon-white"></i><%= t("course.all.new") %></a>
     </div>
 
-    <h3 class="subtitle">Filter</h3>
+    <h3 class="subtitle"><%=t("course.all.filter") %></h3>
     <div class="divider15"></div>
-    <h4 class="widgettitle"> Filter</h4>
+    <h4 class="widgettitle"> <%=t("course.all.filter") %></h4>
     <div class="widgetcontent">
       <%= form_tag courses_path, :method => 'get' do %>
         <% unless @user %>
         <div>
-          <%= label_tag :teacher_id, "Teacher:" %>
+          <%= label_tag :teacher_id, t("course.all.teacher") %>
           <%= collection_select(nil, :teacher_id, User.teacher, :id, :name, {:include_blank => '请选择'}) %>
         </div>
         <div>
-          <%= label_tag :position_id, 'Position:' %>
+          <%= label_tag :position_id, t("course.all.position") %>
           <%= collection_select(nil, :position_id, Position.all, :id, :name, {:include_blank => '请选择'}) %>
         </div>
         <% else %>
         <div>
-          <%= label_tag :teacher_id, "Teacher:" %>
+          <%= label_tag :teacher_id, t("course.all.teacher") %>
           <%= collection_select(nil, :teacher_id, User.teacher, :id, :name, {:include_blank => '请选择'}) %>
         </div>
         <% end %>
-          <%= submit_tag "Filter Courses".html_safe, :class => "btn btn-primary" %>
-          <%= link_to "Clear Filter",  courses_path %>
+          <%= submit_tag t("course.all.filter_condition").html_safe, :class => "btn btn-primary" %>
+          <%= link_to t("course.all.clear_filter"),  courses_path %>
       <% end %>
     </div>
   </div>

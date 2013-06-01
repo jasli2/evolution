@@ -1,6 +1,6 @@
-<% provide(:title, 'Edit User') %>
-<% provide(:page_title, "Edit User Profile") %>
-<% provide(:page_sub_title, "Modify Profile") %>
+<% provide(:title, t("users.all.create")) %>
+<% provide(:page_title, t("users.all.editprof")) %>
+<% provide(:page_sub_title, t("share.header.edit")) %>
 <% provide(:page_icon, "iconfa-edit") %>
 
 <% content_for :breadcrumbs do %>
@@ -15,9 +15,9 @@
 
 <div class="row-fluid">
   <div id="dashboard-left" class="span8">
-    <h3 class="subtitle">Edit User Profile</h3>
+    <h3 class="subtitle"><%= t("users.all.editprof") %></h3>
     <div class="divider15"></div>
-    <h4 class="widgettitle">Edit User Profile</h4>
+    <h4 class="widgettitle"><%= t("users.all.editprof") %></h4>
     <div class="widgetcontent">
       <div class="divider15"></div>
       <%= simple_form_for(@user, :html => {:class => 'form-horizontal', :multipart => true }) do |f| %>
@@ -61,11 +61,11 @@
     </div>
   </div>
   <div id="dashboard-right" class="span4">
-    <h3 class="subtitle">TIPS</h3>
+    <h3 class="subtitle"><%= t("course.all.tip") %></h3>
     <div class="divider15"></div>
-    <h4 class="widgettitle"> Tips</h4>
+    <h4 class="widgettitle"> <%= t("course.all.tips") %></h4>
     <div class="widgetcontent">
-      None
+      <%= t("dashboard.common.none") %>
     </div>
   </div>
 </div>
