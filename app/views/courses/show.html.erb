@@ -75,11 +75,11 @@
         <li><a href="#tabs-4"><span class="iconfa-comments-alt"></span>  <%= t("course.all.discussion") %></a></li>
       </ul>
       <div id="tabs-1" class="course-introduction">
-        <%= eo_markdown(@course.description) %>
+        <%= eo_markdown(@course.description) unless @course.description.blank? %>
       </div>
       <div id="tabs-2" class="course-target">
         <% unless @course.target.blank? %>
-        <%= eo_markdown(@course.target) %>
+        <%= eo_markdown(@course.target) unless @course.description.blank? %>
         <% else %>
         <p> <%= t("course.all.notic1") %></p>
         <% end %>
