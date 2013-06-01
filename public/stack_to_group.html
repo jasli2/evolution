@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+body {
+  margin: auto;
+  position: relative;
+  width: 960px;
+}
+
+text {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+form {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+</style>
+<form>
+  对比于： 
+  <label><input type="radio" name="mode" value="last" checked> 去年</label>
+  <label><input type="radio" name="mode" value="standard"> 行业平均水平</label>
+  <label><input type="radio" name="mode" value="top"> 行业标杆</label>
+</form>
+<script src="js/d3.v3.min.js"></script>
+<script>
+
+var data_last = [
+  [
+    {x: "A0",  y:  0.021},
+    {x: "A1",  y:  0.075},
+    {x: "A2",  y:  0.112},
+    {x: "A3",  y:  0.123},
+    {x: "A4",  y:  0.17},
+    {x: "A5",  y:  0.124},
+    {x: "A6",  y:  0.152},
+    {x: "A7",  y:  0.08},
+    {x: "A8",  y:  0.056},
+    {x: "A9",  y:  0.021},
+    {x: "A10",  y:  0.022},
+    {x: "A11",  y:  0.021},
+    {x: "A12",  y:  0.005},
+    {x: "A13",  y:  0.003},
+    {x: "A14",  y:  0.002},
+    {x: "A15",  y:  0.002},
+    {x: "A16",  y:  0.005},
+    {x: "A17",  y:  0.003},
+    {x: "A18",  y:  0.003},
+    {x: "A19",  y:  0}
+  ],
+  [
+    {x: "A0",  y:  0.045},
+    {x: "A1",  y:  0.123},
+    {x: "A2",  y:  0.156},
+    {x: "A3",  y:  0.089},
+    {x: "A4",  y:  0.123},
+    {x: "A5",  y:  0.154},
+    {x: "A6",  y:  0.192},
+    {x: "A7",  y:  0.019},
+    {x: "A8",  y:  0.031},
+    {x: "A9",  y:  0.011},
+    {x: "A10",  y:  0.034},
+    {x: "A11",  y:  0.012},
+    {x: "A12",  y:  0.004},
+    {x: "A13",  y:  0.002},
+    {x: "A14",  y:  0},
+    {x: "A15",  y:  0},
+    {x: "A16",  y:  0.005},
+    {x: "A17",  y:  0},
+    {x: "A18",  y:  0},
+    {x: "A19",  y:  0}
+  ]
+];
+
+var data_average = [
+  [
+    {x: "A0",  y:  0.021},
+    {x: "A1",  y:  0.075},
+    {x: "A2",  y:  0.112},
+    {x: "A3",  y:  0.123},
+    {x: "A4",  y:  0.17},
+    {x: "A5",  y:  0.124},
+    {x: "A6",  y:  0.152},
+    {x: "A7",  y:  0.08},
+    {x: "A8",  y:  0.056},
+    {x: "A9",  y:  0.021},
+    {x: "A10",  y:  0.022},
+    {x: "A11",  y:  0.021},
+    {x: "A12",  y:  0.005},
+    {x: "A13",  y:  0.003},
+    {x: "A14",  y:  0.002},
+    {x: "A15",  y:  0.002},
+    {x: "A16",  y:  0.005},
+    {x: "A17",  y:  0.003},
+    {x: "A18",  y:  0.003},
+    {x: "A19",  y:  0}
+  ],
+  [
+    {x: "A0",  y:  0},
+    {x: "A1",  y:  0.005},
+    {x: "A2",  y:  0.011},
+    {x: "A3",  y:  0.122},
+    {x: "A4",  y:  0.101},
+    {x: "A5",  y:  0.145},
+    {x: "A6",  y:  0.092},
+    {x: "A7",  y:  0.113},
+    {x: "A8",  y:  0.136},
+    {x: "A9",  y:  0.121},
+    {x: "A10",  y:  0.071},
+    {x: "A11",  y:  0.051},
+    {x: "A12",  y:  0.013},
+    {x: "A13",  y:  0.011},
+    {x: "A14",  y:  0.002},
+    {x: "A15",  y:  0.003},
+    {x: "A16",  y:  0.002},
+    {x: "A17",  y:  0.001},
+    {x: "A18",  y:  0},
+    {x: "A19",  y:  0}
+  ]
+];
+
+var data_top = [
+  [
+    {x: "A0",  y:  0.021},
+    {x: "A1",  y:  0.075},
+    {x: "A2",  y:  0.112},
+    {x: "A3",  y:  0.123},
+    {x: "A4",  y:  0.17},
+    {x: "A5",  y:  0.124},
+    {x: "A6",  y:  0.152},
+    {x: "A7",  y:  0.08},
+    {x: "A8",  y:  0.056},
+    {x: "A9",  y:  0.021},
+    {x: "A10",  y:  0.022},
+    {x: "A11",  y:  0.021},
+    {x: "A12",  y:  0.005},
+    {x: "A13",  y:  0.003},
+    {x: "A14",  y:  0.002},
+    {x: "A15",  y:  0.002},
+    {x: "A16",  y:  0.005},
+    {x: "A17",  y:  0.003},
+    {x: "A18",  y:  0.003},
+    {x: "A19",  y:  0}
+  ],
+  [
+    {x: "A0",  y:  0 },
+    {x: "A1",  y:  0.001 },
+    {x: "A2",  y:  0.001 },
+    {x: "A3",  y:  0.022 },
+    {x: "A4",  y:  0.033 },
+    {x: "A5",  y:  0.051 },
+    {x: "A6",  y:  0.082 },
+    {x: "A7",  y:  0.111 },
+    {x: "A8",  y:  0.162 },
+    {x: "A9",  y:  0.182 },
+    {x: "A10",  y:  0.11  },
+    {x: "A11",  y:  0.095 },
+    {x: "A12",  y:  0.072 },
+    {x: "A13",  y:  0.052 },
+    {x: "A14",  y:  0.009 },
+    {x: "A15",  y:  0.007 },
+    {x: "A16",  y:  0.003 },
+    {x: "A17",  y:  0.004 },
+    {x: "A18",  y:  0.001 },
+    {x: "A19",  y:  0.002 }
+  ]
+];
+
+var formatPercent = d3.format(".0%");
+//var color = d3.scale.category10();
+var color = d3.scale.ordinal()
+    .range(["#8a89a6", "#d0743c", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+var x_key = [
+"A0",
+"A1",
+"A2",
+"A3",
+"A4",
+"A5",
+"A6",
+"A7",
+"A8",
+"A9",
+"A10",
+"A11",
+"A12",
+"A13",
+"A14",
+"A15",
+"A16",
+"A17",
+"A18",
+"A19"
+];
+
+var n = 2, // number of layers
+    stack = d3.layout.stack(),
+    layers0 = stack(d3.range(n).map(function(d, i) { return data_last[i]; })),
+    layers1 = stack(d3.range(n).map(function(d, i) { return data_average[i]; })),
+    layers2 = stack(d3.range(n).map(function(d, i) { return data_top[i]; })),
+    yGroupMax = d3.max(layers0, function(layer) { return d3.max(layer, function(d) { return d.y; }); }),
+    yStackMax = d3.max(layers0, function(layer) { return d3.max(layer, function(d) { return d.y0 + d.y; }); });
+
+var layers = layers0;
+
+var margin = {top: 40, right: 10, bottom: 20, left: 40},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+var x = d3.scale.ordinal()
+    .domain(x_key)
+    .rangeRoundBands([0, width], .08);
+
+var y = d3.scale.linear()
+    //.domain([0, yStackMax])
+    .domain([0, yGroupMax])
+    .range([height, 0]);
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .tickSize(0)
+    .tickPadding(6)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left")
+    .tickFormat(formatPercent);
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var layer = svg.selectAll(".layer")
+    .data(layers)
+  .enter().append("g")
+    .attr("class", "layer")
+    .style("fill", function(d, i) { return color(i); });
+
+var rect = layer.selectAll("rect")
+    .data(function(d) { return d; })
+  .enter().append("rect")
+    .attr("x", function(d, i, j) { return x(d.x) + x.rangeBand() / n * j; })
+    .attr("y", height)
+    .attr("width", x.rangeBand() / n)
+    .attr("height", 0);
+
+rect.transition()
+    .delay(function(d, i) { return i * 10; })
+    .attr("y", function(d) { return y(d.y); })
+    .attr("height", function(d) { return height - y(d.y); });
+
+svg.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + height + ")")
+    .call(xAxis);
+
+svg.append("g")
+    .attr("class", "y axis")
+    .call(yAxis)
+
+d3.selectAll("input").on("change", change);
+
+//var timeout = setTimeout(function() {
+//  d3.select("input[value=\"grouped\"]").property("checked", true).each(change);
+//}, 2000);
+
+function change() {
+  //clearTimeout(timeout);
+
+  if (this.value === "last") transitionRedraw(layers0);
+  else if(this.value == "standard") transitionRedraw(layers1);
+  else transitionRedraw(layers2);
+}
+
+function transitionRedraw(ref) {
+  //y.domain([0, yGroupMax]);
+  layer.data(function() { return layers = ref; });
+
+  rect.data(function(d) { return d; }).transition()
+      .duration(500)
+      .delay(function(d, i) { return i * 50; })
+      .attr("y", function(d) { return y(d.y); })
+      .attr("height", function(d) { return height - y(d.y); });
+}
+
+function transitionGrouped() {
+  y.domain([0, yGroupMax]);
+
+  rect.transition()
+      .duration(500)
+      .delay(function(d, i) { return i * 10; })
+      .attr("x", function(d, i, j) { return x(d.x) + x.rangeBand() / n * j; })
+      .attr("width", x.rangeBand() / n)
+    .transition()
+      .attr("y", function(d) { return y(d.y); })
+      .attr("height", function(d) { return height - y(d.y); });
+}
+
+function transitionStacked() {
+  y.domain([0, yStackMax]);
+
+  rect.transition()
+      .duration(500)
+      .delay(function(d, i) { return i * 10; })
+      .attr("y", function(d) { return y(d.y0 + d.y); })
+      .attr("height", function(d) { return y(d.y0) - y(d.y0 + d.y); })
+    .transition()
+      .attr("x", function(d) { return x(d.x); })
+      .attr("width", x.rangeBand());
+}
+
+// Inspired by Lee Byron's test data generator.
+function bumpLayer(n, o) {
+
+  function bump(a) {
+    var x = 1 / (.1 + Math.random()),
+        y = 2 * Math.random() - .5,
+        z = 10 / (.1 + Math.random());
+    for (var i = 0; i < n; i++) {
+      var w = (i / n - y) * z;
+      a[i] += x * Math.exp(-w * w);
+    }
+  }
+
+  var a = [], i;
+  for (i = 0; i < n; ++i) a[i] = o + o * Math.random();
+  for (i = 0; i < 5; ++i) bump(a);
+  return a.map(function(d, i) { return {x: i, y: Math.max(0, d)}; });
+}
+
+</script>

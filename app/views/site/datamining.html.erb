@@ -1,0 +1,52 @@
+<% provide(:title, '统计中心') %>
+<% provide(:page_title, '统计中心') %>
+<% provide(:page_sub_title, '统计，分析，预测') %>
+<% provide(:page_icon, "iconfa-bar-chart") %>
+
+<% content_for :breadcrumbs do %>
+<%= content_tag(:li, '统计中心') %>
+<% end %>
+
+<% content_for :javascript do %>
+<script type="text/javascript">
+  $(function() {
+    $('#slidercontent').bxSlider({
+      prevText: '',
+      nextText: ''
+    });
+  });
+</script>
+<% end %>
+
+<div class="row-fluid">
+  <div class="span12">
+  <ul id="slidercontent">
+    <li>
+      <div class="divider15"></div>
+      <h5 class="subtitle">分公司人员层级占比</h5>
+      <div class="divider15"></div>
+      <div class="n-chart">
+      <iframe src="Normalized_Bar_Chart.html" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+      </div>
+    </li>
+    
+    <li>
+      <div class="divider15"></div>
+      <h5 class="subtitle">人员能力分布多维对比</h5>
+      <div class="divider15"></div>
+      <div class="d-chart">
+      <iframe src="stack_to_group.html" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+      </div>
+    </li>
+
+    <li>
+      <div class="divider15"></div>
+      <h5 class="subtitle">授课量气泡图（按课程）</h5>
+      <div class="divider15"></div>
+      <div class="b-chart">
+      <iframe id='bubble-chart'src="bubble_chart.html" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+      </div>
+    </li>
+  </ul>
+  </div>
+</div>

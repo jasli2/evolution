@@ -52,7 +52,7 @@
           <li>授课方式：<%= @course.teach_type %></li>
           <li>课程类型：<%= @course.course_type %></li>
           <li>课程时长：<%= @course.duration %> 小时</li>
-          <li>所属胜任力级别：<%= @course.competency_levels.first.competency.name %>（<%= level_name(@course.competency_levels.first.level) %>）</li>
+          <li>所属胜任力级别：<%= (@course.competency_levels.first.competency.name +'（' + level_name(@course.competency_levels.first.level) + '）' ) unless @course.competency_levels.first.blank?  %></li>
         </ul>
         <span><%= link_to @course.creator.name, user_path(@course.creator) %> <%= t("course.all.create") %> <%= distance_of_time_in_words_to_now(@course.created_at) + t("course.all.ago") %></span>
       </div>

@@ -3,12 +3,12 @@ zh-CN:
   menu:
     navigator: '导航栏'
     user:
-      home_title: "主页"
+      home_title: "用户首页"
       notice_title: "温馨提示:"
       announcements: "公告"
-      actions: '用户操作'
-      home: "我的主页"
-      myprofile: "个人简介"
+      action: '用户操作'
+      home: "我的首页"
+      myprofile: "个人主页"
       mycourse: '我的课程'
       myexams:  '我的考试'
       myassessments: '个人评估'
@@ -31,7 +31,7 @@ zh-CN:
       assessments: '团队评估'
     admin:
       action: '管理员操作'
-      dashboard: '仪表板'
+      dashboard: '管理员首页'
       users: '用户管理'
       competency: '能力管理'
       course:  '课程管理'
@@ -48,7 +48,7 @@ zh-CN:
       ago:  '前'
       none: '没有任何信息'
     page:
-      title: '展示板'
+      title: '管理员首页'
       sub_title: '系统概述'
     overview:
       title: '概述'

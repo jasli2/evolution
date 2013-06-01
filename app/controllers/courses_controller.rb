@@ -73,7 +73,7 @@ class CoursesController < ApplicationController
 
   def create
     @user = User.find(params[:user_id]) if params[:user_id]
-    @course = @user.teach_courses.build(params[:course])
+    @course = @user.create_courses.build(params[:course])
 
     respond_to do |format|
       if @course.save

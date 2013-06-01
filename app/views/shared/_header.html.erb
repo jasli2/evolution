@@ -4,18 +4,7 @@
   </div>
   <div class="headerinner">
     <ul class="headmenu">
-      <li class="odd">
-        <a href="">
-          <span class="head-icon iconfa-certificate"></span>
-          <span class="headmenu-label">考试中心</span>
-        </a>
-      </li>
-      <li>
-        <a href="<%= current_user.admin? ?  admin_manage_competency_path : competencies_path %>">
-          <span class="head-icon iconfa-signal"></span>
-          <span class="headmenu-label">能力中心</span>
-        </a>
-      </li>
+      <% unless current_user.admin? %>
       <li class="odd">
         <a href="<%= current_user.admin? ?  admin_manage_course_path : courses_path %>">
           <span class="head-icon iconfa-tasks"></span>
@@ -29,11 +18,24 @@
         </a>
       </li>
       <li class="odd">
-        <a href="#">
-          <span class="head-icon iconfa-question-sign"></span>
-          <span class="headmenu-label">知识共享</span>
+        <a href="<%= current_user.admin? ?  admin_manage_competency_path : competencies_path %>">
+          <span class="head-icon iconfa-signal"></span>
+          <span class="headmenu-label">能力中心</span>
         </a>
       </li>
+      <li>
+        <a href="">
+          <span class="head-icon iconfa-certificate"></span>
+          <span class="headmenu-label">考试中心</span>
+        </a>
+      </li>
+      <li class="odd">
+        <a href="#">
+          <span class="head-icon iconfa-question-sign"></span>
+          <span class="headmenu-label">知识中心</span>
+        </a>
+      </li>
+      <% end %>
       <li class="right">
         <div class="userloggedinfo">
           <%= image_tag user_avatar_path(current_user, :normal) %>

@@ -60,3 +60,4 @@ gem 'carrierwave'
 gem 'rmagick'
 
 gem 'redcarpet'
+gem 'sanitize'

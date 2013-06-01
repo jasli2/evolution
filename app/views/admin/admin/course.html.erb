@@ -33,7 +33,7 @@
             <div class="course-info">
               <h4><%= link_to c.title, course_path(c) %></h4>
               <h6> <%= link_to c.teacher.name, user_path(c.teacher) %> <%= t("course.all.create") %> <%= distance_of_time_in_words_to_now(c.created_at) + t("course.all.ago") %></h6>
-              <p><%= c.description %></p>
+              <p><%= Sanitize.clean(eo_markdown(c.description)) %></p>
               <a href="<%= course_path(c) %>" class="btn btn-primary btn-small"><span class="iconfa-info-sign icon-white"></span> <%= t("course.all.details") %></a>
             </div>
           </li>

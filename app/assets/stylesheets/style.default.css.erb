@@ -97,7 +97,7 @@ h1,h2,h3,h4,h5 { font-weight: normal; line-height: normal; }
 
 .header { background: #0866c6; clear: both; height: 110px; }
 .headerinner { margin-left: 260px; }
-.header .logo { width: 260px; text-align: center; padding-top: 40px; float: left; }
+.header .logo { width: 260px; text-align: center; padding-top: 40px; float: left; border-right: 1px solid rgba(255,255,255,0.15);}
 
 .headmenu { list-style: none; }
 .headmenu .dropdown-menu { border: 2px solid #0866c6; border-top: 0; margin: 0; }
@@ -731,11 +731,11 @@ h1,h2,h3,h4,h5 { font-weight: normal; line-height: normal; }
 .slide_wrap{ padding: 20px 50px ; min-height: 60px; }
 .bx-prev { 
 	position: absolute; top: 0; left: 0; width: 30px; height: 100%; opacity: 0.6; vertical-align: middle; 
-	background: #eee url(../images/prev.png) no-repeat center center; border-right: 1px solid #ddd; 
+	background: #eee url(<%= asset_data_uri 'prev.png' %>) no-repeat center center; border-right: 1px solid #ddd; 
 }
 .bx-next { 
 	position: absolute; top: 0; right: 0; width: 30px; height: 100%; opacity: 0.6; vertical-align: middle; 
-	background: #eee url(../images/next.png) no-repeat center center; border-left: 1px solid #ddd;  
+	background: #eee url(<%= asset_data_uri 'next.png' %>) no-repeat center center; border-left: 1px solid #ddd;  
 }
 .bx-prev:hover, .bx-next:hover { opacity: 1; }
 .slide_img { float: left; width: 100px; }

@@ -1,0 +1,256 @@
+{
+  "name": "课程统计",
+  "children":
+  [
+    {
+      "name": "课程",
+      "children": [
+      {
+        "name": "采用军",
+        "children":
+        [
+          {"name": "情绪管理", "size": 121}
+        ]
+      },
+      {
+        "name": "成见过",
+        "children":
+        [
+          {"name": "客户关系", "size": 21}
+        ]
+      },
+            {
+        "name": "崔涛",
+        "children":
+        [
+          {"name": "时间管理", "size": 43}
+        ]
+      },
+      {
+        "name": "段会农",
+        "children":
+        [
+          {"name": "加入对公客户经理队伍", "size": 2}
+        ]
+      },
+      {
+        "name": "杨奕",
+        "children":
+        [
+          {"name": "商务礼仪", "size": 6}
+        ]
+      },
+      {
+        "name": "杨建军",
+        "children":
+        [
+          {"name": "电话、短信及电邮销售技巧", "size": 29}
+        ]
+      },
+      {
+        "name": "杨成",
+        "children":
+        [
+          {"name": "商合规法律知识", "size": 88}
+        ]
+      },
+      {
+        "name": "阎永康",
+        "children":
+        [
+          {"name": "商务谈判技巧", "size": 322}
+        ]
+      },
+      {
+        "name": "许怡",
+        "children":
+        [
+          {"name": "高效能人士的七种习惯", "size": 287}
+        ]
+      },
+      {
+        "name": "徐长满",
+        "children":
+        [
+          {"name": "工作环境中的情商", "size": 65}
+        ]
+      },
+      {
+        "name": "徐向东",
+        "children":
+        [
+          {"name": "外汇交易和货币市场", "size": 8}
+        ]
+      },
+      {
+        "name": "徐海平",
+        "children":
+        [
+          {"name": "销售保险产品", "size": 325}
+        ]
+      },
+      {
+        "name": "向修涛",
+        "children":
+        [
+          {"name": "新业务知识", "size": 224}
+        ]
+      },
+      {
+        "name": "文华",
+        "children":
+        [
+          {"name": "对公负债业务概述", "size": 54}
+        ]
+      },
+      {
+        "name": "王新刚",
+        "children":
+        [
+          {"name": "网点客户服务技巧", "size": 77}
+        ]
+      },
+      {
+        "name": "王世祥",
+        "children":
+        [
+          {"name": "基础产品销售技巧", "size": 87}
+        ]
+      },
+      {
+        "name": "王春晖",
+        "children":
+        [
+          {"name": "基本风险管理知识", "size": 111}
+        ]
+      },
+      {
+        "name": "田玉峰",
+        "children":
+        [
+          {"name": "风险管控与风险预警", "size": 43}
+        ]
+      },
+      {
+        "name": "石跃龙",
+        "children":
+        [
+          {"name": "高效沟通及演讲技巧", "size": 76}
+        ]
+      },
+      {
+        "name": "任德利",
+        "children":
+        [
+          {"name": "预算介绍", "size": 87}
+        ]
+      },
+      {
+        "name": "罗寿坤",
+        "children":
+        [
+          {"name": "对公资产业务流程", "size": 254}
+        ]
+      },
+      {
+        "name": "刘文红",
+        "children":
+        [
+          {"name": "跨部门沟通", "size": 65}
+        ]
+      },
+      {
+        "name": "梁鸿卉",
+        "children":
+        [
+          {"name": "有效开拓新客户", "size": 24}
+        ]
+      },
+      {
+        "name": "栗明",
+        "children":
+        [
+          {"name": "向军队学习执行力", "size": 48}
+        ]
+      },
+      {
+        "name": "孔祥东",
+        "children":
+        [
+          {"name": "项目管理", "size": 98}
+        ]
+      },
+      {
+        "name": "孔繁杰",
+        "children":
+        [
+          {"name": "投资银行业务", "size": 78}
+        ]
+      },
+      {
+        "name": "季绪浩",
+        "children":
+        [
+          {"name": "对公资产业务概述", "size": 167}
+        ]
+      },
+      {
+        "name": "华汪明",
+        "children":
+        [
+          {"name": "职业及商业道德", "size": 76}
+        ]
+      },
+      {
+        "name": "侯运祥",
+        "children":
+        [
+          {"name": "现金管理", "size": 45}
+        ]
+      },
+      {
+        "name": "何仲民",
+        "children":
+        [
+          {"name": "财务报表分析", "size": 44}
+        ]
+      },
+      {
+        "name": "郝竞",
+        "children":
+        [
+          {"name": "宏观经济环境分析", "size": 76}
+        ]
+      },
+      {
+        "name": "郭华",
+        "children":
+        [
+          {"name": "行业分析", "size": 214}
+        ]
+      },
+      {
+        "name": "付锦海",
+        "children":
+        [
+          {"name": "国学思想与人生智慧", "size": 16}
+        ]
+      },
+      {
+        "name": "冯京",
+        "children":
+        [
+          {"name": "时尚品味培养", "size": 32}
+        ]
+      },
+      {
+        "name": "陈晓华",
+        "children":
+        [
+          {"name": "对公客户管理", "size":43}
+        ]
+      }
+      ]
+    }
+  ]
+}

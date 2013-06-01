@@ -147,10 +147,36 @@
         <li><a href="#tabs-3"><%= t('users.all.recent') %></a></li>
       </ul>
       <div id="tabs-1" class="">
+        <% if @user.followed_users.size > 0 %>
+        <ul>
+        <% @user.followed_users.each do |s| %>
+          <li>
+            <div class="user-image-name">
+              <%= link_to image_tag(user_avatar_path(s, :small)), user_path(s), {:title => "#{s.name}"} %>
+              <%= link_to s.name, user_path(s) %>
+            </div>
+          </li>
+        <% end %>
+        </ul>
+        <% else %>
         <%= t("dashboard.common.none") %>
+        <% end %>
       </div>
       <div id="tabs-2" class="">
+        <% if @user.fans.size > 0 %>
+        <ul>
+        <% @user.fans.each do |s| %>
+          <li>
+            <div class="user-image-name">
+              <%= link_to image_tag(user_avatar_path(s, :small)), user_path(s), {:title => "#{s.name}"} %>
+              <%= link_to s.name, user_path(s) %>
+            </div>
+          </li>
+        <% end %>
+        </ul>
+        <% else %>
         <%= t("dashboard.common.none") %>
+        <% end %>
       </div>
       <div id="tabs-3" class="">
         <%= t("dashboard.common.none") %>
