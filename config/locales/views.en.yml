@@ -187,6 +187,8 @@ en:
       filter_condition: "Filter Courses"
       clear_filter: 'Clear Filter'
       clik_watch: "Click to watch"
+      findcouse: "Find Courses"
+      falcourse: "Find All Courses"
       tip:  "TIPS"
       tips: "Tips"
       notic1: "No course material yet"

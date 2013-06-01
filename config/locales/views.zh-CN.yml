@@ -25,7 +25,7 @@ zh-CN:
       club: '教师俱乐部'
     manager:
       action: '领导操作'
-      members: '团队成员'
+      members: '团队首页'
       competency: '团队能力'
       records: '团队学习记录'
       assessments: '团队评估'
@@ -58,7 +58,7 @@ zh-CN:
       positions: '职位'
     competency:
       title: '能力模型'
-      sub_title: '最近新添加能力模型'
+      sub_title: '我的能力模型'
       null_competency: '目前能力模型为空，请先添加'
     course:
       title: '课程'
@@ -89,7 +89,7 @@ zh-CN:
       blog: "博客"
       myblog: "我的博客"
       knowledge: "知识中心"
-      question: "下面的问题"
+      question: "参加的问题"
       infor: "用户信息"
       subordinates: "属下"
       name: '名字'
@@ -188,6 +188,8 @@ zh-CN:
       filter_condition: "过滤课程"
       clear_filter: "清除过滤"
       clik_watch: "点击播放课件"
+      findcouse: "查找课程结果"
+      falcourse: "查找所有的课程"
       tip: "提示"
       tips: "提示"
       notic1: "目前没有课程资料"
