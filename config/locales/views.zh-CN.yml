@@ -17,20 +17,20 @@ zh-CN:
       courses: '课程库'
       teacheres: '我的老师'
     teacher:
-      action: '教师操作'
+      action: '讲师选项'
       cert: '资格认证'
       class: '教师课程'
       development: '开发课程'
       records: '课程记录'
       club: '教师俱乐部'
     manager:
-      action: '领导操作'
+      action: '主管选项'
       members: '团队首页'
       competency: '团队能力'
       records: '团队学习记录'
       assessments: '团队评估'
     admin:
-      action: '管理员操作'
+      action: '管理员选项'
       dashboard: '仪表板'
       users: '用户管理'
       competency: '能力管理'
