@@ -90,7 +90,7 @@ class CoursesController < ApplicationController
     @course = Course.find(params[:id])
 
     respond_to do |format|
-      if @course.update_attributes(params[:Course])
+      if @course.update_attributes(params[:course])
         format.html { redirect_to session.delete(:return_to), notice: 'Course was successfully updated.' }
         format.json { render json: @course, status: :updated, location: @course }
       else

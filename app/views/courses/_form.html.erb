@@ -1,17 +1,17 @@
 <%= simple_form_for(shallow_args(current_user, @course), :html => {:class => 'form-horizontal', :multipart => true }) do |f| %>
-  <%= f.input :title, :input_html => { :class => "span5" } %>
-  <%= f.input :description, :as => :text, :input_html => { :class => "span5",  :cols => 50, :rows => 3 } %>
+  <%= f.input :title, :label => '课程标题：', :input_html => { :class => "span5" } %>
+  <%= f.input :description, :as => :text, :label => '课程大纲：', :hint => '支持markdown标记语法', :input_html => { :class => "span5",  :cols => 50, :rows => 8 } %>
   <%# f.association :creator, collection: User.staff, label_method: :name, value_method: :id, include_blank: false %>
-  <%= f.association :teacher, collection: User.staff, label_method: :name, value_method: :id, include_blank: false %>
-  <%= f.input :duration %>
-  <%= f.input :teach_type, :collection => [['授课', '授课'] ,['讨论', '讨论']], :label_method => :last, :value_method => :first, :as => :select %>
-  <%= f.input :source_type, :collection => [['内部讲师', '内部讲师'] ,['外部讲师', '外部讲师']], :label_method => :last, :value_method => :first, :as => :select %>
-  <%= f.input :course_type, :collection => [['面授课程', '面授课程'] ,['在线课程', '在线课程']], :label_method => :last, :value_method => :first, :as => :select %>
-  <%= f.input :audience, :input_html => { :class => "span5" } %>
-  <%= f.input :target, :as => :text, :input_html => { :class => "span5",  :cols => 50, :rows => 3 } %>
+  <%= f.association :teacher, :label => '授课老师：', collection: User.staff, label_method: :name, value_method: :id, include_blank: false %>
+  <%= f.input :duration, :label => '课程时长：', :hint => '单位：小时'%>
+  <%= f.input :teach_type, :label => '教学方式：'  %>
+  <%= f.input :source_type, :collection => [['内部讲师', '内部讲师'] ,['外部讲师', '外部讲师']], :label => '讲师来源：', :label_method => :last, :value_method => :first, :as => :select %>
+  <%= f.input :course_type, :collection => [['面授课程', '面授课程'] ,['E-Learning', 'E-Learning']], :label => '课程类型：', :label_method => :last, :value_method => :first, :as => :select %>
+  <%= f.input :audience, :label => '目标学员：', :input_html => { :class => "span5" } %>
+  <%= f.input :target, :label => '教学目标：', :hint => '支持markdown标记语法', :as => :text, :input_html => { :class => "span5",  :cols => 50, :rows => 8 } %>
 
   <div class="control-group file optional">
-    <label class="file optional control-label" for="user_avatar">Cover Image</label>
+    <label class="file optional control-label" for="user_avatar">上传课程封面：</label>
     <div class="controls">
       <div class="fileupload fileupload-new" data-provides="fileupload">
       <div class="input-append">
@@ -24,7 +24,7 @@
         <input class="file optional" id="course_cover_image" name="course[cover_image]" type="file" /></span>
         <a href="#" class="btn fileupload-exists" data-dismiss="fileupload"><%= t("course.all.remove") %></a>
       </div>
-      <p class="help-block">No special characters.</p>
+      <p class="help-block">支持格式（png, jpg, gif, bmp），大小不超过2MB，建议分辨率大于400x300</p>
       </div>
     </div>
   </div>
@@ -43,7 +43,7 @@
         <input class="file optional" id="course_lesson" name="course[lesson]" type="file" /></span>
         <a href="#" class="btn fileupload-exists" data-dismiss="fileupload"><%= t("course.all.remove") %></a>
       </div>
-      <p class="help-block">Support SWF format only</p>
+      <p class="help-block">支持swf格式，大小不超过100MB</p>
       </div>
     </div>
   </div>

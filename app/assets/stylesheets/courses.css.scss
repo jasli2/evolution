@@ -9,8 +9,14 @@
 .course-banner h4 { margin: 20px 0; color: #555; }
 .course-banner button { margin: 18px 0;}
 
-.course-introduction { color: #333; }
-.course-introduction p { margin: 5px 0; }
+.course-introduction { 
+  color: #333; 
+  padding: 10px 30px; 
+  blockquote {
+    font-style: normal;
+  }
+}
+//.course-introduction p { margin: 5px 0; }
 
 .about-teacher { background-color: #fff; }
 .about-teacher img { width: 60px; }
