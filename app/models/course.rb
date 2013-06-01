@@ -82,7 +82,7 @@ class Course < ActiveRecord::Base
 
         row_data << course.creator.name
         row_data << course.creator.staff_id
-        row_data << course.duration
+        row_data << (course.duration / 60.0)
 
         row_data << course.teacher.name
         levels = course.competency_levels
@@ -128,7 +128,7 @@ class Course < ActiveRecord::Base
       unless (creator.nil?)
         course.creator_id  = creator.id
       end
-      course.duration = row["duration"]
+      course.duration = (row["duration"] * 60).to_i
       teacher = User.find_by_name(row["Teacher"])
       course.teacher_id = teacher.id
       save!(course)
