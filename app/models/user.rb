@@ -122,8 +122,8 @@ class User < ActiveRecord::Base
     puts "***************************"
     puts "to csv is open"
     puts "****************************"
-    header = ["name","Staff Id", "email", "Tel", "Mobile", "manager_name","manager_id" , "birthday", "position_name", "department", "department level"]
-    header <<  "Enroll Date"
+    header = ["name","Staff Id", "email", "Tel", "Mobile", "manager_name", "birthday", "position_name",  \
+              "department", "department level", "Enroll Date", "teacher rate", "introduction", "following"]
     puts header
 
     CSV.generate(options) do |csv|
@@ -136,13 +136,60 @@ class User < ActiveRecord::Base
           row_data << mUser.email
           row_data << mUser.phone_num
           row_data << mUser.mobile_phone
-          row_data << mUser.manager.name
-          row_data << mUser.manager.manager_id
-          row_data << mUser.birthday
-          row_data << mUser.position.name
-          row_data << mUser.department
-          row_data << mUser.department_level
-          row_data << mUser.joined_at
+          if (!mUser.manager.nil?)
+            row_data << mUser.manager.name
+          else
+            row_data << " "
+          end
+          #row_data << mUser.manager.manager_id
+          if (mUser.birthday)
+            row_data << mUser.birthday
+          else
+            row_data << " "
+          end
+          if (!mUser.position.nil?)
+            row_data << mUser.position.name
+          else
+            row_data << " "
+          end
+          if (mUser.department)
+            row_data << mUser.department
+          else
+            row_data << " "
+          end
+
+          if (mUser.department_level)
+            row_data << mUser.department_level
+          else
+            row_data << " "
+          end
+
+          if (mUser.joined_at)
+            row_data << mUser.joined_at
+          else
+            row_data << " "
+          end
+
+          if (mUser.teacher_rate)
+            row_data << mUser.teacher_rate
+          else
+            row_data << " "
+          end
+
+          if (mUser.self_intro)
+            row_data << mUser.self_intro
+          else
+            row_data << " "
+          end
+          followers = ""
+          mUser.followed_users.all.each do |user|
+            followers = followers + " " + user.name
+          end
+          if (!followers.empty?)
+            row_data << followers
+          else
+            row_data << " "
+          end
           csv << row_data
           end
       end
