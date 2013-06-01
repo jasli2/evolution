@@ -39,7 +39,7 @@ class User < ActiveRecord::Base
   validates :password, :presence => true, :length => { minimum: 6}, :on => :create
   validates :password_confirmation, :presence => true, :on => :create
   validates :email,
-    :presence => true, 
+    :presence => true,
     :uniqueness => {case_sensitive: false},
     :format => { :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :message => "Not a valid email address!" }
 
@@ -59,6 +59,8 @@ class User < ActiveRecord::Base
 
   has_many :user_course_progresses
   has_many :courses, :through => :user_course_progresses
+
+  has_many :examinations
 
   #relations - for followed
   has_many :user_relations, :foreign_key => 'follower_id', :dependent => :destroy
