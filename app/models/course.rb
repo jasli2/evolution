@@ -128,7 +128,7 @@ class Course < ActiveRecord::Base
       unless (creator.nil?)
         course.creator_id  = creator.id
       end
-      course.duration = (row["duration"] * 60).to_i
+      course.duration = (row["duration"].to_f * 60).to_i
       teacher = User.find_by_name(row["Teacher"])
       course.teacher_id = teacher.id
       save!(course)
