@@ -78,6 +78,7 @@ en:
       title: "All Users"
       action: 'Action'
       student: "Students"
+      editprof: "Edit User Profile"
       aboutteacher: "about the teacher"
       nointruduction: "No teacher intruduction yet"
       social: "Social Networks"

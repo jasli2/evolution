@@ -8,7 +8,7 @@ zh-CN:
       announcements: "公告"
       actions: '用户操作'
       home: "我的主页"
-      myprofile: "个人简介"
+      myprofile: "个人资料"
       mycourse: '我的课程'
       myexams:  '我的考试'
       myassessments: '个人评估'
@@ -79,6 +79,7 @@ zh-CN:
       title: '所有用户'
       action: '操作'
       student: "学生"
+      editprof: "修改用户资料"
       aboutteacher: "教师简介"
       nointruduction: "没有教师相关信息"
       social: "社交网络"
