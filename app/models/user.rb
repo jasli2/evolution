@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
 
   attr_accessible :name, :email, :password, :password_confirmation, :position_id, :avatar, :self_intro, :teacher_rate
   attr_accessible :manager_id,:birthday, :joined_at, :phone_num, :mobile_phone, :staff_id
-  attr_accessible :department, :department_level
+  attr_accessible :department, :department_level,
 
   has_secure_password
 
@@ -68,7 +68,7 @@ class User < ActiveRecord::Base
   has_many :fans, :through => :reverse_user_relations, :source => :follower
 
 
-  validates :position_id, :presence => true
+  #validates :position_id, :presence => true
 
   scope :staff, where(:is_admin => false)
   scope :teacher, lambda { {:joins => :teach_courses, :group => "courses.teacher_id", :having => ["count(courses.teacher_id) > 0"]} }
@@ -158,32 +158,51 @@ class User < ActiveRecord::Base
     spreadsheet = open_spreadsheet(file)
     header = spreadsheet.row(1)
     (2..spreadsheet.last_row).each do |i|
-      #row = Hash[[header,spreadsheet.row(i)].transpose]
-      row = spreadsheet.row(i)
-      user = find_by_email(row[2]) || new
+      row = Hash[[header,spreadsheet.row(i)].transpose]
+      name = row.first[0]
+      #row = spreadsheet.row(i)
+      user = find_by_email(row["email"]) || new
 
-      position = Position.find_by_name(row[8])
-
-      user.password = row[9]
-      user.password_confirmation = row[9]
-      user.name = row[0]
-      user.email = row[2]
-      user.position_id = position.id
+      unless (row["position_name"].nil? || row["position_name"].empty?)
+        position = Position.find_by_name(row["position_name"])
+        user.position_id = position.id
+      end
+      user.password = row["password"]
+      user.password_confirmation = row["password"]
+      user.name = row[name]
+      user.email = row["email"]
       user.save!
-      user.staff_id = row[1]
-      user.phone_num = row[3]
-      user.mobile_phone = row[4]
-      user.manager = User.find_by_name(row[5])
-      user.manager_id = row[6]
-      user.birthday = row[7]
-      user.department = row[10]
-      user.department_level = row[11]
-      user.joined_at = row[12]
+
+      user.staff_id = row["Staff Id"]
+      user.phone_num = row["Tel"]
+      user.mobile_phone = row["Mobile"]
+      unless (row["manager_name"].nil? || row["manager_name"].empty?)
+        user.manager = User.find_by_name(row["manager_name"])
+        user.manager_id = user.manager.staff_id
+      end
+      user.birthday = row["birthday"]
+      user.department = row["department"]
+      user.department_level = row["department level"]
+      user.joined_at = row["Enroll Date"]
+      user.teacher_rate=row["teacher rate"]
+      user.self_intro=row["introduction"]
       user.save!
-      position.users << user
-
-      #user.positoin.competency_levels
-
+      unless (user.position_id.nil?)
+        position.users << user
+      end
+    end
+    (2..spreadsheet.last_row).each do |i|
+      row = Hash[[header,spreadsheet.row(i)].transpose]
+      name = row.first[0]
+      user = find_by_email(row["email"])
+      following = row["following"].split
+      following.each do |name|
+        puts name
+        follower = User.find_by_name(name)
+        unless (follower.nil?)
+          user.follow!(follower)
+        end
+      end
     end
   end
 
