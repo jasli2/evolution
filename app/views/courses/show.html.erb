@@ -45,8 +45,16 @@
       <%= image_tag course_cover_path(@course, :large), :class => "pull-left" %>
       <div class="course-banner">
         <h3><%= @course.title %></h3>
-        <button class="btn btn-warning disabled"><%= t("course.all.join") %></button>
-        <h5><%= link_to @course.creator.name, user_path(@course.creator) %> <%= t("course.all.create") %> <%= distance_of_time_in_words_to_now(@course.created_at) + t("course.all.ago") %></h5>
+        <ul>
+          <li>目标学员：<%= @course.audience %></li>
+          <li>授课老师：<%= @course.teacher.name %></li>
+          <li>讲师来源：<%= @course.source_type %></li>
+          <li>授课方式：<%= @course.teach_type %></li>
+          <li>课程类型：<%= @course.course_type %></li>
+          <li>课程时长：<%= @course.duration %> 小时</li>
+          <li>所属胜任力级别：<%= @course.competency_levels.first.competency.name %>（<%= level_name(@course.competency_levels.first.level) %>）</li>
+        </ul>
+        <span><%= link_to @course.creator.name, user_path(@course.creator) %> <%= t("course.all.create") %> <%= distance_of_time_in_words_to_now(@course.created_at) + t("course.all.ago") %></span>
       </div>
     </div>
     <div class="divider30"></div>
@@ -54,7 +62,7 @@
 
     <% unless @course.lesson.url.nil? %>
     <div id="swf-content">
-      <a class="btn btn-success btn-small" href="<%= @course.lesson.url %>" onclick="loadSWF(this.href, 1); return false;"> <%= t("course.all.clik_watch") %></a>
+      <a class="btn btn-success btn-small" href="<%= @course.lesson.url %>" onclick="loadSWF(this.href, 1); return false;"> <i class="iconfa-play"></i> <%= t("course.all.clik_watch") %></a>
     </div>
     <div class="divider15"></div>
     <% end %>
