@@ -62,16 +62,24 @@
     <div class="tabbedwidget tab-primary">
       <ul>
         <li><a href="#tabs-1"><span class="iconfa-info-sign"></span> <%= t("course.all.info") %></a></li>
-        <li><a href="#tabs-2"><span class="iconfa-file"></span>  <%= t("course.all.material") %></a></li>
-        <li><a href="#tabs-3"><span class="iconfa-comments-alt"></span>  <%= t("course.all.discussion") %></a></li>
+        <li><a href="#tabs-2"><span class="iconfa-check"></span> 课程目标</a></li>
+        <li><a href="#tabs-3"><span class="iconfa-file"></span>  <%= t("course.all.material") %></a></li>
+        <li><a href="#tabs-4"><span class="iconfa-comments-alt"></span>  <%= t("course.all.discussion") %></a></li>
       </ul>
       <div id="tabs-1" class="course-introduction">
-        <h6><%= @course.description %></h6>
+        <%= eo_markdown(@course.description) %>
       </div>
-      <div id="tabs-2" class="course-material">
+      <div id="tabs-2" class="course-target">
+        <% unless @course.target.blank? %>
+        <%= eo_markdown(@course.target) %>
+        <% else %>
+        <p> <%= t("course.all.notic1") %></p>
+        <% end %>
+      </div>
+      <div id="tabs-3" class="course-material">
         <p> <%= t("course.all.notic1") %></p>
       </div>
-      <div id="tabs-3" class="course-discussion">
+      <div id="tabs-4" class="course-discussion">
         <p> <%= t("course.all.notic2") %></p>
       </div>
     </div>
