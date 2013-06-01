@@ -2,6 +2,9 @@ en:
   menu:
     navigator: 'Navigator'
     user:
+      home_title: "Home"
+      notice_title: "Notice:"
+      announcements: "Announcements"
       action: 'User Actions'
       home: 'My Home'
       myprofile: 'My Profile'

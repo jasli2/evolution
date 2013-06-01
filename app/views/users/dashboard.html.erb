@@ -1,10 +1,10 @@
-<% provide(:title, 'home') %>
-<% provide(:page_title, "Home") %>
-<% provide(:page_sub_title, "Home") %>
+<% provide(:title, t("menu.user.home_title")) %>
+<% provide(:page_title, t("menu.user.home_title")) %>
+<% provide(:page_sub_title, t("menu.user.home_title")) %>
 <% provide(:page_icon, "iconfa-home") %>
 
 <% content_for :breadcrumbs do %>
-<%= content_tag(:li, "Home") %>
+<%= content_tag(:li, t("menu.user.home_title")) %>
 <% end %>
 
 <% content_for :javascript do %>
@@ -25,9 +25,9 @@
 <div class="row-fluid">
   <div id="dashboard-left" class="span8">
                         
-    <h3 class="subtitle">Competency Model</h3>
+    <h3 class="subtitle"><%= t("dashboard.competency.title") %></h3>
     <div class="divider15"></div>
-    <h4 class="widgettitle"><span class="iconfa-signal"></span> Competency Summary</h4>
+    <h4 class="widgettitle"><span class="iconfa-signal"></span> <%= t("dashboard.competency.sub_title") %></h4>
     <div class="widgetcontent nopadding">
       <div class="accordion">
         <% current_user.position.competency_levels.each do |cl| %>
@@ -92,19 +92,19 @@
                     
   <div id="dashboard-right" class="span4">
                         
-    <h5 class="subtitle">Announcements</h5>
+    <h5 class="subtitle"><%= t("menu.user.announcements") %></h5>
     
     <div class="divider15"></div>
     
     <div class="alert alert-block">
       <button data-dismiss="alert" class="close" type="button">&times;</button>
-      <h4>Notice:</h4>
-      <p style="margin: 8px 0">Performance review of 2012 year will be expired in May 15, 2013. Make sure you have finished all self-evaluation.</p>
+      <h4><%= t("menu.user.notice_title") %></h4>
+      <p style="margin: 8px 0">2012年的业绩评估终止日期为2013年4月15日，请确定你已经完成了自己的评估.</p>
     </div><!--alert-->
     <div class="divider15"></div>
                         
                         
-    <h4 class="widgettitle">Event Calendar</h4>
+    <h4 class="widgettitle"><%= t("dashboard.calender.title") %></h4>
     <div class="widgetcontent nopadding">
         <div id="datepicker"></div>
     </div>
