@@ -54,11 +54,7 @@
     <div class="divider15"></div>
 
     <h4 class="widgettitle"><span class="iconfa-tasks icon-white"></span><%= t("course.all.sub_title2") %></h4>
-    <% if @pending_courses.size == 0 %>
-    <div class="widgetcontent">
-      <p><%= t("dashboard.common.none") %></p>
-    </div>
-    <% else %>
+    <% if @pending_courses && @pending_courses.size > 0 %>
     <div class="widgetcontent nopadding">
       <ul class="courselist">
         <% @pending_courses.each do |c| %>
@@ -73,7 +69,11 @@
         </li>
         <% end %>
       </ul>
-      <div class="page-wrapper"><%= paginate @pending_courses %></div>
+      <div class="page-wrapper"><%= paginate @pending_courses if @pending_courses %></div>
+    </div>
+    <% else %>
+    <div class="widgetcontent">
+      <p><%= t("dashboard.common.none") %></p>
     </div>
     <% end %>
 
