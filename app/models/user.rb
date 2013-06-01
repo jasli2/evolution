@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
 
   attr_accessible :name, :email, :password, :password_confirmation, :position_id, :avatar, :self_intro, :teacher_rate
   attr_accessible :manager_id,:birthday, :joined_at, :phone_num, :mobile_phone, :staff_id
-  attr_accessible :department, :department_level
+  attr_accessible :department, :department_level,
 
   has_secure_password
 
@@ -39,7 +39,7 @@ class User < ActiveRecord::Base
   validates :password, :presence => true, :length => { minimum: 6}, :on => :create
   validates :password_confirmation, :presence => true, :on => :create
   validates :email,
-    :presence => true, 
+    :presence => true,
     :uniqueness => {case_sensitive: false},
     :format => { :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :message => "Not a valid email address!" }
 
@@ -60,6 +60,8 @@ class User < ActiveRecord::Base
   has_many :user_course_progresses
   has_many :courses, :through => :user_course_progresses
 
+  has_many :examinations
+
   #relations - for followed
   has_many :user_relations, :foreign_key => 'follower_id', :dependent => :destroy
   has_many :followed_users, :through => :user_relations, :source => :leader
@@ -68,7 +70,7 @@ class User < ActiveRecord::Base
   has_many :fans, :through => :reverse_user_relations, :source => :follower
 
 
-  validates :position_id, :presence => true
+  #validates :position_id, :presence => true
 
   scope :staff, where(:is_admin => false)
   scope :teacher, lambda { {:joins => :teach_courses, :group => "courses.teacher_id", :having => ["count(courses.teacher_id) > 0"]} }
@@ -122,8 +124,8 @@ class User < ActiveRecord::Base
     puts "***************************"
     puts "to csv is open"
     puts "****************************"
-    header = ["name","Staff Id", "email", "Tel", "Mobile", "manager_name","manager_id" , "birthday", "position_name", "department", "department level"]
-    header <<  "Enroll Date"
+    header = ["name","Staff Id", "email", "Tel", "Mobile", "manager_name", "birthday", "position_name",  \
+              "department", "department level", "Enroll Date", "teacher rate", "introduction", "following"]
     puts header
 
     CSV.generate(options) do |csv|
@@ -136,13 +138,60 @@ class User < ActiveRecord::Base
           row_data << mUser.email
           row_data << mUser.phone_num
           row_data << mUser.mobile_phone
-          row_data << mUser.manager.name
-          row_data << mUser.manager.manager_id
-          row_data << mUser.birthday
-          row_data << mUser.position.name
-          row_data << mUser.department
-          row_data << mUser.department_level
-          row_data << mUser.joined_at
+          if (!mUser.manager.nil?)
+            row_data << mUser.manager.name
+          else
+            row_data << " "
+          end
+          #row_data << mUser.manager.manager_id
+          if (mUser.birthday)
+            row_data << mUser.birthday
+          else
+            row_data << " "
+          end
+          if (!mUser.position.nil?)
+            row_data << mUser.position.name
+          else
+            row_data << " "
+          end
+          if (mUser.department)
+            row_data << mUser.department
+          else
+            row_data << " "
+          end
+
+          if (mUser.department_level)
+            row_data << mUser.department_level
+          else
+            row_data << " "
+          end
+
+          if (mUser.joined_at)
+            row_data << mUser.joined_at
+          else
+            row_data << " "
+          end
+
+          if (mUser.teacher_rate)
+            row_data << mUser.teacher_rate
+          else
+            row_data << " "
+          end
+
+          if (mUser.self_intro)
+            row_data << mUser.self_intro
+          else
+            row_data << " "
+          end
+          followers = ""
+          mUser.followed_users.all.each do |user|
+            followers = followers + " " + user.name
+          end
+          if (!followers.empty?)
+            row_data << followers
+          else
+            row_data << " "
+          end
           csv << row_data
           end
       end
@@ -158,32 +207,51 @@ class User < ActiveRecord::Base
     spreadsheet = open_spreadsheet(file)
     header = spreadsheet.row(1)
     (2..spreadsheet.last_row).each do |i|
-      #row = Hash[[header,spreadsheet.row(i)].transpose]
-      row = spreadsheet.row(i)
-      user = find_by_email(row[2]) || new
+      row = Hash[[header,spreadsheet.row(i)].transpose]
+      name = row.first[0]
+      #row = spreadsheet.row(i)
+      user = find_by_email(row["email"]) || new
 
-      position = Position.find_by_name(row[8])
-
-      user.password = row[9]
-      user.password_confirmation = row[9]
-      user.name = row[0]
-      user.email = row[2]
-      user.position_id = position.id
+      unless (row["position_name"].nil? || row["position_name"].empty?)
+        position = Position.find_by_name(row["position_name"])
+        user.position_id = position.id
+      end
+      user.password = row["password"]
+      user.password_confirmation = row["password"]
+      user.name = row[name]
+      user.email = row["email"]
       user.save!
-      user.staff_id = row[1]
-      user.phone_num = row[3]
-      user.mobile_phone = row[4]
-      user.manager = User.find_by_name(row[5])
-      user.manager_id = row[6]
-      user.birthday = row[7]
-      user.department = row[10]
-      user.department_level = row[11]
-      user.joined_at = row[12]
+
+      user.staff_id = row["Staff Id"]
+      user.phone_num = row["Tel"]
+      user.mobile_phone = row["Mobile"]
+      unless (row["manager_name"].nil? || row["manager_name"].empty?)
+        user.manager = User.find_by_name(row["manager_name"])
+        user.manager_id = user.manager.staff_id
+      end
+      user.birthday = row["birthday"]
+      user.department = row["department"]
+      user.department_level = row["department level"]
+      user.joined_at = row["Enroll Date"]
+      user.teacher_rate=row["teacher rate"]
+      user.self_intro=row["introduction"]
       user.save!
-      position.users << user
-
-      #user.positoin.competency_levels
-
+      unless (user.position_id.nil?)
+        position.users << user
+      end
+    end
+    (2..spreadsheet.last_row).each do |i|
+      row = Hash[[header,spreadsheet.row(i)].transpose]
+      name = row.first[0]
+      user = find_by_email(row["email"])
+      following = row["following"].split
+      following.each do |name|
+        puts name
+        follower = User.find_by_name(name)
+        unless (follower.nil?)
+          user.follow!(follower)
+        end
+      end
     end
   end
 
