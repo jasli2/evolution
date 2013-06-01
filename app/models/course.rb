@@ -67,23 +67,33 @@ class Course < ActiveRecord::Base
   end
 
   def self.to_csv(options = {})
-    header = ["title", "description", "creator", "creator ID", "duration", "course type", \
-              "Teacher", "TeacherID", "competency", "level"]
+    header = ["title","audience", "type", "sourcetype", "coursetype", "creator", "creator ID", \
+              "duration", "Teacher", "competency", "level"]
     CSV.generate(options) do |csv|
       csv << header
       all.each do |course|
         row_data = []
         row_data << course.title
-        row_data << course.description
+        puts course.title
+        row_data << course.audience
+        row_data << course.teach_type
+        row_data << course.source_type
+        row_data << course.course_type
+
         row_data << course.creator.name
         row_data << course.creator.staff_id
         row_data << course.duration
-        row_data << course.course_type
+
         row_data << course.teacher.name
-        row_data << course.teacher.staff_id
         levels = course.competency_levels
-        row_data << levels.first.competency.name
-        row_data << levels.first.level
+
+        if (!levels.empty? && !levels.nil?)
+          row_data << levels.first.competency.name
+          row_data << levels.first.level
+        else
+          row_data << " "
+          row_data << " "
+        end
 
         csv << row_data
       end
@@ -114,13 +124,11 @@ class Course < ActiveRecord::Base
       course.teach_type = row["type"]
       course.source_type = row["sourcetype"]
       course.course_type = row["coursetype"]
-      #course.description = row[1]
-      #creator = User.find_by_staff_id(row["creatorID"])
       creator = User.find_by_name(row["creator"])
       unless (creator.nil?)
         course.creator_id  = creator.id
       end
-      course.duration = row[4]
+      course.duration = row["duration"]
       teacher = User.find_by_name(row["Teacher"])
       course.teacher_id = teacher.id
       save!(course)
