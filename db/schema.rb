@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130530075722) do
+ActiveRecord::Schema.define(:version => 20130601075215) do
 
   create_table "activities", :force => true do |t|
     t.string   "description"
@@ -90,6 +90,13 @@ ActiveRecord::Schema.define(:version => 20130530075722) do
     t.string   "lesson"
   end
 
+  create_table "examinations", :force => true do |t|
+    t.string   "title"
+    t.integer  "creator_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "position_competency_levels", :force => true do |t|
     t.integer  "standard"
     t.integer  "position_id"
@@ -111,6 +118,13 @@ ActiveRecord::Schema.define(:version => 20130530075722) do
     t.datetime "created_at",                :null => false
     t.datetime "updated_at",                :null => false
     t.integer  "standard"
+  end
+
+  create_table "questions", :force => true do |t|
+    t.text     "qdata"
+    t.string   "answer"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "user_course_progresses", :force => true do |t|
