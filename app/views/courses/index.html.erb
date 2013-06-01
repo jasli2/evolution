@@ -33,7 +33,7 @@
             <div class="course-info">
               <h4><%= link_to c.title, course_path(c) %></h4>
               <h6>created by <%= link_to c.creator.name, user_path(c.creator) %> at <%= distance_of_time_in_words_to_now(c.created_at) + ' ago' %></h6>
-              <p><%= Sanitize.clean(eo_markdown(c.description)) %></p>
+              <p><%= Sanitize.clean(eo_markdown(c.description)) unless c.description.blank? %></p>
               <a href="<%= course_path(c) %>" class="btn btn-primary btn-small"><span class="iconfa-info-sign icon-white"></span> View Details</a>
             </div>
           </li>
