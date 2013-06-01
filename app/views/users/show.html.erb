@@ -1,6 +1,6 @@
 <% provide(:title, @user.name) %>
 <% provide(:page_title, @user.name) %>
-<% provide(:page_sub_title, @user.position.name) %>
+<% provide(:page_sub_title, @user.position.name unless @user.position.blank?) %>
 <% provide(:page_icon, "iconfa-user") %>
 
 <% content_for :breadcrumbs do %>
