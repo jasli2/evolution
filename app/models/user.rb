@@ -60,7 +60,7 @@ class User < ActiveRecord::Base
   has_many :user_course_progresses
   has_many :courses, :through => :user_course_progresses
 
-  has_many :examinations
+  has_many :examinations, :foreign_key => "creator_id"
 
   #relations - for followed
   has_many :user_relations, :foreign_key => 'follower_id', :dependent => :destroy

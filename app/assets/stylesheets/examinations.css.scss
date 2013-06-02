@@ -1,0 +1,26 @@
+// Place all the styles related to the Examinations controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+ul.exam-list {
+  list-style-type: none;
+
+  li {
+    display: block;
+    border-bottom: 1px solid #ddd;
+    padding: 15px 20px;
+    &:last-child { border-bottom: 0; }
+    .btn {
+      padding: 2px 5px;
+    }
+  }
+
+}
+
+td > .btn {
+  padding: 2px 5px;
+}
+
+td#qustion-action {
+  text-align: right;
+}

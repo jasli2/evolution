@@ -26,7 +26,10 @@ Evolution::Application.routes.draw do
     collection {get :export}
   end
 
-  match  '/home'          => 'site#home', :via => :get
+  resources :examinations do
+    resources :questions 
+  end
+
   match  '/about'         => 'site#about', :via => :get
   match  '/help'          => 'site#help', :via => :get
   match  '/knowledge'     => 'site#knowledge', :via => :get
