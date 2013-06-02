@@ -105,7 +105,10 @@
     
     <h3 class="subtitle"> <%= t("users.all.aboutteacher") %></h3>
     <div class="well about-teacher">
-      <%= image_tag user_avatar_path(@course.teacher, :normal), :class => "pull-left" %>
+      <div class="teacher-image-rate">
+      <%= image_tag user_avatar_path(@course.teacher, :normal) %>
+      <%= teacher_rate_tag(@course.teacher) %>
+      </div>
       <div class="teacher-info">
         <h4><%= link_to @course.teacher.name, user_path(@course.teacher) %></h4>
         <% if @course.teacher.self_intro.blank? %>

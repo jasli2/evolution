@@ -22,7 +22,20 @@ blockquote {
 }
 //.course-introduction p { margin: 5px 0; }
 
-.about-teacher { background-color: #fff; }
+.about-teacher { 
+  background-color: #fff;
+  .teacher-image-rate {
+    float: left;
+    width: 60px;
+    text-align: center;
+    img { width: 60px; }
+    span.teacher-rate { 
+      color: #ffc333;
+    }
+  } 
+}
+
+
 .about-teacher img { width: 60px; }
 .about-teacher .teacher-info { margin-left: 80px; min-height: 60px; }
 
