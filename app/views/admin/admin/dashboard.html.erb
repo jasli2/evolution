@@ -135,7 +135,7 @@ $(function() {
             <div class="course-info">
               <h4><%= link_to c.title, course_path(c) %></h4>
               <h6><%= link_to c.teacher.name, user_path(c.teacher) %> <%=t('dashboard.common.create') %> <%= distance_of_time_in_words_to_now(c.created_at) + t('dashboard.common.ago') %></h6>
-              <p><%= c.description %></p>
+              <p><%= Sanitize.clean(eo_markdown(c.description)) unless c.description.blank? %></p>
               <a href="<%= course_path(c) %>" class="btn btn-primary btn-small"><span class="iconfa-info-sign icon-white"></span><%= t('dashboard.course.details') %></a>
             </div>
           </li>
@@ -177,7 +177,7 @@ $(function() {
               <div class="uinfo">
                 <h5><%= link_to u.name, user_path(u) %></h5>
                 <span class="pos"><%= u.position.name if u.position %></span>
-                <span><%= "Created at " + distance_of_time_in_words_to_now(u.created_at) + ' ago' %></span>
+                <span><%= t('dashboard.common.create') + distance_of_time_in_words_to_now(u.created_at) + t('dashboard.common.ago')  %></span>
               </div>
             </div>
           </li>

@@ -46,7 +46,7 @@
           <div class="course-info">
             <h4><%= link_to c.title, course_path(c) %></h4>
             <h6><%= link_to c.teacher.name, user_path(c.teacher) %><%= t("course.all.create")%> <%= distance_of_time_in_words_to_now(c.created_at) + t("course.all.ago") %></h6>
-            <p><%= c.description %></p>
+            <p><%= Sanitize.clean(eo_markdown(c.description)) unless c.description.blank? %></p>
             <a href="<%= course_path(c) %>" class="btn btn-primary btn-small"><span class="iconfa-info-sign icon-white"></span><%=t("course.all.details") %></a>
           </div>
         </li>
@@ -67,7 +67,7 @@
           <div class="course-info">
             <h4><%= link_to c.title, course_path(c) %></h4>
             <h6><%= link_to c.teacher.name, user_path(c.teacher) %> <%= t("course.all.create")%> <%= distance_of_time_in_words_to_now(c.created_at) + t("course.all.ago") %></h6>
-            <p><%= c.description %></p>
+            <p><%= Sanitize.clean(eo_markdown(c.description)) unless c.description.blank? %></p>
             <a href="<%= course_path(c) %>" class="btn btn-primary btn-small"><span class="iconfa-info-sign icon-white"></span> <%=t("course.all.details") %></a>
           </div>
         </li>
@@ -115,7 +115,7 @@
     </div>
 
     <% if @user.manager and @user.manager.id != @user.id  %>
-    <h3 class="subtitle">Manager</h3>
+    <h3 class="subtitle">主管</h3>
     <div class="well user-manager">
       <div class="user-image-name">
         <%= link_to image_tag(user_avatar_path(@user.manager, :small)), user_path(@user.manager), {:title => "#{@user.manager.name}"} %>
@@ -151,7 +151,7 @@
         <li><a href="#tabs-2"><%= t('users.all.follower') %></a></li>
         <li><a href="#tabs-3"><%= t('users.all.recent') %></a></li>
       </ul>
-      <div id="tabs-1" class="">
+      <div id="tabs-1" class="user-following">
         <% if @user.followed_users.size > 0 %>
         <ul>
         <% @user.followed_users.each do |s| %>
@@ -167,7 +167,7 @@
         <%= t("dashboard.common.none") %>
         <% end %>
       </div>
-      <div id="tabs-2" class="">
+      <div id="tabs-2" class="user-follower">
         <% if @user.fans.size > 0 %>
         <ul>
         <% @user.fans.each do |s| %>

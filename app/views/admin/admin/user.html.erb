@@ -13,7 +13,7 @@
 <% end %>
 
 <div class="row-fluid">
-  <div id="dashboard-left" class="span9">
+  <div id="dashboard-left" class="span8">
     <h3 class="subtitle"><%= t('users.all.title') %></h3>
     <div class="divider15"></div>
     <div class="widgetbox">
@@ -31,15 +31,9 @@
             <th class="center"><%= t('users.all.action') %></th>
             <th class="center"><%= t('users.all.name') %></th>
             <th class="center"><%= t('users.all.staff_id') %></th>
-            <th class="center"><%= t('users.all.email')  %></th>
-            <th class="center"><%= t('users.all.telephone') %></th>
-            <th class="center"><%= t('users.all.mobile') %></th>
-            <th class="center"><%= t('users.all.manager')%></th>
             <th class="center"><%= t('users.all.department')%></th>
-            <th class="center"><%= t('users.all.dept_level') %></th>
             <th class="center"><%= t('users.all.position') %></th>
             <th class="center"><%= t('users.all.enroll')%></th>
-            <th class="center"><%= t('users.all.birthday') %></th>
           </tr>
         </thead>
         <tbody>
@@ -50,15 +44,9 @@
             </td>
             <td class="center"><%= link_to u.name, user_path(u) %></td>
             <td class="center"><%= u.staff_id %></td>
-            <td class="center"><%= u.email %></td>
-            <td class="center"><%= u.phone_num %></td>
-            <td class="center"><%= u.mobile_phone %></td>
-            <td class="center"><%= link_to(u.manager.name, user_path(u.manager)) if u.manager %></td>
             <td class="center"><%= u.department %></td>
-            <td class="center"><%= u.department_level %></td>
             <td class="center"><%= u.position.name if u.position %></td>
             <td class="center"><%= u.joined_at %></td>
-            <td class="center"><%= u.birthday %></td>
           </tr>
           <% end %>
         </tbody>
@@ -68,7 +56,7 @@
     </div>
   </div>
 
-  <div id="dashboard-right" class="span3">
+  <div id="dashboard-right" class="span4">
     <h3 class="subtitle"><%= t('users.all.manage') %></h3>
     <div class="divider15"></div>
 

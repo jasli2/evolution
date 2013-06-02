@@ -91,13 +91,13 @@ zh-CN:
       knowledge: "知识中心"
       question: "参加的问题"
       infor: "用户信息"
-      subordinates: "属下"
-      name: '名字'
-      staff_id: '员工号'
-      email: '邮箱'
+      subordinates: "下属"
+      name: '姓名'
+      staff_id: '工号'
+      email: '电子邮箱'
       telephone: '固定电话'
       mobile: '移动电话'
-      manager: '领导'
+      manager: '主管'
       department: '部门'
       dept_level: '级别'
       position: '职位'
@@ -152,10 +152,10 @@ zh-CN:
       create: '创建于'
       ago: '前'
       manage: '能力管理'
-      filter: "过滤"
+      filter: "筛选"
       position: "职位:"
-      filter_condition: "过滤能力项"
-      clear_filter: '清除过滤'
+      filter_condition: "筛选能力项"
+      clear_filter: '清除筛选'
   course:
     page:
       title: "课程管理"
@@ -182,11 +182,11 @@ zh-CN:
       create: '创建于'
       ago: '前'
       manage: '课程管理'
-      filter: '过滤'
+      filter: '筛选'
       teacher: "教师"
       position: "职位:"
-      filter_condition: "过滤课程"
-      clear_filter: "清除过滤"
+      filter_condition: "筛选课程"
+      clear_filter: "清除筛选"
       clik_watch: "点击播放课件"
       findcouse: "查找课程结果"
       falcourse: "查找所有的课程"
