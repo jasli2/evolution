@@ -134,8 +134,16 @@ $(function() {
             <%= image_tag course_cover_path(c, :normal), :class => "pull-left" %>
             <div class="course-info">
               <h4><%= link_to c.title, course_path(c) %></h4>
-              <h6><%= link_to c.teacher.name, user_path(c.teacher) %> <%=t('dashboard.common.create') %> <%= distance_of_time_in_words_to_now(c.created_at) + t('dashboard.common.ago') %></h6>
-              <p><%= Sanitize.clean(eo_markdown(c.description)) unless c.description.blank? %></p>
+              <ul>
+                <li>目标学员：<%= c.audience %></li>
+                <li>授课老师：<%= c.teacher.name %></li>
+                <li>课程时长：<%= c.duration %> 小时</li>
+                <% if c.competency_levels.size > 0 %>
+                <li>所属胜任力级别：<%= c.competency_levels.first.competency.name %> (<%=level_name(c.competency_levels.first.level)%>)</li>
+                <% else %>
+                <li>所属胜任力级别：无</li>
+                <% end %>
+              </ul>
               <a href="<%= course_path(c) %>" class="btn btn-primary btn-small"><span class="iconfa-info-sign icon-white"></span><%= t('dashboard.course.details') %></a>
             </div>
           </li>
