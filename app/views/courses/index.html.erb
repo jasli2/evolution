@@ -1,6 +1,6 @@
-<% provide(:title, @menu_active == 'courses' ? t("menu.user.courses") : t("menu.user.mycourse")) %>
-<% provide(:page_title, @menu_active == 'courses' ? t("menu.user.courses") : t("menu.user.mycourse")) %>
-<% provide(:page_sub_title, @menu_active == 'courses' ? t("course.all.falcourse") : t("course.all.sub_title2")) %>
+<% provide(:title, @menu_active == 'course' ? t("menu.user.courses") : t("menu.user.mycourse")) %>
+<% provide(:page_title, @menu_active == 'course' ? t("menu.user.courses") : t("menu.user.mycourse")) %>
+<% provide(:page_sub_title, @menu_active == 'course' ? t("course.all.falcourse") : t("course.all.sub_title2")) %>
 <% provide(:page_icon, "iconfa-folder-open") %>
 
 <% content_for :breadcrumbs do %>
@@ -22,7 +22,7 @@
       </div>
       <% if @courses.size == 0 %>
       <div class="widgetcontent">
-        <p><%= t("dashboard.competency.null_competency") %> </p>
+        <p>没有找到课程</p>
       </div>
       <% else %>
       <div class="widgetcontent nopadding">
@@ -42,7 +42,7 @@
                 <li>所属胜任力级别：无</li>
                 <% end %>
               </ul>
-              <a href="<%= course_path(c) %>" class="btn btn-primary btn-small"><span class="iconfa-info-sign icon-white"></span> View Details</a>
+              <a href="<%= course_path(c) %>" class="btn btn-primary btn-small"><span class="iconfa-info-sign icon-white"></span> <%= t("course.all.details") %></a>
             </div>
           </li>
           <% end %>
@@ -77,6 +77,7 @@
         <div>
           <%= label_tag :teacher_id, t("course.all.teacher") %>
           <%= collection_select(nil, :teacher_id, User.teacher, :id, :name, {:include_blank => '请选择'}) %>
+          <%= hidden_field_tag 'user_id', @user.id  %>
         </div>
         <% end %>
           <%= submit_tag t("course.all.filter_condition").html_safe, :class => "btn btn-primary" %>

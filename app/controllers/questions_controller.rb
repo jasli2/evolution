@@ -3,7 +3,6 @@ class QuestionsController < ApplicationController
   before_filter :need_admin!
 
   def new
-    logger.debug "p:::: " + params.to_s
     @exam = Examination.find(params[:examination_id])
     @question = Question.new
     session[:return_to] = request.referer
@@ -51,7 +50,6 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    logger.debug "destroy: id = " + params[:id].to_s
     @question = Question.find(params[:id])
     @question.destroy
 

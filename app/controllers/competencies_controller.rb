@@ -23,7 +23,7 @@ class CompetenciesController < ApplicationController
   # GET /competency
   # GET /competency.json
   def index
-    @menu_category = 'user'
+    @menu_category = 'header'
     @menu_active = 'competency' 
 
     if params[:position_id]
@@ -32,7 +32,6 @@ class CompetenciesController < ApplicationController
       @competencies = Competency.order('id DESC')
     end
 
-    logger.info "position_id: " + params[:position_id].to_s
     respond_to do |format|
       format.html
     end

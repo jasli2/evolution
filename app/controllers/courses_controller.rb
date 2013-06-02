@@ -19,12 +19,17 @@ class CoursesController < ApplicationController
   end
 
   def index
-    @menu_category = 'user'
-    @menu_active = params[:user_id] ? 'user_courses' : 'courses'
+    @menu_category =  params[:user_id] ? 'user' : 'header'
+    @menu_active = params[:user_id] ? 'user_courses' : 'course'
 
     @user = User.find(params[:user_id]) if params[:user_id]
     if @user
-      @courses = Course.for_position(@user.position).page params[:page] unless @user.position.blank?
+      if params[:teacher_id]
+        @courses = Course.for_teacher(User.find(params[:teacher_id])) unless params[:teacher_id].blank?
+        @courses = @courses.for_position(@user.position).page params[:page] unless @user.position.blank?
+      else
+        @courses = Course.for_position(@user.position).page params[:page] unless @user.position.blank?
+      end
     else
       if params[:teacher_id] or params[:position_id]
         @courses = Course.for_teacher(User.find(params[:teacher_id])) unless params[:teacher_id].blank?
