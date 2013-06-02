@@ -2,7 +2,7 @@ class CoursesController < ApplicationController
   #POST /competency/import
   def import
     Course.import(params[:file])
-    redirect_to :back, notice: "Courses has successfully imported."
+    redirect_to :back, notice: t("course.all.notic4")
     rescue ActionController::RedirectBackError
       redirect_to root_path
   end
@@ -11,7 +11,7 @@ class CoursesController < ApplicationController
     @courses = Course.order('id DESC')
     if @courses
       respond_to do |format|
-        format.html {redirect_to courses_path, notice: "export open" }
+        format.html {redirect_to courses_path, notice: t("course.all.notic5") }
         format.csv { send_data @courses.to_csv }
         #format.xls
       end
@@ -77,7 +77,7 @@ class CoursesController < ApplicationController
 
     respond_to do |format|
       if @course.save
-        format.html { redirect_to session.delete(:return_to), notice: 'Course was successfully created.' }
+        format.html { redirect_to session.delete(:return_to), notice: t("course.all.notic6") }
         format.json { render json: @course, status: :created, location: @course }
       else
         format.html { render 'new' }
@@ -91,7 +91,7 @@ class CoursesController < ApplicationController
 
     respond_to do |format|
       if @course.update_attributes(params[:course])
-        format.html { redirect_to session.delete(:return_to), notice: 'Course was successfully updated.' }
+        format.html { redirect_to session.delete(:return_to), notice: t("course.all.notic7") }
         format.json { render json: @course, status: :updated, location: @course }
       else
         format.html { render action: "edit" }

@@ -4,7 +4,7 @@ class CompetenciesController < ApplicationController
   def import
     Competency.import(params[:file])
     
-    redirect_to :back, notice: "Competencies has successfully imported."
+    redirect_to :back, notice: t("competency.all.notice1")
     rescue ActionController::RedirectBackError
       redirect_to root_path
   end
@@ -13,7 +13,7 @@ class CompetenciesController < ApplicationController
     @competencies = Competency.order('id DESC')
     if @competencies
       respond_to do |format|
-        format.html {redirect_to competencies_path, notice: "export open" }
+        format.html {redirect_to competencies_path, notice: t("competency.all.notice2") }
         format.csv { send_data @competencies.to_csv, :type => "text/csv" }
         #format.xls
       end
