@@ -122,7 +122,7 @@
         <% if @course.competency_levels.size > 0 %>
         <ul>
           <% @course.competency_levels.first.positions.first.users.each do |u| %>
-          <% unless u.admin? %>
+          <% unless u.admin? or u.id == @course.teacher.id %>
           <li>
             <div class="user-image-name">
               <%= link_to image_tag(user_avatar_path(u, :small)), user_path(u), {:title => "#{u.name}"} %>
