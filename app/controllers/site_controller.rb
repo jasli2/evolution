@@ -15,5 +15,7 @@ class SiteController < ApplicationController
   end
 
   def datamining
+    @menu_category = 'admin'
+    @menu_active = 'datamining'
   end
 end
