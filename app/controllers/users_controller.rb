@@ -22,9 +22,9 @@ class UsersController < ApplicationController
     @user.is_assessed = true
     respond_to do |format|
       if @user.save
-        format.html { redirect_to session.delete(:return_to), notice: 'User assessment is finished.'}
+        format.html { redirect_to session.delete(:return_to), notice: t("users.all.notice1")}
       else
-        format.html { redirect_to :back, notice: 'Update user assessment error.'}
+        format.html { redirect_to :back, notice: t("users.all.notice2")}
       end
     end
   end
@@ -96,7 +96,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to session.delete(:return_to), notice: 'User was successfully created.' }
+        format.html { redirect_to session.delete(:return_to), notice: t("users.all.notice3") }
         format.json { render json: @user, status: :created, location: @user }
       else
         format.html { render 'new' }
@@ -112,7 +112,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
-        format.html { redirect_to session.delete(:return_to), notice: 'User was successfully updated.' }
+        format.html { redirect_to session.delete(:return_to), notice:t("users.all.notice4") }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -128,7 +128,7 @@ class UsersController < ApplicationController
     @user.destroy
 
     respond_to do |format|
-      format.html { redirect_to :back, :notice => "user has been deleted."}
+      format.html { redirect_to :back, :notice =>t("users.all.notice5")}
       format.json { head :no_content }
     end
   end
@@ -136,7 +136,7 @@ class UsersController < ApplicationController
   #POST /users/import
   def import
     User.import(params[:file])
-    redirect_to :back, notice: "Users has successfully imported."
+    redirect_to :back, notice: t("users.all.notice6")
     rescue ActionController::RedirectBackError
       redirect_to root_path
     
@@ -144,9 +144,8 @@ class UsersController < ApplicationController
 
   def export
     @users = User.order(:staff_id)
-    puts "*************************"
     respond_to do |format|
-      format.html {redirect_to :back, notice: "Export format not currect. Support: CSV, Excel." }
+      format.html {redirect_to :back, notice: t("users.all.notice7") }
       format.csv { send_data @users.to_csv, :type => "text/csv" }
     end
   end

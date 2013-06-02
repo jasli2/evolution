@@ -43,6 +43,8 @@ zh-CN:
       data: '数据分析'
   dashboard:
     common:
+      login: "登录成功"
+      logout: "已经退出"
       sub_title1: '查看所有'
       create: '创建于'
       ago:  '前'
@@ -113,6 +115,15 @@ zh-CN:
       change: '重新选择'
       remove: '移除文件'
       notice: "目前还没有学生"
+      notice1: "用户评估完成"
+      notice2: "更新用户评估出错"
+      notice3: "用户创建成功"
+      notice4: "用户更新成功"
+      notice5: "用户被删除"
+      notice6: "用户全部导入成功"
+      notice7: "导出格式出错，支持：CSV,Excel"
+      notice8: "添加关注成功"
+      notice9: "取消关注成功"
   position:
     page:
       title: '职位管理'
@@ -133,6 +144,8 @@ zh-CN:
       manage: '管理职位'
       change: '重新选择'
       remove: '移除文件'
+      notice1: "职位全部成功导入"
+      notice2: "职位全部成功导出"
   competency:
     page:
       title: '能力管理'
@@ -156,6 +169,8 @@ zh-CN:
       position: "职位:"
       filter_condition: "筛选能力项"
       clear_filter: '清除筛选'
+      notice1: "能力模型全部成功导入"
+      notice2: "能力模型全部成功导出"
   course:
     page:
       title: "课程管理"
@@ -195,6 +210,10 @@ zh-CN:
       notic1: "目前没有课程资料"
       notic2: "目前没有讨论"
       notic3: "输入课程名并回车"
+      notic4: "课程全部成功导入"
+      notic5: "课程全部成功导出"
+      notic6: "课程创建成功"
+      notic7: "课程更新成功"
   share:
     header:
       edit: "修改资料"
