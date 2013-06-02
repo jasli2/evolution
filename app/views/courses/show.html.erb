@@ -108,14 +108,31 @@
       <%= image_tag user_avatar_path(@course.teacher, :normal), :class => "pull-left" %>
       <div class="teacher-info">
         <h4><%= link_to @course.teacher.name, user_path(@course.teacher) %></h4>
+        <% if @course.teacher.self_intro.blank? %>
         <p> <%= t("users.all.nointruduction") %></p>
+        <% else %>
+        <p><%= @course.teacher.self_intro %></p>
+        <% end %>
       </div>
     </div>
 
     <div class="divider15"></div>
     <h3 class="subtitle"> <%= t("users.all.student") %></h3>
       <div class="well course-students">
-        <p> <%= t("users.all.notice") %></p>
+        <% if @course.competency_levels.size > 0 %>
+        <ul>
+          <% @course.competency_levels.first.positions.first.users.each do |u| %>
+          <li>
+            <div class="user-image-name">
+              <%= link_to image_tag(user_avatar_path(u, :small)), user_path(u), {:title => "#{u.name}"} %>
+              <%= link_to u.name, user_path(u) %>
+            </div>
+          </li>
+          <% end %>
+        </ul>
+        <% else %>
+        <p><%= t("users.all.notice") %></p>
+        <% end %>
       </div>
     
   </div>

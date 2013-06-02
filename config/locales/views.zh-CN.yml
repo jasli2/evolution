@@ -60,7 +60,7 @@ zh-CN:
       positions: '职位'
     competency:
       title: '能力模型'
-      sub_title: '我的能力模型'
+      sub_title: '最近添加的胜任力模型'
       null_competency: '目前能力模型为空，请先添加'
     course:
       title: '课程'

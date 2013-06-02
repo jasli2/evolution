@@ -30,3 +30,15 @@ blockquote {
 .course-students ul { list-style-type: none; padding: 0px; margin: 0px; }
 .course-students ul li { display: inline; }
 .course-students ul li img { width: 30px; height: 30px; }
+
+.course-students {
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    li {
+      display: inline-block;
+      margin-right: 5px;
+    }
+  }
+}
