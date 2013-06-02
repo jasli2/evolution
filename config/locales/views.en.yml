@@ -42,6 +42,8 @@ en:
       data: 'Data Analysis'
   dashboard:
     common:
+      login: "Logged in"
+      logout: "logged out"
       sub_title1: 'see all'
       create: 'create at '
       ago: ' ago'
@@ -112,6 +114,15 @@ en:
       change: 'Change'
       remove: 'Remove'
       notice: "No Students yet"
+      notice1: "User assessment is finished."
+      notice2: 'Update user assessment error.'
+      notice3: 'User was successfully created.'
+      notice4: 'User was successfully updated.'
+      notice5: "user has been deleted."
+      notice6: "Users has successfully imported."
+      notice7: "Export format not currect. Support: CSV, Excel."
+      notice8: "Add followed user success!"
+      notice9: "unfollowing user success!"
   position:
     page:
       title: 'Position Management'
@@ -132,6 +143,8 @@ en:
       manage: 'Manage Position'
       change: 'Change'
       remove: 'Remove'
+      notice1: "Positions has successfully imported."
+      notice2: "Positions has successfully export."
   competency:
     page:
       title: 'Competency Management'
@@ -155,6 +168,8 @@ en:
       position: "Position:"
       filter_condition: "Filter Competency"
       clear_filter: 'Clear Filter'
+      notice1: "Competencies has successfully imported."
+      notice2: "Competencies has successfully export."
   course:
     page:
       title: 'Courses Management'
@@ -194,6 +209,10 @@ en:
       notic1: "No course material yet"
       notic2: "No discusstion yet"
       notic3: "To search course and hit enter...."
+      notic4: "Courses has successfully imported."
+      notic5: "Courses has successfully export."
+      notic6: "Course was successfully created."
+      notic7: "Course was successfully updated."
   share:
     header:
       edit: "Edit Profile"

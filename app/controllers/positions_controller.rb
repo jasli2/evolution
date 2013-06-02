@@ -2,7 +2,7 @@ class PositionsController < ApplicationController
 
   def import
     Position.import(params[:file])
-    redirect_to :back, notice: "Positions has successfully imported."
+    redirect_to :back, notice: t("position.all.notice1")
     rescue ActionController::RedirectBackError
       redirect_to root_path
   end
@@ -11,7 +11,7 @@ class PositionsController < ApplicationController
     @positions = Position.order(:id)
     if @positions
       respond_to do |format|
-        format.html {redirect_to positions_path, notice: "export open" }
+        format.html {redirect_to positions_path, notice: t("position.all.notice2") }
         format.csv { send_data @positions.to_csv }
         #format.xls
       end
