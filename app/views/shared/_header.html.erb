@@ -4,7 +4,7 @@
   </div>
   <div class="headerinner">
     <ul class="headmenu">
-      <%# unless current_user.admin? %>
+      <% unless current_user.admin? %>
       <li class="odd <%= 'open' if @menu_category == 'header' and @menu_active == 'course' %>">
         <a href="<%= current_user.admin? ?  admin_manage_course_path : courses_path %>">
           <span class="head-icon iconfa-tasks"></span>
@@ -35,7 +35,7 @@
           <span class="headmenu-label">知识中心</span>
         </a>
       </li>
-      <%# end %>
+      <% end %>
       <li class="right">
         <div class="userloggedinfo">
           <%= image_tag user_avatar_path(current_user, :normal) %>
