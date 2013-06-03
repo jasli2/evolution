@@ -21,6 +21,16 @@ class SiteController < ApplicationController
     end
   end
 
+  def details
+    if current_user.admin?
+      @menu_category = 'admin'
+      @menu_active = 'knowledge'
+    else
+      @menu_category = 'header'
+      @menu_active = 'knowledge'
+    end
+  end
+
   def datamining
     @menu_category = 'admin'
     @menu_active = 'datamining'

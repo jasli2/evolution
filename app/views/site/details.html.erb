@@ -1,0 +1,24 @@
+<% provide(:title, "如何处理客户投诉") %>
+<% provide(:page_title, "如何处理客户投诉") %>
+<% provide(:page_sub_title, "问题详情") %>
+<% provide(:page_icon, "iconfa-info-sign") %>
+
+<% content_for :breadcrumbs do %>
+<li><%= link_to current_user.admin? ? "社区管理" : "知识中心", knowledge_path %> <span class="separator"></span></li>
+<%= content_tag(:li, "如何处理客户投诉") %>
+<% end %>
+
+<% content_for :javascript do %>
+<script type="text/javascript">
+
+</script>
+<% end %>
+
+<div class="row-fluid">
+  <div id="dashboard-left" class="span8">
+
+  </div>
+  <div id="dashboard-right" class="span4">
+  </div>
+</div>
+
