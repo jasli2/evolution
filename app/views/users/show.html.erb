@@ -116,13 +116,13 @@
             <%= f.submit "取消关注", class: "btn btn-mini btn-block btn-warning " %>
             <% end %>
           <% end %>
-          <% unless @user.id == current_user.id %>
-            <%= link_to "发信息".html_safe, '#', :class => "btn btn-mini btn-block btn-info " %>
-          <% end %>
+        <% end %>
+        <% unless @user.id == current_user.id %>
+          <%= link_to "发信息".html_safe, '#', :class => "btn btn-mini btn-block btn-info " %>
         <% end %>
       </div>
       <div class="user-info">
-        <h4><%= link_to @user.name, user_path(@user) %></h4>
+        <div><%= link_to @user.name, user_path(@user) %><span class="user-level"><%= user_level(@user) %></span></div>
         <ul class="info-details">
           <li><%= t("users.all.department") %>.: <%= @user.department %></li>
           <li><%= t("users.all.position")%>: <%= @user.position.name unless @user.position.blank? %></li>
