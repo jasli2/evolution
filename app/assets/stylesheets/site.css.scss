@@ -7,3 +7,29 @@ iframe {
   height: 500px;
   border: 1px solid #DEDEDE;
 }
+
+.topiclist {
+  list-style: none;
+  clear: both;
+  li {
+    display: block;
+    border-bottom: 1px solid #ddd;
+    padding: 15px 20px;
+    img { width: 50px; }
+    .topic-info { margin-left: 70px; }
+    p.topic-content { padding: 5px 0; }
+    p:last-child { margin-bottom: 0; }
+    .btn { margin-right: 3px; }
+    .btn span { margin-right: 5px; }
+  }
+}
+
+div.pagination { padding: 5px 20px; }
+
+.taglist { 
+  list-style: none; 
+  clear: both; 
+  li {
+    display: block; padding: 3px 12px; color: #666;
+  }
+}
