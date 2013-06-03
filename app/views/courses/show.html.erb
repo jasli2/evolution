@@ -90,7 +90,14 @@
         <p> <%= t("course.all.notic1") %></p>
       </div>
       <div id="tabs-4" class="course-discussion">
-        <p> <%= t("course.all.notic2") %></p>
+        <div class="discuss-list"> <%= t("course.all.notic2") %></div>
+        <div class="discuss-input-box">
+          <%= image_tag user_avatar_path(current_user, :small) %>
+          <div class="discuss-input">
+            <%= text_area_tag "topic", nil, :rows => 4, :cols => 25, :placeholder => "发起讨论或者发布问题..." %>
+            <div><a href="#" class="btn btn-primary disabled"><i class="iconfa-edit icon-white"></i> 发布讨论</a></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

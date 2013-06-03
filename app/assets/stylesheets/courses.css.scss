@@ -24,10 +24,12 @@ blockquote {
 
 .about-teacher { 
   background-color: #fff;
+  min-height: 80px;
   .teacher-image-rate {
     float: left;
     width: 60px;
     text-align: center;
+
     img { width: 60px; }
     span.teacher-rate { 
       color: #ffc333;
@@ -52,6 +54,33 @@ blockquote {
     li {
       display: inline-block;
       margin-right: 5px;
+    }
+  }
+}
+
+.course-discussion {
+  .discuss-list {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 20px;
+
+  }
+
+  .discuss-input-box {
+    padding-top: 20px;
+    //border: 1px solid #ddd
+    img {
+      float: left; 
+      width: 40px;
+    }
+    .discuss-input {
+      margin-left: 50px;
+      textarea {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+
+        width: 100%;
+      }
     }
   }
 }

@@ -3,13 +3,16 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .user-info-box {
-  min-height: 120px;
+  min-height: 130px;
   .user-info-image {
     width: 80px;
     float: left;
     text-align: center;
     img {
       width: 80px;
+    }
+    .btn-mini {
+      padding: 0;
     }
   }
 
@@ -83,3 +86,5 @@ div.assessment-error {
     h5 { margin: 5px 0; }
   }
 }
+
+
