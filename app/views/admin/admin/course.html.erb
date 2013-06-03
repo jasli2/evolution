@@ -43,6 +43,7 @@
                 <% end %>
               </ul>
               <a href="<%= course_path(c) %>" class="btn btn-primary btn-small"><span class="iconfa-info-sign icon-white"></span> <%= t("course.all.details") %></a>
+              <a href="<%= edit_course_path(c) %>" class="btn btn-warning btn-small"><span class="iconfa-edit icon-white"></span> 编辑课程</a>
             </div>
           </li>
           <% end %>
@@ -59,8 +60,8 @@
     <div class="divider15"></div>
 
     <div class="well">
-      <a href="<%= new_user_course_path(current_user) %>" class="btn btn-primary"><i class="iconfa-plus icon-white"></i><%= t("course.all.new") %></a>
-      <a href="<%= export_courses_path(format: "csv") %>" class="btn btn-warning"><i class="iconfa-download-alt icon-white"></i><%= t("course.all.export") %></a>
+      <a href="<%= new_user_course_path(current_user) %>" class="btn btn-primary"><i class="iconfa-plus icon-white"></i> <%= t("course.all.new") %></a>
+      <a href="<%= export_courses_path(format: "csv") %>" class="btn btn-warning"><i class="iconfa-download-alt icon-white"></i> <%= t("course.all.export") %></a>
     </div>
 
     <h4 class="widgettitle"> <%= t("course.all.import_title") %></h4>

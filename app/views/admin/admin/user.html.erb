@@ -40,7 +40,7 @@
           <% @users.each do |u| %>
           <tr>
             <td class="center">
-              <%= link_to "Edit", edit_user_path(u), {:class => "btn btn-primary"} %>
+              <%= link_to "编辑", edit_user_path(u), {:class => "btn btn-primary"} %>
             </td>
             <td class="center"><%= link_to u.name, user_path(u) %></td>
             <td class="center"><%= u.staff_id %></td>

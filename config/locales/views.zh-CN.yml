@@ -219,3 +219,10 @@ zh-CN:
       edit: "修改资料"
       setting: "账户设置"
       out: "退出"
+  views:
+    pagination:
+      first: "首页"
+      last: "末页"
+      previous: "上一页"
+      next: "下一页"
+      truncate: "..."
