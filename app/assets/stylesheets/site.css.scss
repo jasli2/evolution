@@ -33,3 +33,43 @@ div.pagination { padding: 5px 20px; }
     display: block; padding: 3px 12px; color: #666;
   }
 }
+
+.quest-details {
+  .quest-info {
+    padding: 10px 0;
+    span.quest-tags {
+      padding: 0 5px;
+    }
+  }
+}
+
+.quest-answer-list {
+  .answer-sammary {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+  }
+  ul {
+    list-style: none;
+    clear: both;
+    li {
+      display: block;
+      padding: 10px 0;
+      border-bottom: 1px solid #ddd;
+      &:last-child {
+        border-bottom: 0;
+      }
+      .awswer-header {
+        padding-bottom: 5px;
+      }
+    }
+  }
+}
+
+.quest-input {
+  textarea {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+  }
+}

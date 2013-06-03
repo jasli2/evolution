@@ -16,9 +16,73 @@
 
 <div class="row-fluid">
   <div id="dashboard-left" class="span8">
-
+    <div class="well quest-details">
+      <h3>如何处理客户投诉？</h3>
+      <div class="quest-info">
+        <%= link_to "文华", "#" %>  &#124;
+        <span class="quest-tags">
+        <i class="iconfa-tags"></i>
+        <span class="label label-info">个金客户经理</span>
+        <span class="label label-info">投诉</span>
+        <span class="label label-info">处理</span>
+        </span>
+        <span class="pull-right"><i class="iconfa-time"></i> 1小时前</span>
+      </div>
+      <p>我是一名个金客户经理，经常会遇到客户直接投诉我行业务，实际上并不是因为我的原因产生的，让我很苦恼。请问如何解决？</p>
+    </div>
+    <div class="well quest-answer-list">
+      <div class="answer-sammary"><h4>4条回答</h4></div>
+      <ul>
+        <li>
+          <div class="awswer-header"><%= link_to "崔涛", "#" %> &#124; <span><i class="iconfa-time"></i> 发布于5分钟前</span><span class="pull-right"><i class="iconfa-thumbs-up"></i> 0</span></div>
+          <p>
+            （一）快速反应：顾客认为商品有问题，一般会比较着急，怕不能得到解决，而且也会不太高兴。这个时候要快速反应，记下他的问题，及时查询问题发生的原因，及时帮助顾客解决问题。有些问题不是能够马上解决的，也要告诉顾客我们会马上给您解决，现在就给您处理………<br/>
+            （二）热情接待：如果顾客收到东西后过来反映有什么问题的话，要热情的对待，要比交易的时候更热情，这样买家就会觉得你这个卖家好，不是那种虚伪的，刚开始的时候很热情，等钱收到之后呢，就爱理不理的那种。对于爱理不理的那种，买家就会很失望，即使东西再好，他们也不会再来了。<br/>
+            （三）表示愿意提供帮助：“让我看一下该如何帮助您，我很愿意为您解决问题。” 正如前面所说，当客户正在关注问题的解决时，客服人员应体贴地表示乐于提供帮助，自然会让客户感到安全、有保障，从而进一步消除对立情绪，形成依赖感。<br/>
+（四）引导客户思绪：我们有时候会在说道歉时感到不舒服，因为这似乎是在承认自己有错。其实，“对不起”或“很抱歉”并不一定表明你或公司犯了错，这主要表明你对客户不愉快经历的遗憾与同情。不用担心客户因得到你的认可而越发强硬，认同只会将客户的思绪引向解决方案。同时，我们也可以运用一些方法来引导客户的思绪，化解客户的愤怒
+          </p>
+        </li>
+        <li>
+          <div class="awswer-header"><%= link_to "杨建军", "#" %> &#124; <span><i class="iconfa-time"></i> 发布于18分钟前</span><span class="pull-right"><i class="iconfa-thumbs-up"></i> 0</span></div>
+          <p>
+首先你的态度要好，别人不管原因，首先是你的客户，不要因为对方投诉错了 就发火，有火也不能表现在脸上 2.要找到对方发火的原因所在，合理的安排去处理，并且能够追踪 做到客户问起来，能够回答现在的状况 3.最好再去学一点商务礼仪的知识，那样可能对你的工作做起来更好
+          </p>
+        </li>
+        <li>
+          <div class="awswer-header"><%= link_to "王世祥", "#" %> &#124; <span><i class="iconfa-time"></i> 发布于23分钟前</span><span class="pull-right"><i class="iconfa-thumbs-up"></i> 0</span></div>
+          <p>
+          发生投诉，应当第一时间判断投诉的类型，进行下一步的操作。如果是良性投诉（确实因为自身原因导致），应当第一时间向顾客道歉，并询问事情经过，同时询问顾客需求，有礼貌有针对性的进行处理；切忌不要恶语相向或者拖延、回避，也不要顾客任何要求都答应，对于自己处理不了的事情，需委婉的告知顾客，请上级进行处理。
+          </p>
+        </li>
+        <li>
+          <div class="awswer-header"><%= link_to "杨成", "#" %> &#124; <span><i class="iconfa-time"></i> 发布于39分钟前</span><span class="pull-right"><i class="iconfa-thumbs-up"></i> 0</span></div>
+          <p>
+          1、处理投诉不能一味表现好态度，要先礼后兵。好态度对于蛮不讲理的人只能起反作用。<br/>
+2、大多数情况下，合理的解释和安排用户是可以接收的，但不能用解释来说服的就要用法律和知识来保护自己的利益。最难的是面对那些不讲规则不懂事故人情的人。<br/>
+3、面对诬告、假证据、无证据、证据不足、无理取闹的用户一定要坚持立场。<br/>
+4、因不满的处理结果而投诉受理人的要做最坏打算。<br/>
+5、投诉最佳处理时间在24小时之内，超过时间上级主管要直接介入询问。<br/>
+6、投诉不详细或处理人不懂的地方要及时和相关部门沟通，不能拖延。<br/>
+7、非当事人投诉、性质轻微的事件、其他不合情理或不可抗力的情况可不予理睬。
+          </p>
+        </li>
+      </ul>
+    </div>
+    <%# unless current_user.admin? %>
+    <div class="well quest-input">
+      
+      <%= text_area_tag "topic", nil, :rows => 4, :cols => 25, :placeholder => "提问者正期待您的回答..." %>
+      <div><a href="#" class="btn btn-primary disabled"><i class="iconfa-edit icon-white"></i> 提交回答</a></div>
+      
+    </div>
+    <%# end %>
   </div>
   <div id="dashboard-right" class="span4">
+    <h3 class="subtitle">相关问题</h3>
+    <div class="divider15"></div>
+    <div class="well">
+      没有相关问题
+    </div>
   </div>
 </div>
 
