@@ -68,7 +68,7 @@
         </li>
       </ul>
     </div>
-    <%= unless current_user.admin? %>
+    <% unless current_user.admin? %>
     <div class="well quest-input">
       
       <%= text_area_tag "topic", nil, :rows => 4, :cols => 25, :placeholder => "提问者正期待您的回答..." %>
