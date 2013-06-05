@@ -43,7 +43,7 @@
         <li>
           <%= image_tag user_avatar_path(s, :small) %>
           <span><%= s.name %>（<%= s.position.name %>）</span>
-          <span><%= link_to "<i class='iconfa-check'></i> 已完成评估".html_safe, '#', :class => "btn btn-primary disabled" %></span>
+          <span><%= link_to "<i class='iconfa-check'></i> 已完成评估".html_safe, '#', :class => "btn btn-primary disabled pull-right" %></span>
         </li>
         <% end %>
       </ul>
