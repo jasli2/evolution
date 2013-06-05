@@ -24,7 +24,7 @@
             <% if current_user.admin? %>
             <%= link_to "<i class='iconfa-edit'></i> 查看详情".html_safe, examination_path(e), :class => "btn btn-warning" %>
             <% else %>
-            <%= link_to "<i class='iconfa-check'></i> 报名考试".html_safe, "#", :class => "btn btn-warning disabled" %>
+            <%= link_to "<i class='iconfa-check'></i> 报名考试".html_safe, '#myModal', :class => "btn btn-warning disabled", "data-toggle" => "modal" %>
             <% end %>
           </span>
         </li>
