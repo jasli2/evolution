@@ -7,8 +7,7 @@
         <li class="<%= "active" if active == 'home' %>"><a href="<%= dashboard_user_path(current_user) %>"><span class="iconfa-home"></span> <%= t('menu.user.home') %></a></li>
         <li class="<%= "active" if active == 'profile' %>"><a href="<%= user_path(current_user) %>"><span class="iconfa-file"></span> <%= t('menu.user.myprofile') %></a></li>
         <li class="<%= "active" if active == 'user_courses' %>"><a href="<%= user_courses_path(current_user) %>"><span class="iconfa-book"></span> <%= t('menu.user.mycourse') %></a></li>
-        <li class="<%= "active" if active == 'competency' %>"><a href="<%= competencies_path %>"><span class="iconfa-cloud"></span> <%= t('menu.user.competency') %></a></li>
-        <li class="<%= "active" if active == 'courses' %>"><a href="<%= courses_path %>"><span class="iconfa-bookmark-empty"></span> 我的博客</a></li>
+        <li class="<%= "active" if active == 'courses' %>"><a href="#myModal" data-toggle="modal"><span class="iconfa-bookmark-empty"></span> 我的博客</a></li>
         <li class="<%= "active" if active == 'member' %>"><a href="#myModal" data-toggle="modal"><span class="iconfa-question-sign"></span> 我的问答</a></li>
         <li class="<%= "active" if active == 'member' %>"><a href="#myModal" data-toggle="modal"><span class="iconfa-briefcase"></span> 我的案例</a></li>
         <li class="<%= "active" if active == 'member' %>"><a href="#myModal" data-toggle="modal"><span class="iconfa-upload"></span> 我的成长记录</a></li>

@@ -62,7 +62,7 @@
 
     <div class="well">
       <a href="<%= new_user_path %>" class="btn btn-primary"><i class="iconfa-plus icon-white"></i><%= t('users.all.create')%></a>
-      <a href="<%= export_users_path(format: "csv") %>" class="btn btn-warning"><i class="iconfa-download-alt icon-white"></i> <%= t('users.all.export') %></a>
+      <a href="#myModal" data-toggle="modal" class="btn btn-warning"><i class="iconfa-download-alt icon-white"></i> <%= t('users.all.export') %></a>
     </div>
 
     <div class="well">
@@ -79,7 +79,8 @@
           <a href="#" class="btn fileupload-exists" data-dismiss="fileupload"><%= t('users.all.remove') %></a>
         </div>
       </div>
-      <%= submit_tag t('users.all.import').html_safe, :class => "btn btn-primary" %>
+      <%# submit_tag t('users.all.import').html_safe, :class => "btn btn-primary" %>
+      <a href="#myModal" data-toggle="modal" class="btn btn-primary"> 导入用户</a>
       <% end %>
     </div>
     

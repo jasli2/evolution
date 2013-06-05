@@ -40,8 +40,8 @@
           <% @positions.each do |p| %>
           <tr>
             <td class="center">
-              <%= link_to t("position.all.delete"), "#", {:class => "btn btn-danger disabled"} %>
-              <%= link_to t("position.all.edit"), edit_position_path(p), {:class => "btn btn-primary"} %>
+              <%= link_to t("position.all.delete"), "#myModal", {:class => "btn btn-danger disabled", "data-toggle" => "modal"} %>
+              <%= link_to t("position.all.edit"), "#myModal", {:class => "btn btn-primary", "data-toggle" => "modal"} %>
             </td>
             <td class="center"><%= p.name %></td>
             <td class="center"><%= p.description %></td>
@@ -74,8 +74,8 @@
     <h3 class="subtitle"><%= t("position.all.manage") %></h3>
     <div class="divider15"></div>
     <div class="well">
-      <a href="#" class="btn btn-primary disabled"><i class="iconfa-plus icon-white"></i><%= t("position.all.create")%></a>
-      <a href="<%= export_positions_path(format: "csv") %>" class="btn btn-warning"><i class="iconfa-download-alt icon-white"></i> <%= t("position.all.export")%></a>
+      <a href="#myModal" data-toggle="modal" class="btn btn-primary disabled"><i class="iconfa-plus icon-white"></i><%= t("position.all.create")%></a>
+      <a href="#myModal" data-toggle="modal" class="btn btn-warning"><i class="iconfa-download-alt icon-white"></i> <%= t("position.all.export")%></a>
     </div>
 
     <h4 class="widgettitle"><%= t("position.all.import") %></h4>
@@ -93,7 +93,8 @@
           <a href="#" class="btn fileupload-exists" data-dismiss="fileupload"><%= t("position.all.remove") %></a>
         </div>
       </div>
-      <%= submit_tag t("position.all.import").html_safe, :class => "btn btn-primary submit-import" %>
+      <%# submit_tag t("position.all.import").html_safe, :class => "btn btn-primary submit-import" %>
+      <a href="#myModal" data-toggle="modal" class="btn btn-primary"> 导入职位</a>
       <% end %>
     </div>
   </div>
