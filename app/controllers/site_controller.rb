@@ -1,5 +1,5 @@
 class SiteController < ApplicationController
-  skip_before_filter :authenticate_user!
+  #skip_before_filter :authenticate_user!
 
   def help
   end

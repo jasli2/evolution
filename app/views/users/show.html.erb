@@ -118,7 +118,7 @@
           <% end %>
         <% end %>
         <% unless @user.id == current_user.id %>
-          <%= link_to "发信息".html_safe, '#', :class => "btn btn-mini btn-block btn-info " %>
+          <%= link_to "发信息".html_safe, '#myModal', :class => "btn btn-mini btn-block btn-info", "data-toggle" => "modal" %>
         <% end %>
       </div>
       <div class="user-info">

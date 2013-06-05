@@ -29,6 +29,19 @@
 
 </div>
 
+<div aria-hidden="false" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" class="modal hide fade in" id="myModal">
+    <div class="modal-header">
+        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">&times;</button>
+        <h3 id="myModalLabel">功能暂不可用</h3>
+    </div>
+    <div class="modal-body">
+        <p>抱歉，此功能还未部署，暂时不可使用，请耐心等待系统升级。</p>
+    </div>
+    <div class="modal-footer">
+        <button data-dismiss="modal" class="btn">关闭</button>
+    </div>
+</div><!--#myModal-->
+
 <%= javascript_include_tag "application" %> 
 <%= yield :javascript %> 
 

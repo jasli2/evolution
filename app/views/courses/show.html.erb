@@ -95,7 +95,7 @@
           <%= image_tag user_avatar_path(current_user, :small) %>
           <div class="discuss-input">
             <%= text_area_tag "topic", nil, :rows => 4, :cols => 25, :placeholder => "发起讨论或者发布问题..." %>
-            <div><a href="#" class="btn btn-primary disabled"><i class="iconfa-edit icon-white"></i> 发布讨论</a></div>
+            <div><a href="#myModal" data-toggle="modal" class="btn btn-primary disabled"><i class="iconfa-edit icon-white"></i> 发布讨论</a></div>
           </div>
         </div>
       </div>
@@ -106,7 +106,7 @@
     <% if current_user.admin? or @course.teacher?(current_user) %>
       <a href="<%= edit_course_path(@course) %>" class="btn btn-success"><i class="iconfa-edit icon-white"></i>  <%= t("position.all.edit") %></a>
     <% else %>
-      <a href="#" class="btn btn-warning disabled"><i class="iconfa-plus icon-white"></i> <%= t("course.all.join")%></a>
+      <a href="#myModal" data-toggle="modal" class="btn btn-warning disabled"><i class="iconfa-plus icon-white"></i> <%= t("course.all.join")%></a>
     <% end %>
     </div>
     
