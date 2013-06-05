@@ -18,8 +18,8 @@
   <div class="loginpanelinner">
     <div class="logo animate0 bounceIn"><%= image_tag('logo.png') %></div>
       <%= form_tag sessions_path do %>
-      <div class="inputwrapper login-alert" style="display: none">
-        <div class="alert alert-error">Invalid username or password</div>
+      <div class="inputwrapper login-alert animate5 fadeIn" style="margin-bottom: 5px;">
+        <div class="alert alert-warning">体验版部分功能不可用，请升级成正式版</div>
       </div>
       <div class="inputwrapper animate1 bounceIn">
         <%= text_field_tag :email, params[:email], :class => 'text_field', :placeholder => "Enter username" %>

@@ -23,8 +23,8 @@
         <tr>
           <td width="70%"><%= eo_markdown(q.qdata) %></td>
           <td width="30%" id="qustion-action">
-            <%= link_to "<i class='iconfa-edit'></i> 修改试题".html_safe, edit_examination_question_path(@exam, q), :class => "btn btn-primary btn-small" %>
-            <%= link_to "<i class='iconfa-edit'></i> 删除试题".html_safe, examination_question_path(@exam, q), :method => :delete, :class => "btn btn-danger btn-small", :data => { confirm: '确认要删除试题？' } %>
+            <%= link_to "<i class='iconfa-edit'></i> 修改试题".html_safe, "#myModal", :class => "btn btn-primary btn-small", "data-toggle" => "modal" %>
+            <%= link_to "<i class='iconfa-edit'></i> 删除试题".html_safe, "#myModal", :class => "btn btn-danger btn-small", "data-toggle" => "modal" %>
           </td>
         </tr>
         <% end %>
@@ -42,7 +42,7 @@
     <h3 class="subtitle">管理考题</h3>
     <div class="divider15"></div>
     <div class="well">
-      <a href="<%= new_examination_question_path(@exam) %>" class="btn btn-primary"><i class="iconfa-plus icon-white"></i> 添加新考题</a>
+      <a href="#myModal" data-toggle="modal" class="btn btn-primary"><i class="iconfa-plus icon-white"></i> 添加新考题</a>
     </div>
     <% end %>
   </div>
