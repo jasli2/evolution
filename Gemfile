@@ -9,6 +9,7 @@ gem 'mysql2'
 gem 'simple_form'
 gem 'roo', '~>1.11.2'
 gem 'kaminari'
+gem 'resque', :require => "resque/server"
 
 # Gems used only for assets and not required
 # in production environments by default.
