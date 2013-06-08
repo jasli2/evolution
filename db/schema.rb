@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130602084549) do
+ActiveRecord::Schema.define(:version => 20130607150651) do
 
   create_table "activities", :force => true do |t|
     t.string   "description"
@@ -96,6 +96,24 @@ ActiveRecord::Schema.define(:version => 20130602084549) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "feed_items", :force => true do |t|
+    t.integer  "item_id"
+    t.string   "item_type"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "feed_items", ["item_id", "item_type"], :name => "index_feed_items_on_item_id_and_item_type"
+
+  create_table "feeds", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "feed_item_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "feeds", ["user_id", "feed_item_id"], :name => "index_feeds_on_user_id_and_feed_item_id"
 
   create_table "position_competency_levels", :force => true do |t|
     t.integer  "standard"
