@@ -8,6 +8,7 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #
+require "feeditem_sque.rb"
 
 class UserRelation < ActiveRecord::Base
   attr_accessible :leader_id, :follower_id

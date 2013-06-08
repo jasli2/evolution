@@ -1,4 +1,4 @@
-class FeeditemSque
+class FeedItemSque
   @queue = "feed_item"
 
   def self.perform(feed_item_id)
