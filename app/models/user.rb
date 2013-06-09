@@ -69,6 +69,9 @@ class User < ActiveRecord::Base
   has_many :reverse_user_relations, :class_name => 'UserRelation', :foreign_key => 'leader_id', :dependent => :destroy
   has_many :fans, :through => :reverse_user_relations, :source => :follower
 
+  #feeds
+  has_many :feeds
+  has_many :feed_items, :through => :feeds, :order => 'id DESC'
 
   #validates :position_id, :presence => true
 
