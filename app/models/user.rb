@@ -74,7 +74,7 @@ class User < ActiveRecord::Base
   has_many :feed_items, :through => :feeds, :order => 'id DESC'
 
   has_many :topics, :dependent => :destroy
-  has_many :comments, :dependent => :destroy
+  has_many :comments, :as => :commentable , :dependent => :destroy
   #validates :position_id, :presence => true
 
   scope :staff, where(:is_admin => false)
