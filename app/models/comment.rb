@@ -3,7 +3,7 @@ class Comment < ActiveRecord::Base
   belongs_to :user
   belongs_to :commentable, :polymorphic => true
 
-  validates :user_id, :commentable_id, :commentable_typem, :content, :presence => true
+  validates :user_id, :commentable_id, :commentable_type, :content, :presence => true
   attr_accessible :content
   
 end
