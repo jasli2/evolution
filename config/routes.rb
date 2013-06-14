@@ -7,6 +7,12 @@ Evolution::Application.routes.draw do
     collection {get :export}
   end
 
+  resources :topics do
+    resources :comments 
+  end
+
+  resources :comments
+
   resources :users, :shallow => true do
     get 'dashboard', :on => :member
     get 'mgr_assessments', :on => :member
