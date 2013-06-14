@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130607150651) do
+ActiveRecord::Schema.define(:version => 20130614023730) do
 
   create_table "activities", :force => true do |t|
     t.string   "description"
@@ -32,6 +32,19 @@ ActiveRecord::Schema.define(:version => 20130607150651) do
     t.integer  "activity_id"
     t.integer  "user_id"
   end
+
+  create_table "comments", :force => true do |t|
+    t.text     "content"
+    t.integer  "user_id"
+    t.string   "commentable_type"
+    t.integer  "commentable_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  add_index "comments", ["commentable_id", "commentable_type"], :name => "index_comments_on_commentable_id_and_commentable_type"
+  add_index "comments", ["updated_at"], :name => "index_comments_on_updated_at"
+  add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
   create_table "competencies", :force => true do |t|
     t.string   "name",        :limit => 40
@@ -145,6 +158,17 @@ ActiveRecord::Schema.define(:version => 20130607150651) do
     t.datetime "updated_at",     :null => false
     t.integer  "examination_id"
   end
+
+  create_table "topics", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "title"
+    t.text     "content"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "topics", ["updated_at"], :name => "index_topics_on_updated_at"
+  add_index "topics", ["user_id"], :name => "index_topics_on_user_id"
 
   create_table "user_course_progresses", :force => true do |t|
     t.integer  "course_id"

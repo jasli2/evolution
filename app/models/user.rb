@@ -73,6 +73,8 @@ class User < ActiveRecord::Base
   has_many :feeds
   has_many :feed_items, :through => :feeds, :order => 'id DESC'
 
+  has_many :topics, :dependent => :destroy
+  has_many :comments, :dependent => :destroy
   #validates :position_id, :presence => true
 
   scope :staff, where(:is_admin => false)
@@ -97,6 +99,13 @@ class User < ActiveRecord::Base
   mount_uploader :avatar, ImageUploader
   validates :avatar, :file_size => {:maximum => 1.megabytes.to_i }
 
+  def latest_comments
+    self.comments.order('create_at DESC').limit(10)
+  end
+
+  def latest_created_topics
+    slef.topics.order('created_at DESC').limit(10)
+  end
   #user relattionship
   def following?(other_user)
     user_relations.find_by_leader_id(other_user.id)
