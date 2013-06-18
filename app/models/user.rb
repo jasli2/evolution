@@ -75,6 +75,7 @@ class User < ActiveRecord::Base
 
   has_many :topics, :dependent => :destroy
   has_many :comments, :as => :commentable , :dependent => :destroy
+  #has_many :reply_comments,  :foreign_key => 'reply_id', :class_name => 'Comment', :as => :commentable, :dependent => :destroy
   #validates :position_id, :presence => true
 
   scope :staff, where(:is_admin => false)

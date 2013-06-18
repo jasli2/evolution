@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: examinations
+#
+#  id         :integer          not null, primary key
+#  title      :string(255)
+#  creator_id :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 class Examination < ActiveRecord::Base
   attr_accessible :creator_id, :title
 

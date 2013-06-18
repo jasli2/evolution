@@ -7,9 +7,6 @@ Evolution::Application.routes.draw do
     collection {get :export}
   end
 
-  resources :topics do
-    resources :comments 
-  end
 
   resources :comments
 
@@ -21,9 +18,13 @@ Evolution::Application.routes.draw do
     collection {post :import}
     collection {get :export}
     resources :courses
+    resources :topics
   end
   resources :user_relations, only: [:create, :destroy]
 
+  resources :topics, :only => [:index] do
+    resources :comments 
+  end
 
   resources :competencies do
     collection {post :import}
