@@ -212,13 +212,28 @@ class User < ActiveRecord::Base
     end
   end
 
-  def self.test
-    User.all
+  def self.save!(obj, error_info = nil)
+    begin
+      obj.save!
+    rescue
+      if error_info != nil
+        error_info["error_num"] = error_info["error_num"] + 1
+      end 
+    end
   end
 
   def self.import(file)
     spreadsheet = open_spreadsheet(file)
     header = spreadsheet.row(1)
+    
+    #for error info
+    count = 0
+    error_info = Hash.new
+    error_name = Hash.new
+    error_info["error_action"] = error_name
+    error_info["error_num"] = count
+    error_info["total"] = spreadsheet.last_row - 1
+
     (2..spreadsheet.last_row).each do |i|
       row = Hash[[header,spreadsheet.row(i)].transpose]
       name = row.first[0]
@@ -233,7 +248,11 @@ class User < ActiveRecord::Base
       user.password_confirmation = row["password"]
       user.name = row[name]
       user.email = row["email"]
-      user.save!
+      save!(user, error_info)
+      if error_info["error_num"] != count
+        count = error_info["error_num"]
+        next
+      end
 
       user.staff_id = row["Staff Id"]
       user.phone_num = row["Tel"]
@@ -248,7 +267,11 @@ class User < ActiveRecord::Base
       user.joined_at = row["Enroll Date"]
       user.teacher_rate=row["teacher rate"]
       user.self_intro=row["introduction"]
-      user.save!
+      save!(user, error_info)
+      if error_info["error_num"] != count
+        count = error_info["error_num"]
+        next
+      end
       unless (user.position_id.nil?)
         position.users << user
       end
@@ -257,15 +280,26 @@ class User < ActiveRecord::Base
       row = Hash[[header,spreadsheet.row(i)].transpose]
       name = row.first[0]
       user = find_by_email(row["email"])
+
+      if ( user.nil?)
+        puts "kong de "
+        next
+      end
       following = row["following"].split
       following.each do |name|
-        puts name
         follower = User.find_by_name(name)
+        if follower.nil?
+          next
+        end
         unless (follower.nil?)
-          user.follow!(follower)
+          unless user.following?(follower)
+            user.follow!(follower)
+          end 
         end
       end
     end
+
+    return error_info
   end
 
   def self.open_spreadsheet(file)
