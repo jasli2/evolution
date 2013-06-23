@@ -16,7 +16,7 @@ class Comment < ActiveRecord::Base
   # attr_accessible :title, :body
 
   after_create {
-    Resque.enqueue(CommentSque, slef.id)
+    Resque.enqueue(CommentSque, self.id)
   }
 
   belongs_to :user

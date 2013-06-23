@@ -42,7 +42,7 @@ Evolution::Application.routes.draw do
 
   match  '/about'         => 'site#about', :via => :get
   match  '/help'          => 'site#help', :via => :get
-  match  '/knowledge'     => 'site#knowledge', :via => :get
+  match  '/knowledge'     => 'topics#index'
   match  '/details'       => 'site#details', :via => :get
   match  '/datamining'    => 'site#datamining', :via => :get
 

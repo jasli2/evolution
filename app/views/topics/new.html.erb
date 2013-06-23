@@ -1,0 +1,17 @@
+<% provide(:title, 'create a new topic') %>
+<h1> new topic</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for([current_user, @topic]) do |f| %>
+
+      <%= f.label :title %>
+      <%= f.text_field :title %>
+
+      <%= f.label :content %>
+      <%= f.text_field :content %>
+      
+      <%= f.submit "Create new topic", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>
