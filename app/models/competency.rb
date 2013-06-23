@@ -47,10 +47,14 @@ class Competency < ActiveRecord::Base
     end
   end
 
-  def self.save!(obj)
+  def self.save!(obj, error_info = nil)
     begin
       obj.save!
-    rescue RecordInvalid => error
+    rescue
+      #error_info["error_action"]["fail_name"] = competency.name
+      if error_info != nil
+        error_info["error_num"] = error_info["error_num"] + 1
+      end   
     end
   end
 
@@ -58,6 +62,14 @@ class Competency < ActiveRecord::Base
     spreadsheet = open_spreadsheet(file)
     header = spreadsheet.row(1)
     length = header.length
+    #for error info
+    count = 0
+    error_info = Hash.new
+    error_name = Hash.new
+    error_info["error_action"] = error_name
+    error_info["error_num"] = count
+    error_info["total"] = spreadsheet.last_row - 1
+
     competency = Competency.new
     (2..spreadsheet.last_row).each do |i|
       row = Hash[[header,spreadsheet.row(i)].transpose]
@@ -67,11 +79,19 @@ class Competency < ActiveRecord::Base
         competency = Competency.find_by_name(row[name]) || Competency.new
         competency.name = row[name]
         competency.description = row["description"]
-        save!(competency)
+        save!(competency, error_info)
+        if error_info["error_num"] != count
+          count = error_info["error_num"]
+          next
+        end
       end
 
       competency_level = competency.competency_levels.new(:level => row["level"], :description => row["level_description"])
-      save!(competency_level)
+      save!(competency_level, error_info)
+      if error_info["error_num"] != count 
+        count = error_info["error_num"]
+        next
+      end
       ptr = 1
       num = (length - 4) / 2
       while ptr <= num  do
@@ -85,6 +105,7 @@ class Competency < ActiveRecord::Base
       end
 
     end
+    return error_info
   end
 
   def self.open_spreadsheet(file)
