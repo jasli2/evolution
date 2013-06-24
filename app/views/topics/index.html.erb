@@ -1,0 +1,154 @@
+<% provide(:title, current_user.admin? ? "社区管理" : "知识中心") %>
+<% provide(:page_title, current_user.admin? ? "社区管理" : "知识中心") %>
+<% provide(:page_sub_title, current_user.admin? ? "社区管理" : "知识中心") %>
+<% provide(:page_icon, "iconfa-user") %>
+
+<% content_for :breadcrumbs do %>
+<%= content_tag(:li, current_user.admin? ? "社区管理" : "知识中心") %>
+<% end %>
+
+<% content_for :javascript do %>
+<script type="text/javascript">
+$(function() {
+  $('.tabbedwidget').tabs();
+});
+</script>
+<% end %>
+
+<div class="row-fluid">
+  <div id="dashboard-left" class="span8">
+    <div class="tabbedwidget tab-primary">
+      <ul>
+        <li><a href="#tabs-1"><span>最新问题</span></a></li>
+        <li><a href="#tabs-2"><span>最热问题</span></a></li>
+        <li><a href="#tabs-3"><span>未解决问题</span></a></li>
+      </ul>
+      <div id="tabs-1" class="nopadding">
+                                <ul class="topiclist">
+                                    <% if @topics.size == 0 %>
+                                    <div class="nopadding">
+                                        <p> 目前还没有讨论主题</p>
+                                    </div>
+                                    <% else %>
+                                        <% @topics.each do | topic | %>
+                                         <li>
+                                            <%= image_tag user_avatar_path(topic.user, :normal), :class => "pull-left" %>
+                                            <div class="topic-info">
+                                                <h4><%= link_to topic.title, topic_path(topic) %> </h4>
+                                                <p><%= link_to topic.user.name, user_path(topic.user) %> <%= t("course.all.create")%><%= distance_of_time_in_words_to_now(topic.created_at)  + t("course.all.ago") %></p>
+                                                <p class="topic-content"><%= topic.content %></p>
+                                                <i class="iconfa-tags"></i>
+                                                <span class="label label-info">投诉</span>
+                                                <span class="label label-info">处理</span>
+                                                <p class="pull-right">
+                                                  <i class="iconfa-comments-alt"></i><span><%= topic.comments.size %> 回答</span>
+                                                  <i class="iconfa-thumbs-up"></i><span> 4 关注</span>
+                                                </p>
+                                            </div>
+                                        <% end %>
+                                         </li> 
+                                    <% end %>  
+                                  <div class="page-wrapper"><%= paginate @topics %></div> 
+                            </div>
+                            <div id="tabs-2" class="nopadding">
+                                <h5 class="tabtitle">No Content</h5>
+                               
+                            </div>
+                            <div id="tabs-3" class="nopadding">
+                                <h5 class="tabtitle">No Content</h5>
+                                
+                            </div>
+                        </div><!--tabbedwidget-->
+ 
+    <br/>
+
+  </div>
+  <div id="dashboard-right" class="span4">
+    <div class="widgetbox">
+                            <h4 class="widgettitle">热门关键词<a class="minimize">&#8211;</a></h4>
+                            <div class="widgetcontent">
+                                <ul class="taglist">
+                                    <li><span class="label label-info">公司业务</span> &times; 182</li>
+                                    <li><span class="label label-info">中小企</span> &times; 177</li>
+                                    <li><span class="label label-info">存款</span> &times; 156</li>
+                                    <li><span class="label label-info">贷款</span> &times; 144</li>
+                                    <li><span class="label label-info">拓展</span> &times; 134</li>
+                                    <li><span class="label label-info">信贷</span> &times; 123</li>
+                                    <li><span class="label label-info">风险</span> &times; 121</li>
+                                    <li><span class="label label-info">国际业务</span> &times; 109</li>
+                                    <li><span class="label label-info">理财</span> &times; 98</li>
+                                    <li><span class="label label-info">收益</span> &times; 97</li>
+                                    <li><span class="label label-info">金融危机</span> &times; 89</li>
+                                    <li><span class="label label-info">客户经理</span> &times; 85</li>
+                                    <li><span class="label label-info">个人金融</span> &times; 84</li>
+ 
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="widgetbox">
+                            <h4 class="widgettitle">活跃用户<a class="minimize">&#8211;</a></h4>
+                            <div class="widgetcontent">
+                                <ul class="userlist userlist-favorites">
+                                    <li>
+                                        <div>
+                                            <img src="/uploads/user/000/000/030/avatar/small_张刚.jpg" alt="" class="pull-left" />
+                                            <div class="uinfo">
+                                                <h5>王春晖</h5>
+                                                <p class="link">
+                                                    <a href="#myModal" data-toggle="modal"><i class="iconfa-plus"></i> 关注 </a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <img src="/uploads/user/000/000/021/avatar/small_张新宇.jpg" alt="" class="pull-left" />
+                                            <div class="uinfo">
+                                                <h5>阎永康</h5>
+                                                <p class="link">
+                                                    <a href="#myModal" data-toggle="modal"><i class="iconfa-plus"></i> 关注  </a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <img src="/uploads/user/000/000/009/avatar/small_郝竞.jpg" alt="" class="pull-left" />
+                                            <div class="uinfo">
+                                                <h5>陈建国</h5>
+                                                <p class="link">
+                                                    <a href="#myModal" data-toggle="modal"><i class="iconfa-plus"></i> 关注  </a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <img src="/uploads/user/000/000/033/avatar/small_徐长满.jpg" alt="" class="pull-left" />
+                                            <div class="uinfo">
+                                                <h5>石跃龙</h5>
+                                                <p class="link">
+                                                    <a href="#myModal" data-toggle="modal"><i class="iconfa-plus"></i> 关注  </a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <img src="/uploads/user/000/000/032/avatar/small_田玉峰.jpg" alt="" class="pull-left" />
+                                            <div class="uinfo">
+                                                <h5>王世祥</h5>
+                                                <p class="link">
+                                                    <a href="#myModal" data-toggle="modal"><i class="iconfa-plus"></i> 关注  </a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <br />
+
+  </div>
+</div>

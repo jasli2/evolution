@@ -100,10 +100,13 @@ class Course < ActiveRecord::Base
     end
   end
 
-  def self.save!(obj)
+  def self.save!(obj, error_info = nil)
     begin
       obj.save!
-    rescue RecordInvalid => error
+    rescue 
+      if error_info != nil
+        error_info["error_num"] = error_info["error_num"] + 1
+      end  
     end
   end
 
@@ -111,6 +114,14 @@ class Course < ActiveRecord::Base
     spreadsheet = open_spreadsheet(file)
     header = spreadsheet.row(1)
     length = header.length
+    #for error info
+    count = 0
+    error_info = Hash.new
+    error_name = Hash.new
+    error_info["error_action"] = error_name
+    error_info["error_num"] = count
+    error_info["total"] = spreadsheet.last_row - 1
+
     #course = Course.new
     (2..spreadsheet.last_row).each do |i|
       #row = spreadsheet.row(i)
@@ -131,14 +142,24 @@ class Course < ActiveRecord::Base
       course.duration = (row["duration"].to_f * 60).to_i
       teacher = User.find_by_name(row["Teacher"])
       course.teacher_id = teacher.id
-      save!(course)
+      save!(course, error_info)
+      if error_info["error_num"] != count
+        count = error_info["error_num"]
+        next
+      end
       competency = Competency.find_by_name(row["competency"])
       unless (competency.nil?)
         competency_level = competency.competency_levels.find_by_level(row["level"])
         course.competency_level_has_courses.new(:competency_level_id=>competency_level.id,:course_id => course.id )
       end
       save!(course)
+      if error_info["error_num"] != count
+        count = error_info["error_num"]
+        next
+      end
     end
+
+    return error_info
   end
 
   def self.open_spreadsheet(file)

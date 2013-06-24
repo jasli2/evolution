@@ -44,10 +44,13 @@ class Position < ActiveRecord::Base
     end
   end
 
-  def self.save!(obj)
+  def self.save!(obj, error_info = nil)
     begin
       obj.save!
-    rescue RecordInvalid => error
+    rescue 
+      if error_info != nil
+        error_info["error_num"] = error_info["error_num"] + 1
+      end  
     end
   end
 
@@ -55,6 +58,14 @@ class Position < ActiveRecord::Base
     spreadsheet = open_spreadsheet(file)
     header = spreadsheet.row(1)
     length = header.length
+    #for error info
+    count = 0
+    error_info = Hash.new
+    error_name = Hash.new
+    error_info["error_action"] = error_name
+    error_info["error_num"] = count
+    error_info["total"] = spreadsheet.last_row - 1
+
     (2..spreadsheet.last_row).each do |i|
       row = Hash[[header,spreadsheet.row(i)].transpose]
       name = row.first[0]
@@ -63,7 +74,11 @@ class Position < ActiveRecord::Base
       position.name = row[name]
       position.description = row["description"]
       position.standard = row["Standard"]
-      save!(position)
+      save!(position, error_info)
+      if error_info["error_num"] != count
+        count = error_info["error_num"]
+        next
+      end
       #position.save!
 
       i = 1
@@ -75,12 +90,17 @@ class Position < ActiveRecord::Base
         pcl = position.position_competency_levels.build(:position_id => position.id, :standard => row["Standard_" + i.to_s],\
                                                         :competency_level_id => competency_level.id)
         #save!(pcl)
-        pcl.save!
+        if pcl.save
+          puts "position_competency_levels saved success"
+        else
+          #add error info 
+        end
 
         i += 1
       end
     end
-
+    
+    return error_info
   end
 
   def self.open_spreadsheet(file)
