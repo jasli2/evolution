@@ -20,8 +20,7 @@ require 'spec_helper'
 describe Course do
   #pending "add some examples to (or delete) #{__FILE__}"
   it { should validate_presence_of :title }
-  it { should validate_presence_of :author }
-  it { should validate_presence_of :filter_item }
+  it { should validate_presence_of :creator }
   it { should have_many :activity_has_courses }
   it { should have_many :activities }
   it { should have_many :position_has_courses }

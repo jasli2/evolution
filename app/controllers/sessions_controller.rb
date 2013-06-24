@@ -3,6 +3,10 @@ class SessionsController < ApplicationController
   layout :set_layout
 
   def new
+    unless session[:user_id].blank? #already login
+      user = User.find(session[:user_id])
+      redirect_to user.admin? ? admin_dashboard_path : dashboard_user_path(user)
+    end
   end
 
   def create

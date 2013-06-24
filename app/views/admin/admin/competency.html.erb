@@ -131,8 +131,7 @@ $(function() {
           <a href="#" class="btn fileupload-exists" data-dismiss="fileupload"><%= t('competency.all.remove') %></a>
         </div>
       </div>
-      <%# submit_tag t("competency.all.import").html_safe, :class => "btn btn-primary submit-import" %>
-      <a href="#myModal" data-toggle="modal" class="btn btn-primary"> 导入胜任力</a>
+      <%= submit_tag t("competency.all.import").html_safe, :class => "btn btn-primary submit-import" %>
       <% end %>
     </div>
 

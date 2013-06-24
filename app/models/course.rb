@@ -32,6 +32,8 @@ class Course < ActiveRecord::Base
   belongs_to :creator, :class_name => "User"
   belongs_to :teacher, :class_name => "User"
 
+  validates :creator, :presence => true
+
   has_many :activity_has_courses
   has_many :activities, :through => :activity_has_courses
 
@@ -43,6 +45,11 @@ class Course < ActiveRecord::Base
 
   has_many :user_course_progresses
   has_many :users, :through => :user_course_progresses
+
+  has_many :training_plan_courses
+  has_many :training_plans, :through => :training_plan_courses
+  has_many :training_feedback_courses
+  has_many :training_feedbacks, :through => :training_feedback_courses
 
   mount_uploader :lesson, FileUploader
 
