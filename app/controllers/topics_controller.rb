@@ -6,13 +6,12 @@ class TopicsController < ApplicationController
     else
       @topics = Topic.order('id DESC').page params[:page]
     end
-
-
   end
 
   def show
     @topic = Topic.find(params[:id])
     @comments = @topic.comments.all
+    @reply = Comment.new
   end
 
   def new
