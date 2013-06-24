@@ -12,6 +12,8 @@
 
 class Topic < ActiveRecord::Base
   # attr_accessible :title, :body
+  paginates_per 5
+  
   after_create {
     Resque.enqueue(TopicSque, self.id)   
   }
@@ -23,7 +25,7 @@ class Topic < ActiveRecord::Base
   validates :user_id, :title, :presence => true
   attr_accessible :title, :content
 
-  def gen_feed_item 
+  def gen_feed_item
     f = create_feed_item
     (user.fans).uniq.each {|u| u.feed_items << f }
   end

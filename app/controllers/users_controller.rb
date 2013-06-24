@@ -1,3 +1,4 @@
+# encoding: utf-8
 class UsersController < ApplicationController
   before_filter :need_admin!, :only => [:new, :create]
 
@@ -135,8 +136,15 @@ class UsersController < ApplicationController
 
   #POST /users/import
   def import
-    User.import(params[:file])
-    redirect_to :back, notice: t("users.all.notice6")
+    error_info = Hash.new
+    error_info =  User.import(params[:file])
+    if error_info["error_num"] == 0
+      redirect_to :back, notice: t("users.all.notice6")
+    else
+      count = error_info["total"] - error_info["error_num"]
+      info = "已成功导入#{count}条数据，#{error_info["error_num"]}条数据导入失败,请查看导入失败详细列表。"
+      redirect_to :back, notice: info
+    end
     rescue ActionController::RedirectBackError
       redirect_to root_path
     

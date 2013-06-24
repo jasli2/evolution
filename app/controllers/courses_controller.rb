@@ -1,8 +1,16 @@
+# encoding: utf-8
 class CoursesController < ApplicationController
   #POST /competency/import
   def import
-    Course.import(params[:file])
-    redirect_to :back, notice: t("course.all.notic4")
+    error_info = Hash.new
+    error_info = Course.import(params[:file])
+    if error_info["error_num"] == 0
+      redirect_to :back, notice: t("course.all.notic4")
+    else
+      count = error_info["total"] - error_info["error_num"]
+      info = "已成功导入#{count}条数据，#{error_info["error_num"]}条数据导入失败,请查看导入失败详细列表。"
+      redirect_to :back, notice: info
+    end
     rescue ActionController::RedirectBackError
       redirect_to root_path
   end

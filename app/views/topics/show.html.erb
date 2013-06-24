@@ -1,0 +1,64 @@
+<% provide(:title, @topic.title) %>
+<% provide(:page_title, @topic.title) %>
+<% provide(:page_sub_title, "问题详情") %>
+<% provide(:page_icon, "iconfa-info-sign") %>
+
+<% content_for :breadcrumbs do %>
+<li><%= link_to current_user.admin? ? "社区管理" : "知识中心", knowledge_path %> <span class="separator"></span></li>
+<%= content_tag(:li, @topic.title ) %>
+<% end %>
+
+<% content_for :javascript do %>
+<script type="text/javascript">
+
+</script>
+<% end %>
+
+<div class="row-fluid">
+  <div id="dashboard-left" class="span8">
+    <div class="well quest-details">
+      <h3> <%= @topic.title %></h3>
+      <div class="quest-info">
+        <%= link_to @topic.user.name, user_path(@topic.user.id) %>  &#124;
+        <span class="quest-tags">
+        <i class="iconfa-tags"></i>
+        <span class="label label-info">投诉</span>
+        <span class="label label-info">处理</span>
+        </span>
+        <span class="pull-right"><i class="iconfa-time"></i> <%= distance_of_time_in_words_to_now(@topic.created_at) + t("course.all.ago") %> </span>
+      </div>
+      <p> <%= @topic.content %> </p>
+    </div>
+    <div class="well quest-answer-list">
+    <% if @topic.comments.size == 0 %>
+      <div class="nopadding">
+        <div class="answer-sammary"> <h4>当前还没有人回复主题 </h4></div>
+      </div> 
+    <% else %>
+      
+        <div class="answer-sammary"><h4><%= @topic.comments.size %>条回答</h4></div>
+        <ul>
+          
+        </ul>
+    
+    <% end %>
+    </div>
+
+    <% unless current_user.admin? %>
+    <div class="well quest-input">
+      
+      <%= text_area_tag "topic", nil, :rows => 4, :cols => 25, :placeholder => "提问者正期待您的回答..." %>
+      <div><a href="#myModal" data-toggle="modal" class="btn btn-primary disabled"><i class="iconfa-edit icon-white"></i> 提交回答</a></div>
+      
+    </div>
+    <% end %>
+  </div>
+  <div id="dashboard-right" class="span4">
+    <h3 class="subtitle">相关问题</h3>
+    <div class="divider15"></div>
+    <div class="well">
+      没有相关问题
+    </div>
+  </div>
+</div>
+
