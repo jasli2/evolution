@@ -1,0 +1,9 @@
+<%= simple_form_for(shallow_args(current_user, @topic), :html => {:class => 'form-horizontal', :multipart => true }) do |f| %>
+  <%= f.input :title, :label => '问题标题：', :input_html => { :class => "span8" } %>
+  <%= f.input :content, :as => :text, :label => '问题具体描述：', :input_html => {:class => "span8", :row => 4}%>
+
+  
+  <div class="form-actions">
+  <%= f.button :submit, '创建新问题', :class => "btn-primary"  %>
+  </div>
+<% end %>
