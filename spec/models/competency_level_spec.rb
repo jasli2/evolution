@@ -18,15 +18,11 @@ describe CompetencyLevel do
   it { should have_many :competency_level_requirements }
   it { should have_many :positions }
   it { should belong_to :competency }
-  it {should have_many :competency_level_has_courses}
-  it {should have_many :courses}
+  it { should have_many :competency_level_has_courses }
+  it { should have_many :courses }
 
   it "should has valid factory" do
     FactoryGirl.create(:competency_level).should be_valid
   end
 
-  it "should has unique level" do
-    c = FactoryGirl.create(:competency_level)
-    FactoryGirl.build(:competency_level, :level => c.level).should_not be_valid
-  end
 end

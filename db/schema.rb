@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130616043852) do
+ActiveRecord::Schema.define(:version => 20130624071759) do
 
   create_table "activities", :force => true do |t|
     t.string   "description"
@@ -170,6 +170,49 @@ ActiveRecord::Schema.define(:version => 20130616043852) do
 
   add_index "topics", ["updated_at"], :name => "index_topics_on_updated_at"
   add_index "topics", ["user_id"], :name => "index_topics_on_user_id"
+
+  create_table "training_feedback_courses", :force => true do |t|
+    t.integer  "training_plan_feedback_id"
+    t.integer  "course_id"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  create_table "training_plan_courses", :force => true do |t|
+    t.integer  "training_plan_id"
+    t.integer  "course_id"
+    t.integer  "course_type"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  create_table "training_plan_feedbacks", :force => true do |t|
+    t.integer  "training_plan_id"
+    t.integer  "user_id"
+    t.string   "note"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  create_table "training_plan_users", :force => true do |t|
+    t.integer  "training_plan_id"
+    t.integer  "user_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  create_table "training_plans", :force => true do |t|
+    t.string   "title"
+    t.date     "feedback_deadline"
+    t.date     "end_day"
+    t.integer  "required_course_min", :default => 0
+    t.integer  "required_course_max", :default => 0
+    t.integer  "optional_course_min", :default => 0
+    t.integer  "optional_course_max", :default => 0
+    t.integer  "status"
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+  end
 
   create_table "user_course_progresses", :force => true do |t|
     t.integer  "course_id"

@@ -58,7 +58,7 @@ class User < ActiveRecord::Base
   has_many :competencies, :through => :competency_users
 
   has_many :user_course_progresses
-  has_many :courses, :through => :user_course_progresses
+  has_many :course_progresses, :through => :user_course_progresses
 
   has_many :examinations, :foreign_key => "creator_id"
 
@@ -77,6 +77,12 @@ class User < ActiveRecord::Base
   has_many :comments, :as => :commentable , :dependent => :destroy
   #has_many :reply_comments,  :foreign_key => 'reply_id', :class_name => 'Comment', :as => :commentable, :dependent => :destroy
   #validates :position_id, :presence => true
+
+  # training plan
+  has_many :training_plan_users
+  has_many :tranning_plans, :through => :training_plan_users
+  has_many :training_plan_feedbacks
+  has_many :training_feedbacks, :through => :training_plan_feedbacks
 
   scope :staff, where(:is_admin => false)
   scope :teacher, lambda { {:joins => :teach_courses, :group => "courses.teacher_id", :having => ["count(courses.teacher_id) > 0"]} }

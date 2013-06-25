@@ -1,8 +1,8 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
-  factory :course do
-    title "English"
-    association :creator, :factory => :user 
+  factory :training_plan_user do
+    training_plan_id 1
+    user_id 1
   end
 end

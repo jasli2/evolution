@@ -1,8 +1,7 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
-  factory :course do
-    title "English"
-    association :creator, :factory => :user 
+  factory :training_plan do
+    title "MyString"
   end
 end
