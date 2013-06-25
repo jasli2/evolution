@@ -1,18 +1,21 @@
 class TopicsController < ApplicationController
   def index
     @user = User.find(params[:user_id]) if params[:user_id]
+    @topics = Topic.order('id DESC').page params[:page]
+=begin
     if @user
       @topics = @user.topics.all
     else
       @topics = Topic.order('id DESC').page params[:page]
     end
-
+=end
 
   end
 
   def show
     @topic = Topic.find(params[:id])
     @comments = @topic.comments.all
+    @reply = Comment.new
   end
 
   def new

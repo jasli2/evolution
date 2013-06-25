@@ -29,6 +29,12 @@
       </div>
       <p> <%= @topic.content %> </p>
     </div>
+    <%= simple_form_for @reply, :url => comments_path(:user_id => current_user.id, :topic_id => @topic.id) do |f| %>
+      <%= f.input :content, :as => :text, :input_html => {:class => "span12", :rows => 5} %>
+      <div>
+      <%= f.button :submit, "提交回复", :class => "btn-primary" %>
+      </div>
+    <% end %>
     <div class="well quest-answer-list">
     <% if @topic.comments.size == 0 %>
       <div class="nopadding">
@@ -38,7 +44,23 @@
       
         <div class="answer-sammary"><h4><%= @topic.comments.size %>条回答</h4></div>
         <ul>
-          
+          <% @topic.comments.each do | comment | %>
+          <% if ((comment.repcomment != nil) || (1073741823 == comment.repcomment_id)) %>
+            <li> 
+              <div class="awswer-header"><%= link_to comment.user.name, user_path(comment.user.id) %> &#124; <span><i class="iconfa-time"></i> 发布于<%= distance_of_time_in_words_to_now(comment.created_at) %>前</span><span class="pull-right"><i class="iconfa-thumbs-up"></i> 0</span></div>
+              <p><%= comment.content %></p>
+              <div><span class="pull-right"></span></div>
+            </li>
+          <% end %>
+          <% if comment.replies.size != 0 %>
+            <% comment.replies.each do |reply| %>
+              <li>
+                <div class="awswer-header"><%= link_to reply.user.name, user_path(reply.user.id) %> &#124; <span><i class="iconfa-time"></i> 发布于<%= distance_of_time_in_words_to_now(reply.created_at) %>前</span><span class="pull-right"><i class="iconfa-thumbs-up"></i> 0</span></div>
+                <p><%= link_to reply.user.name, user_path(reply.user.id)%>回复<%= link_to comment.user.name, user_path(reply.user.id) %>：<%= reply.content %></p>
+              </li>
+            <% end %>
+          <% end %>
+          <% end %>
         </ul>
     
     <% end %>

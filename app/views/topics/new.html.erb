@@ -1,17 +1,33 @@
-<% provide(:title, 'create a new topic') %>
-<h1> new topic</h1>
+<% provide(:title, t("course.all.new"))%>
+<% provide(:page_title, t("course.all.new")) %>
+<% provide(:page_sub_title, t("course.all.newcourse")) %>
+<% provide(:page_icon, "iconfa-edit") %>
 
-<div class="row">
-  <div class="span6 offset3">
-    <%= form_for([current_user, @topic]) do |f| %>
+<% content_for :breadcrumbs do %>
+<li><%= link_to "社区管理", knowledge_path %> <span class="separator"></span></li>
+<%= content_tag(:li, "创建新问题") %>
+<% end %>
 
-      <%= f.label :title %>
-      <%= f.text_field :title %>
+<% content_for :javascript do %>
 
-      <%= f.label :content %>
-      <%= f.text_field :content %>
-      
-      <%= f.submit "Create new topic", class: "btn btn-large btn-primary" %>
-    <% end %>
+<% end %>
+
+<div class="row-fluid">
+  <div id="dashboard-left" class="span8">
+    <h3 class="subtitle">新问题</h3>
+    <div class="divider15"></div>
+    <h4 class="widgettitle">创建新问题</h4>
+    <div class="widgetcontent">
+      <div class="divider15"></div>
+      <%= render :partial => 'form' %>
+    </div>
+  </div>
+  <div id="dashboard-right" class="span4">
+    <h3 class="subtitle"><%= t("course.all.tip") %></h3>
+    <div class="divider15"></div>
+    <h4 class="widgettitle"> <%= t("course.all.tips") %></h4>
+    <div class="widgetcontent">
+      <%= t("dashboard.common.none") %>
+    </div>
   </div>
 </div>
