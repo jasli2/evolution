@@ -1,5 +1,8 @@
 require 'spec_helper'
 
 describe TrainingPlanUser do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it { should validate_presence_of :training_plan_id }
+  it { should validate_presence_of :user_id }
+  it { should belong_to :training_plan }
+  it { should belong_to :user }
 end
