@@ -84,6 +84,11 @@ class User < ActiveRecord::Base
   has_many :training_plan_feedbacks
   has_many :training_feedbacks, :through => :training_plan_feedbacks
 
+  # todos
+  has_many :todos
+  has_many :pending_todos, :class_name => 'Todo', :conditions => 'finish_at IS NULL'
+  has_many :finished_todos, :class_name => 'Todo', :conditions => 'finish_at IS NOT NULL'
+
   scope :staff, where(:is_admin => false)
   scope :teacher, lambda { {:joins => :teach_courses, :group => "courses.teacher_id", :having => ["count(courses.teacher_id) > 0"]} }
   scope :assessed, where(:is_assessed => true)
