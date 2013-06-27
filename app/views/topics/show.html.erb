@@ -29,11 +29,15 @@
       </div>
       <p> <%= @topic.content %> </p>
     </div>
-    <%= simple_form_for @reply, :url => comments_path(:user_id => current_user.id, :topic_id => @topic.id) do |f| %>
-      <%= f.input :content, :as => :text, :input_html => {:class => "span12", :rows => 5} %>
+    <% unless current_user.admin? %>
+    <div class="well quest-input">
+      <%= form_tag  comments_path(:user_id => current_user.id, :topic_id => @topic.id) do %>
+      <%= text_area_tag "content", nil, :rows => 4, :cols => 25, :placeholder => "提问者正期待您的回答..." %>
       <div>
-      <%= f.button :submit, "提交回复", :class => "btn-primary" %>
+        <%= submit_tag  "提交回答",  :class => "btn btn-primary"  %>
       </div>
+      <% end %>
+    </div>
     <% end %>
     <div class="well quest-answer-list">
     <% if @topic.comments.size == 0 %>
@@ -66,14 +70,6 @@
     <% end %>
     </div>
 
-    <% unless current_user.admin? %>
-    <div class="well quest-input">
-      
-      <%= text_area_tag "topic", nil, :rows => 4, :cols => 25, :placeholder => "提问者正期待您的回答..." %>
-      <div><a href="#myModal" data-toggle="modal" class="btn btn-primary disabled"><i class="iconfa-edit icon-white"></i> 提交回答</a></div>
-      
-    </div>
-    <% end %>
   </div>
   <div id="dashboard-right" class="span4">
     <h3 class="subtitle">相关问题</h3>
