@@ -21,4 +21,11 @@ class TrainingPlanFeedback < ActiveRecord::Base
 
   has_many :training_feedback_courses
   has_many :courses, :through => :training_feedback_courses
+
+  after_create :clear_feedback_todo
+
+  private
+    def clear_feedback_todo
+      training_plan.feedback_todos.find_by_user_id(user_id).update_attributes(:finish_at => Time.now)
+    end
 end

@@ -32,8 +32,17 @@ class TrainingPlan < ActiveRecord::Base
   has_many :training_plan_optional_courses, :class_name => 'TrainingPlanCourse', :conditions => { :course_type => TrainingPlanCourse::COURSE_TYPE.index(:optional) }
   has_many :optional_courses, :through => :training_plan_optional_courses, :source => :course
 
-
   has_many :training_plan_feedbacks
   has_many :feedbacks, :through => :training_plan_feedbacks
 
+  has_many :feedback_todos, :class_name => 'Todo', :as => :source, :conditions => { :todo_type => 'feedback' }
+
+  after_create :gen_feedback_todos
+
+  private
+    def gen_feedback_todos  # TODO :: move it into background task
+      users.each do |u|
+        u.todos.create!(:source => self, :todo_type => 'feedback', :deadline => self.feedback_deadline)
+      end
+    end
 end

@@ -6,8 +6,7 @@ Evolution::Application.routes.draw do
     collection {post :import}
     collection {get :export}
   end
-
-
+  
   resources :comments
 
   resources :users, :shallow => true do
@@ -38,6 +37,10 @@ Evolution::Application.routes.draw do
 
   resources :examinations do
     resources :questions 
+  end
+
+  resources :training_plans do
+    resources :feedbacks
   end
 
   match  '/about'         => 'site#about', :via => :get
