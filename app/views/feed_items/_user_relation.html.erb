@@ -1,0 +1,11 @@
+<%
+feed_item ||= @feed_item
+relation = feed_item.item
+leader = relation.leader
+follower = relation.follower
+%>
+
+<li class="user">
+  <p><%= link_to follower.name, follower %> followed <%= link_to leader.name, leader %>.
+  <br/><small><%= "about " + distance_of_time_in_words_to_now(relation.created_at) + " ago" %></small></p>
+</li>

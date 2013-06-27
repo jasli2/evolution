@@ -7,7 +7,8 @@ class CommentsController < ApplicationController
 
   def create
     @tp = Topic.find(params[:topic_id])
-    @comment = @tp.comments.build(params[:comment])
+    @comment = @tp.comments.build
+    @comment.content = params[:content]
     @comment.user_id = params[:user_id]
 
     @comment.repcomment_id = (params[:repcomment_id].nil?) ? 1073741823 : params[:repcomment_id]

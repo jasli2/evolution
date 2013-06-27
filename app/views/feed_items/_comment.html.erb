@@ -1,0 +1,10 @@
+<%
+feed_item ||= @feed_item
+comment = feed_item.item
+topic = comment.commentable
+%>
+
+<li class="comment">
+  <p><%= link_to comment.user.name, comment.user %> add comment on <%= link_to topic.title, course %>.
+  <br/><small><%= "about " + distance_of_time_in_words_to_now(comment.created_at) + " ago" %></small></p>
+</li>

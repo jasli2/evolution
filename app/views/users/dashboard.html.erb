@@ -103,12 +103,25 @@
     </div><!--alert-->
     <div class="divider15"></div>
                         
-                        
+    <h4 class="widgettitle">最近消息记录</h4>
+    <div class="widgetcontent ">
+      <% if @feed_items.empty? %>
+      <p> 目前没有消息</p>
+      <% else %>
+      <ul>
+        <% @feed_items[0..5].each do |feed_item| %>
+        <% next unless (feed_item.item && feed_item.partial != "topic") %>
+        <%= render :partial => "feed_items/#{feed_item.partial}", :locals => {:feed_item => feed_item} %> 
+        <% end %>
+      </ul>
+      <% end %>
+    </div>
+
     <h4 class="widgettitle"><%= t("dashboard.calender.title") %></h4>
     <div class="widgetcontent nopadding">
         <div id="datepicker"></div>
     </div>
-                        
+                      
     <div class="divider30"></div>                      
   </div><!--span4-->
 </div> <!--row-fluid-->
