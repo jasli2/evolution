@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130626070527) do
+ActiveRecord::Schema.define(:version => 20130627085117) do
 
   create_table "activities", :force => true do |t|
     t.string   "description"
@@ -220,9 +220,11 @@ ActiveRecord::Schema.define(:version => 20130626070527) do
     t.integer  "required_course_max", :default => 0
     t.integer  "optional_course_min", :default => 0
     t.integer  "optional_course_max", :default => 0
-    t.integer  "status"
+    t.string   "state"
     t.datetime "created_at",                         :null => false
     t.datetime "updated_at",                         :null => false
+    t.datetime "finished_at"
+    t.datetime "cancelled_at"
   end
 
   create_table "user_course_progresses", :force => true do |t|
