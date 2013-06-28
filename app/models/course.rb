@@ -51,6 +51,8 @@ class Course < ActiveRecord::Base
   has_many :training_feedback_courses
   has_many :training_feedbacks, :through => :training_feedback_courses
 
+  has_many :course_classes
+
   mount_uploader :lesson, FileUploader
 
   # custom image sizes: each key is a version name

@@ -2,11 +2,13 @@ Evolution::Application.routes.draw do
 
   mount Resque::Server, :at => "/resque"
 
-  resources :courses, :only => [:index] do
+  resources :courses, :only => [:index], :shallow => true do
     collection {post :import}
     collection {get :export}
+
+    resources :classes
   end
-  
+
   resources :comments
 
   resources :users, :shallow => true do
