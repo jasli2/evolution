@@ -5,7 +5,9 @@ leader = relation.leader
 follower = relation.follower
 %>
 
-<li class="user">
-  <p><%= link_to follower.name, follower %> followed <%= link_to leader.name, leader %>.
-  <br/><small><%= "about " + distance_of_time_in_words_to_now(relation.created_at) + " ago" %></small></p>
-</li>
+<tr class="user">
+  <td>
+    <p><%= link_to follower.name, follower %> 已经关注了 <%= link_to leader.name, leader %>.
+    <br/><small><%= distance_of_time_in_words_to_now(relation.created_at) + "前" %></small></p>
+  </td>
+</tr>

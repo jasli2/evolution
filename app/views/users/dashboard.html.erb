@@ -91,30 +91,29 @@
   </div><!--span8-->
                     
   <div id="dashboard-right" class="span4">
-                        
+
     <h5 class="subtitle"><%= t("menu.user.announcements") %></h5>
-    
-    <div class="divider15"></div>
-    
     <div class="alert alert-block">
       <button data-dismiss="alert" class="close" type="button">&times;</button>
       <h4>系统提示：</h4>
       <p style="margin: 8px 0">体验版部分功能不可用，请升级成正式版</p>
     </div><!--alert-->
     <div class="divider15"></div>
-                        
-    <h4 class="widgettitle">最近消息记录</h4>
-    <div class="widgetcontent ">
+
+    <h4 class="widgettitle">查看消息记录</h4>
+    <div class="widgetcontent nopadding">
+      <div class="a-header">
       <% if @feed_items.empty? %>
       <p> 目前没有消息</p>
       <% else %>
-      <ul>
-        <% @feed_items[0..5].each do |feed_item| %>
-        <% next unless (feed_item.item && feed_item.partial != "topic") %>
+      <table class="table table-hover">
+        <% @feed_items[0..4].each do |feed_item| %>
+        <% next unless feed_item.item %>
         <%= render :partial => "feed_items/#{feed_item.partial}", :locals => {:feed_item => feed_item} %> 
         <% end %>
-      </ul>
+      </table>
       <% end %>
+    </div>
     </div>
 
     <h4 class="widgettitle"><%= t("dashboard.calender.title") %></h4>

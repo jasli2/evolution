@@ -1,0 +1,11 @@
+<%
+feed_item ||= @feed_item
+topic = feed_item.item
+%>
+
+<tr class="topic">
+  <td>
+    <p><%= link_to topic.user.name, topic.user %> 创建了新的问题 <%= link_to topic.title, topic %>.
+  <br/><small><%= distance_of_time_in_words_to_now(topic.created_at) + "前" %></small></p>
+  </td>
+</tr>
