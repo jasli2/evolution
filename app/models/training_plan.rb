@@ -10,13 +10,15 @@
 #  required_course_max :integer          default(0)
 #  optional_course_min :integer          default(0)
 #  optional_course_max :integer          default(0)
-#  status              :integer
+#  state               :string(255)
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
+#  finished_at         :datetime
+#  cancelled_at        :datetime
 #
 
 class TrainingPlan < ActiveRecord::Base
-  attr_accessible :title, :feedback_deadline, :end_day, :status
+  attr_accessible :title, :feedback_deadline, :end_day
   attr_accessible :required_course_min, :required_course_max, :optional_course_min, :optional_course_max
 
   validates :title, :presence => true
@@ -37,9 +39,41 @@ class TrainingPlan < ActiveRecord::Base
 
   has_many :feedback_todos, :class_name => 'Todo', :as => :source, :conditions => { :todo_type => 'feedback' }
 
-  after_create :gen_feedback_todos
+  after_create :determine_first_state, :gen_feedback_todos
+
+  # state machine
+  state_machine :state, :initial => :created do
+    after_transition :on => :finish do |tp, transition|
+      tp.finished_at = Time.zone.now
+    end
+
+    after_transition :on => :cancel do |tp, transition|
+      tp.cancelled_at = Time.zone.now
+    end
+
+    event :all_feedbacked do
+      transition :pending_feedback => :pending_publish
+    end
+
+    event :publish do
+      transition :pending_publish => :started
+    end
+
+    event :finish do
+      transition :started => :finished
+    end
+
+    event :cancel do 
+      transition any => :cancelled
+    end
+  end
 
   private
+    def determine_first_state
+      # here to determine different state based on training type TODO
+      self.state = 'pending_feedback'
+    end
+
     def gen_feedback_todos  # TODO :: move it into background task
       users.each do |u|
         u.todos.create!(:source => self, :todo_type => 'feedback', :deadline => self.feedback_deadline)

@@ -84,6 +84,13 @@ class User < ActiveRecord::Base
   has_many :training_plan_feedbacks
   has_many :training_feedbacks, :through => :training_plan_feedbacks
 
+  # course class
+  has_many :as_admin_in_class, :class_name => 'ClassUserRole', :conditions => { :role => ['teacher', 'assistent'] }
+  has_many :owned_classes, :through => :as_admin_in_class, :source => :course_class
+  has_many :as_student_in_class, :class_name => 'ClassUserRole', :conditions => { :role => 'student' }
+  has_many :joined_classes, :through => :as_student_in_class, :source => :course_class
+
+
   # todos
   has_many :todos
   has_many :pending_todos, :class_name => 'Todo', :conditions => 'finish_at IS NULL'

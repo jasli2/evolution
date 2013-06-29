@@ -1,12 +1,30 @@
 Evolution::Application.routes.draw do
 
+  get "training_plans/index"
+
+  get "training_plans/new"
+
+  get "training_plans/show"
+
+  get "training_plans/edit"
+
+  get "training_plan/index"
+
+  get "training_plan/new"
+
+  get "training_plan/show"
+
+  get "training_plan/edit"
+
   mount Resque::Server, :at => "/resque"
 
-  resources :courses, :only => [:index] do
+  resources :courses, :only => [:index], :shallow => true do
     collection {post :import}
     collection {get :export}
+
+    resources :classes
   end
-  
+
   resources :comments
 
   resources :users, :shallow => true do

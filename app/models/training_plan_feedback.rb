@@ -26,6 +26,6 @@ class TrainingPlanFeedback < ActiveRecord::Base
 
   private
     def clear_feedback_todo
-      training_plan.feedback_todos.find_by_user_id(user_id).update_attributes(:finish_at => Time.now)
+      training_plan.feedback_todos.find_by_user_id(user_id).update_attributes(:finish_at => Time.zone.now)
     end
 end

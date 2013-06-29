@@ -62,3 +62,5 @@ gem 'rmagick'
 
 gem 'redcarpet'
 gem 'sanitize'
+gem 'state_machine'
+
