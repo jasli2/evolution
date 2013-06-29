@@ -15,8 +15,7 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       if @comment.save
-        unless params[:repcomment_id]
-          @tp.comments << @comment
+        @tp.comments << @comment unless params[:repcomment_id]
         format.html { redirect_to topic_path(@tp), :notice => '已成功回复' }
         format.json { render json: @comment, status: :created, location: @comment }
       else
