@@ -7,14 +7,15 @@ class CommentsController < ApplicationController
 
   def create
     @tp = Topic.find(params[:topic_id])
-    @comment = @tp.comments.build(params[:comment])
+    @comment = @tp.comments.build
+    @comment.content = params[:content]
     @comment.user_id = params[:user_id]
 
     @comment.repcomment_id = (params[:repcomment_id].nil?) ? 1073741823 : params[:repcomment_id]
 
     respond_to do |format|
       if @comment.save
-        @tp.comments << @comment
+        @tp.comments << @comment unless params[:repcomment_id]
         format.html { redirect_to topic_path(@tp), :notice => '已成功回复' }
         format.json { render json: @comment, status: :created, location: @comment }
       else

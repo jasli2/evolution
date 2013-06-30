@@ -1,0 +1,12 @@
+<%
+feed_item ||= @feed_item
+comment = feed_item.item
+topic = comment.commentable
+%>
+
+<tr class="comment">
+  <td>
+    <p><%= link_to comment.user.name, comment.user %> 已经回复了 <%= link_to topic.title, topic %>.
+    <br/><small><%= distance_of_time_in_words_to_now(comment.created_at) + "前" %></small></p>
+  </td>
+</tr>

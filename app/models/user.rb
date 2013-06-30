@@ -74,7 +74,7 @@ class User < ActiveRecord::Base
   has_many :feed_items, :through => :feeds, :order => 'id DESC'
 
   has_many :topics, :dependent => :destroy
-  has_many :comments, :as => :commentable , :dependent => :destroy
+  has_many :comments
   #has_many :reply_comments,  :foreign_key => 'reply_id', :class_name => 'Comment', :as => :commentable, :dependent => :destroy
   #validates :position_id, :presence => true
 

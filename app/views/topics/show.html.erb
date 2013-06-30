@@ -29,27 +29,40 @@
       </div>
       <p> <%= @topic.content %> </p>
     </div>
-    <%= simple_form_for @reply, :url => comments_path(:user_id => current_user.id, :topic_id => @topic.id) do |f| %>
-      <%= f.input :content, :as => :text, :input_html => {:class => "span12", :rows => 5} %>
+    <% unless current_user.admin? %>
+    <div class="well quest-input">
+      <%= form_tag  comments_path(:user_id => current_user.id, :topic_id => @topic.id) do %>
+      <%= text_area_tag "content", nil, :rows => 4, :cols => 25, :placeholder => "提问者正期待您的回答..." %>
       <div>
-      <%= f.button :submit, "提交回复", :class => "btn-primary" %>
+        <%= submit_tag  "提交回答",  :class => "btn btn-primary"  %>
       </div>
+      <% end %>
+    </div>
     <% end %>
     <div class="well quest-answer-list">
-    <% if @topic.comments.size == 0 %>
+    <% if @comments.size == 0 %>
       <div class="nopadding">
         <div class="answer-sammary"> <h4>当前还没有人回复主题 </h4></div>
       </div> 
     <% else %>
       
-        <div class="answer-sammary"><h4><%= @topic.comments.size %>条回答</h4></div>
+        <div class="answer-sammary"><h4><%= @comments.size %>条回答</h4></div>
         <ul>
-          <% @topic.comments.each do | comment | %>
+          <% @comments.each do | comment | %>
           <% if ((comment.repcomment != nil) || (1073741823 == comment.repcomment_id)) %>
             <li> 
-              <div class="awswer-header"><%= link_to comment.user.name, user_path(comment.user.id) %> &#124; <span><i class="iconfa-time"></i> 发布于<%= distance_of_time_in_words_to_now(comment.created_at) %>前</span><span class="pull-right"><i class="iconfa-thumbs-up"></i> 0</span></div>
+              <div class="awswer-header"><%= link_to comment.user.name, user_path(comment.user.id) %> &#124; <span><i class="iconfa-time"></i> 发布于<%= distance_of_time_in_words_to_now(comment.created_at) %>前</span><span class="pull-right"><%= link_to "评论", "#" %>&#124;<i class="iconfa-thumbs-up"></i> 0</span></div>
               <p><%= comment.content %></p>
-              <div><span class="pull-right"></span></div>
+              <% unless current_user.admin? %>
+              <div class="well quest-input " style="display:none">
+                <%= form_tag  comments_path(:user_id => current_user.id, :topic_id => @topic.id, :repcomment_id => comment.id) do %>
+                <%= text_area_tag "content", nil, :rows => 4, :cols => 25, :placeholder => "提问者正期待您的回答..." %>
+                <div>
+                  <%= submit_tag  "提交回答",  :class => "btn btn-primary"  %>
+                </div>
+                <% end %>
+              </div>
+              <% end %>
             </li>
           <% end %>
           <% if comment.replies.size != 0 %>
@@ -66,14 +79,6 @@
     <% end %>
     </div>
 
-    <% unless current_user.admin? %>
-    <div class="well quest-input">
-      
-      <%= text_area_tag "topic", nil, :rows => 4, :cols => 25, :placeholder => "提问者正期待您的回答..." %>
-      <div><a href="#myModal" data-toggle="modal" class="btn btn-primary disabled"><i class="iconfa-edit icon-white"></i> 提交回答</a></div>
-      
-    </div>
-    <% end %>
   </div>
   <div id="dashboard-right" class="span4">
     <h3 class="subtitle">相关问题</h3>
