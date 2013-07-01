@@ -111,7 +111,7 @@
       <p> 目前没有消息</p>
       <% else %>
       <ul class="activity-list">
-        <% @feed_items[0..4].each do |feed_item| %>
+        <% @feed_items.each do |feed_item| %>
         <% next unless feed_item.item %>
         <li>
           <%= render :partial => "feed_items/#{feed_item.partial}", :locals => {:feed_item => feed_item} %> 
