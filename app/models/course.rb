@@ -49,7 +49,7 @@ class Course < ActiveRecord::Base
   has_many :training_plan_courses
   has_many :training_plans, :through => :training_plan_courses
   has_many :training_feedback_courses
-  has_many :training_feedbacks, :through => :training_feedback_courses
+  has_many :training_feedbacks, :through => :training_feedback_courses, :source => :training_plan_feedback
 
   has_many :course_classes
 

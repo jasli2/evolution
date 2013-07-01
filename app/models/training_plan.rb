@@ -36,8 +36,8 @@ class TrainingPlan < ActiveRecord::Base
   has_many :optional_courses, :through => :training_plan_optional_courses, :source => :course
   attr_accessible :course_ids, :required_course_ids, :optional_course_ids
 
-  has_many :training_plan_feedbacks
-  has_many :feedbacks, :through => :training_plan_feedbacks
+  #has_many :training_plan_feedbacks
+  has_many :feedbacks, :class_name => 'TrainingPlanFeedback'
 
   has_many :feedback_todos, :class_name => 'Todo', :as => :source, :conditions => { :todo_type => 'feedback' }
 
@@ -74,6 +74,7 @@ class TrainingPlan < ActiveRecord::Base
     def determine_first_state
       # here to determine different state based on training type TODO
       self.state = 'pending_feedback'
+      self.save!
     end
 
     def gen_feedback_todos  # TODO :: move it into background task
