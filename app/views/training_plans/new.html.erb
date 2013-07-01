@@ -1,2 +1,35 @@
-<h1>TrainingPlans#new</h1>
-<p>Find me in app/views/training_plans/new.html.erb</p>
+<% provide(:title, "创建新的培训计划") %>
+
+<% content_for :breadcrumbs do %>
+<li><%= link_to "培训计划管理", training_plans_path %> <span class="separator"></span></li>
+<%= content_tag(:li, "创建新的培训计划") %>
+<% end %>
+
+<% content_for :javascript do %>
+
+<% end %>
+
+<div class="row-fluid">
+  <div id="dashboard-left" class="span8">
+    <h4 class="widgettitle">创建新的培训计划</h4>
+    <div class="widgetcontent">
+      <div class="divider15"></div>
+      <%= simple_form_for(@tp, :html => {:class => 'form-horizontal', :multipart => true }) do |f| %>
+        <%= f.input :title %>
+        <%= f.input :feedback_deadline, :as => :date, 
+          :start_year => Date.today.year, 
+          :end_year => Date.today.year + 10, 
+          :order => [:year, :month, :day]
+        %>
+        <%= f.association :required_courses, :multiple => true %>
+        <%= f.association :optional_courses, :multiple => true %>
+        <%= f.association :users, :collection => User.staff, :multiple => true %>
+        <div class="form-actions">
+        <%= f.button :submit, '创建新培训课程', :class => "btn-primary"  %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div id="dashboard-right" class="span4">
+  </div>
+</div>

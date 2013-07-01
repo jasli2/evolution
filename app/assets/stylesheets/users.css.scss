@@ -95,4 +95,17 @@ div.assessment-error {
   }
 }
 
+ul.activity-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    padding: 5px 15px;
+    border-bottom: 1px dashed #ddd;
+    &:last-child { border-bottom: 0; }
+    .activity-icon { padding-right: 10px; color: #8aba56; font-size: 15px; }
+    span.activity-time { display: block;  margin-left: 30px; font-style: italic; color: #bfbbc6; }
+  }
+}
 

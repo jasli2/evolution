@@ -26,6 +26,7 @@ class TrainingPlan < ActiveRecord::Base
 
   has_many :training_plan_users
   has_many :users, :through => :training_plan_users
+  attr_accessible :user_ids
 
   has_many :training_plan_courses
   has_many :courses, :through => :training_plan_courses
@@ -33,6 +34,7 @@ class TrainingPlan < ActiveRecord::Base
   has_many :required_courses, :through => :training_plan_required_courses, :source => :course
   has_many :training_plan_optional_courses, :class_name => 'TrainingPlanCourse', :conditions => { :course_type => TrainingPlanCourse::COURSE_TYPE.index(:optional) }
   has_many :optional_courses, :through => :training_plan_optional_courses, :source => :course
+  attr_accessible :course_ids, :required_course_ids, :optional_course_ids
 
   has_many :training_plan_feedbacks
   has_many :feedbacks, :through => :training_plan_feedbacks

@@ -13,8 +13,6 @@
     $('#datepicker').datepicker();
     
     $('.accordion').accordion({
-        collapsible: true,
-        active: false,
         heightStyle: "content",
         header: ".a-header"
     });
@@ -93,6 +91,7 @@
   <div id="dashboard-right" class="span4">
 
     <h5 class="subtitle"><%= t("menu.user.announcements") %></h5>
+    <div class="divider15"></div>
     <div class="alert alert-block">
       <button data-dismiss="alert" class="close" type="button">&times;</button>
       <h4>系统提示：</h4>
@@ -100,25 +99,27 @@
     </div><!--alert-->
     <div class="divider15"></div>
 
-    <h4 class="widgettitle">查看消息记录</h4>
+    <h4 class="widgettitle"><%= t("dashboard.calender.title") %></h4>
+    <div class="widgetcontent nopadding">
+        <div id="datepicker"></div>
+    </div>
+
+    <h4 class="widgettitle">最近好友活动</h4>
     <div class="widgetcontent nopadding">
       <div class="a-header">
       <% if @feed_items.empty? %>
       <p> 目前没有消息</p>
       <% else %>
-      <table class="table table-hover">
+      <ul class="activity-list">
         <% @feed_items[0..4].each do |feed_item| %>
         <% next unless feed_item.item %>
-        <%= render :partial => "feed_items/#{feed_item.partial}", :locals => {:feed_item => feed_item} %> 
+        <li>
+          <%= render :partial => "feed_items/#{feed_item.partial}", :locals => {:feed_item => feed_item} %> 
+        </li>
         <% end %>
-      </table>
+      </ul>
       <% end %>
-    </div>
-    </div>
-
-    <h4 class="widgettitle"><%= t("dashboard.calender.title") %></h4>
-    <div class="widgetcontent nopadding">
-        <div id="datepicker"></div>
+      </div>
     </div>
                       
     <div class="divider30"></div>                      
