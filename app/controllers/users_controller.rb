@@ -33,7 +33,7 @@ class UsersController < ApplicationController
   def dashboard
     @menu_category = 'user'
     @menu_active = 'home'
-    @feed_items  = current_user.feed_items.page(params[:page]).per(10) unless current_user.feed_items.blank?
+    @feed_items  = current_user.feed_items.page(params[:page]).per(5) unless current_user.feed_items.blank?
     @pending_courses = Course.for_position(current_user.position).first(3) unless current_user.position.blank?
   end
 
