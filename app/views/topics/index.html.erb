@@ -41,7 +41,7 @@ $(function() {
                                                 <span class="label label-info">投诉</span>
                                                 <span class="label label-info">处理</span>
                                                 <p class="pull-right">
-                                                  <i class="iconfa-comments-alt"></i><span><%= topic.comments.size %> 回答</span>
+                                                  <i class="iconfa-comments-alt"></i><span> <%= link_to topic.comments.size.to_s + ' 回答', topic_path(topic) %></span>
                                                   <i class="iconfa-thumbs-up"></i><span> 4 关注</span>
                                                 </p>
                                             </div>
