@@ -26,6 +26,24 @@ class TrainingPlanFeedback < ActiveRecord::Base
 
   after_create :clear_feedback_todo
 
+#  def required_course_ids
+#    cs = courses.where(:id => training_plan.required_course_ids)
+#    c = cs.map{ |course| course.id }
+#  end
+#
+#  def required_course_ids=(ids)
+#    logger.debug "TrainingPlanFeedback:: required_course_ids" + ids
+#  end
+#
+#  def optional_course_ids
+#    cs = courses.where(:id => training_plan.optional_course_ids)
+#    c = cs.map{ |course| course.id }
+#  end
+#
+#  def optional_course_ids=(ids)
+#    logger.debug "TrainingPlanFeedback:: optional_course_ids" + ids
+#  end
+
   private
     def clear_feedback_todo
       training_plan.feedback_todos.find_by_user_id(user_id).update_attributes(:finish_at => Time.zone.now)

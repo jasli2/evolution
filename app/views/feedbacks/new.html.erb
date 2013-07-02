@@ -1,2 +1,28 @@
-<h1>Feedbacks#new</h1>
-<p>Find me in app/views/feedbacks/new.html.erb</p>
+<% provide(:title, "培训计划反馈") %>
+
+<% content_for :breadcrumbs do %>
+<%= content_tag(:li, "培训计划反馈") %>
+<% end %>
+
+<% content_for :javascript do %>
+
+<% end %>
+
+<div class="row-fluid">
+  <div id="dashboard-left" class="span8">
+    <h4 class="widgettitle">培训计划反馈表</h4>
+    <div class="widgetcontent">
+      <div class="divider15"></div>
+      <%= simple_form_for(@feedback, :html => {:class => 'form-horizontal', :multipart => true }) do |f| %>
+        <legend><%= @tp.title %></legend>
+        <%= f.association :courses, :multiple => true, :collection => @tp.courses %>
+        <%= f.input :note, :as => :text, :input_html => { :cols => 50, :rows => 3 }, :placeholder => '对培训计划有什么建议或者意见，请留言...' %>
+        <div class="form-actions">
+        <%= f.button :submit, '提交培训反馈', :class => "btn-primary"  %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div id="dashboard-right" class="span4">
+  </div>
+</div>
