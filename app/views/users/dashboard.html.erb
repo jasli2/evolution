@@ -27,7 +27,9 @@
     <div class="widgetcontent nopadding">
       <ul class="user-todo-list">
         <% current_user.pending_todos.each do |todo| %>
-        <li><%= todo_description(todo) %><span><%= link_to "点击处理", todo_url(todo) %></span></li>
+        <li>
+          <%= todo_description(todo) %><span class='todo-action'><%= link_to "点击处理", todo_url(todo), :class => 'btn btn-primary btn-small' %></span>
+        </li>
         <% end %>
       </ul>
     </div>
