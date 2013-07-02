@@ -5,8 +5,31 @@
 .tp-list {
   padding: 0;
   margin: 0;
+}
 
-  td {
-    vertical-align: middle;
+.tp-details-progress {
+  h4 {
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  ul.tp-course-progress-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 5px;
+
+    li {
+      padding: 10px 0;
+      border-bottom: 1px dashed #ddd;
+      &:last-child { border-bottom: 0; }
+    }
+  }
+}
+
+.progress {
+  height: 18px;
+  .bar {
+    color: #333;
   }
 }

@@ -22,6 +22,16 @@
 
 <div class="row-fluid">
   <div id="dashboard-left" class="span8">
+    <% if current_user.pending_todos.count > 0 %>
+    <h4 class="widgettitle"><span class="iconfa-check"></span> 待办事项（<%= current_user.pending_todos.count %>）</h4>
+    <div class="widgetcontent nopadding">
+      <ul class="user-todo-list">
+        <% current_user.pending_todos.each do |todo| %>
+        <li><%= todo_description(todo) %><span><%= link_to "点击处理", todo_url(todo) %></span></li>
+        <% end %>
+      </ul>
+    </div>
+    <% end %>
                         
     <h3 class="subtitle"><%= t("dashboard.competency.title") %></h3>
     <div class="divider15"></div>

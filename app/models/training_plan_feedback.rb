@@ -22,6 +22,8 @@ class TrainingPlanFeedback < ActiveRecord::Base
   has_many :training_feedback_courses
   has_many :courses, :through => :training_feedback_courses
 
+  scope :for_plan, lambda { |p| where( :training_plan_id => p.id ) if p }
+
   after_create :clear_feedback_todo
 
   private
