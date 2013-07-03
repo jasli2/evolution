@@ -23,7 +23,7 @@
           <span>必修课程：<%= tp.required_courses.count %></span>
           <span>选修课程：<%= tp.optional_courses.count %></span>
         </td>
-        <td><%= tp.created_at %></td>
+        <td><%= tp.created_at.to_date %></td>
         <td><%= link_to "编辑", edit_training_plan_path(tp), :class => "btn btn-primary" %></td>
       </tr>
       <% end %>

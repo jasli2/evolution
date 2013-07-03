@@ -40,7 +40,8 @@ class FeedbacksController < ApplicationController
   end
 
   def create
-    @feedback = TrainingPlan.new(params[:training_plan_feedback])
+    @tp = TrainingPlan.find(params[:training_plan_id])
+    @feedback = @tp.feedbacks.build(params[:training_plan_feedback])
 
     respond_to do |format|
       if @feedback.save

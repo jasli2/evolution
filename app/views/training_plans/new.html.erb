@@ -24,6 +24,7 @@
         <%= f.association :required_courses, :multiple => true %>
         <%= f.association :optional_courses, :multiple => true %>
         <%= f.association :users, :collection => User.staff, :multiple => true %>
+        <%= f.hidden_field :creator_id, :value => current_user.id %>
         <div class="form-actions">
         <%= f.button :submit, '创建新培训课程', :class => "btn-primary"  %>
         </div>

@@ -21,10 +21,11 @@ class TrainingPlanFeedback < ActiveRecord::Base
 
   has_many :training_feedback_courses
   has_many :courses, :through => :training_feedback_courses
+  attr_accessible :course_ids
 
   scope :for_plan, lambda { |p| where( :training_plan_id => p.id ) if p }
 
-  after_create :clear_feedback_todo
+  after_create :clear_feedback_todo, :feedback_callback
 
 #  def required_course_ids
 #    cs = courses.where(:id => training_plan.required_course_ids)
@@ -47,5 +48,9 @@ class TrainingPlanFeedback < ActiveRecord::Base
   private
     def clear_feedback_todo
       training_plan.feedback_todos.find_by_user_id(user_id).update_attributes(:finish_at => Time.zone.now)
+    end
+
+    def feedback_callback
+      training_plan.feedback_created(self)
     end
 end

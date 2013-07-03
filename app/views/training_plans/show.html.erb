@@ -23,7 +23,6 @@
     <div class="well">
       <div>
         <h4 class="pull-left">培训员工反馈进度</h4>
-        
         <div class="progress progress-info pull-right" style="width: 60%;">
           <div style="width: <%= @tp.feedbacks.count*100/@tp.users.count %>%" class="bar">
             <%= @tp.feedbacks.count.to_s + '/' + @tp.users.count.to_s %>

@@ -15,15 +15,17 @@
 #  updated_at          :datetime         not null
 #  finished_at         :datetime
 #  cancelled_at        :datetime
+#  creator_id          :integer
 #
 
 class TrainingPlan < ActiveRecord::Base
-  attr_accessible :title, :feedback_deadline, :end_day
+  attr_accessible :title, :feedback_deadline, :end_day, :creator_id
   attr_accessible :required_course_min, :required_course_max, :optional_course_min, :optional_course_max
 
-  validates :title, :presence => true
+  validates :title, :presence => true, :uniqueness => true
   validates :feedback_deadline, :presence => true
 
+  belongs_to :creator, :class_name => 'User'
   has_many :training_plan_users
   has_many :users, :through => :training_plan_users
   attr_accessible :user_ids
@@ -67,6 +69,12 @@ class TrainingPlan < ActiveRecord::Base
 
     event :cancel do 
       transition any => :cancelled
+    end
+  end
+
+  def feedback_created(feedback)
+    if feedbacks.count == users.count
+      self.all_feedbacked
     end
   end
 
