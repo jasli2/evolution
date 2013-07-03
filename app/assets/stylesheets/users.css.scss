@@ -109,3 +109,21 @@ ul.activity-list {
   }
 }
 
+ul.user-todo-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    padding: 10px 15px;
+    border-bottom: 1px dashed #ddd;
+    &:last-child { border-bottom: 0; }
+    span.todo-action { float: right }
+    .btn-small {
+      padding: 0 4px;
+    }
+  }
+}
+
+
+

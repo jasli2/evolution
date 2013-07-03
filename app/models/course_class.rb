@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: course_classes
+#
+#  id         :integer          not null, primary key
+#  course_id  :integer
+#  state      :string(255)
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 class CourseClass < ActiveRecord::Base
   attr_accessible :course_id
   validates :course_id, :presence => true
