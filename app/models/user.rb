@@ -85,6 +85,9 @@ class User < ActiveRecord::Base
   has_many :training_plan_feedbacks
   has_many :training_feedbacks, :through => :training_plan_feedbacks
 
+  # system notification
+  has_many :notifications
+
   # course class
   has_many :as_admin_in_class, :class_name => 'ClassUserRole', :conditions => { :role => ['teacher', 'assistent'] }
   has_many :owned_classes, :through => :as_admin_in_class, :source => :course_class
