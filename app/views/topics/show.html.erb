@@ -10,7 +10,10 @@
 
 <% content_for :javascript do %>
 <script type="text/javascript">
-
+function show_view(comment_id) {
+  var dispmode = document.getElementById('light_' + comment_id).style.display
+  document.getElementById('light_' + comment_id).style.display = (dispmode == 'block') ? 'none' : 'block'
+}
 </script>
 <% end %>
 
@@ -49,12 +52,12 @@
         <div class="answer-sammary"><h4><%= @comments.size %>条回答</h4></div>
         <ul>
           <% @comments.each do | comment | %>
-          <% if ((comment.repcomment != nil) || (1073741823 == comment.repcomment_id)) %>
+          <% if (1073741823 == comment.repcomment_id) %>
             <li> 
-              <div class="awswer-header"><%= link_to comment.user.name, user_path(comment.user.id) %> &#124; <span><i class="iconfa-time"></i> 发布于<%= distance_of_time_in_words_to_now(comment.created_at) %>前</span><span class="pull-right"><%= link_to "评论", "#" %>&#124;<i class="iconfa-thumbs-up"></i> 0</span></div>
+              <div class="awswer-header"><%= link_to comment.user.name, user_path(comment.user.id) %> &#124; <span><i class="iconfa-time"></i> 发布于<%= distance_of_time_in_words_to_now(comment.created_at) %>前</span><span class="pull-right"><%= link_to_function "评论", "show_view('#{comment.id}')" %>&#124;<i class="iconfa-thumbs-up"></i> 0</span></div>
               <p><%= comment.content %></p>
               <% unless current_user.admin? %>
-              <div class="well quest-input " style="display:none">
+              <div id="light_<%= comment.id.to_s%>" class="well quest-input " style="display:none">
                 <%= form_tag  comments_path(:user_id => current_user.id, :topic_id => @topic.id, :repcomment_id => comment.id) do %>
                 <%= text_area_tag "content", nil, :rows => 4, :cols => 25, :placeholder => "提问者正期待您的回答..." %>
                 <div>

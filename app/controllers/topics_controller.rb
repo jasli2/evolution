@@ -12,24 +12,10 @@ class TopicsController < ApplicationController
 
   end
 
-  def show_reply(comment)
-    puts comment.content
-    if comment.replies.size != 0
-      comment.replies.each do |cmm|
-        show_reply(cmm)
-      end
-    else
-      puts "no people reply"
-    end
-  end
-
   def show
     @topic = Topic.find(params[:id])
     @comments = @topic.comments.order('id DESC').page params[:page]
     @reply = Comment.new
-    @comments.each do |comment|
-      show_reply(comment)
-    end
   end
 
   def new
