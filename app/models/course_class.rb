@@ -22,4 +22,6 @@ class CourseClass < ActiveRecord::Base
   has_many :user_role_students, :class_name => 'ClassUserRole', :conditions => { :role => 'student' }
   has_many :students, :through => :user_role_teachers, :source => :user
 
+  has_many :user_progresses, :class_name => 'UserClassProgress'
+
 end

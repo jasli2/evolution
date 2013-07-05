@@ -94,11 +94,17 @@ class User < ActiveRecord::Base
   has_many :as_student_in_class, :class_name => 'ClassUserRole', :conditions => { :role => 'student' }
   has_many :joined_classes, :through => :as_student_in_class, :source => :course_class
 
-
+  # user class progress
+  has_many :class_progesses, :class_name => 'UserClassProgress'
+  
   # todos
   has_many :todos
   has_many :pending_todos, :class_name => 'Todo', :conditions => 'finish_at IS NULL'
   has_many :finished_todos, :class_name => 'Todo', :conditions => 'finish_at IS NOT NULL'
+
+  # notifications
+  has_many :notifications
+  has_many :unread_notices, :class_name => 'Notification', :conditions => 'viewed_at IS NULL'
 
   scope :staff, where(:is_admin => false)
   scope :teacher, lambda { {:joins => :teach_courses, :group => "courses.teacher_id", :having => ["count(courses.teacher_id) > 0"]} }

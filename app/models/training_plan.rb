@@ -42,6 +42,10 @@ class TrainingPlan < ActiveRecord::Base
   has_many :feedbacks, :class_name => 'TrainingPlanFeedback'
 
   has_many :feedback_todos, :class_name => 'Todo', :as => :source, :conditions => { :todo_type => 'feedback' }
+  has_many :notifications, :class_name => 'Notification', :as => :source
+
+  # user training progress
+  has_many :user_progresses, :class_name => 'UserClassProgress'
 
   after_create :determine_first_state, :gen_feedback_todos
 
@@ -53,6 +57,10 @@ class TrainingPlan < ActiveRecord::Base
 
     after_transition :on => :cancel do |tp, transition|
       tp.cancelled_at = Time.zone.now
+    end
+
+    after_transition :on => :all_feedbacked do |tp, transition|
+      tp.notifications.create!(:user_id => creator.id, :notification_type => "state_change") if tp.creator
     end
 
     event :all_feedbacked do

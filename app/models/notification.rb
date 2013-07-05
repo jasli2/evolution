@@ -1,8 +1,23 @@
+# == Schema Information
+#
+# Table name: notifications
+#
+#  id                :integer          not null, primary key
+#  source_type       :string(255)
+#  source_id         :integer
+#  notification_type :string(255)
+#  viewed_at         :datetime
+#  user_id           :integer
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#
+
 class Notification < ActiveRecord::Base
   attr_accessible :notification_type, :source_id, :source_type, :viewed_at, :user_id
 
-  belongs_to :user
-  belongs_to :source, :polymorphic => true
+  validates :user_id, :presence => true
+  validates :notification_type, :presence => true
 
-  scope  
+  belongs_to :user
+  belongs_to :source, :polymorphic => true  
 end
