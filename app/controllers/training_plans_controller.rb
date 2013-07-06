@@ -70,4 +70,29 @@ class TrainingPlansController < ApplicationController
     end
   end
 
+  # get publish
+  def publish
+    @menu_category = 'admin'
+    @menu_active = 'plan'
+
+    @tp = TrainingPlan.find(params[:id])
+
+    respond_to do |format|
+      format.html
+    end    
+  end
+
+  # put confirm_publish
+  def confirm_publish
+    @tp = TrainingPlan.find(params[:id])
+
+    respond_to do |format|
+      if @tp.confirm_publish(params[:training_plan])
+        format.html { redirect_to session.delete(:return_to), :notice => "培训计划：#{@tp.title}, 发布成功！"}
+      else
+        format.html { render 'publish' }
+      end
+    end
+  end
+
 end

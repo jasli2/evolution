@@ -60,10 +60,25 @@ class TrainingPlan < ActiveRecord::Base
     end
 
     after_transition :on => :all_feedbacked do |tp, transition|
-      tp.notifications.create!(:user_id => creator.id, :notification_type => "state_change") if tp.creator
+      tp.notifications.create!(:user_id => creator.id, :notification_type => "all_feedback") if tp.creator
+    end
+
+    after_transition :on => :feedback_timeout do |tp, transition|
+      tp.notifications.create!(:user_id => creator.id, :notification_type => "feedback_timeout") if tp.creator
+    end
+
+    after_transition :on => :publish do |tp, transition|
+      # need to move to background task. TODO
+      tp.users.each do |user|
+        tp.notifications.create!(:user_id => user.id, :notification_type => "published") if user
+      end
     end
 
     event :all_feedbacked do
+      transition :pending_feedback => :pending_publish
+    end
+
+    event :feedback_timeout do
       transition :pending_feedback => :pending_publish
     end
 
@@ -83,6 +98,22 @@ class TrainingPlan < ActiveRecord::Base
   def feedback_created(feedback)
     if feedbacks.count == users.count
       self.all_feedbacked
+    end
+  end
+
+  def confirm_publish(params)
+    if params[:required_course_ids] || params[:optional_course_ids]
+      reject_course = []
+      reject_course = courses_id - params[:required_course_ids] if params[:required_course_ids]
+      reject_course = courses_id - params[:optional_course_ids] if params[:optional_course_ids]
+
+      reject_course.each do |cid|
+        if training_plan_courses.find(:course_id => cid)
+          training_plan_courses.find(:course_id => cid).update_attributes({:course_type => TrainingPlanCourse::COURSE_TYPE.index(:rejected)})
+        end
+      end
+
+      self.publish
     end
   end
 
