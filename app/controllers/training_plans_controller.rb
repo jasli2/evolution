@@ -30,7 +30,7 @@ class TrainingPlansController < ApplicationController
     @tp = TrainingPlan.find(params[:id])
 
     respond_to do |format|
-      format.html #{ render @tp.state }
+      format.html { render @tp.state }
     end
   end
 
