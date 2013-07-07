@@ -11,7 +11,7 @@
 <div class="row-fluid">
   <div id="dashboard-left" class="span8">
     <h4 class="widgettitle">所有培训计划</h4>
-    <% if @tps.size > 0 %>
+    <% if @tps.count > 0 %>
     <div class="widgetcontent nopadding">
       <table class="table responsive tp-list">
       <% @tps.each do |tp| %>

@@ -16,7 +16,7 @@
         创建于<%= distance_of_time_in_words_to_now(@tp.created_at) + t("course.all.ago") %>&middot;
         培训员工（<%= @tp.users.count %>）&middot;
         必修课程（<%= @tp.required_courses.count %>）&middot;
-        选修课程（<%= @tp.optional_courses.count %>）&middot;
+        选修课程（<%= @tp.optional_courses.count %>)
       </div>
     </div>
 
@@ -64,8 +64,8 @@
   </div>
   <div id="dashboard-right" class="span4">
     <div class="well">
-      <a href="<%= new_user_path %>" class="btn btn-primary"><i class="iconfa-plus icon-white"></i> 修改培训计划</a>
-      <a href="#myModal" data-toggle="modal" class="btn btn-warning"><i class="iconfa-download-alt icon-white"></i> <%= t('users.all.export') %></a>
+      <a href="<%= publish_training_plan_path(@tp) %>" class="btn btn-primary"><i class="iconfa-plus icon-white"></i> 发布培训计划</a>
+      <a href="#myModal" data-toggle="modal" class="btn btn-warning"><i class="iconfa-download-alt icon-white"></i> 导出培训计划数据</a>
     </div>
   </div>
 </div>

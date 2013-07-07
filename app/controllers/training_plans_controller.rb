@@ -76,6 +76,7 @@ class TrainingPlansController < ApplicationController
     @menu_active = 'plan'
 
     @tp = TrainingPlan.find(params[:id])
+    session[:return_to] = request.referer
 
     respond_to do |format|
       format.html

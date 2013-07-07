@@ -36,6 +36,8 @@ class TrainingPlan < ActiveRecord::Base
   has_many :required_courses, :through => :training_plan_required_courses, :source => :course
   has_many :training_plan_optional_courses, :class_name => 'TrainingPlanCourse', :conditions => { :course_type => TrainingPlanCourse::COURSE_TYPE.index(:optional) }
   has_many :optional_courses, :through => :training_plan_optional_courses, :source => :course
+  has_many :training_plan_rejected_courses, :class_name => 'TrainingPlanCourse', :conditions => { :course_type => TrainingPlanCourse::COURSE_TYPE.index(:rejected) }
+  has_many :rejected_courses, :through => :training_plan_rejected_courses, :source => :course
   attr_accessible :course_ids, :required_course_ids, :optional_course_ids
 
   #has_many :training_plan_feedbacks
@@ -60,11 +62,11 @@ class TrainingPlan < ActiveRecord::Base
     end
 
     after_transition :on => :all_feedbacked do |tp, transition|
-      tp.notifications.create!(:user_id => creator.id, :notification_type => "all_feedback") if tp.creator
+      tp.notifications.create!(:user_id => tp.creator.id, :notification_type => "all_feedback") if tp.creator
     end
 
     after_transition :on => :feedback_timeout do |tp, transition|
-      tp.notifications.create!(:user_id => creator.id, :notification_type => "feedback_timeout") if tp.creator
+      tp.notifications.create!(:user_id => tp.creator.id, :notification_type => "feedback_timeout") if tp.creator
     end
 
     after_transition :on => :publish do |tp, transition|
@@ -102,18 +104,17 @@ class TrainingPlan < ActiveRecord::Base
   end
 
   def confirm_publish(params)
-    if params[:required_course_ids] || params[:optional_course_ids]
-      reject_course = []
-      reject_course = courses_id - params[:required_course_ids] if params[:required_course_ids]
-      reject_course = courses_id - params[:optional_course_ids] if params[:optional_course_ids]
+    # TODO :: currently this function will delete data then create data again.
+    # Need to revisit it.
+    course_backup = course_ids
 
-      reject_course.each do |cid|
-        if training_plan_courses.find(:course_id => cid)
-          training_plan_courses.find(:course_id => cid).update_attributes({:course_type => TrainingPlanCourse::COURSE_TYPE.index(:rejected)})
-        end
-      end
+    if update_attributes(params)
+      course_backup -= required_course_ids
+      course_backup -= optional_course_ids
 
-      self.publish
+      rejected_courses = course_backup
+    else
+      false
     end
   end
 

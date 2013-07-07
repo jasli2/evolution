@@ -82,8 +82,7 @@ class User < ActiveRecord::Base
   has_many :created_training_plans, :class_name => 'TrainingPlan', :foreign_key => 'creator_id'
   has_many :training_plan_users
   has_many :tranning_plans, :through => :training_plan_users
-  #has_many :active_training_plan_users, :class_name => 'TrainingPlanUser', :conditions => { :state => 'started' }
-  #has_many :active_training_plans, :through => :active_training_plan_users
+  has_many :active_training_plans, :through => :training_plan_users, :source => :training_plan, :conditions => { :state => 'started' }
   has_many :training_plan_feedbacks
   has_many :training_feedbacks, :through => :training_plan_feedbacks
 

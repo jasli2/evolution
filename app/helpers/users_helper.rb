@@ -31,4 +31,26 @@ module UsersHelper
       ""
     end
   end
+
+  def notice_description(n)
+    case n.source_type
+    when 'TrainingPlan'
+      if n.notification_type == 'all_feedback'
+        "培训计划：" + n.source.title + " 所有培训学员都已经提交反馈。"
+      elsif n.notification_type == 'published'
+        "培训计划：" + n.source.title + " 已经发布。"
+      end
+    else
+      "unknow notification"
+    end
+  end
+
+  def notice_url(n)
+    case n.source_type
+    when 'TrainingPlan'
+      training_plan_path(n.source)
+    else
+      ""
+    end    
+  end
 end
