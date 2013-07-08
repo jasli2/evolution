@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130703074259) do
+ActiveRecord::Schema.define(:version => 20130705063858) do
 
   create_table "activities", :force => true do |t|
     t.string   "description"
@@ -144,6 +144,16 @@ ActiveRecord::Schema.define(:version => 20130703074259) do
 
   add_index "feeds", ["user_id", "feed_item_id"], :name => "index_feeds_on_user_id_and_feed_item_id"
 
+  create_table "notifications", :force => true do |t|
+    t.string   "source_type"
+    t.integer  "source_id"
+    t.string   "notification_type"
+    t.datetime "viewed_at"
+    t.integer  "user_id"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
   create_table "position_competency_levels", :force => true do |t|
     t.integer  "standard"
     t.integer  "position_id"
@@ -241,6 +251,15 @@ ActiveRecord::Schema.define(:version => 20130703074259) do
     t.datetime "finished_at"
     t.datetime "cancelled_at"
     t.integer  "creator_id"
+  end
+
+  create_table "user_class_progresses", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "course_class_id"
+    t.integer  "training_plan_id"
+    t.string   "progress"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
   create_table "user_course_progresses", :force => true do |t|

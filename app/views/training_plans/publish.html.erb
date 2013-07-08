@@ -1,0 +1,30 @@
+<% provide(:title, "发布培训计划") %>
+
+<% content_for :breadcrumbs do %>
+<li><%= link_to "培训计划管理", training_plans_path %> <span class="separator"></span></li>
+<li><%= link_to @tp.title, training_plan_path(@tp) %> <span class="separator"></span></li>
+<%= content_tag(:li, "发布培训计划") %>
+<% end %>
+
+<% content_for :javascript do %>
+
+<% end %>
+
+<div class="row-fluid">
+  <div id="dashboard-left" class="span8">
+    <h4 class="widgettitle">发布培训计划</h4>
+    <div class="widgetcontent">
+      <div class="divider15"></div>
+      <%= simple_form_for(@tp, :url => confirm_publish_training_plan_path(@tp), :method => :put, :html => {:class => 'form-horizontal', :multipart => true }) do |f| %>
+        <%= f.association :required_courses, :collection => @tp.required_courses, :multiple => true %>
+        <%= f.association :optional_courses, :collection => @tp.optional_courses, :multiple => true %>
+        <%= f.hidden_field :creator_id, :value => current_user.id %>
+        <div class="form-actions">
+        <%= f.button :submit, '发布培训计划', :class => "btn-primary"  %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div id="dashboard-right" class="span4">
+  </div>
+</div>

@@ -22,6 +22,19 @@ $(function() {
 
 <div class="row-fluid">
   <div id="dashboard-left" class="span8">
+    <% if current_user.notifications.count > 0 %>
+    <div class="alert alert-info alert-block">
+      <button data-dismiss="alert" class="close" type="button">&times;</button>
+      <h4>最新消息：</h4>
+      <ul class='notificaiton-list'>
+        <% current_user.notifications.each do |n| %>
+        <li><%= link_to notice_description(n), notice_url(n) %></li>
+        <% end %>
+      </ul>
+    </div><!--notifications-->
+    <div class="divider15"></div>
+    <% end %>
+
     <h5 class="subtitle"> <%= t('dashboard.overview.title') %> </h5>
     <ul class="shortcuts">
       <li class="events">

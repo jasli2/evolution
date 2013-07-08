@@ -41,6 +41,8 @@ Evolution::Application.routes.draw do
   end
 
   resources :training_plans do
+    get 'publish', :on => :member
+    put 'confirm_publish', :on => :member
     resources :feedbacks
   end
 

@@ -36,12 +36,18 @@ class TrainingPlan < ActiveRecord::Base
   has_many :required_courses, :through => :training_plan_required_courses, :source => :course
   has_many :training_plan_optional_courses, :class_name => 'TrainingPlanCourse', :conditions => { :course_type => TrainingPlanCourse::COURSE_TYPE.index(:optional) }
   has_many :optional_courses, :through => :training_plan_optional_courses, :source => :course
+  has_many :training_plan_rejected_courses, :class_name => 'TrainingPlanCourse', :conditions => { :course_type => TrainingPlanCourse::COURSE_TYPE.index(:rejected) }
+  has_many :rejected_courses, :through => :training_plan_rejected_courses, :source => :course
   attr_accessible :course_ids, :required_course_ids, :optional_course_ids
 
   #has_many :training_plan_feedbacks
   has_many :feedbacks, :class_name => 'TrainingPlanFeedback'
 
   has_many :feedback_todos, :class_name => 'Todo', :as => :source, :conditions => { :todo_type => 'feedback' }
+  has_many :notifications, :class_name => 'Notification', :as => :source
+
+  # user training progress
+  has_many :user_progresses, :class_name => 'UserClassProgress'
 
   after_create :determine_first_state, :gen_feedback_todos
 
@@ -55,7 +61,26 @@ class TrainingPlan < ActiveRecord::Base
       tp.cancelled_at = Time.zone.now
     end
 
+    after_transition :on => :all_feedbacked do |tp, transition|
+      tp.notifications.create!(:user_id => tp.creator.id, :notification_type => "all_feedback") if tp.creator
+    end
+
+    after_transition :on => :feedback_timeout do |tp, transition|
+      tp.notifications.create!(:user_id => tp.creator.id, :notification_type => "feedback_timeout") if tp.creator
+    end
+
+    after_transition :on => :publish do |tp, transition|
+      # need to move to background task. TODO
+      tp.users.each do |user|
+        tp.notifications.create!(:user_id => user.id, :notification_type => "published") if user
+      end
+    end
+
     event :all_feedbacked do
+      transition :pending_feedback => :pending_publish
+    end
+
+    event :feedback_timeout do
       transition :pending_feedback => :pending_publish
     end
 
@@ -75,6 +100,21 @@ class TrainingPlan < ActiveRecord::Base
   def feedback_created(feedback)
     if feedbacks.count == users.count
       self.all_feedbacked
+    end
+  end
+
+  def confirm_publish(params)
+    # TODO :: currently this function will delete data then create data again.
+    # Need to revisit it.
+    course_backup = course_ids
+
+    if update_attributes(params)
+      course_backup -= required_course_ids
+      course_backup -= optional_course_ids
+
+      rejected_courses = course_backup
+    else
+      false
     end
   end
 

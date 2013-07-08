@@ -30,7 +30,7 @@ class TrainingPlansController < ApplicationController
     @tp = TrainingPlan.find(params[:id])
 
     respond_to do |format|
-      format.html #{ render @tp.state }
+      format.html { render @tp.state }
     end
   end
 
@@ -66,6 +66,32 @@ class TrainingPlansController < ApplicationController
         format.html { redirect_to session.delete(:return_to), :notice => "培训计划：#{@tp.title}，更新成功！" }
       else
         format.html { render 'edit' }
+      end
+    end
+  end
+
+  # get publish
+  def publish
+    @menu_category = 'admin'
+    @menu_active = 'plan'
+
+    @tp = TrainingPlan.find(params[:id])
+    session[:return_to] = request.referer
+
+    respond_to do |format|
+      format.html
+    end    
+  end
+
+  # put confirm_publish
+  def confirm_publish
+    @tp = TrainingPlan.find(params[:id])
+
+    respond_to do |format|
+      if @tp.confirm_publish(params[:training_plan])
+        format.html { redirect_to session.delete(:return_to), :notice => "培训计划：#{@tp.title}, 发布成功！"}
+      else
+        format.html { render 'publish' }
       end
     end
   end
