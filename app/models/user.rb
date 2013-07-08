@@ -96,7 +96,11 @@ class User < ActiveRecord::Base
   has_many :joined_classes, :through => :as_student_in_class, :source => :course_class
 
   # user class progress
-  has_many :class_progesses, :class_name => 'UserClassProgress'
+  has_many :class_progresses, :class_name => 'UserClassProgress'
+
+  def erolled_class_for_course(c)
+    class_progresses.find_by_course_class_id c.course_class_ids
+  end
   
   # todos
   has_many :todos

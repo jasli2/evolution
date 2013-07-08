@@ -132,5 +132,21 @@ ul.notificaiton-list {
 
 }
 
+ul.active-training-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+
+  li.training-plan-title {
+    background-color: #e3e3e3;
+    padding: 5px;
+  }
+
+  li.training-user-course {
+    padding: 5px;
+    padding-left: 15px;
+  }
+}
+
 
 

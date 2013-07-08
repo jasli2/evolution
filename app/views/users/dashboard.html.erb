@@ -32,7 +32,9 @@
         <% end %>
       </ul>
     </div><!--notifications-->
+    <div class="divider15"></div>
     <% end %>
+
     <% if current_user.pending_todos.count > 0 %>
     <h4 class="widgettitle"><span class="iconfa-check"></span> 待办事项（<%= current_user.pending_todos.count %>）</h4>
     <div class="widgetcontent nopadding">
@@ -44,8 +46,34 @@
         <% end %>
       </ul>
     </div>
+    <div class="divider15"></div>
     <% end %>
-                        
+
+    <h4 class="widgettitle"><span class="iconfa-signal"></span> 我的培训计划</h4>
+    <% if current_user.active_training_plans.count %>
+    <div class="widgetcontent nopadding">
+    <ul class='active-training-list'>
+      <% current_user.active_training_plans.each do |tp| %>
+      <li class='training-plan-title'>
+        <%= tp.title %>
+      </li>
+        <% tp.course_for_user(current_user).each do |c| %>
+        <li class='training-user-course'>
+          <%= link_to c.title, course_path(c) %>
+          <span class='course-state'><%= user_course_state(c) %>
+        </li>
+        <% end %>
+      <% end %>
+    </ul>
+    </div>
+    <% else %>
+    <div class="widgetcontent">
+      目前没有未完成的培训计划
+    </div>
+    <% end %>
+    <div class="divider15"></div>
+    
+
     <h3 class="subtitle"><%= t("dashboard.competency.title") %></h3>
     <div class="divider15"></div>
     <h4 class="widgettitle"><span class="iconfa-signal"></span> 我的胜任力</h4>
