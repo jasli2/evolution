@@ -49,6 +49,14 @@ class TrainingPlan < ActiveRecord::Base
   # user training progress
   has_many :user_progresses, :class_name => 'UserClassProgress'
 
+  # return courses which belongs to user
+  # TODO: need revisite if add training plan type
+  def course_for_user(u)
+    if u and users.include?(u) and feedbacks.find_by_user_id(u.id)
+      courses.find feedbacks.find_by_user_id(u.id).course_ids
+    end
+  end
+
   after_create :determine_first_state, :gen_feedback_todos
 
   # state machine
@@ -107,12 +115,22 @@ class TrainingPlan < ActiveRecord::Base
     # TODO :: currently this function will delete data then create data again.
     # Need to revisit it.
     course_backup = course_ids
+#    logger.debug "course_backup first: "
+#    course_backup.each do |c|
+#      logger.debug c
+#    end
 
     if update_attributes(params)
       course_backup -= required_course_ids
       course_backup -= optional_course_ids
+#    logger.debug "course_backup second: "
+#    course_backup.each do |c|
+#      logger.debug c
+#    end
 
-      rejected_courses = course_backup
+      rejected_course_ids = course_backup
+
+      self.publish
     else
       false
     end
