@@ -1,3 +1,4 @@
+# encoding: utf-8
 module CoursesHelper
   def course_cover_path(c, type)
     c.cover_image_url(type) || "default_cover_#{type}.png"
@@ -15,7 +16,8 @@ module CoursesHelper
     class_progress = u.erolled_class_for_course(c)
     if class_progress
       class_progress.progress ? '已完成' : '已报名'
-    elsif 
+    elsif
+       '已完成'
     end
   end
 end
