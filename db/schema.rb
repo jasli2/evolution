@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130705063858) do
+ActiveRecord::Schema.define(:version => 20130709084235) do
 
   create_table "activities", :force => true do |t|
     t.string   "description"
@@ -31,6 +31,15 @@ ActiveRecord::Schema.define(:version => 20130705063858) do
     t.datetime "updated_at",  :null => false
     t.integer  "activity_id"
     t.integer  "user_id"
+  end
+
+  create_table "attachments", :force => true do |t|
+    t.string   "description"
+    t.integer  "attachable_id"
+    t.string   "attachable_type"
+    t.string   "file"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   create_table "class_user_roles", :force => true do |t|
@@ -100,6 +109,8 @@ ActiveRecord::Schema.define(:version => 20130705063858) do
     t.string   "state"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "creator_id"
+    t.datetime "teach_date"
   end
 
   create_table "courses", :force => true do |t|

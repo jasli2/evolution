@@ -60,7 +60,7 @@
         <% tp.course_for_user(current_user).each do |c| %>
         <li class='training-user-course'>
           <%= link_to c.title, course_path(c) %>
-          <span class='course-state'><%= user_course_state(c) %>
+          <span class='course-state'><%= user_course_state(current_user, c) %></span>
         </li>
         <% end %>
       <% end %>

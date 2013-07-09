@@ -10,10 +10,11 @@
 #
 
 class CourseClass < ActiveRecord::Base
-  attr_accessible :course_id
+  attr_accessible :course_id, :creator_id, :teach_date
   validates :course_id, :presence => true
   
   belongs_to :course
+  belongs_to :creator, :class_name => 'User'
 
   has_many :user_role_teachers, :class_name => 'ClassUserRole', :conditions => { :role => 'teacher' }
   has_many :teachers, :through => :user_role_teachers, :source => :user
@@ -24,4 +25,22 @@ class CourseClass < ActiveRecord::Base
 
   has_many :user_progresses, :class_name => 'UserClassProgress'
 
+  has_many :attachments, :as => :attachable
+
+  # state machine
+  state_machine :state, :initial => :erolling do 
+    event :eroll_timeout do 
+      transition :erolling => :eroll_done
+    end
+
+    event :finish do
+      transition :eroll_done => :finished
+    end
+
+    event :cancel do
+      transition any => :cancelled
+    end
+  end
+
+  scope :active, where(:state => [:erolling, :eroll_done])
 end
