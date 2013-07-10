@@ -44,7 +44,7 @@
     <div class="class-course">
       <%= image_tag course_cover_path(@course, :large), :class => "pull-left" %>
       <div class="course-banner">
-        <h3><%= @course.title %></h3>
+        <h3><%= @course.title %><span class='label label-info course-state'><%= @course.state %></span></h3>
         <ul>
           <li>目标学员：<%= @course.audience %></li>
           <li>授课老师：<%= @course.teacher.name %></li>
@@ -67,6 +67,18 @@
       <a class="btn btn-success btn-small" href="<%= @course.lesson.url %>" onclick="loadSWF(this.href, 1); return false;"> <i class="iconfa-play"></i> <%= t("course.all.clik_watch") %></a>
     </div>
     <div class="divider15"></div>
+    <% end %>
+
+    <% if @course.course_classes.active.count > 0 %>
+    <ul class='course-active-class-list'>
+      <% @course.course_classes.active.each do |c| %>
+      <li>
+        <% @course.teachers.each do |t| %>
+        <span><%= t.name %></span>
+        <% end %>
+      </li>
+      <% end %>
+    </ul>
     <% end %>
 
     <div class="tabbedwidget tab-primary">
@@ -94,7 +106,7 @@
         <div class="discuss-input-box">
           <%= image_tag user_avatar_path(current_user, :small) %>
           <div class="discuss-input">
-            <%= text_area_tag "topic", nil, :rows => 4, :cols => 25, :placeholder => "发起讨论或者发布问题..." %>
+            <%= text_area_tag "topic", nil, :rows => 2, :cols => 25, :placeholder => "发起讨论或者发布问题..." %>
             <div><a href="#myModal" data-toggle="modal" class="btn btn-primary disabled"><i class="iconfa-edit icon-white"></i> 发布讨论</a></div>
           </div>
         </div>
@@ -102,13 +114,12 @@
     </div>
   </div>
   <div id="dashboard-right" class="span4">
+    <% if current_user.admin? or @course.creator?(current_user) %>
     <div class="well">
-    <% if current_user.admin? or @course.teacher?(current_user) %>
-      <a href="<%= edit_course_path(@course) %>" class="btn btn-success"><i class="iconfa-edit icon-white"></i>  <%= t("position.all.edit") %></a>
-    <% else %>
-      <a href="#myModal" data-toggle="modal" class="btn btn-warning disabled"><i class="iconfa-plus icon-white"></i> <%= t("course.all.join")%></a>
-    <% end %>
+      <a href="<%= edit_course_path(@course) %>" class="btn btn-success"><i class="iconfa-edit icon-white"></i>  编辑课程信息</a>
+      <a href="<%= new_course_class_path(@course) %>" class="btn btn-warning"><i class="iconfa-plus icon-white"></i>  开设班级</a> 
     </div>
+    <% end %>
     
     <h3 class="subtitle"> <%= t("users.all.aboutteacher") %></h3>
     <div class="well about-teacher">
