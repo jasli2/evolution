@@ -2,14 +2,16 @@
 #
 # Table name: examinations
 #
-#  id          :integer          not null, primary key
-#  title       :string(255)
-#  creator_id  :integer
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  deadline    :datetime
-#  state       :string(255)
-#  finished_at :datetime
+#  id           :integer          not null, primary key
+#  title        :string(255)
+#  creator_id   :integer
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  deadline     :datetime
+#  state        :string(255)
+#  finished_at  :datetime
+#  cancelled_at :datetime
+#  published_at :datetime
 #
 
 class Examination < ActiveRecord::Base
@@ -34,7 +36,7 @@ class Examination < ActiveRecord::Base
   has_many :papers
   belongs_to :creator, :class_name => "User"
 
-  after_create :determine_first_state
+  after_create :determine_first_state, :gen_feedback_todos
 
   #state machine
   state_machine :state, :initial => :created  do
@@ -84,7 +86,7 @@ class Examination < ActiveRecord::Base
 
     def gen_feedback_todos
       users.each do |u|
-        u.todos.create!(:source => self, :todo_type => 'examination_pe', :deadline => self.deadline)
+        u.todos.create!(:source => self, :todo_type => 'examination_pending', :deadline => self.deadline)
       end
     end
 
