@@ -17,6 +17,8 @@ module UsersHelper
     when 'Examination'
       if todo.todo_type == 'feedback'
         "请在" + todo.source.deadline + "之前参加" + todo.source.title
+      elsif todo.todo_type == 'examination_pending'
+        "考试管理：" + todo.source.title + "即将发布"
       end
     else
       # unknow todo
@@ -32,7 +34,9 @@ module UsersHelper
       end
     when 'Examination'
       if todo.todo_type == 'feedback'
-        puts "TODO: add route" 
+        examinations_path()
+      elsif todo.todo_type == 'examination_pending'
+        examinations_path()
       end
     else
       # unknow action TODO

@@ -18,6 +18,9 @@ class Question < ActiveRecord::Base
   validates :answer, :presence => true
   validates :qdata, :presence => true
 
-  belongs_to :examination
+  has_many :examination_questions
+  has_many :examinations, :through => :examination_questions
+
+  has_many :user_answers
 
 end
