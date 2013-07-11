@@ -17,8 +17,17 @@
     <h4 class="widgettitle">创建新考试</h4>
     <div class="widgetcontent">
       <div class="divider15"></div>
-      <%= simple_form_for(@exam, :html => {:class => 'form-horizontal'}) do |f| %>
+      <%= simple_form_for(@exam, :html => {:class => 'form-horizontal', :multipart => true}) do |f| %>
         <%= f.input :title, :label => "考试标题：", :input_html => { :class => "span5" } %>
+        <%= f.input :deadline, :as => :date,
+        :start_year => Date.today.year,
+        :end_year => Date.today.year + 10,
+        :order => [:year, :month, :day]
+        %>
+        <div > 请选择参考人：<div>
+        <div  style="width:260px;height:120px; overflow-y:scroll; border:0.1px solid;">
+        <%= f.collection_check_boxes :user_ids, User.staff, :id, :name %>
+        </div>
         <%= f.hidden_field :creator_id, :value => current_user.id %>
         <div class="form-actions">
         <%= f.button :submit, '创建考试', :class => "btn-primary"  %>

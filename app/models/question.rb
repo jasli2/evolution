@@ -8,6 +8,8 @@
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  examination_id :integer
+#  type           :integer
+#  correct        :boolean
 #
 
 class Question < ActiveRecord::Base

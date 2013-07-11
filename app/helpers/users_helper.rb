@@ -14,6 +14,10 @@ module UsersHelper
       if todo.todo_type == 'feedback'
         "培训计划：" + todo.source.title + " 需要提供培训反馈。"
       end
+    when 'Examination'
+      if todo.todo_type == 'feedback'
+        "请在" + todo.source.deadline + "之前参加" + todo.source.title
+      end
     else
       # unknow todo
       "unknown todo!"
@@ -25,6 +29,10 @@ module UsersHelper
     when 'TrainingPlan'
       if todo.todo_type == 'feedback'
         new_training_plan_feedback_path(todo.source)
+      end
+    when 'Examination'
+      if todo.todo_type == 'feedback'
+        puts "TODO: add route" 
       end
     else
       # unknow action TODO
@@ -39,6 +47,10 @@ module UsersHelper
         "培训计划：" + n.source.title + " 所有培训学员都已经提交反馈。"
       elsif n.notification_type == 'published'
         "培训计划：" + n.source.title + " 已经发布。"
+      end
+    when 'Examination'
+      if n.notification_type == 'all_feedback'
+        "考试管理：" + n.source.title + "已经结束"
       end
     else
       "unknow notification"
