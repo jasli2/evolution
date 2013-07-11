@@ -21,4 +21,20 @@ class ClassUserRole < ActiveRecord::Base
 
   belongs_to :course_class
   belongs_to :user
+
+  after_create :gen_notification, :if => Proc.new( |r| ['teacher', 'assistent'].include? r.role )
+  after_create :gen_user_progress, :if => Proc.new( |r| r.role == 'student' )
+
+  def gen_notification
+    user.notificaitons.create!(:source => course_class, :notification_type => 'assign_' + r.role)
+  end
+
+  def gen_user_progress
+    tp = user.training_plan_for_course(self.course_class.course)
+    if tp
+      user.class_progresses.create!(:course_class_id => self.course_class_id, :training_plan_id => tp.id)
+    else
+      user.class_progresses.create!(:course_class_id => self.course_class_id)
+    end
+  end
 end

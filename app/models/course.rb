@@ -75,6 +75,14 @@ class Course < ActiveRecord::Base
     teacher_id == u.id
   end
 
+  def creator?(u)
+    creator.id == u.id
+  end
+
+  def state
+    course_classes.active.count > 0 ? 'open' : 'closed'
+  end
+
   def self.to_csv(options = {})
     header = ["title","audience", "type", "sourcetype", "coursetype", "creator", "creator ID", \
               "duration", "Teacher", "competency", "level"]

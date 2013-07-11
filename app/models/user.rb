@@ -94,8 +94,9 @@ class User < ActiveRecord::Base
   has_many :notifications
 
   # course class
-  has_many :as_admin_in_class, :class_name => 'ClassUserRole', :conditions => { :role => ['teacher', 'assistent'] }
-  has_many :owned_classes, :through => :as_admin_in_class, :source => :course_class
+  has_many :created_classes, :class_name => 'CourseClass', :foreign_key => 'creator_id'
+  has_many :as_teacher_in_class, :class_name => 'ClassUserRole', :conditions => { :role => ['teacher', 'assistent'] }
+  has_many :teach_classes, :through => :as_admin_in_class, :source => :course_class
   has_many :as_student_in_class, :class_name => 'ClassUserRole', :conditions => { :role => 'student' }
   has_many :joined_classes, :through => :as_student_in_class, :source => :course_class
 
@@ -104,6 +105,12 @@ class User < ActiveRecord::Base
 
   def erolled_class_for_course(c)
     class_progresses.find_by_course_class_id c.course_class_ids
+  end
+
+  def training_plan_for_course(c)
+    active_training_plans.each do |tp|
+      return tp if tp.course_for_user(self).include? c
+    end
   end
   
   # todos
@@ -142,8 +149,9 @@ class User < ActiveRecord::Base
   end
 
   def latest_created_topics
-    slef.topics.order('created_at DESC').limit(10)
+    self.topics.order('created_at DESC').limit(10)
   end
+
   #user relattionship
   def following?(other_user)
     user_relations.find_by_leader_id(other_user.id)

@@ -115,18 +115,10 @@ class TrainingPlan < ActiveRecord::Base
     # TODO :: currently this function will delete data then create data again.
     # Need to revisit it.
     course_backup = course_ids
-#    logger.debug "course_backup first: "
-#    course_backup.each do |c|
-#      logger.debug c
-#    end
 
     if update_attributes(params)
       course_backup -= required_course_ids
       course_backup -= optional_course_ids
-#    logger.debug "course_backup second: "
-#    course_backup.each do |c|
-#      logger.debug c
-#    end
 
       rejected_course_ids = course_backup
 
