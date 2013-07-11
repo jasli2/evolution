@@ -14,6 +14,9 @@
 class UserAnswer < ActiveRecord::Base
   attr_accessible :content, :correct
 
+  validates :question_id , :presence => true
+  validates :paper_id , :presence => true
+
   belongs_to :question
   belongs_to :paper
 

@@ -23,8 +23,8 @@
         <tr>
           <td width="70%"><%= eo_markdown(q.qdata) %></td>
           <td width="30%" id="qustion-action">
-            <%= link_to "<i class='iconfa-edit'></i> 修改试题".html_safe, edit_examination_question_path(@exam.id), :class => "btn btn-primary btn-small", "data-toggle" => "modal" %>
-            <%= link_to "<i class='iconfa-edit'></i> 删除试题".html_safe, "#myModal", :class => "btn btn-danger btn-small", "data-toggle" => "modal" %>
+            <%= link_to "<i class='iconfa-edit'></i> 修改试题".html_safe, edit_examination_question_path(@exam.id, q.id), :class => "btn btn-primary btn-small", "data-toggle" => "modal" %>
+            <%= link_to "<i class='iconfa-edit'></i> 删除试题".html_safe, examination_question_path(@exam.id, q.id), :data => {confirm: "确定删除？"}, :method => :delete, :class => "btn btn-danger btn-small", "data-toggle" => "modal" %>
           </td>
         </tr>
         <% end %>
