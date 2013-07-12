@@ -73,8 +73,13 @@
     <ul class='course-active-class-list'>
       <% @course.course_classes.active.each do |c| %>
       <li>
-        <% @course.teachers.each do |t| %>
+        班级老师：
+        <% c.teachers.each do |t| %>
         <span><%= t.name %></span>
+        <% end %>
+        助教：
+        <% c.assistents.each do |a| %>
+        <span><%= a.name %></span>
         <% end %>
       </li>
       <% end %>
