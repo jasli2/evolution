@@ -45,6 +45,7 @@ Evolution::Application.routes.draw do
   end
 
   resources :examinations do
+    get "confirm_publish", :on => :member
     resources :questions 
   end
 

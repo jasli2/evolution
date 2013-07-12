@@ -38,6 +38,8 @@ class Examination < ActiveRecord::Base
 
   after_create :determine_first_state, :gen_feedback_todos
 
+
+
   #state machine
   state_machine :state, :initial => :created  do
 
@@ -52,7 +54,12 @@ class Examination < ActiveRecord::Base
 
     after_transition :on => :publish do |exam, transition|
       #gen_feedback_todos
-      exam.notifications.create!(:user_id => tp.creator.id, :notification_type => "published") if exam.creator
+      exam.users.each do |user|
+        todo =  exam.user_todo_exam(user, exam)
+        todo.update_attribute(:todo_type, 'published')
+        exam.notifications.create!(:user_id => user.id, :notification_type => "published") if user
+      end
+
     end
 
     event :all_feedbacked do
@@ -72,10 +79,18 @@ class Examination < ActiveRecord::Base
     end  
   end
 
+  def user_todo_exam(ur, exam)
+    ur.todos.where(:source_type => "Examination", :source_id => exam.id).first
+  end
+
   def feedback_created(feedback)
     if feedbacks.count == users.count
       self.all_feedbacked
     end
+  end
+
+  def confirm_publish
+    self.publish
   end
 
   private

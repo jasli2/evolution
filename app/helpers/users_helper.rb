@@ -15,8 +15,8 @@ module UsersHelper
         "培训计划：" + todo.source.title + " 需要提供培训反馈。"
       end
     when 'Examination'
-      if todo.todo_type == 'feedback'
-        "请在" + todo.source.deadline + "之前参加" + todo.source.title
+      if todo.todo_type == 'published'
+        "请及时参加考试：" + todo.source.title + "  结束日期：#{todo.source.deadline.to_date}"
       elsif todo.todo_type == 'examination_pending'
         "考试管理：" + todo.source.title + "即将发布"
       end
@@ -37,6 +37,8 @@ module UsersHelper
         examinations_path()
       elsif todo.todo_type == 'examination_pending'
         examinations_path()
+      elsif todo.todo_type == 'published'
+        "#exam"
       end
     else
       # unknow action TODO
@@ -55,6 +57,8 @@ module UsersHelper
     when 'Examination'
       if n.notification_type == 'all_feedback'
         "考试管理：" + n.source.title + "已经结束"
+      elsif n.notification_type == 'published'
+        "考试管理：" + n.source.title + "  已发布，结束日期: #{n.source.deadline.to_date}"
       end
     else
       "unknow notification"
