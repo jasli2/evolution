@@ -15,8 +15,12 @@
 class Paper < ActiveRecord::Base
   attr_accessible :correct_nums, :error_nums, :score
   
+  validates :examination_id, :presence => true
+
   belongs_to :users
   belongs_to :examination
+  belongs_to :examination_feedback
+
   has_many :user_answers
 
 end

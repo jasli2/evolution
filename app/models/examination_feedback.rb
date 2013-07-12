@@ -18,6 +18,10 @@ class ExaminationFeedback < ActiveRecord::Base
   belongs_to :examination
   belongs_to :user
 
+  has_many :papers
+  has_many :user_answers
+  attr_accessible :user_answer_ids
+
   after_create :clear_feedback_todo, :feedback_callback
 
   private

@@ -38,8 +38,6 @@ class Examination < ActiveRecord::Base
 
   after_create :determine_first_state, :gen_feedback_todos
 
-
-
   #state machine
   state_machine :state, :initial => :created  do
 
@@ -77,6 +75,18 @@ class Examination < ActiveRecord::Base
     event :publish do
       transition :pending_publish => :published
     end  
+  end
+
+  def get_choice_question(exam)
+    exam.questions.where(:question_type => Question::QUESTION_TYPE.index(:choice))
+  end
+
+  def get_judgement_question(exam)
+    exam.questions.where(:question_type => Question::QUESTION_TYPE.index(:judgement))
+  end
+
+  def get_dialogical_question(exam)
+    exam.questions.where(:question_type => Question::QUESTION_TYPE.index(:dialogical))
   end
 
   def user_todo_exam(ur, exam)
