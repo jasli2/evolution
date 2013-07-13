@@ -81,6 +81,10 @@
         <% c.assistents.each do |a| %>
         <span><%= a.name %></span>
         <% end %>
+        <%= form_for(c, :url => eroll_class_path(c), html: { :method => :put }) do |f| %>
+        <%= f.hidden_field :user_id, :value => current_user.id %>
+        <%= f.submit "报名", :class => "btn btn-mini btn-primary" %>
+        <% end %>
       </li>
       <% end %>
     </ul>
@@ -94,7 +98,11 @@
         <li><a href="#tabs-4"><span class="iconfa-comments-alt"></span>  <%= t("course.all.discussion") %></a></li>
       </ul>
       <div id="tabs-1" class="course-introduction">
+        <% unless @course.description.blank? %>
         <%= eo_markdown(@course.description) unless @course.description.blank? %>
+        <% else %>
+        <p>目前没有课程介绍。</p>
+        <% end %>
       </div>
       <div id="tabs-2" class="course-target">
         <% unless @course.target.blank? %>
@@ -125,43 +133,6 @@
       <a href="<%= new_course_class_path(@course) %>" class="btn btn-warning"><i class="iconfa-plus icon-white"></i>  开设班级</a> 
     </div>
     <% end %>
-    
-    <h3 class="subtitle"> <%= t("users.all.aboutteacher") %></h3>
-    <div class="well about-teacher">
-      <div class="teacher-image-rate">
-      <%= image_tag user_avatar_path(@course.teacher, :normal) %>
-      <%= teacher_rate_tag(@course.teacher) %>
-      </div>
-      <div class="teacher-info">
-        <h4><%= link_to @course.teacher.name, user_path(@course.teacher) %></h4>
-        <% if @course.teacher.self_intro.blank? %>
-        <p> <%= t("users.all.nointruduction") %></p>
-        <% else %>
-        <p><%= @course.teacher.self_intro %></p>
-        <% end %>
-      </div>
-    </div>
-
-    <div class="divider15"></div>
-    <h3 class="subtitle"> <%= t("users.all.student") %></h3>
-      <div class="well course-students">
-        <% if @course.competency_levels.size > 0 %>
-        <ul>
-          <% @course.competency_levels.first.positions.first.users.each do |u| %>
-          <% unless u.admin? or u.id == @course.teacher.id %>
-          <li>
-            <div class="user-image-name">
-              <%= link_to image_tag(user_avatar_path(u, :small)), user_path(u), {:title => "#{u.name}"} %>
-              <%= link_to u.name, user_path(u) %>
-            </div>
-          </li>
-          <% end %>
-          <% end %>
-        </ul>
-        <% else %>
-        <p><%= t("users.all.notice") %></p>
-        <% end %>
-      </div>
     
   </div>
 </div>

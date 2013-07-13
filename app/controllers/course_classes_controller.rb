@@ -1,6 +1,32 @@
 # encoding: utf-8
 
 class CourseClassesController < ApplicationController
+  def eroll
+    @course_class = CourseClass.find(params[:id])
+    @user = User.find(params[:course_class][:user_id])
+
+    respond_to do |format|
+      if @course_class.eroll(@user)
+        format.html { redirect_to class_path(@course_class), :notice => "报名成功。" }
+      else
+        format.html { redirect_to :back, :notice => "报名失败。" }
+      end
+    end
+  end
+
+  def uneroll
+    @course_class = CourseClass.find(params[:id])
+    @user = User.find(params[:course_class][:user_id])
+
+    respond_to do |format|
+      if @course_class.uneroll(@user)
+        format.html { redirect_to course_path(@course_class.course), :notice => "退出班级成功。" }
+      else
+        format.html { redirect_to :back, :notice => "退出班级失败。" }
+      end
+    end
+  end  
+
   def index
     @course_classes = CourseClass.all
 
@@ -11,6 +37,7 @@ class CourseClassesController < ApplicationController
 
   def show
     @course_class = CourseClass.find(params[:id])
+    @course = @course_class.course
 
     respond_to do |format|
       format.html

@@ -50,4 +50,16 @@ class CourseClass < ActiveRecord::Base
   end
 
   scope :active, where(:state => [:erolling, :eroll_done])
+
+  def eroll(u)
+    students << u if u
+  end
+
+  def uneroll(u)
+    user_role_students.find_by_user_id(u.id).destroy if u
+  end
+
+  def creator?(u)
+    creator_id == u.id if u
+  end
 end
