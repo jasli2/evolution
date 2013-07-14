@@ -28,7 +28,7 @@ class Examination < ActiveRecord::Base
 
   
   has_many :feedbacks, :class_name => 'ExaminationFeedback'
-  has_many :feedback_todos, :class_name => 'Todo', :as => :source, :conditions => {:todo_type => 'feedback'}
+  has_many :feedback_todos, :class_name => 'Todo', :as => :source, :conditions => {:todo_type => 'published'}
   has_many :notifications, :class_name => 'Notification', :as => :source
 
   has_many :examination_questions
@@ -77,20 +77,33 @@ class Examination < ActiveRecord::Base
     end  
   end
 
-  def get_choice_question(exam)
-    exam.questions.where(:question_type => Question::QUESTION_TYPE.index(:choice))
+  def find_user_todo(current_user_id)
+    self.feedback_todos.find_by_user_id(current_user_id)
   end
 
-  def get_judgement_question(exam)
-    exam.questions.where(:question_type => Question::QUESTION_TYPE.index(:judgement))
+  def check_user_paper(current_user_id)
+    paper =  self.papers.find_by_user_id(current_user_id)
+    if paper.nil?
+      paper = self.papers.create!(:user_id => current_user_id)
+      self.exam_question_answere(paper.id)
+    end
+    return paper
   end
 
-  def get_dialogical_question(exam)
-    exam.questions.where(:question_type => Question::QUESTION_TYPE.index(:dialogical))
+  def get_choice_question
+    self.questions.where(:question_type => Question::QUESTION_TYPE.index(:choice))
   end
 
-  def user_todo_exam(ur, exam)
-    ur.todos.where(:source_type => "Examination", :source_id => exam.id).first
+  def get_judgement_question
+    self.questions.where(:question_type => Question::QUESTION_TYPE.index(:judgement))
+  end
+
+  def get_dialogical_question
+    self.questions.where(:question_type => Question::QUESTION_TYPE.index(:dialogical))
+  end
+
+  def user_todo_exam(ur)
+    ur.todos.where(:source_type => "Examination", :source_id => self.id).first
   end
 
   def feedback_created(feedback)
@@ -101,6 +114,12 @@ class Examination < ActiveRecord::Base
 
   def confirm_publish
     self.publish
+  end
+
+  def exam_question_answere(paper_id)
+    self.questions.all.each do |question|
+       question.user_answers.create!(:paper_id => paper_id)
+    end
   end
 
   private

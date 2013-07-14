@@ -1,0 +1,90 @@
+<% provide(:title, "考试详情") %>
+<% provide(:page_title, "考试详情") %>
+<% provide(:page_sub_title, "查看、编辑考试试题") %>
+<% provide(:page_icon, "iconfa-info-sign") %>
+
+<% content_for :breadcrumbs do %>
+<li><%= link_to "考试管理", examinations_path %> <span class="separator"></span></li>
+<%= content_tag(:li, "考试详情") %>
+<% end %>
+
+<% content_for :javascript do %>
+<script type="text/javascript">
+function show_answere(question_id) {
+  var dispmode = document.getElementById('light_' + question_id).style.display
+  document.getElementById('light_' + question_id).style.display = (dispmode == 'block') ? 'none' : 'block'
+}
+</script>
+<% end %>
+
+<div class="row-fluid">
+  <div id="dashboard-left" class="span8">
+    <%= form_tag examination_exam_feedbacks_path(@exam) do %>
+    <h4 class="widgettitle"><%= @exam.title %>（选择题:<%=@exam.get_choice_question.size %>  判断题:<%= @exam.get_judgement_question.size %>  问答题:<%= @exam.get_dialogical_question.size %>）<%=submit_tag  "提交试卷",  :class => "btn btn-warning" %></h4>
+    <% if @exam.questions.size > 0 %>
+    <div class="widgetcontent nopadding">
+      <table class="table responsive">
+
+        <% @exam.get_choice_question.each do |question| %>
+        <tr>
+          <td width="1%"><%= get_question_index(@exam, question, "choice") %>、</td>
+          <td width="69%">
+            <%= eo_markdown(question.qdata) %>
+            <div id="light_<%= question.id.to_s%>" style="display:none">
+              <%= text_field_tag "choice_#{question.id.to_s}_answer", nil,:maxlength => 1 %>
+            </div>
+          </td>
+          <td width="30%">
+          <%= link_to_function "<i class='iconfa-edit'></i> 回答该题：".html_safe, "show_answere('#{question.id}')", :class => "btn btn-primary btn-small"%>   
+          </td>
+        </tr>      
+        <% end %>
+
+        <% @exam.get_judgement_question.each do |question| %>
+        <tr>
+          <td width="1%"><%= get_question_index(@exam, question, "judgement") %>、</td>
+          <td width="69%">
+            <%= eo_markdown(question.qdata) %>
+            <div id="light_<%= question.id.to_s%>" style="display:none">
+              <%= text_field_tag "judgement_#{question.id.to_s}_answer", nil,:maxlength => 4 %>
+            </div>
+          </td>
+          <td width="30%">
+          <%= link_to_function "<i class='iconfa-edit'></i> 回答该题：".html_safe, "show_answere('#{question.id}')", :class => "btn btn-primary btn-small"%>   
+          </td>
+        </tr>      
+        <% end %>
+
+        <% @exam.get_dialogical_question.each do |question| %>
+        <tr>
+          <td width="1%"><%= get_question_index(@exam, question, "dialogical") %>、</td>
+          <td width="69%">
+            <%= eo_markdown(question.qdata) %>
+            <div id="light_<%= question.id.to_s%>" style="display:none">
+              <%= text_field_tag "dialogical_#{question.id.to_s}_answer", nil %>
+            </div>
+          </td>
+          <td width="30%">
+          <%= link_to_function "<i class='iconfa-edit'></i> 回答该题：".html_safe, "show_answere('#{question.id}')", :class => "btn btn-primary btn-small"%>   
+          </td>
+        </tr>      
+        <% end %>
+      </table>
+    </div>
+    <% else %>
+    <div class="widgetcontent">
+      目前还没有添加任何考题
+    </div>
+    <% end %>
+  <% end %>
+  </div>
+  <div id="dashboard-right" class="span4">
+    <% if current_user.admin? %>
+    <h3 class="subtitle">管理考题</h3>
+    <div class="divider15"></div>
+    <div class="well">
+      <a href="<%= new_examination_question_path(@exam.id) %>" data-toggle="modal" class="btn btn-primary"><i class="iconfa-plus icon-white"></i> 添加新考题</a>
+    </div>
+    <% end %>
+  </div>
+</div>

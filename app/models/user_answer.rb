@@ -12,7 +12,7 @@
 #
 
 class UserAnswer < ActiveRecord::Base
-  attr_accessible :content, :correct
+  attr_accessible :content, :correct, :paper_id
 
   validates :question_id , :presence => true
   validates :paper_id , :presence => true

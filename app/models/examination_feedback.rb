@@ -20,13 +20,12 @@ class ExaminationFeedback < ActiveRecord::Base
 
   has_many :papers
   has_many :user_answers
-  attr_accessible :user_answer_ids
 
   after_create :clear_feedback_todo, :feedback_callback
 
   private
     def clear_feedback_todo
-      examination.feedback_todos.find_by_user_id(user_id).update_attributes(:finish_at => Time.zone.new)
+      examination.feedback_todos.find_by_user_id(user_id).update_attributes(:finish_at => Time.zone.now)
     end
 
     def feedback_callback

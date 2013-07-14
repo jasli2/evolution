@@ -21,14 +21,14 @@
         <tr>
           <td><span class="label label-info"><%= exam_progress(e.state) %></span></td>
           <td>
+            <%= link_to e.title, current_user.admin? ? examination_path(e) : "#MyExam" %>
+            <span>参考总人数: <%=e.users.size %></span>
+            <span>考试日期：<%= e.published_at ? e.published_at.to_date : "待定 " %></span>
+            <span>结束日期：<%= e.deadline ? e.deadline.to_date : "待定" %></span>
             <% if current_user.admin? %>
-              <%= link_to e.title, examination_path(e) %>
-              <span>参考总人数: <%=e.users.size %></span>
-              <span>考试日期：<%= e.published_at ? e.published_at.to_date : "待定 " %></span>
-              <span>结束日期：<%= e.deadline ? e.deadline.to_date : "待定" %></span>
-              <span><%= link_to exam_state(e.state), exam_state_action(e, current_user), :class => "btn btn-warning" %></span>
+            <span><%= link_to exam_state(e.state), exam_state_action(e, current_user), :class => "btn btn-warning" %></span>
             <% else %>
-              <%= link_to "<i class='iconfa-check'></i> 报名考试".html_safe, '#myModal', :class => "btn btn-warning disabled", "data-toggle" => "modal" %>
+            <%= link_to "<i class='iconfa-check'></i> #{student_exam_state(e, current_user)}".html_safe, student_exam_todo_url(e, current_user), :class => "btn btn-warning" %>
             <% end %>
           </td>
         </tr>

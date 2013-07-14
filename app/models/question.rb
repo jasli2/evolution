@@ -19,10 +19,11 @@ class Question < ActiveRecord::Base
   validates :question_type_str, :inclusion => { :in => [:choice, :judgement, :dialogical], :message => "%{value} is not a valid question type"}
   #validates :type, :presence => true
 
+  paginates_per 8
   has_many :examination_questions
   has_many :examinations, :through => :examination_questions
 
-  has_many :user_answers
+  has_many :user_answers, :dependent => :destroy
 
   QUESTION_TYPE = [:choice, :judgement, :dialogical]
 

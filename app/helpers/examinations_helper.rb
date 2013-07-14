@@ -36,4 +36,36 @@ module ExaminationsHelper
       "#myMode"
     end
   end
+
+  def student_exam_state(exam, user)
+    todo =  exam.find_user_todo(user.id)
+    if todo
+      todo.finished? ? "已参加考试" : "报名考试"
+    else
+      "未知状态"
+    end
+  end
+
+  def student_exam_todo_url(exam, user)
+    todo =  exam.find_user_todo(user.id)
+    if todo
+      todo.finished? ? "#exam" : new_examination_exam_feedback_path(exam)
+    else
+      "#exam"
+    end
+  end
+
+  def get_question_index(exam, question, type)
+    case type
+    when "choice"
+      exam.get_choice_question.index(question) + 1
+    when "judgement"
+      exam.get_judgement_question.index(question) + 1
+    when "dialogical"
+      exam.get_dialogical_question.index(question) + 1
+    else
+      0
+    end
+
+  end
 end

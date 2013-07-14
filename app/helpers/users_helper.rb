@@ -34,11 +34,12 @@ module UsersHelper
       end
     when 'Examination'
       if todo.todo_type == 'feedback'
-        examinations_path()
+        "#MyResult"
       elsif todo.todo_type == 'examination_pending'
         examinations_path()
       elsif todo.todo_type == 'published'
-        "#exam"
+        #new_examination_exam_feedback_path(todo.source)
+        examinations_path()
       end
     else
       # unknow action TODO

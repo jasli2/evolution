@@ -13,14 +13,15 @@
 #
 
 class Paper < ActiveRecord::Base
-  attr_accessible :correct_nums, :error_nums, :score
+  attr_accessible :correct_nums, :error_nums, :score, :user_id
   
   validates :examination_id, :presence => true
+  validates :user_id, :presence => true
 
   belongs_to :users
   belongs_to :examination
   belongs_to :examination_feedback
 
-  has_many :user_answers
+  has_many :user_answers, :dependent => :destroy
 
 end
