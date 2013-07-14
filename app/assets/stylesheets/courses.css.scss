@@ -83,3 +83,18 @@ blockquote {
     }
   }
 }
+
+.course-active-class-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    padding: 10px 15px;
+    border-bottom: 1px dashed #ddd;
+    &:last-child { border-bottom: 0; }
+    form {
+      display: inline;
+    }
+  }
+}

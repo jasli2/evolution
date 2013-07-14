@@ -40,6 +40,14 @@ module UsersHelper
       elsif n.notification_type == 'published'
         "培训计划：" + n.source.title + " 已经发布。"
       end
+    when 'CourseClass'
+      if n.notification_type == 'assign_teacher'
+        "你已经被委任为课程：" +  n.source.course.title + "的班级老师。" 
+      elsif n.notification_type == 'assign_assistent'
+        "你已经被委任为课程：" +  n.source.course.title + "的班级助教。" 
+      else
+        "班级通知类型未知：" + n.notification_type
+      end
     else
       "unknow notification"
     end
@@ -49,6 +57,8 @@ module UsersHelper
     case n.source_type
     when 'TrainingPlan'
       training_plan_path(n.source)
+    when 'CourseClass'
+      class_path(n.source)
     else
       ""
     end    

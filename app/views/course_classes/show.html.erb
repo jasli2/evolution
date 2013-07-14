@@ -4,7 +4,7 @@
 <% provide(:page_icon, "iconfa-edit") %>
 
 <% content_for :breadcrumbs do %>
-<%= content_tag(:li, @course.title) %>
+<%= content_tag(:li, @course.title + '(班级-' + @course_class.id.to_s + ")") %>
 <% end %>
 
 <% content_for :javascript do %>
@@ -39,7 +39,7 @@
     <div class="class-course">
       <%= image_tag course_cover_path(@course, :large), :class => "pull-left" %>
       <div class="course-banner">
-        <h3><%= @course.title %><span class='label label-info course-state'><%= @course.state %></span></h3>
+        <h3><%= @course.title %></h3>
         <ul>
           <li>目标学员：<%= @course.audience %></li>
           <li>授课老师：<%= @course.teacher.name %></li>
@@ -82,7 +82,18 @@
         <% end %>
       </div>
       <div id="tabs-3" class="course-material">
-        <p> <%= t("course.all.notic1") %></p>
+        <% if @course_class.attachments.count > 0 %>
+        <ul class='course-class-attachment'>
+          <% @course_class.attachments.each do |at| %>
+          <li>
+            <%= link_to at.description ? at.description : at.file.file.filename, at.file.url %>
+          </li>
+          <% end %>
+        </ul>
+        <% else %>
+        <p><%= t("course.all.notic1") %></p>
+        <% end %>
+        
       </div>
       <div id="tabs-4" class="course-discussion">
         <div class="discuss-list"> <%= t("course.all.notic2") %></div>
@@ -97,7 +108,7 @@
     </div>
   </div>
   <div id="dashboard-right" class="span4">
-    <% if current_user.admin? or @course_class.creator?(current_user) %>
+    <% if current_user.admin? or @course_class.creator?(current_user) or @course_class.teacher?(current_user) %>
     <div class="well">
       <a href="<%= edit_class_path(@course) %>" class="btn btn-success"><i class="iconfa-edit icon-white"></i>  编辑班级信息</a>
     </div>

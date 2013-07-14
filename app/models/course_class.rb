@@ -62,4 +62,8 @@ class CourseClass < ActiveRecord::Base
   def creator?(u)
     creator_id == u.id if u
   end
+
+  def teacher?(u)
+    teacher_ids.include? u.id if u
+  end
 end
