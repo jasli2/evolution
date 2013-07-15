@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: training_plan_users
+#
+#  id               :integer          not null, primary key
+#  training_plan_id :integer
+#  user_id          :integer
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#
+
 require 'spec_helper'
 
 describe TrainingPlanUser do

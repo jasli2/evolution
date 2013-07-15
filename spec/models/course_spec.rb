@@ -4,15 +4,19 @@
 #
 #  id          :integer          not null, primary key
 #  title       :string(255)
-#  author      :string(255)
-#  filter_item :string(255)
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  creator_id  :integer
 #  duration    :integer
 #  course_type :string(255)
 #  teacher_id  :integer
-#  description :string(255)
+#  description :text
+#  cover_image :string(255)
+#  audience    :string(255)
+#  target      :string(255)
+#  teach_type  :string(255)
+#  source_type :string(255)
+#  lesson      :string(255)
 #
 
 require 'spec_helper'

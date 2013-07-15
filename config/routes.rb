@@ -1,19 +1,14 @@
 Evolution::Application.routes.draw do
-  get "course_classes/index"
-
-  get "course_classes/show"
-
-  get "course_classes/edit"
-
-  get "course_classes/new"
-
   mount Resque::Server, :at => "/resque"
 
   resources :courses, :only => [:index], :shallow => true do
     collection {post :import}
     collection {get :export}
 
-    resources :classes, :controller => :course_classes
+    resources :classes, :controller => :course_classes do
+      put 'eroll', :on => :member
+      put 'uneroll', :on => :member
+    end
   end
 
   resources :comments

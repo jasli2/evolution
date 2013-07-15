@@ -35,3 +35,11 @@ form p.help-block {
 a.btn-primary, a.btn-info, a.btn-success, a.btn-warning, a.btn-danger, a.btn-inverse {
   color: #fff;
 }
+
+.btn-small {
+  padding: 0 4px;
+}
+
+.btn-mini {
+  padding: 0;
+}

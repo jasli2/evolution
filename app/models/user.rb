@@ -112,6 +112,8 @@ class User < ActiveRecord::Base
     active_training_plans.each do |tp|
       return tp if tp.course_for_user(self).include? c
     end
+
+    nil
   end
   
   # todos

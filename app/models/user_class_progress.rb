@@ -19,5 +19,5 @@ class UserClassProgress < ActiveRecord::Base
 
   belongs_to :course_class
   belongs_to :user
-  belongs_to :training_plan_id
+  belongs_to :training_plan
 end

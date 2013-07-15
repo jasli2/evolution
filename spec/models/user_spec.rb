@@ -19,6 +19,9 @@
 #  mobile_phone     :integer
 #  department       :string(255)
 #  department_level :integer
+#  self_intro       :string(255)
+#  teacher_rate     :integer
+#  is_assessed      :boolean          default(FALSE)
 #
 
 require 'spec_helper'

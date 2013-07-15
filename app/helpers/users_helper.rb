@@ -60,6 +60,16 @@ module UsersHelper
         "考试管理：" + n.source.title + "已经结束"
       elsif n.notification_type == 'published'
         "考试管理：" + n.source.title + "  已发布，结束日期: #{n.source.deadline.to_date}"
+      else
+        "考试管理：未知状态"
+      end
+    when 'CourseClass'
+      if n.notification_type == 'assign_teacher'
+        "你已经被委任为课程：" +  n.source.course.title + "的班级老师。" 
+      elsif n.notification_type == 'assign_assistent'
+        "你已经被委任为课程：" +  n.source.course.title + "的班级助教。" 
+      else
+        "班级通知类型未知：" + n.notification_type
       end
     else
       "unknow notification"
@@ -70,6 +80,8 @@ module UsersHelper
     case n.source_type
     when 'TrainingPlan'
       training_plan_path(n.source)
+    when 'CourseClass'
+      class_path(n.source)
     else
       ""
     end    

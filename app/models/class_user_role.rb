@@ -13,7 +13,7 @@
 class ClassUserRole < ActiveRecord::Base
   attr_accessible :course_class_id, :role, :user_id
   
-  ROLES = %w(teacher, assistent, student)
+  ROLES = %w(teacher assistent student)
 
   validates :user_id, :presence => true
   validates :course_class_id, :presence => true
@@ -22,19 +22,26 @@ class ClassUserRole < ActiveRecord::Base
   belongs_to :course_class
   belongs_to :user
 
-  after_create :gen_notification, :if => Proc.new( |r| ['teacher', 'assistent'].include? r.role )
-  after_create :gen_user_progress, :if => Proc.new( |r| r.role == 'student' )
+  after_create :gen_notification, :if => Proc.new { |r| ['teacher', 'assistent'].include? r.role }
+  after_create :gen_user_progress, :if => Proc.new { |r| r.role == 'student' }
+  before_destroy :remove_user_progess, :if => Proc.new { |r| r.role == 'student' }
 
   def gen_notification
-    user.notificaitons.create!(:source => course_class, :notification_type => 'assign_' + r.role)
+    user.notifications.create!(:source => course_class, :notification_type => 'assign_' + self.role)
   end
 
   def gen_user_progress
     tp = user.training_plan_for_course(self.course_class.course)
     if tp
-      user.class_progresses.create!(:course_class_id => self.course_class_id, :training_plan_id => tp.id)
+      #tp.each do |t|
+        user.class_progresses.create!(:course_class_id => self.course_class_id, :training_plan_id => tp.id)
+      #end
     else
       user.class_progresses.create!(:course_class_id => self.course_class_id)
     end
+  end
+
+  def remove_user_progess
+    user.class_progresses.find_by_course_class_id(self.id).destroy
   end
 end

@@ -1,2 +1,34 @@
-<h1>CourseClasses#new</h1>
-<p>Find me in app/views/course_classes/new.html.erb</p>
+<% provide(:title, "开设班级") %>
+
+<% content_for :breadcrumbs do %>
+<li><%= link_to @course.title, course_path(@course) %> <span class="separator"></span></li>
+<%= content_tag(:li, "开设班级") %>
+<% end %>
+
+<% content_for :javascript do %>
+<% end %>
+
+<div class="row-fluid">
+  <div id="dashboard-left" class="span8">
+    <h4 class="widgettitle">开设班级</h4>
+    <div class="widgetcontent">
+      <div class="divider15"></div>
+      <%= simple_form_for(@course_class, :html => {:class => 'form-horizontal', :multipart => true }) do |f| %>
+        <%= f.input :eroll_deadline, :as => :date, 
+          :start_year => Date.today.year, 
+          :end_year => Date.today.year + 10, 
+          :order => [:year, :month, :day]
+        %>
+        <%= f.association :teachers, :collection => User.teacher, :multiple => true %>
+        <%= f.association :assistents, :collection => User.teacher, :multiple => true %>
+        <%= f.hidden_field :creator_id, :value => current_user.id %>
+        <%= f.hidden_field :course_id, :value => @course.id %>        
+        <div class="form-actions">
+        <%= f.button :submit, '开设新班级', :class => "btn-primary"  %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div id="dashboard-right" class="span4">
+  </div>
+</div>
