@@ -38,6 +38,7 @@ class CourseClassesController < ApplicationController
   def show
     @course_class = CourseClass.find(params[:id])
     @course = @course_class.course
+    @course_class.attachments.build
 
     respond_to do |format|
       format.html
@@ -77,12 +78,16 @@ class CourseClassesController < ApplicationController
   end
 
   def update
-    @course_class = CourseClass.find(params[:course_class])
+    @course_class = CourseClass.find(params[:id])
     @course = @course_class.course
 
     respond_to do |format|
       if @course_class.update_attributes(params[:course_class])
-        format.html { redirect_to session.delete(:return_to), :notice => "更新班级信息成功。"}
+        if session.delete(:return_to)
+          format.html { redirect_to session.delete(:return_to), :notice => "更新班级信息成功。"}
+        else
+          format.html { redirect_to class_path(@course_class), :notice => "更新班级信息成功。"}
+        end
       else
         format.html { render 'edit' }
       end
