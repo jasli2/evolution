@@ -10,6 +10,8 @@ Evolution::Application.routes.draw do
       put 'uneroll', :on => :member
     end
   end
+  
+  resources :attachments, :only => [:create]
 
   resources :comments
 

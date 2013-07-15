@@ -82,9 +82,7 @@
         <% end %>
       </div>
       <div id="tabs-3" class="course-material">
-        <h5><%= @course_class.id %></h5>
-        <%# if @course_class.attachments.count > 0 %>
-        <% if false %>
+        <% if @course_class.attachments.count > 0 %>
         <ul class='course-class-attachment'>
           <% @course_class.attachments.each do |at| %>
           <li>
@@ -95,11 +93,11 @@
         <% else %>
         <p><%= t("course.all.notic1") %></p>
         <% end %>
-        <%= simple_form_for(@course_class, :url => class_path(@course_class), :html => {:class => 'form-horizontal', :multipart => true }) do |f| %>
-          <%= f.simple_fields_for :attachments do |af| %>
-            <%= af.input :description %>
-            <%= af.input :file, :as => :file %>
-          <% end %>
+        <%= simple_form_for(Attachment.new, :html => {:class => 'form-horizontal', :multipart => true }) do |f| %>
+            <%= f.input :description %>
+            <%= f.input :file, :as => :file %>
+            <%= f.hidden_field :attachable_type, :value => @course_class.class.name.demodulize %>
+            <%= f.hidden_field :attachable_id, :value => @course_class.id %>
           <%= f.button :submit, '上传附件', :class => "btn-primary"  %>
         <% end %>
       </div>
@@ -124,6 +122,24 @@
     
     <h3 class="subtitle"> <%= t("users.all.aboutteacher") %></h3>
     <% @course_class.teachers.each do |t| %>
+    <div class="well about-teacher">
+      <div class="teacher-image-rate">
+      <%= image_tag user_avatar_path(t, :normal) %>
+      <%= teacher_rate_tag(t) %>
+      </div>
+      <div class="teacher-info">
+        <h4><%= link_to t.name, user_path(t) %></h4>
+        <% if t.self_intro.blank? %>
+        <p> <%= t("users.all.nointruduction") %></p>
+        <% else %>
+        <p><%= t.self_intro %></p>
+        <% end %>
+      </div>
+    </div>
+    <% end %>
+
+    <h3 class="subtitle">助教简介</h3>
+    <% @course_class.assistents.each do |t| %>
     <div class="well about-teacher">
       <div class="teacher-image-rate">
       <%= image_tag user_avatar_path(t, :normal) %>

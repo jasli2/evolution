@@ -27,7 +27,7 @@ class Comment < ActiveRecord::Base
   belongs_to :repcomment, :class_name => "Comment"
   has_one :feed_item, :as => :item, :dependent => :destroy
 
-  validates :user_id, :commentable_id, :commentable_type, :repcomment_id, :content, :presence => true
+  validates :user_id, :commentable_id, :commentable_type, :content, :presence => true
   attr_accessible :content
   
   def gen_feed_item
