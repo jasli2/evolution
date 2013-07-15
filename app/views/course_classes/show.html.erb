@@ -82,18 +82,26 @@
         <% end %>
       </div>
       <div id="tabs-3" class="course-material">
-        <% if @course_class.attachments.count > 0 %>
+        <h5><%= @course_class.id %></h5>
+        <%# if @course_class.attachments.count > 0 %>
+        <% if false %>
         <ul class='course-class-attachment'>
           <% @course_class.attachments.each do |at| %>
           <li>
-            <%= link_to at.description ? at.description : at.file.file.filename, at.file.url %>
+            <%= link_to (at.description ? at.description : at.file.file.filename), at.file.url %>
           </li>
           <% end %>
         </ul>
         <% else %>
         <p><%= t("course.all.notic1") %></p>
         <% end %>
-        
+        <%= simple_form_for(@course_class, :url => class_path(@course_class), :html => {:class => 'form-horizontal', :multipart => true }) do |f| %>
+          <%= f.simple_fields_for :attachments do |af| %>
+            <%= af.input :description %>
+            <%= af.input :file, :as => :file %>
+          <% end %>
+          <%= f.button :submit, '上传附件', :class => "btn-primary"  %>
+        <% end %>
       </div>
       <div id="tabs-4" class="course-discussion">
         <div class="discuss-list"> <%= t("course.all.notic2") %></div>

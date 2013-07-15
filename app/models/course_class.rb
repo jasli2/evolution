@@ -33,6 +33,8 @@ class CourseClass < ActiveRecord::Base
   has_many :user_progresses, :class_name => 'UserClassProgress'
 
   has_many :attachments, :as => :attachable
+  accepts_nested_attributes_for :attachments, :reject_if => proc { |a| a['file'].blank? }
+  attr_accessible :attachments_attributes
 
   # state machine
   state_machine :state, :initial => :erolling do 
