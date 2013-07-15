@@ -42,12 +42,12 @@ class Examination < ActiveRecord::Base
   state_machine :state, :initial => :created  do
 
     after_transition :on => :all_feedbacked do |exam, transition|
-      exam.notifications.create!(:user_id => tp.creator.id, :notification_type => "finished") if exam.creator
+      exam.notifications.create!(:user_id => exam.creator.id, :notification_type => "finished") if exam.creator
       exam.finished_at = Time.zone.now
     end
 
-    after_transition :on => :cancel do |tp, transition|
-      tp.cancelled_at = Time.zone.now
+    after_transition :on => :cancel do |exam, transition|
+      exam.cancelled_at = Time.zone.now
     end
 
     after_transition :on => :publish do |exam, transition|
