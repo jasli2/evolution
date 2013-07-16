@@ -99,6 +99,10 @@ class User < ActiveRecord::Base
   # user class progress
   has_many :class_progresses, :class_name => 'UserClassProgress'
 
+  # model permission
+  has_many :model_permissions
+  #accepts_nested_attributes_for :model_permissions
+
   def erolled_class_for_course(c)
     class_progresses.find_by_course_class_id c.course_class_ids
   end

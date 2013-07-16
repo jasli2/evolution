@@ -64,3 +64,5 @@ gem 'redcarpet'
 gem 'sanitize'
 gem 'state_machine'
 
+gem 'cancan'
+

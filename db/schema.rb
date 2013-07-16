@@ -11,7 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130711054629) do
+ActiveRecord::Schema.define(:version => 20130714134044) do
+
+  create_table "action_permissions", :force => true do |t|
+    t.integer  "model_permission_id"
+    t.string   "action_name"
+    t.integer  "user_scope"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
 
   create_table "activities", :force => true do |t|
     t.string   "description"
@@ -155,6 +163,13 @@ ActiveRecord::Schema.define(:version => 20130711054629) do
   end
 
   add_index "feeds", ["user_id", "feed_item_id"], :name => "index_feeds_on_user_id_and_feed_item_id"
+
+  create_table "model_permissions", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "model_name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "notifications", :force => true do |t|
     t.string   "source_type"

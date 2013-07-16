@@ -213,6 +213,19 @@ en:
       notic5: "Courses has successfully export."
       notic6: "Course was successfully created."
       notic7: "Course was successfully updated."
+  permissions:
+    page:
+      title: "Permission Management"
+      sub_title: "Permission Management"  
+    all:
+      title: "Permission Center"
+      sub_title: "View Permission"
+      action: "Modification"
+      name: "Module"
+      create: "Creatable"
+      read: "Readable"
+      update: "Writable"
+      delete: "Deletable"    
   share:
     header:
       edit: "Edit Profile"

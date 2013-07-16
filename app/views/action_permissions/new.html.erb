@@ -1,0 +1,33 @@
+<% provide(:title, "创建用户权限") %>
+<% provide(:page_title, "创建用户权限") %>
+<% provide(:page_sub_title, "创建用户权限") %>
+<% provide(:page_icon, "iconfa-edit") %>
+
+<% content_for :breadcrumbs do %>
+<li><%= link_to "权限管理", permissions_path %> <span class="separator"></span></li>
+<%= content_tag(:li, "创建用户权限") %>
+<% end %>
+
+<% content_for :javascript do %>
+
+<% end %>
+
+<div class="row-fluid">
+  <div id="dashboard-left" class="span8">
+    <h4 class="widgettitle">创建用户权限</h4>
+    <div class="widgetcontent">
+      <div class="divider15"></div>
+        <%= simple_form_for(@authority, :url => action_permissions_path, :method => :post, :html => {:class => 'form-horizontal'}) do |f| %>
+        <%= f.hidden_field :model_permission_id, :value => @model_permission_id %>
+        <%= f.input :action_name, :label => 'Action Name' %>
+        <%= f.input :user_scope, :label => 'User Scope' %>
+        <div class="form-actions">
+        <%= f.button :submit, 'Submit', :class => "btn-primary"  %>
+        </div>
+        <% end %>
+    </div>
+  </div>
+  <div id="dashboard-right" class="span4">
+    
+  </div>
+</div>
