@@ -16,7 +16,7 @@
 
 class Examination < ActiveRecord::Base
   attr_accessible :creator_id, :title
-  attr_accessible :deadline
+  attr_accessible :deadline, :published_at
 
   validates :creator_id, :presence => true
   validates :title, :presence => true
@@ -119,6 +119,29 @@ class Examination < ActiveRecord::Base
   def exam_question_answere(paper_id)
     self.questions.all.each do |question|
        question.user_answers.create!(:paper_id => paper_id)
+    end
+  end
+
+  #should put this action in background
+  #paper processing should more perfect
+  def finish_paper(paper, answers)
+    answers.each do |key, value|
+      puts key.split('_')[0]
+      puts key.split('_')[1]
+      q_type = key.split('_')[0]
+      q_id = key.split('_')[1].to_i
+      sub = Question.find(q_id)
+      sub_ans = sub.user_answers.where(paper.id).first
+      if !q_type.eql?("dialogical")
+        if value.nil?
+          state = false
+        else
+          state = sub.answer.upcase.eql?(value.upcase)
+        end
+      else
+        puts "dialogical should deal"
+      end
+      sub_ans.update_attributes(:content => value, :correct => state)
     end
   end
 
