@@ -1,0 +1,12 @@
+<% provide(:title, current_user.admin? ? "权限管理" : "我的权限") %>
+<% provide(:page_title, current_user.admin? ? "权限管理" : "我的权限") %>
+<% provide(:page_sub_title, current_user.admin? ? "管理用户权限" : "查看权限") %>
+<% provide(:page_icon, "iconfa-certificate") %>
+
+<% content_for :breadcrumbs do %>
+<%= content_tag(:li, current_user.admin? ? "权限管理" : "我的权限") %>
+<% end %>
+
+<% content_for :javascript do %>
+
+<% end %>

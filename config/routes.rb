@@ -47,6 +47,10 @@ Evolution::Application.routes.draw do
     resources :questions 
   end
 
+  resources :permissions
+
+  resources :action_permissions
+  
   resources :training_plans do
     get 'publish', :on => :member
     put 'confirm_publish', :on => :member
