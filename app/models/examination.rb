@@ -53,7 +53,7 @@ class Examination < ActiveRecord::Base
     after_transition :on => :publish do |exam, transition|
       #gen_feedback_todos
       exam.users.each do |user|
-        todo =  exam.user_todo_exam(user, exam)
+        todo =  exam.user_todo_exam(user)
         todo.update_attribute(:todo_type, 'published')
         exam.notifications.create!(:user_id => user.id, :notification_type => "published") if user
       end
