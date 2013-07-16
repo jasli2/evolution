@@ -214,6 +214,19 @@ zh-CN:
       notic5: "课程全部成功导出"
       notic6: "课程创建成功"
       notic7: "课程更新成功"
+  permissions:
+    page:
+      title: "权限管理"
+      sub_title: "管理用户权限"  
+    all:
+      title: "权限中心"
+      sub_title: "查看权限"
+      action: "修改"
+      name: "模块"
+      create: "可创建"
+      read: "可读取"
+      update: "可修改"
+      delete: "可删除"
   share:
     header:
       edit: "修改资料"
