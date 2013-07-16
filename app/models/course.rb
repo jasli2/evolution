@@ -83,6 +83,16 @@ class Course < ActiveRecord::Base
     course_classes.active.count > 0 ? 'open' : 'closed'
   end
 
+  def find_class_for_user(u)
+    if u
+      course_classes.each do |cc|
+        return cc if cc.student_ids.include? u.id
+      end
+
+      nil
+    end
+  end
+
   def self.to_csv(options = {})
     header = ["title","audience", "type", "sourcetype", "coursetype", "creator", "creator ID", \
               "duration", "Teacher", "competency", "level"]

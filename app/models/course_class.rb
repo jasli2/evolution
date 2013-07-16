@@ -33,6 +33,8 @@ class CourseClass < ActiveRecord::Base
   has_many :user_progresses, :class_name => 'UserClassProgress'
 
   has_many :attachments, :as => :attachable
+  accepts_nested_attributes_for :attachments, :reject_if => proc { |a| a['file'].blank? }
+  attr_accessible :attachments_attributes
 
   # state machine
   state_machine :state, :initial => :erolling do 
@@ -50,4 +52,20 @@ class CourseClass < ActiveRecord::Base
   end
 
   scope :active, where(:state => [:erolling, :eroll_done])
+
+  def eroll(u)
+    students << u if u
+  end
+
+  def uneroll(u)
+    user_role_students.find_by_user_id(u.id).destroy if u
+  end
+
+  def creator?(u)
+    creator_id == u.id if u
+  end
+
+  def teacher?(u)
+    teacher_ids.include? u.id if u
+  end
 end

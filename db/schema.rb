@@ -139,11 +139,37 @@ ActiveRecord::Schema.define(:version => 20130714134044) do
     t.string   "lesson"
   end
 
+  create_table "examination_feedbacks", :force => true do |t|
+    t.integer  "examination_id"
+    t.integer  "user_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  create_table "examination_questions", :force => true do |t|
+    t.integer  "examination_id"
+    t.integer  "question_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  create_table "examination_users", :force => true do |t|
+    t.integer  "examination_id"
+    t.integer  "user_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
   create_table "examinations", :force => true do |t|
     t.string   "title"
     t.integer  "creator_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.datetime "deadline"
+    t.string   "state"
+    t.datetime "finished_at"
+    t.datetime "cancelled_at"
+    t.datetime "published_at"
   end
 
   create_table "feed_items", :force => true do |t|
@@ -181,6 +207,16 @@ ActiveRecord::Schema.define(:version => 20130714134044) do
     t.datetime "updated_at",        :null => false
   end
 
+  create_table "papers", :force => true do |t|
+    t.integer  "score"
+    t.integer  "correct_nums"
+    t.integer  "error_nums"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.integer  "user_id"
+    t.integer  "examination_id"
+  end
+
   create_table "position_competency_levels", :force => true do |t|
     t.integer  "standard"
     t.integer  "position_id"
@@ -207,9 +243,10 @@ ActiveRecord::Schema.define(:version => 20130714134044) do
   create_table "questions", :force => true do |t|
     t.text     "qdata"
     t.string   "answer"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-    t.integer  "examination_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.boolean  "correct"
+    t.integer  "question_type"
   end
 
   create_table "todos", :force => true do |t|
@@ -278,6 +315,15 @@ ActiveRecord::Schema.define(:version => 20130714134044) do
     t.datetime "finished_at"
     t.datetime "cancelled_at"
     t.integer  "creator_id"
+  end
+
+  create_table "user_answers", :force => true do |t|
+    t.string   "content"
+    t.boolean  "correct"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.integer  "question_id"
+    t.integer  "paper_id"
   end
 
   create_table "user_class_progresses", :force => true do |t|

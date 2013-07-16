@@ -44,7 +44,7 @@
     <div class="class-course">
       <%= image_tag course_cover_path(@course, :large), :class => "pull-left" %>
       <div class="course-banner">
-        <h3><%= @course.title %><span class='label label-info course-state'><%= @course.state %></span></h3>
+        <h3><%= @course.title %></h3>
         <ul>
           <li>目标学员：<%= @course.audience %></li>
           <li>授课老师：<%= @course.teacher.name %></li>
@@ -69,21 +69,29 @@
     <div class="divider15"></div>
     <% end %>
 
+    <h3 class="subtitle">目前开设的班级：</h3>
     <% if @course.course_classes.active.count > 0 %>
+    <div class='well nopadding'>
     <ul class='course-active-class-list'>
       <% @course.course_classes.active.each do |c| %>
       <li>
-        班级老师：
+        <%= link_to '班级-' + c.id.to_s, class_path(c) %> :
+        老师：
         <% c.teachers.each do |t| %>
-        <span><%= t.name %></span>
+        <span><%= link_to t.name, user_path(t) %></span>
         <% end %>
         助教：
         <% c.assistents.each do |a| %>
-        <span><%= a.name %></span>
+        <span><%= link_to a.name, user_path(a) %></span>
+        <% end %>
+        <%= form_for(c, :url => eroll_class_path(c), html: { :method => :put }) do |f| %>
+        <%= f.hidden_field :user_id, :value => current_user.id %>
+        <%= f.submit "点击报名", :class => "btn btn-small btn-primary pull-right" %>
         <% end %>
       </li>
       <% end %>
     </ul>
+    </div>
     <% end %>
 
     <div class="tabbedwidget tab-primary">
@@ -94,7 +102,11 @@
         <li><a href="#tabs-4"><span class="iconfa-comments-alt"></span>  <%= t("course.all.discussion") %></a></li>
       </ul>
       <div id="tabs-1" class="course-introduction">
+        <% unless @course.description.blank? %>
         <%= eo_markdown(@course.description) unless @course.description.blank? %>
+        <% else %>
+        <p>目前没有课程介绍。</p>
+        <% end %>
       </div>
       <div id="tabs-2" class="course-target">
         <% unless @course.target.blank? %>
@@ -125,43 +137,6 @@
       <a href="<%= new_course_class_path(@course) %>" class="btn btn-warning"><i class="iconfa-plus icon-white"></i>  开设班级</a> 
     </div>
     <% end %>
-    
-    <h3 class="subtitle"> <%= t("users.all.aboutteacher") %></h3>
-    <div class="well about-teacher">
-      <div class="teacher-image-rate">
-      <%= image_tag user_avatar_path(@course.teacher, :normal) %>
-      <%= teacher_rate_tag(@course.teacher) %>
-      </div>
-      <div class="teacher-info">
-        <h4><%= link_to @course.teacher.name, user_path(@course.teacher) %></h4>
-        <% if @course.teacher.self_intro.blank? %>
-        <p> <%= t("users.all.nointruduction") %></p>
-        <% else %>
-        <p><%= @course.teacher.self_intro %></p>
-        <% end %>
-      </div>
-    </div>
-
-    <div class="divider15"></div>
-    <h3 class="subtitle"> <%= t("users.all.student") %></h3>
-      <div class="well course-students">
-        <% if @course.competency_levels.size > 0 %>
-        <ul>
-          <% @course.competency_levels.first.positions.first.users.each do |u| %>
-          <% unless u.admin? or u.id == @course.teacher.id %>
-          <li>
-            <div class="user-image-name">
-              <%= link_to image_tag(user_avatar_path(u, :small)), user_path(u), {:title => "#{u.name}"} %>
-              <%= link_to u.name, user_path(u) %>
-            </div>
-          </li>
-          <% end %>
-          <% end %>
-        </ul>
-        <% else %>
-        <p><%= t("users.all.notice") %></p>
-        <% end %>
-      </div>
     
   </div>
 </div>

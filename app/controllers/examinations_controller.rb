@@ -10,6 +10,7 @@ class ExaminationsController < ApplicationController
       @menu_category = 'header'
       @menu_active = 'exam'
     end
+    session[:return_to] = request.referer
 
     @exams = Examination.order(:id)
 
@@ -72,6 +73,18 @@ class ExaminationsController < ApplicationController
         format.html { redirect_to session.delete(:return_to), notice: '更新考试信息成功！'}
       else
         format.html { render 'edit' }
+      end
+    end
+  end
+
+  def confirm_publish
+
+    @exam = Examination.find(params[:id]) if current_user.admin?
+    respond_to do |format|
+      if @exam.confirm_publish
+        format.html { redirect_to :back, :notice => "在线考试：, 发布成功！"}
+      else
+        format.html { render 'index' }
       end
     end
   end

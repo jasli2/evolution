@@ -1,2 +1,181 @@
-<h1>CourseClasses#show</h1>
-<p>Find me in app/views/course_classes/show.html.erb</p>
+<% provide(:title, @course.title) %>
+<% provide(:page_title, @course.title) %>
+<% provide(:page_sub_title, t("course.all.detail")) %>
+<% provide(:page_icon, "iconfa-edit") %>
+
+<% content_for :breadcrumbs do %>
+<%= content_tag(:li, @course.title + '(班级-' + @course_class.id.to_s + ")") %>
+<% end %>
+
+<% content_for :javascript do %>
+<script type="text/javascript">
+  $(function() {
+    // tabbed widget
+    $('.tabbedwidget').tabs();
+  });
+  function loadSWF(url, id){
+    if(url) {
+      var flashvars = {};
+      var swfwidth = $("#swf-content").width();
+      console.log(swfwidth);
+      var swfheigth = Math.floor(swfwidth * 3 / 4);
+      console.log(swfheigth);
+      flashvars.autoPlay = "true";
+      var params = {};
+      params.play = "true";
+      params.menu = "false";
+      params.quality = "high";
+      params.allowfullscreen = "true";
+      var attributes = {};
+      attributes.align = "middle";
+      swfobject.embedSWF(url, "swf-content", swfwidth.toString(), swfheigth.toString(), "9.0.0", false, flashvars, params, attributes);
+    }
+  }
+</script>
+<% end %>
+
+<div class="row-fluid">
+  <div id="dashboard-left" class="span8">
+    <div class="class-course">
+      <%= image_tag course_cover_path(@course, :large), :class => "pull-left" %>
+      <div class="course-banner">
+        <h3><%= @course.title %></h3>
+        <ul>
+          <li>目标学员：<%= @course.audience %></li>
+          <li>授课老师：<%= @course.teacher.name %></li>
+          <li>讲师来源：<%= @course.source_type %></li>
+          <li>授课方式：<%= @course.teach_type %></li>
+          <li>课程类型：<%= @course.course_type %></li>
+          <li>课程时长：<%= @course.duration %> 小时</li>
+          <% if @course.competency_levels.size > 0 %>
+          <li>所属胜任力级别：<%= @course.competency_levels.first.competency.name %> (<%=level_name(@course.competency_levels.first.level)%>)</li>
+          <% end %>
+        </ul>
+        <span><%= link_to @course.creator.name, user_path(@course.creator) %> <%= t("course.all.create") %> <%= distance_of_time_in_words_to_now(@course.created_at) + t("course.all.ago") %></span>
+      </div>
+    </div>
+    <div class="divider30"></div>
+    <div class="clearfix"></div>
+
+    <% unless @course.lesson.url.nil? %>
+    <div id="swf-content">
+      <a class="btn btn-success btn-small" href="<%= @course.lesson.url %>" onclick="loadSWF(this.href, 1); return false;"> <i class="iconfa-play"></i> <%= t("course.all.clik_watch") %></a>
+    </div>
+    <div class="divider15"></div>
+    <% end %>
+
+    <div class="tabbedwidget tab-primary">
+      <ul>
+        <li><a href="#tabs-1"><span class="iconfa-info-sign"></span> <%= t("course.all.info") %></a></li>
+        <li><a href="#tabs-2"><span class="iconfa-check"></span> 课程目标</a></li>
+        <li><a href="#tabs-3"><span class="iconfa-file"></span>  <%= t("course.all.material") %></a></li>
+        <li><a href="#tabs-4"><span class="iconfa-comments-alt"></span>  <%= t("course.all.discussion") %></a></li>
+      </ul>
+      <div id="tabs-1" class="course-introduction">
+        <%= eo_markdown(@course.description) unless @course.description.blank? %>
+      </div>
+      <div id="tabs-2" class="course-target">
+        <% unless @course.target.blank? %>
+        <%= eo_markdown(@course.target) unless @course.description.blank? %>
+        <% else %>
+        <p> <%= t("course.all.notic1") %></p>
+        <% end %>
+      </div>
+      <div id="tabs-3" class="course-material">
+        <% if @course_class.attachments.count > 0 %>
+        <ul class='course-class-attachment'>
+          <% @course_class.attachments.each do |at| %>
+          <li>
+            <%= link_to (at.description ? at.description : at.file.file.filename), at.file.url %>
+          </li>
+          <% end %>
+        </ul>
+        <% else %>
+        <p><%= t("course.all.notic1") %></p>
+        <% end %>
+        <%= simple_form_for(Attachment.new, :html => {:class => 'form-horizontal', :multipart => true }) do |f| %>
+            <%= f.input :description %>
+            <%= f.input :file, :as => :file %>
+            <%= f.hidden_field :attachable_type, :value => @course_class.class.name.demodulize %>
+            <%= f.hidden_field :attachable_id, :value => @course_class.id %>
+          <%= f.button :submit, '上传附件', :class => "btn-primary"  %>
+        <% end %>
+      </div>
+      <div id="tabs-4" class="course-discussion">
+        <div class="discuss-list"> <%= t("course.all.notic2") %></div>
+        <div class="discuss-input-box">
+          <%= image_tag user_avatar_path(current_user, :small) %>
+          <div class="discuss-input">
+            <%= text_area_tag "topic", nil, :rows => 2, :cols => 25, :placeholder => "发起讨论或者发布问题..." %>
+            <div><a href="#myModal" data-toggle="modal" class="btn btn-primary disabled"><i class="iconfa-edit icon-white"></i> 发布讨论</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="dashboard-right" class="span4">
+    <% if current_user.admin? or @course_class.creator?(current_user) or @course_class.teacher?(current_user) %>
+    <div class="well">
+      <a href="<%= edit_class_path(@course) %>" class="btn btn-success"><i class="iconfa-edit icon-white"></i>  编辑班级信息</a>
+    </div>
+    <% end %>
+    
+    <h3 class="subtitle"> <%= t("users.all.aboutteacher") %></h3>
+    <% @course_class.teachers.each do |t| %>
+    <div class="well about-teacher">
+      <div class="teacher-image-rate">
+      <%= image_tag user_avatar_path(t, :normal) %>
+      <%= teacher_rate_tag(t) %>
+      </div>
+      <div class="teacher-info">
+        <h4><%= link_to t.name, user_path(t) %></h4>
+        <% if t.self_intro.blank? %>
+        <p> <%= t("users.all.nointruduction") %></p>
+        <% else %>
+        <p><%= t.self_intro %></p>
+        <% end %>
+      </div>
+    </div>
+    <% end %>
+
+    <h3 class="subtitle">助教简介</h3>
+    <% @course_class.assistents.each do |t| %>
+    <div class="well about-teacher">
+      <div class="teacher-image-rate">
+      <%= image_tag user_avatar_path(t, :normal) %>
+      <%= teacher_rate_tag(t) %>
+      </div>
+      <div class="teacher-info">
+        <h4><%= link_to t.name, user_path(t) %></h4>
+        <% if t.self_intro.blank? %>
+        <p> <%= t("users.all.nointruduction") %></p>
+        <% else %>
+        <p><%= t.self_intro %></p>
+        <% end %>
+      </div>
+    </div>
+    <% end %>
+
+    <div class="divider15"></div>
+    <h3 class="subtitle"> <%= t("users.all.student") %></h3>
+      <div class="well course-students">
+        <% if @course_class.students.size > 0 %>
+        <ul>
+          <% @course_class.students.each do |u| %>
+          <% unless u.admin? %>
+          <li>
+            <div class="user-image-name">
+              <%= link_to image_tag(user_avatar_path(u, :small)), user_path(u), {:title => "#{u.name}"} %>
+              <%= link_to u.name, user_path(u) %>
+            </div>
+          </li>
+          <% end %>
+          <% end %>
+        </ul>
+        <% else %>
+        <p><%= t("users.all.notice") %></p>
+        <% end %>
+      </div>
+    
+  </div>
+</div>
