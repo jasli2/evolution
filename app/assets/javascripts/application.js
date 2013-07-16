@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap-fileupload.min
+//= require_tree .
 
 // for drop dowm manu
 jQuery('.leftmenu .dropdown > a').click(function(){
