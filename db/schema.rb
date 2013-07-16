@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130714134044) do
+ActiveRecord::Schema.define(:version => 20130715141556) do
 
   create_table "action_permissions", :force => true do |t|
     t.integer  "model_permission_id"
@@ -137,6 +137,14 @@ ActiveRecord::Schema.define(:version => 20130714134044) do
     t.string   "teach_type"
     t.string   "source_type"
     t.string   "lesson"
+  end
+
+  create_table "discusses", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "course_class_id"
+    t.string   "title"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   create_table "examination_feedbacks", :force => true do |t|
