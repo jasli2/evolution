@@ -61,7 +61,27 @@ blockquote {
 .course-discussion {
   .discuss-list {
     border-bottom: 1px solid #ddd;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        padding: 10px 0;
+        border-bottom: 1px dashed #ddd;
+        &:last-child { border-bottom: 0; }
+        img { 
+          float: left;
+          width: 40px;
+        }
+
+        .discuss-details {
+          margin-left: 50px;
+        }
+      }
+    }
   }
 
   .discuss-input-box {

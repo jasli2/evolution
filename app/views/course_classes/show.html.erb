@@ -86,7 +86,11 @@
         <ul class='course-class-attachment'>
           <% @course_class.attachments.each do |at| %>
           <li>
-            <%= link_to (at.description ? at.description : at.file.file.filename), at.file.url %>
+            <% if at.description %>
+            <%= link_to at.description + '(' + at.file.file.filename + '-' + at.file.size_to_human + ')', at.file.url %>
+            <% else %>
+            <%= link_to at.file.file.filename + '-' + at.file.size_to_human, at.file.url %>
+            <% end %>
           </li>
           <% end %>
         </ul>
@@ -102,12 +106,33 @@
         <% end %>
       </div>
       <div id="tabs-4" class="course-discussion">
-        <div class="discuss-list"> <%= t("course.all.notic2") %></div>
+        <div class="discuss-list"> 
+          <% if @course_class.discusses.count > 0 %>
+          <ul>
+            <% @course_class.discusses.each do |d| %>
+            <li>
+              <%= image_tag user_avatar_path(d.user, :small) %>
+              <div class='discuss-details'>
+              <%= link_to d.user.name, user_path(d.user) %>
+              <%= distance_of_time_in_words_to_now(d.created_at) %>
+              <h4><%= d.title %></h4>
+              </div>
+            </li>
+            <% end %>
+          </ul>
+          <%=  %>
+          <% else %>
+          <%= t("course.all.notic2") %>
+          <% end %>
+        </div>
         <div class="discuss-input-box">
           <%= image_tag user_avatar_path(current_user, :small) %>
           <div class="discuss-input">
-            <%= text_area_tag "topic", nil, :rows => 2, :cols => 25, :placeholder => "发起讨论或者发布问题..." %>
-            <div><a href="#myModal" data-toggle="modal" class="btn btn-primary disabled"><i class="iconfa-edit icon-white"></i> 发布讨论</a></div>
+            <%= simple_form_for([@course_class, Discuss.new], :url => class_discusses_path(@course_class)) do |f| %>
+              <%= f.input :title, :as => :text, :input_html => { :cols => 50, :rows => 3 }, :placeholder => "发起讨论或话题...", :label => false %>
+              <%= f.hidden_field :user_id, :value => current_user.id %>
+              <%= f.submit "发布", :class => "btn, btn-primary" %>
+            <% end %>
           </div>
         </div>
       </div>
@@ -138,8 +163,8 @@
     </div>
     <% end %>
 
-    <h3 class="subtitle">助教简介</h3>
     <% @course_class.assistents.each do |t| %>
+    <h3 class="subtitle">助教简介</h3>
     <div class="well about-teacher">
       <div class="teacher-image-rate">
       <%= image_tag user_avatar_path(t, :normal) %>

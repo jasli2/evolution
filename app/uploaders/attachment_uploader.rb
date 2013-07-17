@@ -60,4 +60,10 @@ class AttachmentUploader < CarrierWave::Uploader::Base
   #   "something.jpg" if original_filename
   # end
 
+  def size_to_human
+    units = %w{B KB MB GB TB}
+    e = (Math.log(self.size)/Math.log(1024)).floor
+    s = "%.1f" % (self.size.to_f / 1024**e)
+    s.sub(/\.?0*$/, units[e])
+  end
 end

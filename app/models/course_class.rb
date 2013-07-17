@@ -36,6 +36,8 @@ class CourseClass < ActiveRecord::Base
   accepts_nested_attributes_for :attachments, :reject_if => proc { |a| a['file'].blank? }
   attr_accessible :attachments_attributes
 
+  has_many :discusses
+
   # state machine
   state_machine :state, :initial => :erolling do 
     event :eroll_timeout do 
