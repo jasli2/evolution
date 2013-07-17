@@ -8,8 +8,11 @@ Evolution::Application.routes.draw do
     resources :classes, :controller => :course_classes do
       put 'eroll', :on => :member
       put 'uneroll', :on => :member
+      resources :discuss, :only => [:create]
     end
   end
+  
+  resources :attachments, :only => [:create]
 
   resources :comments
 
@@ -45,6 +48,10 @@ Evolution::Application.routes.draw do
     resources :questions 
   end
 
+  resources :permissions
+
+  resources :action_permissions
+  
   resources :training_plans do
     get 'publish', :on => :member
     put 'confirm_publish', :on => :member

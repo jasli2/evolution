@@ -38,7 +38,6 @@ class CourseClassesController < ApplicationController
   def show
     @course_class = CourseClass.find(params[:id])
     @course = @course_class.course
-    @course_class.attachments.build
 
     respond_to do |format|
       format.html

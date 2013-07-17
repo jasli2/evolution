@@ -1,0 +1,35 @@
+<% provide(:title, current_user.admin? ? "权限管理" : "我的权限") %>
+<% provide(:page_title, current_user.admin? ? "权限管理" : "我的权限") %>
+<% provide(:page_sub_title, current_user.admin? ? "管理用户权限" : "查看权限") %>
+<% provide(:page_icon, "iconfa-certificate") %>
+
+<% content_for :breadcrumbs do %>
+<%= content_tag(:li, current_user.admin? ? "权限管理" : "我的权限") %>
+<% end %>
+
+<% content_for :javascript do %>
+
+<% end %>
+
+<div class="row-fluid">
+  <div id="dashboard-left" class="span8">
+    <h3 class="subtitle"><%= t("users.all.editprof") %></h3>
+    <div class="divider15"></div>
+    <h4 class="widgettitle"><%= t("users.all.editprof") %></h4>
+    <div class="widgetcontent">
+      <div class="divider15"></div>
+      <%= simple_form_for(@authority, :html => {:class => 'form-horizontal'}) do |f| %>
+      	<% f.hidden_field :user_id, :value => current_user.id %>
+        <%= f.input :create_permit, :label => '创建权限' %>
+        <%= f.input :read_permit, :label => '可读权限' %>
+        <%= f.input :write_permit, :label => '可写权限' %>
+        <%= f.input :delete_permit, :label => '删除权限' %>
+        <div class="form-actions">
+        <%= f.button :submit, '修改用户权限', :class => "btn-primary"  %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div id="dashboard-right" class="span4">
+  </div>
+</div>

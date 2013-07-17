@@ -13,6 +13,14 @@
 
 ActiveRecord::Schema.define(:version => 20130716100205) do
 
+  create_table "action_permissions", :force => true do |t|
+    t.integer  "model_permission_id"
+    t.string   "action_name"
+    t.integer  "user_scope"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
+
   create_table "activities", :force => true do |t|
     t.string   "description"
     t.datetime "created_at",  :null => false
@@ -131,6 +139,14 @@ ActiveRecord::Schema.define(:version => 20130716100205) do
     t.string   "lesson"
   end
 
+  create_table "discusses", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "course_class_id"
+    t.string   "title"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
   create_table "examination_feedbacks", :force => true do |t|
     t.integer  "examination_id"
     t.integer  "user_id"
@@ -181,6 +197,13 @@ ActiveRecord::Schema.define(:version => 20130716100205) do
   end
 
   add_index "feeds", ["user_id", "feed_item_id"], :name => "index_feeds_on_user_id_and_feed_item_id"
+
+  create_table "model_permissions", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "model_name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "notifications", :force => true do |t|
     t.string   "source_type"
