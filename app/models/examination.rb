@@ -33,7 +33,7 @@ class Examination < ActiveRecord::Base
 
   has_many :examination_questions
   has_many :questions, :through => :examination_questions
-  has_many :papers
+  has_many :papers, :dependent => :destroy
   belongs_to :creator, :class_name => "User"
 
   after_create :determine_first_state, :gen_feedback_todos
@@ -43,7 +43,6 @@ class Examination < ActiveRecord::Base
 
     after_transition :on => :all_feedbacked do |exam, transition|
       exam.notifications.create!(:user_id => exam.creator.id, :notification_type => "finished") if exam.creator
-      exam.finished_at = Time.zone.now
     end
 
     after_transition :on => :cancel do |exam, transition|
@@ -57,15 +56,19 @@ class Examination < ActiveRecord::Base
         todo.update_attribute(:todo_type, 'published')
         exam.notifications.create!(:user_id => user.id, :notification_type => "published") if user
       end
+    end
 
+
+    after_transition :on => :complete do |exam, transition|
+      exam.finished_at = Time.zone.now
     end
 
     event :all_feedbacked do
-      transition :published => :finished
+      transition :published => :pending_complete
     end
 
     event :feedback_timeout do
-      transition :published => :finished
+      transition :published => :pending_complete
     end
 
     event :cancel do
@@ -74,6 +77,10 @@ class Examination < ActiveRecord::Base
 
     event :publish do
       transition :pending_publish => :published
+    end
+
+    event :complete do
+      transition :pending_complete => :finished
     end  
   end
 
@@ -122,27 +129,28 @@ class Examination < ActiveRecord::Base
     end
   end
 
-  #should put this action in background
   #paper processing should more perfect
-  def finish_paper(paper, answers)
+  #function : deal with student paper \
+  #create todo for examination creator to finish examination
+  def finish_paper(paper_id, answers)
     answers.each do |key, value|
       puts key.split('_')[0]
       puts key.split('_')[1]
       q_type = key.split('_')[0]
       q_id = key.split('_')[1].to_i
       sub = Question.find(q_id)
-      sub_ans = sub.user_answers.where(paper.id).first
+      sub_ans = sub.user_answers.where(:paper_id => paper_id).first
       if !q_type.eql?("dialogical")
         if value.nil?
           state = false
         else
           state = sub.answer.upcase.eql?(value.upcase)
         end
-      else
-        puts "dialogical should deal"
       end
       sub_ans.update_attributes(:content => value, :correct => state)
     end
+
+    creator.todos.create!(:source => self, :todo_type => 'exam_pending_complete', :deadline => self.deadline)
   end
 
   private

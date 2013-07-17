@@ -20,4 +20,6 @@ class UserAnswer < ActiveRecord::Base
   belongs_to :question
   belongs_to :paper
 
+  scope :right_answer, lambda {|state| where(:correct => state)}
+
 end

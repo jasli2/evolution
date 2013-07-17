@@ -31,7 +31,7 @@ function show_answere(question_id) {
           <td width="69%">
             <%= eo_markdown(question.qdata) %>
             <div id="light_<%= question.id.to_s%>" style="display:none">
-              <%= text_field_tag "choice_#{question.id.to_s}_answer", params[:answer],:maxlength => 1 %>
+              <%= text_field_tag "answer[choice_#{question.id.to_s}]", nil,:maxlength => 1 %>
             </div>
           </td>
           <td width="30%">
@@ -46,7 +46,7 @@ function show_answere(question_id) {
           <td width="69%">
             <%= eo_markdown(question.qdata) %>
             <div id="light_<%= question.id.to_s%>" style="display:none">
-              <%= text_field_tag "judgement_#{question.id.to_s}_answer", params[:answer],:maxlength => 5 %>
+              <%= text_field_tag "answer[judgement_#{question.id.to_s}]", nil,:maxlength => 5 %>
             </div>
           </td>
           <td width="30%">
@@ -61,7 +61,7 @@ function show_answere(question_id) {
           <td width="69%">
             <%= eo_markdown(question.qdata) %>
             <div id="light_<%= question.id.to_s%>" style="display:none">
-              <%= text_field_tag "dialogical_#{question.id.to_s}_answer", params[:answer] %>
+              <%= text_field_tag "answer[dialogical_#{question.id.to_s}]", nil%>
             </div>
           </td>
           <td width="30%">

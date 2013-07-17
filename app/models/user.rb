@@ -62,7 +62,7 @@ class User < ActiveRecord::Base
 
   #examination
   has_many :papers
-  has_many :examinations, :foreign_key => "creator_id"
+  has_many :created_examinations, :class_name => "Examination", :foreign_key => "creator_id"
   has_many :examination_users
   has_many :examinations, :through => :examination_users
   has_many :active_examinations, :through => :examination_users, :source => :examination, :conditions => { :state => 'published'}
