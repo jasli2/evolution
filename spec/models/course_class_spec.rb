@@ -10,6 +10,10 @@
 #  creator_id     :integer
 #  teach_date     :datetime
 #  eroll_deadline :datetime
+#  max_students   :integer
+#  start_time     :datetime
+#  end_time       :datetime
+#  address        :string(255)
 #
 
 require 'spec_helper'

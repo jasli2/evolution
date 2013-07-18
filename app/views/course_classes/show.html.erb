@@ -51,7 +51,7 @@
           <li>所属胜任力级别：<%= @course.competency_levels.first.competency.name %> (<%=level_name(@course.competency_levels.first.level)%>)</li>
           <% end %>
         </ul>
-        <span><%= link_to @course.creator.name, user_path(@course.creator) %> <%= t("course.all.create") %> <%= distance_of_time_in_words_to_now(@course.created_at) + t("course.all.ago") %></span>
+        <span class='label'>报名状态：10/30</span>
       </div>
     </div>
     <div class="divider30"></div>
@@ -82,6 +82,8 @@
         <% end %>
       </div>
       <div id="tabs-3" class="course-material">
+        <% if can_view_class_attachment?(@course_class, current_user) %>
+
         <% if @course_class.attachments.count > 0 %>
         <ul class='course-class-attachment'>
           <% @course_class.attachments.each do |at| %>
@@ -97,6 +99,8 @@
         <% else %>
         <p><%= t("course.all.notic1") %></p>
         <% end %>
+
+        <% if can_uploader_attachment?(@course_class, current_user) %>
         <div class='course-class-uploader-form'>
         <%= simple_form_for(Attachment.new, :html => {:class => 'form-horizontal', :multipart => true }) do |f| %>
             <%= f.input :description %>
@@ -106,8 +110,16 @@
           <%= f.button :submit, '上传附件', :class => "btn-primary"  %>
         <% end %>
         </div>
+        <% end %>
+
+        <% else %>
+
+        <p>课程讨论只对班级学员开放，请先报名。</p>
+
+        <% end %>
       </div>
       <div id="tabs-4" class="course-discussion">
+        <% if can_view_class_discussion?(@course_class, current_user) %>
         <div class="discuss-list"> 
           <% if @course_class.discusses.count > 0 %>
           <ul>
@@ -122,11 +134,12 @@
             </li>
             <% end %>
           </ul>
-          <%=  %>
           <% else %>
           <%= t("course.all.notic2") %>
           <% end %>
         </div>
+
+        <% if can_post_discuss?(@course_class, current_user) %>
         <div class="discuss-input-box">
           <%= image_tag user_avatar_path(current_user, :small) %>
           <div class="discuss-input">
@@ -137,6 +150,12 @@
             <% end %>
           </div>
         </div>
+        <% end %>
+
+        <% else %>
+        <p>课程讨论只对班级学员开放，请先报名。</p>
+        <% end %>
+
       </div>
     </div>
   </div>

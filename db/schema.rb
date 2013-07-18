@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130715141556) do
+ActiveRecord::Schema.define(:version => 20130718130649) do
 
   create_table "action_permissions", :force => true do |t|
     t.integer  "model_permission_id"
@@ -120,6 +120,10 @@ ActiveRecord::Schema.define(:version => 20130715141556) do
     t.integer  "creator_id"
     t.datetime "teach_date"
     t.datetime "eroll_deadline"
+    t.integer  "max_students"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.string   "address"
   end
 
   create_table "courses", :force => true do |t|
