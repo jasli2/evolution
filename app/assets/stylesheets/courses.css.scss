@@ -86,7 +86,6 @@ blockquote {
 
   .discuss-input-box {
     padding-top: 20px;
-    //border: 1px solid #ddd
     img {
       float: left; 
       width: 40px;
@@ -117,4 +116,19 @@ blockquote {
       display: inline;
     }
   }
+}
+
+ul.course-class-attachment {
+  padding: 10px 15px;
+
+  li {
+    padding: 5px 0;
+    border-bottom: 1px dashed #ddd;
+    &:last-child { border-bottom: 0; }
+  }
+}
+
+.course-class-uploader-form {
+  border-top: 1px dashed #ddd;
+  padding-top: 20px;
 }
