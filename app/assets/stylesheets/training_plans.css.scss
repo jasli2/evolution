@@ -7,6 +7,27 @@
   margin: 0;
 }
 
+.tp-details {
+  h4.tp-header {
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  ul.tp-course-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      min-height: 100px;
+      img { float: left; width: 80px; }
+      div.tp-course-info { margin: 0 90px; }
+      a.action { float: right; }
+    }
+  }
+}
+
 .tp-details-progress {
   h4 {
     padding-bottom: 5px;
@@ -33,3 +54,4 @@
     color: #333;
   }
 }
+
