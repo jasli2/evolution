@@ -28,7 +28,7 @@ class Comment < ActiveRecord::Base
   has_one :feed_item, :as => :item, :dependent => :destroy
 
   validates :user_id, :commentable_id, :commentable_type, :content, :presence => true
-  attr_accessible :content
+  attr_accessible :content, :user_id, :commentable_type, :commentable_id, :repcomment_id
   
   def gen_feed_item
     f = create_feed_item

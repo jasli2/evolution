@@ -15,15 +15,15 @@
     <div class="widgetcontent">
       <div class="divider15"></div>
       <%= simple_form_for(@tp, :html => {:class => 'form-horizontal', :multipart => true }) do |f| %>
-        <%= f.input :title %>
-        <%= f.input :feedback_deadline, :as => :date, 
+        <%= f.input :title, :label => '培训计划标题' %>
+        <%= f.input :feedback_deadline, :label => '学员反馈截止日期', :as => :date, 
           :start_year => Date.today.year, 
           :end_year => Date.today.year + 10, 
           :order => [:year, :month, :day]
         %>
-        <%= f.association :required_courses, :multiple => true %>
-        <%= f.association :optional_courses, :multiple => true %>
-        <%= f.association :users, :collection => User.staff, :multiple => true %>
+        <%= f.association :required_courses, :label => '必修课程', :multiple => true %>
+        <%= f.association :optional_courses, :label => '选修课程', :multiple => true %>
+        <%= f.association :users, :label => '计划参培人员', :collection => User.staff, :multiple => true %>
         <%= f.hidden_field :creator_id, :value => current_user.id %>
         <div class="form-actions">
         <%= f.button :submit, '创建培训计划', :class => "btn-primary"  %>

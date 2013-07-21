@@ -21,4 +21,6 @@ class Notification < ActiveRecord::Base
   belongs_to :user
   belongs_to :source, :polymorphic => true  
   attr_accessible :source
+
+  scope :active, where(:viewed_at => nil)
 end

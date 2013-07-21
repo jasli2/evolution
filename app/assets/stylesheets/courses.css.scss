@@ -118,6 +118,47 @@ blockquote {
   }
 }
 
+.course-comments {
+  h4 {
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  ul.course-comments-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    li {
+      padding: 10px 0;
+      border-bottom: 1px solid #ddd;
+      &:last-child { border-bottom: 0; }
+
+      img { float: left; width: 40px; }
+      div.comment-details {
+        margin-left: 50px;
+      }
+    }
+  }
+
+  .course-comment-form {
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
+    margin-top: 20px;
+    img { float: left; width: 40px; }
+    div.comment-input {
+      margin-left: 50px;
+      textarea {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+
+        width: 100%;
+      }      
+    }
+  }
+}
+
 ul.course-class-attachment {
   padding: 10px 15px;
 

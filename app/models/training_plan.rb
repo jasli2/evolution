@@ -128,6 +128,10 @@ class TrainingPlan < ActiveRecord::Base
     end
   end
 
+  def required?(course)
+    required_course_ids.include? course.id
+  end
+
   private
     def determine_first_state
       # here to determine different state based on training type TODO

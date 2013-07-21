@@ -144,7 +144,8 @@ ul.active-training-list {
 
   li.training-user-course {
     padding: 5px;
-    padding-left: 15px;
+    border-bottom: 1px solid #ddd;
+    &:last-child { border-bottom: 0; }
   }
 }
 

@@ -42,6 +42,6 @@ class ClassUserRole < ActiveRecord::Base
   end
 
   def remove_user_progess
-    user.class_progresses.find_by_course_class_id(self.id).destroy
+    user.class_progresses.find_by_course_class_id(self.course_class_id).destroy
   end
 end

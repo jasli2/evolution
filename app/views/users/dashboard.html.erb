@@ -22,12 +22,12 @@
 
 <div class="row-fluid">
   <div id="dashboard-left" class="span8">
-    <% if current_user.notifications.count > 0 %>
+    <% if @active_notifications.count > 0 %>
     <div class="alert alert-info alert-block">
       <button data-dismiss="alert" class="close" type="button">&times;</button>
       <h4>最新消息：</h4>
       <ul class='notificaiton-list'>
-        <% current_user.notifications.each do |n| %>
+        <% @active_notifications.each do |n| %>
         <li><%= link_to notice_description(n), notice_url(n) %></li>
         <% end %>
       </ul>
@@ -59,8 +59,9 @@
       </li>
         <% tp.course_for_user(current_user).each do |c| %>
         <li class='training-user-course'>
+          <span><%= tp.required?(c) ? '[必修课]' : '[选修课]' %>
           <%= link_to c.title, course_path(c) %>
-          <span class='course-state'>
+          <span class='label label-info pull-right'><%= user_course_state current_user, c %></span>
         </li>
         <% end %>
       <% end %>
@@ -111,31 +112,6 @@
                         
     <div class="divider15"></div>
 
-    <h4 class="widgettitle"><span class="iconfa-tasks icon-white"></span><%= t("course.all.sub_title2") %><span class="pull-right"><%= link_to "see all &#8594;".html_safe, user_courses_path(current_user) %></span></h4>
-    
-    <% if @pending_courses.size == 0 %>
-    <div class="widgetcontent">
-      <p>No user setup yet. please setup it first. </p>
-    </div>
-    <% else %>
-    <div class="widgetcontent nopadding">
-      <ul class="courselist">
-        <% @pending_courses.each do |c| %>
-        <li>
-          <%= image_tag course_cover_path(c, :normal), :class => "pull-left" %>
-          <div class="course-info">
-            <h4><%= link_to c.title, course_path(c) %></h4>
-            <h6><%= link_to c.teacher.name, user_path(c.teacher) %> <%= t("course.all.create") %> <%= distance_of_time_in_words_to_now(c.created_at) + t("course.all.ago") %></h6>
-            <p><%= Sanitize.clean(eo_markdown(c.description)) unless c.description.blank? %></p>
-            <a href="<%= course_path(c) %>" class="btn btn-primary btn-small"><span class="iconfa-info-sign icon-white"></span><%= t("course.all.details") %></a>
-          </div>
-        </li>
-        <% end %>
-      </ul>
-    </div>
-    <% end %>
-
-    <div class="divider30"></div>
                         
   </div><!--span8-->
                     

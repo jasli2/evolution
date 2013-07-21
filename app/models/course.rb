@@ -53,7 +53,10 @@ class Course < ActiveRecord::Base
 
   has_many :course_classes
 
+  has_many :comments, :as => :commentable
+  
   mount_uploader :lesson, FileUploader
+
 
   # custom image sizes: each key is a version name
   IMAGE_CONFIG = {

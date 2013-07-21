@@ -51,13 +51,13 @@
           <li>所属胜任力级别：<%= @course.competency_levels.first.competency.name %> (<%=level_name(@course.competency_levels.first.level)%>)</li>
           <% end %>
         </ul>
-        <span class='label'>报名状态：10/30</span>
+        <span class='label'>报名状态：<%= @course_class.students.count.to_s + '/' + @course_class.max_students.to_s %></span>
       </div>
     </div>
     <div class="divider30"></div>
     <div class="clearfix"></div>
 
-    <% unless @course.lesson.url.nil? %>
+    <% if @course_class.student?(current_user) and @course.lesson.url.nil? %>
     <div id="swf-content">
       <a class="btn btn-success btn-small" href="<%= @course.lesson.url %>" onclick="loadSWF(this.href, 1); return false;"> <i class="iconfa-play"></i> <%= t("course.all.clik_watch") %></a>
     </div>
@@ -160,11 +160,23 @@
     </div>
   </div>
   <div id="dashboard-right" class="span4">
-    <% if current_user.admin? or @course_class.creator?(current_user) or @course_class.teacher?(current_user) %>
     <div class="well">
+    <% if current_user.admin? or @course_class.creator?(current_user) or @course_class.teacher?(current_user) %>
       <a href="<%= edit_class_path(@course) %>" class="btn btn-success"><i class="iconfa-edit icon-white"></i>  编辑班级信息</a>
-    </div>
+    <% else %>
+      <% if @course_class.student?(current_user) %>
+        <%= form_for(@course_class, :url => uneroll_class_path(@course_class), html: { :method => :put }) do |f| %>
+        <%= f.hidden_field :user_id, :value => current_user.id %>
+        <%= f.submit "退出班级", :class => "btn btn-warning" %>
+        <% end %>
+      <% else %>
+        <%= form_for(@course_class, :url => eroll_class_path(@course_class), html: { :method => :put }) do |f| %>
+        <%= f.hidden_field :user_id, :value => current_user.id %>
+        <%= f.submit "点击报名", :class => "btn btn-primary" %>
+        <% end %>
+      <% end %>
     <% end %>
+    </div>
     
     <h3 class="subtitle"> <%= t("users.all.aboutteacher") %></h3>
     <% @course_class.teachers.each do |t| %>

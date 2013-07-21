@@ -2,13 +2,20 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.tp-list {
+ul.tp-list {
+  list-style-type:none;
   padding: 0;
   margin: 0;
+
+  li {
+    padding: 5px 10px;
+    border-bottom: 1px solid #ddd;
+    &:last-child { border-bottom: 0; }
+  }
 }
 
 .tp-details {
-  h4.tp-header {
+  h4#tp-header {
     padding-bottom: 5px;
     margin-bottom: 10px;
     border-bottom: 1px solid #ddd;
@@ -16,14 +23,19 @@
 
   ul.tp-course-list {
     list-style-type: none;
-    padding: 0;
+    padding: 10px 0;
     margin: 0;
 
     li {
-      min-height: 100px;
-      img { float: left; width: 80px; }
-      div.tp-course-info { margin: 0 90px; }
+      min-height: 45px;
+      padding: 5px 0;
+      img { float: left; width: 60px; }
+      div.tp-course-info { 
+        margin: 0 70px;
+        padding: 2px 0;
+      }
       a.action { float: right; }
+      border-bottom: 1px dashed #ddd;
     }
   }
 }
