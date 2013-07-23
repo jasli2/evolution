@@ -19,7 +19,6 @@ class ExaminationFeedback < ActiveRecord::Base
   belongs_to :user
 
   has_many :papers
-  has_many :user_answers
 
   after_create :clear_feedback_todo, :feedback_callback
 

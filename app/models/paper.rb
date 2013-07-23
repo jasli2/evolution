@@ -2,14 +2,13 @@
 #
 # Table name: papers
 #
-#  id             :integer          not null, primary key
-#  score          :integer
-#  correct_nums   :integer
-#  error_nums     :integer
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  user_id        :integer
-#  examination_id :integer
+#  id                      :integer          not null, primary key
+#  score                   :integer
+#  created_at              :datetime         not null
+#  updated_at              :datetime         not null
+#  user_id                 :integer
+#  examination_id          :integer
+#  examination_feedback_id :integer
 #
 
 class Paper < ActiveRecord::Base
@@ -18,7 +17,7 @@ class Paper < ActiveRecord::Base
   validates :examination_id, :presence => true
   validates :user_id, :presence => true
 
-  belongs_to :users
+  belongs_to :user
   belongs_to :examination
   belongs_to :examination_feedback
 

@@ -1,0 +1,26 @@
+<% provide(:title, @exam.title) %>
+
+<% content_for :breadcrumbs do %>
+<li><%= link_to "考试管理", examinations_path %> <span class="separator"></span></li>
+<li><%= link_to @exam.title, examinations_path %> <span class="separator"></span></li>
+<%= content_tag(:li, @exam_feedback.user.name) %>
+<% end %>
+
+<% content_for :javascript do %>
+<% end %>
+
+<div class="row-fluid">
+  <div id="dashboard-left" class="span8">
+    <div class="well">
+      <h3><%= @exam.title %> <span class="label label-info pull-right"><%= @tp.state %></span></h3>
+    </div>
+
+    <div class="well">
+      <div>
+      </div>
+    </div>
+
+  </div>
+    
+  </div>
+</div>

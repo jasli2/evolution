@@ -35,6 +35,20 @@ $(function() {
     <div class="divider15"></div>
     <% end %>
 
+    <% if current_user.pending_todos.count > 0 %>
+    <h4 class="widgettitle"><span class="iconfa-check"></span> 待办事项（<%= current_user.pending_todos.count %>）</h4>
+    <div class="widgetcontent nopadding">
+      <ul class="user-todo-list">
+        <% current_user.pending_todos.each do |todo| %>
+        <li>
+          <%= todo_description(todo) %><span class='todo-action'><%= link_to "点击处理", todo_url(todo), :class => 'btn btn-primary btn-small' %></span>
+        </li>
+        <% end %>
+      </ul>
+    </div>
+    <div class="divider15"></div>
+    <% end %>
+
     <h5 class="subtitle"> <%= t('dashboard.overview.title') %> </h5>
     <ul class="shortcuts">
       <li class="events">
