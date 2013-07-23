@@ -8,9 +8,16 @@ ul.tp-list {
   margin: 0;
 
   li {
-    padding: 5px 10px;
+    padding: 10px;
     border-bottom: 1px solid #ddd;
     &:last-child { border-bottom: 0; }
+
+    .tp-header {
+      padding-bottom: 5px;
+      //margin-right: 130px;
+      a { font-size: medium; padding-right: 10px; }
+      .created-at { font-style: italic; color: #3e3e3e; }
+    }
   }
 }
 

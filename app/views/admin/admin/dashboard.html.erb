@@ -49,38 +49,35 @@ $(function() {
     <div class="divider15"></div>
     <% end %>
 
-    <h5 class="subtitle"> <%= t('dashboard.overview.title') %> </h5>
-    <ul class="shortcuts">
-      <li class="events">
-        <a href="<%= admin_manage_users_path %>">
-          <span class="counter"><%= @users_count %></span>
-          <span class="shortcuts-icon iconfa-group"></span>
-          <span class="shortcuts-label"><%= t('dashboard.overview.users') %></span>
-        </a>
+    <% if current_user.created_training_plans.active.count > 0 %>
+    <h4 class="widgettitle"><span class="iconfa-check"></span> 项目进度跟踪（<%= current_user.created_training_plans.active.count %>）</h4>
+    <div class="widgetcontent nopadding">
+      <ul class="tp-list">
+      <% current_user.created_training_plans.active.each do |tp| %>
+      <li>
+        <% if tp.state == 'pending_publish' %>
+        <a href="<%= publish_training_plan_path(tp) %>" class="btn btn-warning pull-right">发布计划</a>
+        <% end %>
+        <div class='tp-header'>
+        <%= link_to tp.title, training_plan_path(tp) %>
+        <span class="created-at"> 发布于<%= distance_of_time_in_words_to_now tp.created_at %>前</span>
+        </div>
+        <span>
+          <span class="label label-info" ><%= training_plan_state(tp) %></span> &middot;
+          计划参培人员（<%= tp.users.count %>） &middot;
+          必修课程（<%= tp.required_courses.count %>） &middot;
+          选修课程（<%= tp.optional_courses.count %>） 
+          <% if tp.state == 'pending_feedback' %>
+           &middot; 反馈进度（<%= tp.feedbacks.count.to_s + '/' + tp.users.count.to_s %>）
+          <% end %>
+        </span>
       </li>
-      <li class="events">
-        <a href="<%= admin_manage_competency_path %>">
-          <span class="counter"><%= @competencies_count %></span>
-          <span class="shortcuts-icon iconfa-sitemap"></span>
-          <span class="shortcuts-label"><%= t('dashboard.overview.competencies') %></span>
-        </a>
-      </li>
-      <li class="events">
-        <a href="<%= admin_manage_course_path %>">
-          <span class="counter"><%= @courses_count %></span>
-          <span class="shortcuts-icon iconfa-folder-open"></span>
-          <span class="shortcuts-label"><%= t('dashboard.overview.courses') %></span>
-        </a>
-      </li>
-      <li class="events">
-        <a href="<%= admin_manage_position_path %>">
-          <span class="counter"><%= @positions_count %></span>
-          <span class="shortcuts-icon iconfa-reorder"></span>
-          <span class="shortcuts-label"><%= t('dashboard.overview.positions') %></span>
-        </a>
-      </li>
-    </ul>
-    <div class="divider30"></div>
+      <% end %>
+      </ul>
+    </div>
+    <% end %>
+
+    
 
     <h3 class="subtitle"><%= t("dashboard.competency.title") %></h3>
     <div class="divider15"></div>
@@ -189,22 +186,49 @@ $(function() {
       <p style="margin: 8px 0">体验版部分功能不可用，请升级成正式版</p>
     </div><!--alert-->
     <div class="divider15"></div>
-    
-    <h3 class="subtitle"><%= t('dashboard.calender.title') %></h3>
-    <div class="divider15"></div>
 
+    <ul class="shortcuts">
+      <li class="events">
+        <a href="<%= admin_manage_users_path %>">
+          <span class="counter"><%= @users_count %></span>
+          <span class="shortcuts-icon iconfa-group"></span>
+          <span class="shortcuts-label"><%= t('dashboard.overview.users') %></span>
+        </a>
+      </li>
+      <li class="events">
+        <a href="<%= admin_manage_competency_path %>">
+          <span class="counter"><%= @competencies_count %></span>
+          <span class="shortcuts-icon iconfa-sitemap"></span>
+          <span class="shortcuts-label"><%= t('dashboard.overview.competencies') %></span>
+        </a>
+      </li>
+      <li class="events">
+        <a href="<%= admin_manage_course_path %>">
+          <span class="counter"><%= @courses_count %></span>
+          <span class="shortcuts-icon iconfa-folder-open"></span>
+          <span class="shortcuts-label"><%= t('dashboard.overview.courses') %></span>
+        </a>
+      </li>
+      <li class="events">
+        <a href="<%= admin_manage_position_path %>">
+          <span class="counter"><%= @positions_count %></span>
+          <span class="shortcuts-icon iconfa-reorder"></span>
+          <span class="shortcuts-label"><%= t('dashboard.overview.positions') %></span>
+        </a>
+      </li>
+    </ul>
+    <div class="divider30"></div>
+    
     <h4 class="widgettitle"><%= t('dashboard.calender.title') %></h4>
     <div class="widgetcontent nopadding">
       <div id="datepicker"></div>
     </div>
     <div class="divider15"></div>
 
-    <h3 class="subtitle"><%= t('dashboard.user.title') %></h3>
-    <div class="divider15"></div>
     <div class="widgetbox">
       <div class="headtitle">
         <h4 class="widgettitle"><span class="iconfa-group"></span><%= t('dashboard.user.sub_title') %><span class="pull-right"><%= link_to (t('dashboard.common.sub_title1') +  "&#8594;").html_safe, admin_manage_users_path %></span></h4>
-      </div>
+    </div>
       <% if @users.size == 0 %>
       <div class="widgetcontent">
         <p>No user setup yet. please setup it first. </p>

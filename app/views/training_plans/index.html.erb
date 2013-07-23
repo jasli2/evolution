@@ -16,20 +16,27 @@
       <ul class="tp-list">
       <% @tps.each do |tp| %>
       <li>
-        <span class="label label-info pull-right" ><%= training_plan_state(tp) %></span>
-        <h5><%= link_to tp.title, training_plan_path(tp) %></h5>
+        <% if tp.state == 'pending_publish' %>
+        <a href="<%= publish_training_plan_path(tp) %>" class="btn btn-warning pull-right">发布计划</a>
+        <% end %>
+        <div class='tp-header'>
+        <%= link_to tp.title, training_plan_path(tp) %>
+        <span class="created-at"> 发布于<%= distance_of_time_in_words_to_now tp.created_at %>前</span>
+        </div>
         <span>
-          <% if tp.creator %>
-          <%= link_to tp.creator.name, user_path(tp.creator) %>发布于<%= distance_of_time_in_words_to_now tp.created_at %>前 &middot;
-          <% end %>
-          计划参加人员（<%= tp.users.count %>） &middot;
+          <span class="label label-info" ><%= training_plan_state(tp) %></span> &middot;
+          计划参培人员（<%= tp.users.count %>） &middot;
           必修课程（<%= tp.required_courses.count %>） &middot;
           选修课程（<%= tp.optional_courses.count %>） 
+          <% if tp.state == 'pending_feedback' %>
+           &middot; 反馈进度（<%= tp.feedbacks.count.to_s + '/' + tp.users.count.to_s %>）
+          <% end %>
         </span>
       </li>
       <% end %>
-      </div>
-    </ul>
+      </ul>      
+    </div>
+
     <% else %>
     <div class="widgetcontent">
       <p>还没有任何培训计划</p>

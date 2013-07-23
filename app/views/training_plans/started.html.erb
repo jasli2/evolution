@@ -11,7 +11,7 @@
 <div class="row-fluid">
   <div id="dashboard-left" class="span8">
     <div class="well">
-      <h3><%= @tp.title %> <span class="label label-info pull-right"><%= @tp.state %></span></h3>
+      <h3><%= @tp.title %> <span class="label label-info pull-right"><%= training_plan_state @tp %></span></h3>
       <div>
         创建于<%= distance_of_time_in_words_to_now(@tp.created_at) + t("course.all.ago") %>&middot;
         培训员工（<%= @tp.users.count %>）&middot;
