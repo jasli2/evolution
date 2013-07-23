@@ -22,6 +22,26 @@ class Paper < ActiveRecord::Base
   belongs_to :examination_feedback
 
   has_many :user_answers,  :dependent => :destroy
+  has_one :feedback_todo, :class_name => "Todo", :as => :source,:conditions => {:todo_type => 'pending_finish'}
+
+  def get_answer_result(result)
+    user_answers.answer_result(result)
+  end
+
+  def get_dialogical_result()
+    user_answers - user_answers.answer_result(true) - user_answers.answer_result(false)
+  end
+
+  def get_answer_question_result(type, result)
+    question = Array.new
+    user_answers.answer_result(result).each do |answer|
+      if answer.question.question_type_str == type
+        question << answer.question
+      end
+    end
+
+    return question
+  end
 
   #get paper correct/error numbers
   def get_answer_numbers(state)
