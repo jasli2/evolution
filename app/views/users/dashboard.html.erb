@@ -53,26 +53,29 @@
     <% end %>
     <div class="divider15"></div>
 
-    <h4 class="widgettitle"><span class="iconfa-signal"></span> 项目进度跟踪（<%= @current_user.active_training_plans.count %>）</h4>
-    <% if current_user.active_training_plans.count > 0 %>
+    <h4 class="widgettitle"><span class="iconfa-signal"></span> 项目进度跟踪（<%= @current_user.active_course_count %>）</h4>
+    <% if @current_user.active_course_count > 0 %>
     <div class="widgetcontent nopadding">
-      <div class="accordion">
       <% current_user.active_training_plans.each do |tp| %>
-      <div class="a-header">
-        <a href="#">培训计划：<%= tp.title %>（<%= tp.course_for_user(current_user).count.to_s %>）</a>
-      </div>
-      <div class="a-content">
         <ul class='active-training-list'>
         <% tp.course_for_user(current_user).each do |c| %>
 
         <li class='training-user-course'>
-          <span><%= tp.required?(c) ? '[必修课]' : '[选修课]' %>
+        <% if c.course_classes.active.count == 0 %>
+          <span class='label label-info'><%= user_course_state current_user, c %></span>
+          <span>[<%= tp.title %>]</span>
+          <span><%= tp.required?(c) ? '[必修课]' : '[选修课]' %></span>
           <%= link_to c.title, course_path(c) %>
-          <span class='label label-info pull-right'><%= user_course_state current_user, c %></span>
+        <% else %>
           <% @course_class = c.find_class_for_user(current_user) %>
           <% if @course_class %>
             <ul class='active-class-list'>
               <li>
+                <span class='label label-info'><%= user_course_state current_user, c %></span>
+                <span>[<%= tp.title %>]</span>
+                <span><%= tp.required?(c) ? '[必修课]' : '[选修课]' %></span>
+                <%= link_to c.title, course_path(c) %> &middot;
+
                 <%= link_to '班级(ID-' + @course_class.id.to_s + ')', class_path(@course_class) %>
                 老师:
                 <% @course_class.teachers.each do |t| %>
@@ -103,6 +106,11 @@
             <ul class='active-class-list'>
               <% c.course_classes.active.each do |cl| %>
               <li>
+                <span class='label label-info'><%= user_course_state current_user, c %></span>
+                <span>[<%= tp.title %>]</span>
+                <span><%= tp.required?(c) ? '[必修课]' : '[选修课]' %></span>
+                <%= link_to c.title, course_path(c) %> &middot;
+
                 <%= link_to '班级(ID-' + cl.id.to_s + ')', class_path(cl) %>
                 老师:
                 <% cl.teachers.each do |t| %>
@@ -120,15 +128,39 @@
               </li>
               <% end %>
             </ul>
+          <% else %>
           <% end %>
+
+        <% end %>
         </li>
         <% end %>
         </ul>
-      </div>
-      <% end %>
+      <% end %>  <!-- training_course -->
+
+      <% if current_user.teach_classes.count > 0 %>
+      <ul class='teach-classes-list'>
+        <% current_user.teach_classes.each do |tc| %>
+        <li>
+          <span class='label label-info'><%= tc.teacher?(current_user) ? "班级老师" : "班级助教" %></span>
+          <%= link_to tc.course.title, course_path(tc.course) %> &middot;
+
+          <%= link_to '班级(ID-' + tc.id.to_s + ')', class_path(tc) %>
+          老师:
+          <% tc.teachers.each do |t| %>
+          <span><%= link_to t.name, user_path(t) %></span>
+          <% end %>
+          助教:
+          <% tc.assistents.each do |a| %>
+          <span><%= link_to a.name, user_path(a) %></span>
+          <% end %>
+          报名状态: <%= tc.students.count %>/<%= tc.max_students %>
+        </li>
+        <% end %>
+      </ul>
+      <% end %> <!-- teach course -->
+    
     </div>
 
-    </div>
     <% else %>
     <div class="widgetcontent">
       目前没有追踪进度的项目。

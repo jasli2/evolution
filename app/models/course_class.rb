@@ -92,6 +92,14 @@ class CourseClass < ActiveRecord::Base
     student_ids.include? u.id if u
   end
 
+  def published?
+    if course.course_type == "E-LEARNING"
+      start_time and end_time and address
+    else
+      true
+    end
+  end
+
   private
   def start_and_end_time
     if start_time or end_time

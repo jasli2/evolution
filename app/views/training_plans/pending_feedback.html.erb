@@ -20,6 +20,7 @@
       </div>
     </div>
 
+    <% if @tp.users.count > 0 %>
     <div class="well">
       <div>
         <h4 class="pull-left">培训员工反馈进度</h4>
@@ -60,6 +61,11 @@
         <% end %>
       </ul> 
     </div>
+    <% else %>
+    <div class='well'>
+      没有指定参培人员，请先指定参培人员。
+    </div>
+    <% end %>
     
   </div>
   <div id="dashboard-right" class="span4">

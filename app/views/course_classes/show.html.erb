@@ -57,11 +57,30 @@
     <div class="divider30"></div>
     <div class="clearfix"></div>
 
-    <% if @course_class.student?(current_user) and @course.lesson.url.nil? %>
+    <% if can_view_elearning?(@course_class, current_user) and not @course.lesson.url.nil? %>
     <div id="swf-content">
       <a class="btn btn-success btn-small" href="<%= @course.lesson.url %>" onclick="loadSWF(this.href, 1); return false;"> <i class="iconfa-play"></i> <%= t("course.all.clik_watch") %></a>
     </div>
     <div class="divider15"></div>
+    <% end %>
+
+    <% if @course.course_type != 'E-LEARNING' %>
+
+      <% if @course_class.published? %>
+        <% if can_publish_address?(@course_class, current_user) %>
+        <div class='well'>
+          目前没有发布上课时间和地点。
+          <span class='pull-right'><%= link_to '现在发布', '#', :class => 'btn btn-small btn-primary' %></span>
+        </div>
+        <% end %>
+      <% else %>
+        <% if can_view_publish_info?(@course_class, current_user) %>
+        <div class='well'>
+          @course_class.address
+        </div>
+        <% end %>
+      <% end %>
+
     <% end %>
 
     <div class="tabbedwidget tab-primary">
@@ -70,6 +89,7 @@
         <li><a href="#tabs-2"><span class="iconfa-check"></span> 课程目标</a></li>
         <li><a href="#tabs-3"><span class="iconfa-file"></span>  <%= t("course.all.material") %></a></li>
         <li><a href="#tabs-4"><span class="iconfa-comments-alt"></span>  <%= t("course.all.discussion") %></a></li>
+        <li><a href="#tabs-5"><span class="iconfa-signal"></span> 考试和问卷调查</a></li>
       </ul>
       <div id="tabs-1" class="course-introduction">
         <%= eo_markdown(@course.description) unless @course.description.blank? %>
@@ -120,43 +140,60 @@
       </div>
       <div id="tabs-4" class="course-discussion">
         <% if can_view_class_discussion?(@course_class, current_user) %>
-        <div class="discuss-list"> 
-          <% if @course_class.discusses.count > 0 %>
-          <ul>
-            <% @course_class.discusses.each do |d| %>
-            <li>
-              <%= image_tag user_avatar_path(d.user, :small) %>
-              <div class='discuss-details'>
-              <%= link_to d.user.name, user_path(d.user) %>
-              <%= distance_of_time_in_words_to_now(d.created_at) %>
-              <h4><%= d.title %></h4>
-              </div>
-            </li>
-            <% end %>
-          </ul>
-          <% else %>
-          <%= t("course.all.notic2") %>
-          <% end %>
-        </div>
-
-        <% if can_post_discuss?(@course_class, current_user) %>
-        <div class="discuss-input-box">
-          <%= image_tag user_avatar_path(current_user, :small) %>
-          <div class="discuss-input">
-            <%= simple_form_for([@course_class, Discuss.new], :url => class_discusses_path(@course_class)) do |f| %>
-              <%= f.input :title, :as => :text, :input_html => { :cols => 50, :rows => 3 }, :placeholder => "发起讨论或话题...", :label => false %>
-              <%= f.hidden_field :user_id, :value => current_user.id %>
-              <%= f.submit "发布", :class => "btn, btn-primary" %>
+          <div class="discuss-list"> 
+            <% if @course_class.discusses.count > 0 %>
+            <ul>
+              <% @course_class.discusses.each do |d| %>
+              <li>
+                <%= image_tag user_avatar_path(d.user, :small) %>
+                <div class='discuss-details'>
+                <%= link_to d.user.name, user_path(d.user) %>
+                发布于<%= distance_of_time_in_words_to_now(d.created_at) %>前
+                <h4><%= d.title %></h4>
+                </div>
+              </li>
+              <% end %>
+            </ul>
+            <% else %>
+            <%= t("course.all.notic2") %>
             <% end %>
           </div>
-        </div>
-        <% end %>
+
+          <% if can_post_discuss?(@course_class, current_user) %>
+          <div class="discuss-input-box">
+            <%= image_tag user_avatar_path(current_user, :small) %>
+            <div class="discuss-input">
+              <%= simple_form_for([@course_class, Discuss.new], :url => class_discusses_path(@course_class)) do |f| %>
+                <%= f.input :title, :as => :text, :input_html => { :cols => 50, :rows => 3 }, :placeholder => "发起讨论或话题...", :label => false %>
+                <%= f.hidden_field :user_id, :value => current_user.id %>
+                <%= f.submit "发布", :class => "btn, btn-primary" %>
+              <% end %>
+            </div>
+          </div>
+          <% end %>
 
         <% else %>
-        <p>课程讨论只对班级学员开放，请先报名。</p>
+          <p>课程讨论只对班级学员开放，请先报名。</p>
         <% end %>
 
       </div>
+
+      <div id="tabs-5" class="course-exam">
+        <% if can_view_examination?(@course_class, current_user) %>
+          <div class='examination-list'>
+            目前没有考试信息。
+            <%= link_to '创建考试', "#myModal", {:class => "btn btn-primary btn-small disabled", "data-toggle" => "modal"} %>
+          </div>
+
+          <div class='survey-list'>
+            目前没有调查问卷信息。
+            <%= link_to '创建问卷调查', "#myModal", {:class => "btn btn-primary btn-small disabled", "data-toggle" => "modal"} %>
+          </div>
+        <% else %>
+          <p>课程考试和问卷调查只对班级学员开放，请先报名。</p>
+        <% end %>
+      </div>
+
     </div>
   </div>
   <div id="dashboard-right" class="span4">
@@ -167,12 +204,12 @@
       <% if @course_class.student?(current_user) %>
         <%= form_for(@course_class, :url => uneroll_class_path(@course_class), html: { :method => :put }) do |f| %>
         <%= f.hidden_field :user_id, :value => current_user.id %>
-        <%= f.submit "退出班级", :class => "btn btn-warning" %>
+        <%= f.submit "退出班级", :class => "btn btn-danger" %>
         <% end %>
       <% else %>
         <%= form_for(@course_class, :url => eroll_class_path(@course_class), html: { :method => :put }) do |f| %>
         <%= f.hidden_field :user_id, :value => current_user.id %>
-        <%= f.submit "点击报名", :class => "btn btn-primary" %>
+        <%= f.submit "点击报名", :class => "btn btn-warning" %>
         <% end %>
       <% end %>
     <% end %>

@@ -56,43 +56,31 @@ $(function() {
 
     <h4 class="widgettitle"><span class="iconfa-check"></span> 项目进度跟踪（<%= @tps.count %>）</h4>
     <div class="widgetcontent nopadding">
-      <div class="accordion">
-        <div class="a-header">
-          <a href="#">培训计划（<%= @tps.count %>）</a>
+      <% if @tps.count > 0 %>
+      <ul class="tp-list">
+      <% @tps.each do |tp| %>
+      <li>
+        <% if tp.state == 'pending_publish' %>
+        <a href="<%= publish_training_plan_path(tp) %>" class="btn btn-warning btn-small pull-right">发布计划</a>
+        <% end %>
+        <div class='tp-header'>
+        [培训计划] <%= link_to tp.title, training_plan_path(tp) %>
+        <span class="deadline"> 反馈截止日期：<%= tp.feedback_deadline %></span>
         </div>
-        <div class="a-content">
-          <% if @tps.count > 0 %>
-    
-          <ul class="tp-list">
-          <% @tps.each do |tp| %>
-          <li>
-            <% if tp.state == 'pending_publish' %>
-            <a href="<%= publish_training_plan_path(tp) %>" class="btn btn-warning btn-small pull-right">发布计划</a>
-            <% end %>
-            <div class='tp-header'>
-            <%= link_to tp.title, training_plan_path(tp) %>
-            <span class="created-at"> 发布于<%= distance_of_time_in_words_to_now tp.created_at %>前</span>
-            </div>
-            <span>
-              <span class="label label-info" ><%= training_plan_state(tp) %></span> &middot;
-              计划参培人员（<%= tp.users.count %>） &middot;
-              必修课程（<%= tp.required_courses.count %>） &middot;
-              选修课程（<%= tp.optional_courses.count %>） 
-              <% if tp.state == 'pending_feedback' %>
-               &middot; 反馈进度（<%= tp.feedbacks.count.to_s + '/' + tp.users.count.to_s %>）
-              <% end %>
-            </span>
-          </li>
+        <span>
+          <span class="label label-info" ><%= training_plan_state(tp) %></span> &middot;
+          计划参培人员（<%= tp.users.count %>） &middot;
+          培训课程（<%= tp.required_courses.count + tp.optional_courses.count %>）
+          <% if tp.state == 'pending_feedback' %>
+           &middot; 反馈进度（<%= tp.feedbacks.count.to_s + '/' + tp.users.count.to_s %>）
           <% end %>
-          </ul>
-          
-          <% else %>
-
-          <p>目前没有跟踪进度的培训计划。</p>
-
-          <% end %>
-        </div>
-      </div>
+        </span>
+      </li>
+      <% end %>
+      </ul>
+      <% else %>
+      <p>目前没有跟踪进度的培训计划。</p>
+      <% end %>
     </div>
     
 

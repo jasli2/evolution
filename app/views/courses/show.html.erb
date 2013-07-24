@@ -54,9 +54,17 @@
         <span><%= link_to a.name, user_path(a) %></span>
         <% end %>
         报名状态: <%= c.students.count %>/<%= c.max_students %>
-        <%= form_for(c, :url => eroll_class_path(c), html: { :method => :put }) do |f| %>
-        <%= f.hidden_field :user_id, :value => current_user.id %>
-        <%= f.submit "点击报名", :class => "btn btn-small btn-warning pull-right" %>
+        <% if current_user.admin? or c.teacher?(current_user) or c.assistent?(current_user) %>
+        <% elsif c.student?(current_user) %>
+          <%= form_for(c, :url => uneroll_class_path(c), html: { :method => :put }) do |f| %>
+          <%= f.hidden_field :user_id, :value => current_user.id %>
+          <%= f.submit "退出班级", :class => "btn btn-small btn-danger pull-right" %>
+          <% end %>
+        <% else %>
+          <%= form_for(c, :url => eroll_class_path(c), html: { :method => :put }) do |f| %>
+          <%= f.hidden_field :user_id, :value => current_user.id %>
+          <%= f.submit "点击报名", :class => "btn btn-small btn-warning pull-right" %>
+          <% end %>
         <% end %>
       </li>
       <% end %>
