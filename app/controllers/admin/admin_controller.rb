@@ -13,13 +13,14 @@ class Admin::AdminController < ApplicationController
     @positions = Position.last(4).reverse
     @positions_count = Position.all.size
     @active_notifications = current_user.notifications.active
-    logger.debug 'get the active nofitication:: ' + @active_notifications.count.to_s
-    # @active_notifications.each do |n|
-    #   n.update_attributes(:viewed_at => Time.zone.now)
-    # end
+    @tps = current_user.created_training_plans.order("id DESC").active
 
     respond_to do |format|
       format.html
+    end
+
+    @active_notifications.each do |n|
+      n.update_attributes(:viewed_at => Time.zone.now)
     end
   end
 

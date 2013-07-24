@@ -38,24 +38,25 @@
     <div class="divider15"></div>
     <div class="clearfix"></div>
 
-    <h3 class="subtitle">目前开设的班级：</h3>
     <% if @course.course_classes.active.count > 0 %>
+    <h3 class="subtitle">目前开设的班级：</h3>
     <div class='well nopadding'>
     <ul class='course-active-class-list'>
       <% @course.course_classes.active.each do |c| %>
       <li>
-        <%= link_to '班级-' + c.id.to_s, class_path(c) %> :
-        老师：
+        <%= link_to '班级(ID-' + c.id.to_s + ')', class_path(c) %>
+        老师:
         <% c.teachers.each do |t| %>
         <span><%= link_to t.name, user_path(t) %></span>
         <% end %>
-        助教：
+        助教:
         <% c.assistents.each do |a| %>
         <span><%= link_to a.name, user_path(a) %></span>
         <% end %>
+        报名状态: <%= c.students.count %>/<%= c.max_students %>
         <%= form_for(c, :url => eroll_class_path(c), html: { :method => :put }) do |f| %>
         <%= f.hidden_field :user_id, :value => current_user.id %>
-        <%= f.submit "点击报名", :class => "btn btn-small btn-primary pull-right" %>
+        <%= f.submit "点击报名", :class => "btn btn-small btn-warning pull-right" %>
         <% end %>
       </li>
       <% end %>
@@ -123,6 +124,32 @@
       <a href="<%= new_course_class_path(@course) %>" class="btn btn-warning"><i class="iconfa-plus icon-white"></i>  开设班级</a> 
     </div>
     <% end %>
-    
+
+    <h3 class="subtitle">已完成班级记录：</h3>
+    <% if @course.course_classes.finished.count > 0 %>
+    <div class='well nopadding'>
+      <ul class='course-active-class-list'>
+        <% @course.course_classes.active.each do |c| %>
+        <li>
+          <%= link_to '班级(ID-' + c.id.to_s + ')', class_path(c) %>
+          老师:
+          <% c.teachers.each do |t| %>
+          <span><%= link_to t.name, user_path(t) %></span>
+          <% end %>
+          助教:
+          <% c.assistents.each do |a| %>
+          <span><%= link_to a.name, user_path(a) %></span>
+          <% end %>
+          报名状态: <%= c.students.count %>/<%= c.max_students %>
+        </li>
+        <% end %>
+      </ul>
+    </div>
+    <% else %>
+    <div class='well'>
+      没有已完成班级记录。
+    </div>
+    <% end %>
+
   </div>
 </div>

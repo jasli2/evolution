@@ -23,4 +23,8 @@ class Notification < ActiveRecord::Base
   attr_accessible :source
 
   scope :active, where(:viewed_at => nil)
+
+  def set_viewed
+    update_attributes(:viewed_at => Time.zone.now)
+  end
 end

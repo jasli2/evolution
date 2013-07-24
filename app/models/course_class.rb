@@ -62,6 +62,7 @@ class CourseClass < ActiveRecord::Base
   end
 
   scope :active, where(:state => [:erolling, :eroll_done])
+  scope :finished, where(:state => :finished)
 
   def eroll(u)
     students << u if u

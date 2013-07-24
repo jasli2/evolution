@@ -13,8 +13,9 @@ $(function() {
   $('#datepicker').datepicker();
   $('.tabbedwidget').tabs();
   $('.accordion').accordion({
-      heightStyle: "content",
-      header: ".a-header"
+    collapsible: true,
+    heightStyle: "content",
+    header: ".a-header"
   });
 });
 </script>
@@ -25,18 +26,18 @@ $(function() {
     <% if @active_notifications.count > 0 %>
     <div class="alert alert-info alert-block">
       <button data-dismiss="alert" class="close" type="button">&times;</button>
-      <h4>最新消息：</h4>
+      <h6>最新消息：</h6>
       <ul class='notificaiton-list'>
         <% @active_notifications.each do |n| %>
-        <li><%= link_to notice_description(n), notice_url(n) %></li>
+        <li><%= notice_description(n) %> <%= link_to '点击查看', notice_url(n) %></li>
         <% end %>
       </ul>
     </div><!--notifications-->
     <div class="divider15"></div>
     <% end %>
 
-    <% if current_user.pending_todos.count > 0 %>
     <h4 class="widgettitle"><span class="iconfa-check"></span> 待办事项（<%= current_user.pending_todos.count %>）</h4>
+    <% if current_user.pending_todos.count > 0 %>
     <div class="widgetcontent nopadding">
       <ul class="user-todo-list">
         <% current_user.pending_todos.each do |todo| %>
@@ -46,36 +47,54 @@ $(function() {
         <% end %>
       </ul>
     </div>
-    <div class="divider15"></div>
-    <% end %>
-
-    <% if current_user.created_training_plans.active.count > 0 %>
-    <h4 class="widgettitle"><span class="iconfa-check"></span> 项目进度跟踪（<%= current_user.created_training_plans.active.count %>）</h4>
-    <div class="widgetcontent nopadding">
-      <ul class="tp-list">
-      <% current_user.created_training_plans.active.each do |tp| %>
-      <li>
-        <% if tp.state == 'pending_publish' %>
-        <a href="<%= publish_training_plan_path(tp) %>" class="btn btn-warning pull-right">发布计划</a>
-        <% end %>
-        <div class='tp-header'>
-        <%= link_to tp.title, training_plan_path(tp) %>
-        <span class="created-at"> 发布于<%= distance_of_time_in_words_to_now tp.created_at %>前</span>
-        </div>
-        <span>
-          <span class="label label-info" ><%= training_plan_state(tp) %></span> &middot;
-          计划参培人员（<%= tp.users.count %>） &middot;
-          必修课程（<%= tp.required_courses.count %>） &middot;
-          选修课程（<%= tp.optional_courses.count %>） 
-          <% if tp.state == 'pending_feedback' %>
-           &middot; 反馈进度（<%= tp.feedbacks.count.to_s + '/' + tp.users.count.to_s %>）
-          <% end %>
-        </span>
-      </li>
-      <% end %>
-      </ul>
+    <% else %>
+    <div class="widgetcontent">
+      目前没有待处理的事项。
     </div>
     <% end %>
+    <div class="divider15"></div>
+
+    <h4 class="widgettitle"><span class="iconfa-check"></span> 项目进度跟踪（<%= @tps.count %>）</h4>
+    <div class="widgetcontent nopadding">
+      <div class="accordion">
+        <div class="a-header">
+          <a href="#">培训计划（<%= @tps.count %>）</a>
+        </div>
+        <div class="a-content">
+          <% if @tps.count > 0 %>
+    
+          <ul class="tp-list">
+          <% @tps.each do |tp| %>
+          <li>
+            <% if tp.state == 'pending_publish' %>
+            <a href="<%= publish_training_plan_path(tp) %>" class="btn btn-warning btn-small pull-right">发布计划</a>
+            <% end %>
+            <div class='tp-header'>
+            <%= link_to tp.title, training_plan_path(tp) %>
+            <span class="created-at"> 发布于<%= distance_of_time_in_words_to_now tp.created_at %>前</span>
+            </div>
+            <span>
+              <span class="label label-info" ><%= training_plan_state(tp) %></span> &middot;
+              计划参培人员（<%= tp.users.count %>） &middot;
+              必修课程（<%= tp.required_courses.count %>） &middot;
+              选修课程（<%= tp.optional_courses.count %>） 
+              <% if tp.state == 'pending_feedback' %>
+               &middot; 反馈进度（<%= tp.feedbacks.count.to_s + '/' + tp.users.count.to_s %>）
+              <% end %>
+            </span>
+          </li>
+          <% end %>
+          </ul>
+          
+          <% else %>
+
+          <p>目前没有跟踪进度的培训计划。</p>
+
+          <% end %>
+        </div>
+      </div>
+    </div>
+    
 
     
 
@@ -187,33 +206,33 @@ $(function() {
     </div><!--alert-->
     <div class="divider15"></div>
 
-    <ul class="shortcuts">
+    <ul class="overview">
       <li class="events">
         <a href="<%= admin_manage_users_path %>">
-          <span class="counter"><%= @users_count %></span>
-          <span class="shortcuts-icon iconfa-group"></span>
-          <span class="shortcuts-label"><%= t('dashboard.overview.users') %></span>
+          <span class="overview-icon iconfa-group"></span>
+          <span class="overview-label"><%= t('dashboard.overview.users') %></span>
+          <span class="overview-counter"><%= @users_count %></span>
         </a>
       </li>
       <li class="events">
         <a href="<%= admin_manage_competency_path %>">
-          <span class="counter"><%= @competencies_count %></span>
-          <span class="shortcuts-icon iconfa-sitemap"></span>
-          <span class="shortcuts-label"><%= t('dashboard.overview.competencies') %></span>
+          <span class="overview-icon iconfa-sitemap"></span>
+          <span class="overview-label"><%= t('dashboard.overview.competencies') %></span>
+          <span class="overview-counter"><%= @competencies_count %></span>
         </a>
       </li>
       <li class="events">
         <a href="<%= admin_manage_course_path %>">
-          <span class="counter"><%= @courses_count %></span>
-          <span class="shortcuts-icon iconfa-folder-open"></span>
-          <span class="shortcuts-label"><%= t('dashboard.overview.courses') %></span>
+          <span class="overview-icon iconfa-folder-open"></span>
+          <span class="overview-label"><%= t('dashboard.overview.courses') %></span>
+          <span class="overview-counter"><%= @courses_count %></span>
         </a>
       </li>
       <li class="events">
         <a href="<%= admin_manage_position_path %>">
-          <span class="counter"><%= @positions_count %></span>
-          <span class="shortcuts-icon iconfa-reorder"></span>
-          <span class="shortcuts-label"><%= t('dashboard.overview.positions') %></span>
+          <span class="overview-icon iconfa-reorder"></span>
+          <span class="overview-label"><%= t('dashboard.overview.positions') %></span>
+          <span class="overview-counter"><%= @positions_count %></span>
         </a>
       </li>
     </ul>
@@ -231,21 +250,19 @@ $(function() {
     </div>
       <% if @users.size == 0 %>
       <div class="widgetcontent">
-        <p>No user setup yet. please setup it first. </p>
+        <p>没有用户资料。</p>
       </div>
       <% else %>
       <div class="widgetcontent nopadding">
         <ul class="userlist">
           <% @users.each do |u| %>
           <li>
-            <div>
               <%= image_tag user_avatar_path(u, :normal), :class => "pull-left" %>
               <div class="uinfo">
                 <h5><%= link_to u.name, user_path(u) %></h5>
                 <span class="pos"><%= u.position.name if u.position %></span>
                 <span><%= t('dashboard.common.create') + distance_of_time_in_words_to_now(u.created_at) + t('dashboard.common.ago')  %></span>
               </div>
-            </div>
           </li>
           <% end %>
         </ul>

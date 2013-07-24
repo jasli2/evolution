@@ -36,6 +36,11 @@ class UsersController < ApplicationController
     
     @feed_items  = current_user.feed_items.page(params[:page]).per(5) unless current_user.feed_items.blank?
     @active_notifications = current_user.notifications.active
+
+    respond_to do |format|
+      format.html
+    end
+    
     @active_notifications.each do |n|
       n.update_attributes(:viewed_at => Time.zone.now)
     end

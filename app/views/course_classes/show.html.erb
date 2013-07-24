@@ -102,19 +102,19 @@
 
         <% if can_uploader_attachment?(@course_class, current_user) %>
         <div class='course-class-uploader-form'>
-        <%= simple_form_for(Attachment.new, :html => {:class => 'form-horizontal', :multipart => true }) do |f| %>
-            <%= f.input :description %>
-            <%= f.input :file, :as => :file %>
+        <%= form_for(Attachment.new, :html => { :multipart => true }) do |f| %>
+            <%= f.text_field :description, :label => false, :placeholder => "课程资料描述" %>
+            <%= f.file_field :file, :label => false %>
             <%= f.hidden_field :attachable_type, :value => @course_class.class.name.demodulize %>
             <%= f.hidden_field :attachable_id, :value => @course_class.id %>
-          <%= f.button :submit, '上传附件', :class => "btn-primary"  %>
+          <%= f.submit '上传附件', :class => "btn btn-primary"  %>
         <% end %>
         </div>
         <% end %>
 
         <% else %>
 
-        <p>课程讨论只对班级学员开放，请先报名。</p>
+        <p>课程资料只对班级学员开放，请先报名。</p>
 
         <% end %>
       </div>

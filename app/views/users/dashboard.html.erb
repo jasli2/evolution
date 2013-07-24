@@ -25,18 +25,19 @@
     <% if @active_notifications.count > 0 %>
     <div class="alert alert-info alert-block">
       <button data-dismiss="alert" class="close" type="button">&times;</button>
-      <h4>最新消息：</h4>
+      <h6>最新消息：</h6>
       <ul class='notificaiton-list'>
         <% @active_notifications.each do |n| %>
-        <li><%= link_to notice_description(n), notice_url(n) %></li>
+        <li><%= notice_description(n) %> <%= link_to '点击查看', notice_url(n) %></li>
+        <%= n.set_viewed %>
         <% end %>
       </ul>
     </div><!--notifications-->
     <div class="divider15"></div>
     <% end %>
 
-    <% if current_user.pending_todos.count > 0 %>
     <h4 class="widgettitle"><span class="iconfa-check"></span> 待办事项（<%= current_user.pending_todos.count %>）</h4>
+    <% if current_user.pending_todos.count > 0 %>
     <div class="widgetcontent nopadding">
       <ul class="user-todo-list">
         <% current_user.pending_todos.each do |todo| %>
@@ -46,37 +47,96 @@
         <% end %>
       </ul>
     </div>
-    <div class="divider15"></div>
+    <% else %>
+    <div class="widgetcontent">
+      目前没有待处理的事项。
+    </div>
     <% end %>
+    <div class="divider15"></div>
 
-    <h4 class="widgettitle"><span class="iconfa-signal"></span> 我的培训计划</h4>
-    <% if current_user.active_training_plans.count %>
+    <h4 class="widgettitle"><span class="iconfa-signal"></span> 项目进度跟踪（<%= @current_user.active_training_plans.count %>）</h4>
+    <% if current_user.active_training_plans.count > 0 %>
     <div class="widgetcontent nopadding">
-    <ul class='active-training-list'>
+      <div class="accordion">
       <% current_user.active_training_plans.each do |tp| %>
-      <li class='training-plan-title'>
-        <%= tp.title %>
-      </li>
+      <div class="a-header">
+        <a href="#">培训计划：<%= tp.title %>（<%= tp.course_for_user(current_user).count.to_s %>）</a>
+      </div>
+      <div class="a-content">
+        <ul class='active-training-list'>
         <% tp.course_for_user(current_user).each do |c| %>
+
         <li class='training-user-course'>
           <span><%= tp.required?(c) ? '[必修课]' : '[选修课]' %>
           <%= link_to c.title, course_path(c) %>
           <span class='label label-info pull-right'><%= user_course_state current_user, c %></span>
+          <% @course_class = c.find_class_for_user(current_user) %>
+          <% if @course_class %>
+            <ul class='active-class-list'>
+              <li>
+                <%= link_to '班级(ID-' + @course_class.id.to_s + ')', class_path(@course_class) %>
+                老师:
+                <% @course_class.teachers.each do |t| %>
+                <span><%= link_to t.name, user_path(t) %></span>
+                <% end %>
+                助教:
+                <% @course_class.assistents.each do |a| %>
+                <span><%= link_to a.name, user_path(a) %></span>
+                <% end %>
+                报名状态: <%= @course_class.students.count %>/<%= @course_class.max_students %>
+                <% if @course_class.student?(current_user) %>
+                  <%= form_for(@course_class, :url => uneroll_class_path(@course_class), html: { :method => :put }) do |f| %>
+                  <%= f.hidden_field :user_id, :value => current_user.id %>
+                  <%= f.submit "退出班级", :class => "btn btn-small btn-danger pull-right" %>
+                  <% end %>
+
+                <% else %>
+
+                  <%= form_for(@course_class, :url => eroll_class_path(@course_class), html: { :method => :put }) do |f| %>
+                  <%= f.hidden_field :user_id, :value => current_user.id %>
+                  <%= f.submit "点击报名", :class => "btn btn-small btn-warning pull-right" %>
+                  <% end %>
+                <% end %>
+              </li>
+            </ul> 
+
+          <% elsif c.course_classes.active.count > 0 %>
+            <ul class='active-class-list'>
+              <% c.course_classes.active.each do |cl| %>
+              <li>
+                <%= link_to '班级(ID-' + cl.id.to_s + ')', class_path(cl) %>
+                老师:
+                <% cl.teachers.each do |t| %>
+                <span><%= link_to t.name, user_path(t) %></span>
+                <% end %>
+                助教:
+                <% cl.assistents.each do |a| %>
+                <span><%= link_to a.name, user_path(a) %></span>
+                <% end %>
+                报名状态: <%= cl.students.count %>/<%= cl.max_students %>
+                <%= form_for(cl, :url => eroll_class_path(cl), html: { :method => :put }) do |f| %>
+                <%= f.hidden_field :user_id, :value => current_user.id %>
+                <%= f.submit "点击报名", :class => "btn btn-small btn-warning pull-right" %>
+                <% end %>
+              </li>
+              <% end %>
+            </ul>
+          <% end %>
         </li>
         <% end %>
+        </ul>
+      </div>
       <% end %>
-    </ul>
+    </div>
+
     </div>
     <% else %>
     <div class="widgetcontent">
-      目前没有未完成的培训计划
+      目前没有追踪进度的项目。
     </div>
     <% end %>
     <div class="divider15"></div>
     
-
-    <h3 class="subtitle"><%= t("dashboard.competency.title") %></h3>
-    <div class="divider15"></div>
     <h4 class="widgettitle"><span class="iconfa-signal"></span> 我的胜任力</h4>
     <div class="widgetcontent nopadding">
       <div class="accordion">
@@ -117,8 +177,6 @@
                     
   <div id="dashboard-right" class="span4">
 
-    <h5 class="subtitle"><%= t("menu.user.announcements") %></h5>
-    <div class="divider15"></div>
     <div class="alert alert-block">
       <button data-dismiss="alert" class="close" type="button">&times;</button>
       <h4>系统提示：</h4>

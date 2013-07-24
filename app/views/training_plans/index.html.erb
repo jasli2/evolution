@@ -17,7 +17,7 @@
       <% @tps.each do |tp| %>
       <li>
         <% if tp.state == 'pending_publish' %>
-        <a href="<%= publish_training_plan_path(tp) %>" class="btn btn-warning pull-right">发布计划</a>
+        <a href="<%= publish_training_plan_path(tp) %>" class="btn btn-warning btn-small pull-right">发布计划</a>
         <% end %>
         <div class='tp-header'>
         <%= link_to tp.title, training_plan_path(tp) %>
