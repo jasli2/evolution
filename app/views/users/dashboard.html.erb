@@ -29,7 +29,6 @@
       <ul class='notificaiton-list'>
         <% @active_notifications.each do |n| %>
         <li><%= notice_description(n) %> <%= link_to '点击查看', notice_url(n) %></li>
-        <%= n.set_viewed %>
         <% end %>
       </ul>
     </div><!--notifications-->
