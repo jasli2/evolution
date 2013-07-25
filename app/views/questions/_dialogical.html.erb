@@ -1,0 +1,7 @@
+<%= simple_form_for [@exam, @question],:url => examination_questions_path(@exam, :type => @question_type), :method => :post, :html => {:class => 'form-horizontal '} do |f| %>
+  <%= f.input :title, label: "题目", :input_html => { :class => "span8" }%>
+  <%= f.input :answer, label: "正确答案", as: :text, :input_html => {:class => "span8", :row => 4}%>
+  <div class="form-actions">
+    <%= f.button :submit, '完成', :class => "btn-primary" %>
+  </div>
+<% end %>
