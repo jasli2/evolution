@@ -143,6 +143,16 @@ ActiveRecord::Schema.define(:version => 20130725142330) do
     t.string   "lesson"
   end
 
+  create_table "default_permissions", :force => true do |t|
+    t.string   "role"
+    t.string   "model_name"
+    t.integer  "create_permit"
+    t.integer  "edit_permit"
+    t.integer  "read_permit"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
   create_table "discusses", :force => true do |t|
     t.integer  "user_id"
     t.integer  "course_class_id"
