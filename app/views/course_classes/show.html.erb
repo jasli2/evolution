@@ -183,9 +183,27 @@
 
       <div id="tabs-5" class="course-exam">
         <% if can_view_examination?(@course_class, current_user) %>
+          <% @course_class.examinations.count > 0 %>
+          <ul class='exam-list'>
+            <% if @course_class.examinations.each do |e| %>
+              <li>
+                <span class="label label-info"><%= exam_progress(e.state) %></span>          
+                <%= link_to e.title, current_user.admin? ? examination_path(e) : "#MyExam" %>
+                <span>参考总人数: <%=e.users.size %></span>
+                <span>考试日期：<%= e.published_at ? e.published_at.to_date : "待定 " %><%= ' - ' + e.deadline.to_date.to_s if e.deadline %></span>
+                <% if current_user.admin? %>
+                <span class='pull-right'><%= link_to exam_state(e.state), exam_state_action(e, current_user), :class => "btn btn-warning btn-small" %></span>
+                <% else %>
+                <span class='pull-right'><%= link_to "<i class='iconfa-check'></i> #{student_exam_state(e, current_user)}".html_safe, student_exam_todo_url(e, current_user), :class => "btn btn-warning btn-small" %></span>
+                <% end %>          
+              </li>
+            <% end %>
+          </ul>
+          <% else %>
+          <p>目前没有考试信息。</p>
+          <% end %>
           <div class='examination-list'>
-            目前没有考试信息。
-            <%= link_to '创建考试', "#myModal", {:class => "btn btn-primary btn-small disabled", "data-toggle" => "modal"} %>
+            <%= link_to '创建考试', new_examination_path(:course_class_id => @course_class.id), {:class => "btn btn-primary btn-small"} %>
           </div>
 
           <div class='survey-list'>

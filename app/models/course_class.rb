@@ -45,6 +45,7 @@ class CourseClass < ActiveRecord::Base
   attr_accessible :attachments_attributes
 
   has_many :discusses
+  has_many :examinations
 
   before_save :gen_address_notification
 

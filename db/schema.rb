@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130724143931) do
+ActiveRecord::Schema.define(:version => 20130725142330) do
 
   create_table "action_permissions", :force => true do |t|
     t.integer  "model_permission_id"
@@ -175,13 +175,14 @@ ActiveRecord::Schema.define(:version => 20130724143931) do
   create_table "examinations", :force => true do |t|
     t.string   "title"
     t.integer  "creator_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
     t.datetime "deadline"
     t.string   "state"
     t.datetime "finished_at"
     t.datetime "cancelled_at"
     t.datetime "published_at"
+    t.integer  "course_class_id"
   end
 
   create_table "feed_items", :force => true do |t|

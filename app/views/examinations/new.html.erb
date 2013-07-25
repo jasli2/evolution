@@ -29,7 +29,14 @@
         :end_year => Date.today.year + 10,
         :order => [:year, :month, :day]
         %>
-        <%= f.association :users, :collection => User.staff, :label => "参考人员" %>
+        <% if @course_class %>
+        <%= f.association :users, :collection => @course_class.students, :label => "参考人员:" %>
+        <% else %>
+        <%= f.association :users, :collection => User.staff, :label => "参考人员:" %>
+        <% end %>
+        <% if @course_class %>
+        <%= f.hidden_field :course_class_id, :value => @course_class.id %>
+        <% end %>
         <%= f.hidden_field :creator_id, :value => current_user.id %>
         <div class="form-actions">
         <%= f.button :submit, '创建考试', :class => "btn-primary"  %>

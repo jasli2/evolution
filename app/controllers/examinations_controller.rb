@@ -37,6 +37,7 @@ class ExaminationsController < ApplicationController
     @menu_category = 'admin'
     @menu_active = 'exam'
     @exam = Examination.new
+    @course_class = CourseClass.find(params[:course_class_id]) if params[:course_class_id]
     session[:return_to] = request.referer
 
     respond_to do |format|

@@ -17,6 +17,7 @@
 class Examination < ActiveRecord::Base
   attr_accessible :creator_id, :title
   attr_accessible :deadline, :published_at
+  attr_accessible :course_class_id
 
   validates :creator_id, :presence => true
   validates :title, :presence => true
@@ -35,6 +36,7 @@ class Examination < ActiveRecord::Base
   has_many :questions, :through => :examination_questions
   has_many :papers, :dependent => :destroy
   belongs_to :creator, :class_name => "User"
+  belongs_to :course_class
 
   after_create :determine_first_state, :gen_feedback_notification
 
