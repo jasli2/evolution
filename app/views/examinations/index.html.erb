@@ -16,24 +16,21 @@
     <h4 class="widgettitle">所有考试（<%= @exams.size %>）</h4>
     <% if @exams.size > 0 %>
     <div class="widgetcontent nopadding">
-      <table class="table responsive tp-list">
+      <ul class="exam-list">
         <% @exams.each do |e| %>
-        <tr>
-          <td><span class="label label-info"><%= exam_progress(e.state) %></span></td>
-          <td>
-            <%= link_to e.title, current_user.admin? ? examination_path(e) : "#MyExam" %>
-            <span>参考总人数: <%=e.users.size %></span>
-            <span>考试日期：<%= e.published_at ? e.published_at.to_date : "待定 " %></span>
-            <span>结束日期：<%= e.deadline ? e.deadline.to_date : "待定" %></span>
-            <% if current_user.admin? %>
-            <span><%= link_to exam_state(e.state), exam_state_action(e, current_user), :class => "btn btn-warning" %></span>
-            <% else %>
-            <%= link_to "<i class='iconfa-check'></i> #{student_exam_state(e, current_user)}".html_safe, student_exam_todo_url(e, current_user), :class => "btn btn-warning" %>
-            <% end %>
-          </td>
-        </tr>
+        <li>
+          <span class="label label-info"><%= exam_progress(e.state) %></span>          
+          <%= link_to e.title, current_user.admin? ? examination_path(e) : "#MyExam" %>
+          <span>参考总人数: <%=e.users.size %></span>
+          <span>考试日期：<%= e.published_at ? e.published_at.to_date : "待定 " %><%= ' - ' + e.deadline.to_date.to_s if e.deadline %></span>
+          <% if current_user.admin? %>
+          <span class='pull-right'><%= link_to exam_state(e.state), exam_state_action(e, current_user), :class => "btn btn-warning btn-small" %></span>
+          <% else %>
+          <span class='pull-right'><%= link_to "<i class='iconfa-check'></i> #{student_exam_state(e, current_user)}".html_safe, student_exam_todo_url(e, current_user), :class => "btn btn-warning btn-small" %></span>
+          <% end %>          
+        </li>
         <% end %>
-      </table>
+      </ul>
     </div>
     <% else %>
     <div class='widgetcontent'>

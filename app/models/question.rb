@@ -26,6 +26,8 @@ class Question < ActiveRecord::Base
 
   has_many :user_answers, :dependent => :destroy
   has_many :options, :dependent => :destroy
+  accepts_nested_attributes_for :options
+  attr_accessible :options_attributes
 
   QUESTION_TYPE = [:choice, :judgement, :dialogical]
 
