@@ -143,10 +143,30 @@ ul.active-training-list {
   }
 
   li.training-user-course {
-    padding: 5px;
-    padding-left: 15px;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    &:last-child { border-bottom: 0; }
+
+    ul.active-class-list {
+      clear: both;
+      list-style-type: none;
+      padding: 0;
+
+      li {
+        padding: 5px 0;
+        form { display: inline; }
+      }
+    }
   }
 }
 
+ul.teach-classes-list {
+  list-style-type: none;
 
+  li {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    &:last-child { border-bottom: 0; }
+  }
+}
 

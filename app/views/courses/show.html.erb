@@ -13,30 +13,6 @@
 <% end %>
 
 <% content_for :javascript do %>
-<script type="text/javascript">
-  $(function() {
-    // tabbed widget
-    $('.tabbedwidget').tabs();
-  });
-  function loadSWF(url, id){
-    if(url) {
-      var flashvars = {};
-      var swfwidth = $("#swf-content").width();
-      console.log(swfwidth);
-      var swfheigth = Math.floor(swfwidth * 3 / 4);
-      console.log(swfheigth);
-      flashvars.autoPlay = "true";
-      var params = {};
-      params.play = "true";
-      params.menu = "false";
-      params.quality = "high";
-      params.allowfullscreen = "true";
-      var attributes = {};
-      attributes.align = "middle";
-      swfobject.embedSWF(url, "swf-content", swfwidth.toString(), swfheigth.toString(), "9.0.0", false, flashvars, params, attributes);
-    }
-  }
-</script>
 <% end %>
 
 <div class="row-fluid">
@@ -59,34 +35,36 @@
         <span><%= link_to @course.creator.name, user_path(@course.creator) %> <%= t("course.all.create") %> <%= distance_of_time_in_words_to_now(@course.created_at) + t("course.all.ago") %></span>
       </div>
     </div>
-    <div class="divider30"></div>
+    <div class="divider15"></div>
     <div class="clearfix"></div>
 
-    <% unless @course.lesson.url.nil? %>
-    <div id="swf-content">
-      <a class="btn btn-success btn-small" href="<%= @course.lesson.url %>" onclick="loadSWF(this.href, 1); return false;"> <i class="iconfa-play"></i> <%= t("course.all.clik_watch") %></a>
-    </div>
-    <div class="divider15"></div>
-    <% end %>
-
-    <h3 class="subtitle">目前开设的班级：</h3>
     <% if @course.course_classes.active.count > 0 %>
+    <h3 class="subtitle">目前开设的班级：</h3>
     <div class='well nopadding'>
     <ul class='course-active-class-list'>
       <% @course.course_classes.active.each do |c| %>
       <li>
-        <%= link_to '班级-' + c.id.to_s, class_path(c) %> :
-        老师：
+        <%= link_to '班级(ID-' + c.id.to_s + ')', class_path(c) %>
+        老师:
         <% c.teachers.each do |t| %>
         <span><%= link_to t.name, user_path(t) %></span>
         <% end %>
-        助教：
+        助教:
         <% c.assistents.each do |a| %>
         <span><%= link_to a.name, user_path(a) %></span>
         <% end %>
-        <%= form_for(c, :url => eroll_class_path(c), html: { :method => :put }) do |f| %>
-        <%= f.hidden_field :user_id, :value => current_user.id %>
-        <%= f.submit "点击报名", :class => "btn btn-small btn-primary pull-right" %>
+        报名状态: <%= c.students.count %>/<%= c.max_students %>
+        <% if current_user.admin? or c.teacher?(current_user) or c.assistent?(current_user) %>
+        <% elsif c.student?(current_user) %>
+          <%= form_for(c, :url => uneroll_class_path(c), html: { :method => :put }) do |f| %>
+          <%= f.hidden_field :user_id, :value => current_user.id %>
+          <%= f.submit "退出班级", :class => "btn btn-small btn-danger pull-right" %>
+          <% end %>
+        <% else %>
+          <%= form_for(c, :url => eroll_class_path(c), html: { :method => :put }) do |f| %>
+          <%= f.hidden_field :user_id, :value => current_user.id %>
+          <%= f.submit "点击报名", :class => "btn btn-small btn-warning pull-right" %>
+          <% end %>
         <% end %>
       </li>
       <% end %>
@@ -94,41 +72,58 @@
     </div>
     <% end %>
 
-    <div class="tabbedwidget tab-primary">
-      <ul>
-        <li><a href="#tabs-1"><span class="iconfa-info-sign"></span> <%= t("course.all.info") %></a></li>
-        <li><a href="#tabs-2"><span class="iconfa-check"></span> 课程目标</a></li>
-        <li><a href="#tabs-3"><span class="iconfa-file"></span>  <%= t("course.all.material") %></a></li>
-        <li><a href="#tabs-4"><span class="iconfa-comments-alt"></span>  <%= t("course.all.discussion") %></a></li>
-      </ul>
-      <div id="tabs-1" class="course-introduction">
-        <% unless @course.description.blank? %>
-        <%= eo_markdown(@course.description) unless @course.description.blank? %>
-        <% else %>
-        <p>目前没有课程介绍。</p>
-        <% end %>
-      </div>
-      <div id="tabs-2" class="course-target">
-        <% unless @course.target.blank? %>
-        <%= eo_markdown(@course.target) unless @course.description.blank? %>
-        <% else %>
-        <p> <%= t("course.all.notic1") %></p>
-        <% end %>
-      </div>
-      <div id="tabs-3" class="course-material">
-        <p> <%= t("course.all.notic1") %></p>
-      </div>
-      <div id="tabs-4" class="course-discussion">
-        <div class="discuss-list"> <%= t("course.all.notic2") %></div>
-        <div class="discuss-input-box">
-          <%= image_tag user_avatar_path(current_user, :small) %>
-          <div class="discuss-input">
-            <%= text_area_tag "topic", nil, :rows => 2, :cols => 25, :placeholder => "发起讨论或者发布问题..." %>
-            <div><a href="#myModal" data-toggle="modal" class="btn btn-primary disabled"><i class="iconfa-edit icon-white"></i> 发布讨论</a></div>
-          </div>
-        </div>
-      </div>
+    <h3 class="subtitle">课程简介：</h3>
+    <div class='well'>
+      <% unless @course.description.blank? %>
+      <%= eo_markdown(@course.description) unless @course.description.blank? %>
+      <% else %>
+      <p>目前没有课程介绍。</p>
+      <% end %>
     </div>
+
+    <h3 class="subtitle">课程目标：</h3>
+    <div class='well'>
+      <% unless @course.target.blank? %>
+      <%= eo_markdown(@course.target) unless @course.description.blank? %>
+      <% else %>
+      <p>目前没有课程目标。</p>
+      <% end %>
+    </div>
+
+    <div class='well course-comments'>
+      <h4>课程评论：<%= @course.comments.count %></h4>
+      <% if @course.comments.count > 0 %>
+      <ul class='course-comments-list'>
+        <% @course.comments.each do |com| %>
+        <li>
+        <%= image_tag user_avatar_path(com.user, :small) %>
+          <div class='comment-details'>
+            <%= link_to com.user.name, user_path(com.user) %>
+            <span class='pull-right'> 发表于<%= distance_of_time_in_words_to_now(com.created_at) %>前</span>
+            <p><%= com.content %><p>
+          </div>
+        </li>
+        <% end %>
+      </ul>
+      <% else %>
+      <p>目前还没有评论。</p>
+      <% end %>
+
+      <div class='course-comment-form'>
+      <%= image_tag user_avatar_path(current_user, :small) %>
+      <div class='comment-input'>
+      <%= simple_form_for Comment.new, :url => comments_path, :method => :post do |f| %>
+        <%= f.input :content, :as => :text, :input_html => { :cols => 50, :rows => 3 }, :placeholder => "发表评论...", :label => false %>
+        <%= f.hidden_field :user_id, :value => current_user.id %>
+        <%= f.hidden_field :commentable_type, :value => @course.class.name.demodulize  %>
+        <%= f.hidden_field :commentable_id, :value => @course.id %>
+        <%= f.submit "发表评论", :class => "btn, btn-primary" %>
+      <% end %>
+      </div>
+      </div>
+
+    </div>
+
   </div>
   <div id="dashboard-right" class="span4">
     <% if current_user.admin? or @course.creator?(current_user) %>
@@ -137,6 +132,32 @@
       <a href="<%= new_course_class_path(@course) %>" class="btn btn-warning"><i class="iconfa-plus icon-white"></i>  开设班级</a> 
     </div>
     <% end %>
-    
+
+    <h3 class="subtitle">已完成班级记录：</h3>
+    <% if @course.course_classes.finished.count > 0 %>
+    <div class='well nopadding'>
+      <ul class='course-active-class-list'>
+        <% @course.course_classes.active.each do |c| %>
+        <li>
+          <%= link_to '班级(ID-' + c.id.to_s + ')', class_path(c) %>
+          老师:
+          <% c.teachers.each do |t| %>
+          <span><%= link_to t.name, user_path(t) %></span>
+          <% end %>
+          助教:
+          <% c.assistents.each do |a| %>
+          <span><%= link_to a.name, user_path(a) %></span>
+          <% end %>
+          报名状态: <%= c.students.count %>/<%= c.max_students %>
+        </li>
+        <% end %>
+      </ul>
+    </div>
+    <% else %>
+    <div class='well'>
+      没有已完成班级记录。
+    </div>
+    <% end %>
+
   </div>
 </div>

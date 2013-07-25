@@ -85,7 +85,9 @@ module UsersHelper
       if n.notification_type == 'assign_teacher'
         "你已经被委任为课程：" +  n.source.course.title + "的班级老师。" 
       elsif n.notification_type == 'assign_assistent'
-        "你已经被委任为课程：" +  n.source.course.title + "的班级助教。" 
+        "你已经被委任为课程：" +  n.source.course.title + "的班级助教。"
+      elsif 'publish_time_address'
+        "班级：" + n.source.course.title + "（班级ID-" + n.source.id.to_s + "）" + "已经发布了上课时间和地点。"
       else
         "班级通知类型未知：" + n.notification_type
       end

@@ -97,7 +97,7 @@ class User < ActiveRecord::Base
   # course class
   has_many :created_classes, :class_name => 'CourseClass', :foreign_key => 'creator_id'
   has_many :as_teacher_in_class, :class_name => 'ClassUserRole', :conditions => { :role => ['teacher', 'assistent'] }
-  has_many :teach_classes, :through => :as_admin_in_class, :source => :course_class
+  has_many :teach_classes, :through => :as_teacher_in_class, :source => :course_class
   has_many :as_student_in_class, :class_name => 'ClassUserRole', :conditions => { :role => 'student' }
   has_many :joined_classes, :through => :as_student_in_class, :source => :course_class
 
@@ -150,6 +150,17 @@ class User < ActiveRecord::Base
   }
   mount_uploader :avatar, ImageUploader
   validates :avatar, :file_size => {:maximum => 1.megabytes.to_i }
+
+  # this function is plan to provide the count of course this user need to attentd and manage
+  def active_course_count
+    count = 0
+
+    active_training_plans.each do |tp| 
+      count += tp.course_for_user(self).count
+    end
+
+    count += teach_classes.count
+  end
 
   def latest_comments
     self.comments.order('create_at DESC').limit(10)

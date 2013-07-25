@@ -8,7 +8,7 @@ Evolution::Application.routes.draw do
     resources :classes, :controller => :course_classes do
       put 'eroll', :on => :member
       put 'uneroll', :on => :member
-      resources :discuss, :only => [:create]
+      resources :discusses, :only => [:create]
     end
   end
   

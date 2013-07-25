@@ -14,13 +14,14 @@
     <div class="widgetcontent">
       <div class="divider15"></div>
       <%= simple_form_for(@course_class, :html => {:class => 'form-horizontal', :multipart => true }) do |f| %>
-        <%= f.input :eroll_deadline, :as => :date, 
+        <%= f.input :eroll_deadline, :label => '报名截止日期', :as => :date, 
           :start_year => Date.today.year, 
           :end_year => Date.today.year + 10, 
           :order => [:year, :month, :day]
         %>
-        <%= f.association :teachers, :collection => User.teacher, :multiple => true %>
-        <%= f.association :assistents, :collection => User.teacher, :multiple => true %>
+        <%= f.association :teachers, :label => '指定老师', :collection => User.teacher, :multiple => true %>
+        <%= f.association :assistents, :label => '指定助教', :collection => User.teacher, :multiple => true %>
+        <%= f.input :max_students, :label => '报名最大人数' %>
         <%= f.hidden_field :creator_id, :value => current_user.id %>
         <%= f.hidden_field :course_id, :value => @course.id %>        
         <div class="form-actions">

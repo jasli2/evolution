@@ -11,7 +11,7 @@
 <div class="row-fluid">
   <div id="dashboard-left" class="span8">
     <div class="well">
-      <h3><%= @tp.title %> <span class="label label-info pull-right"><%= @tp.state %></span></h3>
+      <h3><%= @tp.title %> <span class="label label-info pull-right"><%= training_plan_state @tp %></span></h3>
       <div>
         创建于<%= distance_of_time_in_words_to_now(@tp.created_at) + t("course.all.ago") %>&middot;
         培训员工（<%= @tp.users.count %>）&middot;
@@ -20,30 +20,36 @@
       </div>
     </div>
 
-    <div class="well tp-details-progress">
-      <h4>课程反馈详细信息</h4>
+    <div class="well tp-details">
+      <h4 id='tp-header'>课程培训进度</h4>
       <h5>必修课程（<%= @tp.required_courses.count %>）</h5>
-      <ul class="tp-course-progress-list">
+      <ul class="tp-course-list">
         <% @tp.required_courses.each do |c| %>
         <li>
-          <%= link_to c.title, course_path(c) %>
-          <div class="progress progress-info pull-right" style="width: 60%;">
-            <div style="width: <%= c.training_feedbacks.for_plan(@tp).count*100/@tp.users.count %>%" class="bar">
-              <%= c.training_feedbacks.for_plan(@tp).count.to_s + '/' + @tp.users.count.to_s %>
-            </div>
+          <%= image_tag course_cover_path(c, :small) %>
+          <a href="<%= new_course_class_path(c) %>" class="btn btn-warning btn-small action">开设班级</a>
+          <div class='tp-course-info'>
+            <%= link_to content_tag(:h4, c.title), course_path(c) %>
+            <span>
+              预计参培人数：<%= c.training_feedbacks.for_plan(@tp).count.to_s + '/' + @tp.users.count.to_s %> &middot;
+              已开设班级：<%= c.course_classes.active.count %>
+            </span>
           </div>
         </li>
         <% end %>
       </ul>
       <h5>选修课程（<%= @tp.optional_courses.count %>）</h5>     
-      <ul class="tp-course-progress-list">
+      <ul class="tp-course-list">
         <% @tp.optional_courses.each do |c| %>
         <li>
-          <%= link_to c.title, course_path(c) %>
-          <div class="progress progress-info pull-right" style="width: 60%;">
-            <div style="width: <%= c.training_feedbacks.for_plan(@tp).count*100/@tp.users.count %>%" class="bar">
-              <%= c.training_feedbacks.for_plan(@tp).count.to_s + '/' + @tp.users.count.to_s %>
-            </div>
+          <%= image_tag course_cover_path(c, :small) %>
+          <a href="<%= new_course_class_path(c) %>" class="btn btn-warning btn-small action">开设班级</a>
+          <div class='tp-course-info'>
+            <h4><%= link_to c.title, course_path(c) %></h4>
+            <span>
+              预计参培人数：<%= c.training_feedbacks.for_plan(@tp).count.to_s + '/' + @tp.users.count.to_s %> &middot;
+              已开设班级：<%= c.course_classes.active.count %>
+            </span>
           </div>
         </li>
         <% end %>
@@ -52,9 +58,8 @@
     
   </div>
   <div id="dashboard-right" class="span4">
-    <div class="well">
-      <a href="<%= new_user_path %>" class="btn btn-primary"><i class="iconfa-plus icon-white"></i><%= t('users.all.create')%></a>
-      <a href="#myModal" data-toggle="modal" class="btn btn-warning"><i class="iconfa-download-alt icon-white"></i> <%= t('users.all.export') %></a>
+    <div class='well'>
+      <a href="#myModal" data-toggle="modal" class="btn btn-warning"><i class="iconfa-download-alt icon-white"></i>关闭培训计划</a>
     </div>
   </div>
 </div>

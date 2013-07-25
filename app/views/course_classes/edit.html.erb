@@ -1,2 +1,50 @@
-<h1>CourseClasses#edit</h1>
-<p>Find me in app/views/course_classes/edit.html.erb</p>
+<% provide(:title, @is_publish ? "发布上课时间地点" : "修改班级信息") %>
+
+<% content_for :breadcrumbs do %>
+<li><%= link_to @course_class.course.title + "(班级ID-" + @course_class.id.to_s + ")", class_path(@course_class) %> <span class="separator"></span></li>
+<%= content_tag(:li, @is_publish ? "发布上课时间地点" : "修改班级信息") %>
+<% end %>
+
+<% content_for :javascript do %>
+<% end %>
+
+<div class="row-fluid">
+  <div id="dashboard-left" class="span8">
+    
+    <% if @is_publish %>
+    <h4 class="widgettitle">发布上课时间地点</h4>
+    <div class="widgetcontent">
+      <%= simple_form_for(@course_class, :url => class_path(@course_class), :method => :put, :html => {:class => 'form-horizontal', :multipart => true }) do |f| %>
+      <%= f.input :address, :label => '上课地点', :input_html => { :class => "input-xlarge" } %>
+      <%= f.input :start_time, :as => :datetime, :label => '课程开始时间' %>
+      <%= f.input :end_time, :as => :datetime, :label => '课程结束时间' %>
+      <div class="form-actions">
+        <%= f.button :submit, '发布上课时间地点', :class => "btn-primary"  %>
+      </div>
+      <% end %>
+    </div>
+    <% else %>
+    <h4 class="widgettitle">修改班级信息</h4>
+    <div class="widgetcontent">
+      <div class="divider15"></div>
+      <%= simple_form_for(@course_class, :url => class_path(@course_class), :method => :put, :html => {:class => 'form-horizontal', :multipart => true }) do |f| %>
+        <%= f.input :eroll_deadline, :label => '报名截止日期', :as => :date, 
+          :start_year => Date.today.year, 
+          :end_year => Date.today.year + 10, 
+          :order => [:year, :month, :day]
+        %>
+        <%= f.association :teachers, :label => '指定老师', :collection => User.teacher, :multiple => true %>
+        <%= f.association :assistents, :label => '指定助教', :collection => User.teacher, :multiple => true %>
+        <%= f.input :max_students, :label => '报名最大人数' %>
+        <div class="form-actions">
+        <%= f.button :submit, '更新班级信息', :class => "btn-primary"  %>
+        </div>
+      <% end %>
+    </div>
+    <% end %>
+
+  </div>
+
+  <div id="dashboard-right" class="span4">
+  </div>
+</div>

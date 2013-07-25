@@ -120,6 +120,10 @@ ActiveRecord::Schema.define(:version => 20130724143931) do
     t.integer  "creator_id"
     t.datetime "teach_date"
     t.datetime "eroll_deadline"
+    t.integer  "max_students"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.string   "address"
   end
 
   create_table "courses", :force => true do |t|

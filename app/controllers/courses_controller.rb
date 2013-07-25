@@ -53,14 +53,14 @@ class CoursesController < ApplicationController
     @menu_category = current_user.admin? ? 'admin' : 'user'
     @menu_active = current_user.admin? ? 'courses' : 'user_courses'
     @course = Course.find(params[:id])
-    @course_class = @course.find_class_for_user(current_user)
+    #@course_class = @course.find_class_for_user(current_user)
 
     respond_to do |format|
-      if @course_class
-        format.html { redirect_to class_path(@course_class) }
-      else
+      # if @course_class
+      #   format.html { redirect_to class_path(@course_class) }
+      # else
         format.html
-      end
+      # end
 
       format.json { render json: @course }
     end
