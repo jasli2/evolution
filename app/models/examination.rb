@@ -36,7 +36,7 @@ class Examination < ActiveRecord::Base
   has_many :papers, :dependent => :destroy
   belongs_to :creator, :class_name => "User"
 
-  after_create :determine_first_state, :gen_feedback_todos
+  after_create :determine_first_state, :gen_feedback_notification
 
   #state machine
   state_machine :state, :initial => :created  do
@@ -57,8 +57,8 @@ class Examination < ActiveRecord::Base
     after_transition :on => :publish do |exam, transition|
       #gen_feedback_todos
       exam.users.each do |user|
-        todo =  exam.user_todo_exam(user)
-        user.todos.create!(:source => self, :todo_type => 'published', :deadline => self.deadline)
+        #todo =  exam.user_todo_exam(user)
+        user.todos.create!(:source => exam, :todo_type => 'published', :deadline => exam.deadline)
         exam.notifications.create!(:user_id => user.id, :notification_type => "published") if user
       end
     end

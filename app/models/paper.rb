@@ -13,6 +13,7 @@
 
 class Paper < ActiveRecord::Base
   attr_accessible :correct_nums, :error_nums, :score, :user_id
+  attr_accessible :examination_feedback_id
   
   validates :examination_id, :presence => true
   validates :user_id, :presence => true
