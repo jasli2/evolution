@@ -1,0 +1,71 @@
+<% provide(:title, @exam.title) %>
+
+<% content_for :breadcrumbs do %>
+<li><%= link_to "培训计划管理", training_plans_path %> <span class="separator"></span></li>
+<%= content_tag(:li, @tp.title) %>
+<% end %>
+
+<% content_for :javascript do %>
+<% end %>
+
+<div class="row-fluid">
+  <div id="dashboard-left" class="span8">
+    <div class="well">
+      <h3><%= @tp.title %> <span class="label label-info pull-right"><%= @tp.state %></span></h3>
+      <div>
+        创建于<%= distance_of_time_in_words_to_now(@tp.created_at) + t("course.all.ago") %>&middot;
+        培训员工（<%= @tp.users.count %>）&middot;
+        必修课程（<%= @tp.required_courses.count %>）&middot;
+        选修课程（<%= @tp.optional_courses.count %>）&middot;
+      </div>
+    </div>
+
+    <div class="well">
+      <div>
+        <h4 class="pull-left">培训员工反馈进度</h4>
+        <div class="progress progress-info pull-right" style="width: 60%;">
+          <div style="width: <%= @tp.feedbacks.count*100/@tp.users.count %>%" class="bar">
+            <%= @tp.feedbacks.count.to_s + '/' + @tp.users.count.to_s %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="well tp-details-progress">
+      <h4>课程反馈详细信息</h4>
+      <h5>必修课程（<%= @tp.required_courses.count %>）</h5>
+      <ul class="tp-course-progress-list">
+        <% @tp.required_courses.each do |c| %>
+        <li>
+          <%= link_to c.title, course_path(c) %>
+          <div class="progress progress-info pull-right" style="width: 60%;">
+            <div style="width: <%= c.training_feedbacks.for_plan(@tp).count*100/@tp.users.count %>%" class="bar">
+              <%= c.training_feedbacks.for_plan(@tp).count.to_s + '/' + @tp.users.count.to_s %>
+            </div>
+          </div>
+        </li>
+        <% end %>
+      </ul>
+      <h5>选修课程（<%= @tp.optional_courses.count %>）</h5>     
+      <ul class="tp-course-progress-list">
+        <% @tp.optional_courses.each do |c| %>
+        <li>
+          <%= link_to c.title, course_path(c) %>
+          <div class="progress progress-info pull-right" style="width: 60%;">
+            <div style="width: <%= c.training_feedbacks.for_plan(@tp).count*100/@tp.users.count %>%" class="bar">
+              <%= c.training_feedbacks.for_plan(@tp).count.to_s + '/' + @tp.users.count.to_s %>
+            </div>
+          </div>
+        </li>
+        <% end %>
+      </ul> 
+    </div>
+    
+  </div>
+  <div id="dashboard-right" class="span4">
+    <div class="well">
+      <a href="<%= new_user_path %>" class="btn btn-primary"><i class="iconfa-edit icon-white"></i> 修改培训计划</a>
+      <a href="#myModal" data-toggle="modal" class="btn btn-warning"><i class="iconfa-download-alt icon-white"></i> 导出培训计划</a>
+    </div>
+  </div>
+</div>

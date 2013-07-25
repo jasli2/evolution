@@ -35,7 +35,7 @@ module ExaminationsHelper
     when "published"
       "#myMode"
     when "finished"
-      "#myMode"
+      result_examination_path(exam)
     else
       "#myMode"
     end

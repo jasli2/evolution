@@ -43,15 +43,18 @@ class Examination < ActiveRecord::Base
 
     after_transition :on => :all_feedbacked do |exam, transition|
       exam.finished_at = Time.zone.now
-      exam.notifications.create!(:user_id => exam.creator.id, :notification_type => "finished") if exam.creator
+      exam.save
+      exam.notifications.create!(:user_id => exam.creator.id, :notification_type => "all_feedback") if exam.creator
     end
 
     after_transition :on => :cancel do |exam, transition|
       exam.cancelled_at = Time.zone.now
+      exam.save
     end
 
     after_transition :on => :feedback_timeout do |exam, transition|
       exam.finished_at = self.deadline
+      exam.save
     end
 
     after_transition :on => :publish do |exam, transition|
@@ -111,7 +114,7 @@ class Examination < ActiveRecord::Base
   end
 
   def feedback_created(feedback)
-    if feedbacks.count == users.count
+    if self.feedbacks.count == self.users.count
       self.all_feedbacked
     end
   end
@@ -124,6 +127,10 @@ class Examination < ActiveRecord::Base
     self.questions.all.each do |question|
        question.user_answers.create!(:paper_id => paper_id)
     end
+  end
+
+  def answer_kind_num(type, qid)
+    UserAnswer.get_user_answer(type).where(:question_id => qid)
   end
 
   def set_day(old, increment)
