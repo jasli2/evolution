@@ -17,6 +17,7 @@
 class Examination < ActiveRecord::Base
   attr_accessible :creator_id, :title
   attr_accessible :deadline, :published_at
+  attr_accessible :course_class_id
 
   validates :creator_id, :presence => true
   validates :title, :presence => true
@@ -33,31 +34,35 @@ class Examination < ActiveRecord::Base
 
   has_many :examination_questions
   has_many :questions, :through => :examination_questions
-  has_many :papers
+  has_many :papers, :dependent => :destroy
   belongs_to :creator, :class_name => "User"
+  belongs_to :course_class
 
-  after_create :determine_first_state, :gen_feedback_todos
+  after_create :determine_first_state, :gen_feedback_notification
 
   #state machine
   state_machine :state, :initial => :created  do
 
     after_transition :on => :all_feedbacked do |exam, transition|
-      exam.notifications.create!(:user_id => exam.creator.id, :notification_type => "finished") if exam.creator
       exam.finished_at = Time.zone.now
+      exam.notifications.create!(:user_id => exam.creator.id, :notification_type => "finished") if exam.creator
     end
 
     after_transition :on => :cancel do |exam, transition|
       exam.cancelled_at = Time.zone.now
     end
 
+    after_transition :on => :feedback_timeout do |exam, transition|
+      exam.finished_at = self.deadline
+    end
+
     after_transition :on => :publish do |exam, transition|
       #gen_feedback_todos
       exam.users.each do |user|
-        todo =  exam.user_todo_exam(user)
-        todo.update_attribute(:todo_type, 'published')
+        #todo =  exam.user_todo_exam(user)
+        user.todos.create!(:source => exam, :todo_type => 'published', :deadline => exam.deadline)
         exam.notifications.create!(:user_id => user.id, :notification_type => "published") if user
       end
-
     end
 
     event :all_feedbacked do
@@ -74,7 +79,8 @@ class Examination < ActiveRecord::Base
 
     event :publish do
       transition :pending_publish => :published
-    end  
+    end
+
   end
 
   def find_user_todo(current_user_id)
@@ -103,7 +109,7 @@ class Examination < ActiveRecord::Base
   end
 
   def user_todo_exam(ur)
-    ur.todos.where(:source_type => "Examination", :source_id => self.id).first
+    ur.todos.where(:source_type => "Examination", :source_id => self.id).first if ur
   end
 
   def feedback_created(feedback)
@@ -122,27 +128,36 @@ class Examination < ActiveRecord::Base
     end
   end
 
-  #should put this action in background
-  #paper processing should more perfect
-  def finish_paper(paper, answers)
+  def set_day(old, increment)
+    return old + increment
+  end
+
+  #function : 
+  #1、correct student paper 
+  #2、create todo for examination creator to finish paper
+  #TODO:paper processing should more perfect
+  def finish_paper(paper_id, feedback_id, answers)
     answers.each do |key, value|
       puts key.split('_')[0]
       puts key.split('_')[1]
       q_type = key.split('_')[0]
       q_id = key.split('_')[1].to_i
       sub = Question.find(q_id)
-      sub_ans = sub.user_answers.where(paper.id).first
-      if !q_type.eql?("dialogical")
+      sub_ans = sub.user_answers.where(:paper_id => paper_id).first
+      unless q_type.eql?("dialogical")
         if value.nil?
           state = false
         else
           state = sub.answer.upcase.eql?(value.upcase)
         end
-      else
-        puts "dialogical should deal"
       end
       sub_ans.update_attributes(:content => value, :correct => state)
     end
+    #to tell creator  about student  submit a paper and crorrect paper
+    #teacher should correct paper after examination  3 day
+    paper = Paper.find(paper_id)
+    paper.update_attributes(:examination_feedback_id => feedback_id)
+    creator.todos.create!(:source => paper, :todo_type => 'pending_finish', :deadline =>set_day(self.deadline, 3.day)) if creator
   end
 
   private
@@ -151,9 +166,9 @@ class Examination < ActiveRecord::Base
       self.save!
     end
 
-    def gen_feedback_todos
+    def gen_feedback_notification
       users.each do |u|
-        u.todos.create!(:source => self, :todo_type => 'examination_pending', :deadline => self.deadline)
+        self.notifications.create!(:user_id => u.id, :notification_type => 'examination_pending') if u
       end
     end
 

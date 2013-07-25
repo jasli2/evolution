@@ -46,6 +46,7 @@ class CourseClassesController < ApplicationController
 
   def edit
     @course_class = CourseClass.find(params[:id])
+    @is_publish = params[:publish]
 
     respond_to do |format|
       format.html

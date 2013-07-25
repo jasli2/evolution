@@ -29,24 +29,30 @@ function show_answere(question_id) {
         <tr>
           <td width="1%"><%= get_question_index(@exam, question, "choice") %>、</td>
           <td width="69%">
-            <%= eo_markdown(question.qdata) %>
+            <p><%= eo_markdown(question.title) %></p>
+            <% question.options.each do |option| %>
+              <p><%= option.content %></p>
+            <% end %>
             <div id="light_<%= question.id.to_s%>" style="display:none">
-              <%= text_field_tag "choice_#{question.id.to_s}_answer", params[:answer],:maxlength => 1 %>
+              <p>请选择答案: </p>
+              <p><%= select_tag "answer[choice_#{question.id.to_s}]", options_for_select(["A", "B", "C", "D"], "A") %></p>
             </div>
           </td>
           <td width="30%">
           <%= link_to_function "<i class='iconfa-edit'></i> 回答该题：".html_safe, "show_answere('#{question.id}')", :class => "btn btn-primary btn-small"%>   
           </td>
-        </tr>      
+        </tr>
         <% end %>
 
         <% @exam.get_judgement_question.each do |question| %>
         <tr>
           <td width="1%"><%= get_question_index(@exam, question, "judgement") %>、</td>
           <td width="69%">
-            <%= eo_markdown(question.qdata) %>
+            <%= eo_markdown(question.title) %>
             <div id="light_<%= question.id.to_s%>" style="display:none">
-              <%= text_field_tag "judgement_#{question.id.to_s}_answer", params[:answer],:maxlength => 5 %>
+              <p>请选择答案: </p>
+              <p><%= radio_button_tag "answer[judgement_#{question.id.to_s}]", "true" %> 正确 </p>
+              <p><%= radio_button_tag "answer[judgement_#{question.id.to_s}]", "false" %> 错误 </p>
             </div>
           </td>
           <td width="30%">
@@ -59,9 +65,10 @@ function show_answere(question_id) {
         <tr>
           <td width="1%"><%= get_question_index(@exam, question, "dialogical") %>、</td>
           <td width="69%">
-            <%= eo_markdown(question.qdata) %>
+            <%= eo_markdown(question.title) %>
             <div id="light_<%= question.id.to_s%>" style="display:none">
-              <%= text_field_tag "dialogical_#{question.id.to_s}_answer", params[:answer] %>
+              <p>请输入答案: </p>
+              <p><%= text_area_tag "answer[dialogical_#{question.id.to_s}]", nil,  rows: 4, cols: 50 %></p>
             </div>
           </td>
           <td width="30%">

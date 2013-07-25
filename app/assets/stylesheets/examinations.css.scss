@@ -8,19 +8,39 @@ ul.exam-list {
   li {
     display: block;
     border-bottom: 1px solid #ddd;
-    padding: 15px 20px;
+    padding: 15px 10px;
     &:last-child { border-bottom: 0; }
-    .btn {
-      padding: 2px 5px;
-    }
   }
 
 }
 
-td > .btn {
-  padding: 2px 5px;
-}
+.exam-question-list {
+  list-style-type: none;
 
-td#qustion-action {
-  text-align: right;
+  li.question-details {
+    padding: 10px 20px;
+    border-bottom: 1px solid #ddd;
+    &:last-child { border-bottom: 0; }
+
+    .question-header {
+      padding: 5px 0;
+      span.qustion-title {
+        font-weight: bold;
+      }
+    }
+
+    ul.option-list-choice {
+      list-style-type: upper-alpha;
+      margin: 0 20px;
+    }
+
+    ul.option-list-judgement {
+      list-style-type: none;
+    }
+  }
+
+  .iconfa-check {
+    color: green;
+    margin: 0 10px;
+  }
 }

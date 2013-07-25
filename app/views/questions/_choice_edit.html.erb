@@ -1,0 +1,11 @@
+<%= simple_form_for [@exam, @question], :html => {:class => 'form-horizontal'} do |f| %>
+  <%= f.input :title, :label => "题干：" %>
+  <% @question.options.each do |op| %>
+  <%= f.simple_fields_for :options do |option_form| %>
+    <%= option_form.input :content, :label => "选项-1：" %>
+  <% end %>
+  <%= f.input :answer, :collection => [[0, "选项-1"], [1, "选项-2"], [2, "选项-3"], [3, "选项-4"]], :value_method =>:first, :label_method => :last, :label => "正确答案：" %>
+  <div class="form-actions">
+  <%= f.button :submit, '修改题目', :class => "btn-primary"  %>
+  </div>
+<% end %>
