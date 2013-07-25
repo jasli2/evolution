@@ -14,14 +14,14 @@
 
 <div class="row-fluid">
   <div id="dashboard-left" class="span8">
-    <h4 class="widgettitle"><%= @exam.title %>（<%= @exam.questions.size %>）</h4>
+    <h4 class="widgettitle"><%= @exam.title %> (总题数：<%= @exam.questions.size %> | 选择题：<%=@exam.get_choice_question.size %> | 判断题：<%= @exam.get_judgement_question.size %> | 简答题：<%= @exam.get_dialogical_question.size %>  )</h4>
     <% if @exam.questions.size > 0 %>
     <div class="widgetcontent nopadding">
       <table class="table responsive">
         
         <% @exam.questions.each do |q| %>
         <tr>
-          <td width="70%"><%= eo_markdown(q.qdata) %></td>
+          <td width="70%"><%= eo_markdown(q.title) %></td>
           <td width="30%" id="qustion-action">
             <%= link_to "<i class='iconfa-edit'></i> 修改试题".html_safe, edit_examination_question_path(@exam.id, q.id), :class => "btn btn-primary btn-small", "data-toggle" => "modal" %>
             <%= link_to "<i class='iconfa-edit'></i> 删除试题".html_safe, examination_question_path(@exam.id, q.id), :data => {confirm: "确定删除？"}, :method => :delete, :class => "btn btn-danger btn-small", "data-toggle" => "modal" %>

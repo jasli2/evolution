@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130718130649) do
+ActiveRecord::Schema.define(:version => 20130724143931) do
 
   create_table "action_permissions", :force => true do |t|
     t.integer  "model_permission_id"
@@ -219,14 +219,20 @@ ActiveRecord::Schema.define(:version => 20130718130649) do
     t.datetime "updated_at",        :null => false
   end
 
+  create_table "options", :force => true do |t|
+    t.integer  "question_id"
+    t.string   "content"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
   create_table "papers", :force => true do |t|
     t.integer  "score"
-    t.integer  "correct_nums"
-    t.integer  "error_nums"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
     t.integer  "user_id"
     t.integer  "examination_id"
+    t.integer  "examination_feedback_id"
   end
 
   create_table "position_competency_levels", :force => true do |t|
@@ -253,7 +259,7 @@ ActiveRecord::Schema.define(:version => 20130718130649) do
   end
 
   create_table "questions", :force => true do |t|
-    t.text     "qdata"
+    t.string   "title"
     t.string   "answer"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false

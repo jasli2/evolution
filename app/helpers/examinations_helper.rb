@@ -6,6 +6,8 @@ module ExaminationsHelper
       "发布考试"
     when "published"
       "取消考试"
+    when "finished"
+      "查看考试结果"
     else
       "未知状态"
     end
@@ -31,6 +33,8 @@ module ExaminationsHelper
     when "pending_publish"
       confirm_publish_examination_path(exam.id)
     when "published"
+      "#myMode"
+    when "finished"
       "#myMode"
     else
       "#myMode"
