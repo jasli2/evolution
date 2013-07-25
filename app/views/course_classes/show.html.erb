@@ -66,21 +66,24 @@
 
     <% if @course.course_type != 'E-LEARNING' %>
 
-      <% if @course_class.published? %>
+      <% unless @course_class.published? %>
         <% if can_publish_address?(@course_class, current_user) %>
         <div class='well'>
           目前没有发布上课时间和地点。
-          <span class='pull-right'><%= link_to '现在发布', '#', :class => 'btn btn-small btn-primary' %></span>
+          <span class='pull-right'><%= link_to '现在发布', edit_class_path( @course_class, :publish => true), :class => 'btn btn-small btn-primary' %></span>
         </div>
         <% end %>
       <% else %>
         <% if can_view_publish_info?(@course_class, current_user) %>
-        <div class='well'>
-          @course_class.address
+        <div class="alert alert-info alert-block">
+          <h6>上课时间及地点：</h6>
+          <%= content_tag(:i, nil, :class => "iconfa-time") %>  <%= l(@course_class.start_time, :format =>:long) + " - " + l(@course_class.end_time, :format => :long) %>
+          <%= content_tag(:i, nil, :class => "iconfa-map-marker") %>  <%= @course_class.address %>
         </div>
         <% end %>
       <% end %>
 
+      <div class="divider15"></div>
     <% end %>
 
     <div class="tabbedwidget tab-primary">
@@ -199,7 +202,7 @@
   <div id="dashboard-right" class="span4">
     <div class="well">
     <% if current_user.admin? or @course_class.creator?(current_user) or @course_class.teacher?(current_user) %>
-      <a href="<%= edit_class_path(@course) %>" class="btn btn-success"><i class="iconfa-edit icon-white"></i>  编辑班级信息</a>
+      <a href="<%= edit_class_path(@course_class) %>" class="btn btn-success"><i class="iconfa-edit icon-white"></i>  编辑班级信息</a>
     <% else %>
       <% if @course_class.student?(current_user) %>
         <%= form_for(@course_class, :url => uneroll_class_path(@course_class), html: { :method => :put }) do |f| %>

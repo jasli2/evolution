@@ -46,6 +46,17 @@ class CourseClass < ActiveRecord::Base
 
   has_many :discusses
 
+  before_save :gen_address_notification
+
+  def gen_address_notification
+    # only send out notification for the first time update start_time/end_time/address
+    if start_time_changed? and start_time_was == nil and end_time_changed? and end_time_was == nil and address_changed? and address_was == nil
+      students.each do |u|
+        u.notifications.create!(:source => self, :notification_type => "publish_time_address")
+      end
+    end
+  end
+
   # state machine
   state_machine :state, :initial => :erolling do 
     event :eroll_timeout do 
@@ -93,7 +104,7 @@ class CourseClass < ActiveRecord::Base
   end
 
   def published?
-    if course.course_type == "E-LEARNING"
+    if course.course_type != "E-LEARNING"
       start_time and end_time and address
     else
       true

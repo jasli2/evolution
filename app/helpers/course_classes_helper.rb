@@ -26,4 +26,8 @@ module CourseClassesHelper
   def can_publish_address?(c, u)
     u.admin? or c.teacher?(u) or c.assistent?(u)
   end
+
+  def can_view_publish_info?(c, u)
+    u.admin? or c.teacher?(u) or c.assistent?(u) or c.student?(u)    
+  end
 end
