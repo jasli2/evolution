@@ -6,6 +6,7 @@ class QuestionsController < ApplicationController
     @exam = Examination.find(params[:examination_id])
     @question = Question.new
     @question_type = params[:question_type] if params[:question_type]
+    1.times { @question.options.build }
 
     session[:return_to] = request.referer
     respond_to do |format|
@@ -25,13 +26,15 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    @exam = Examination.find(params[:examination_id]) 
-    @question = @exam.questions.build(params[:question])
-    @question.question_type_str=params[:type]
+    # @exam = Examination.find(params[:examination_id]) 
+    # @question = @exam.questions.build(params[:question])
+    # @question.question_type_str = params[:type]
+    @exam = Examination.find(params[:examination_id])
+    @question = Question.new(params[:question])
 
     respond_to do |format|
       if @question.save!
-        @question.check_question_options(params[:options]) if params[:options]
+        #@question.check_question_options(params[:options]) if params[:options]
         @exam.examination_questions.create(:question_id => @question.id)
         format.html { redirect_to session.delete(:return_to), notice: '添加考题成功！'}
       else

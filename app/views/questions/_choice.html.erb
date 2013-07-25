@@ -1,27 +1,20 @@
-<%= form_tag examination_questions_path(@exam, :type => @question_type), :method => :post, :html => {:class => 'form-horizontal '} do %>
-    <p>题目：<%= text_field_tag "question[title]", @question.title%> </p>
-    <table class="table responsive">
-      <tr>
-        <td >
-          <p>A：<%= text_field_tag "options[A]", nil%> </p>
-        </td>
-      </tr>
-      <tr>
-        <td >
-          <p>B：<%= text_field_tag "options[B]", "" %></p>
-        </td>
-      </tr>
-      <tr>
-        <td >
-          <p>C：<%= text_field_tag "options[C]", "" %></p>
-        </td>
-      </tr>
-      <tr>
-        <td >
-          <p>D：<%= text_field_tag "options[D]", "" %></p>
-        </td>
-      </tr>
-  </table>
-  <p>答案：<%= select_tag "question[answer]", options_for_select(["A", "B","C","D"], "A") %> </p>
-  <p><%=submit_tag  "完成",  :class => "btn-primary" %></p>
+<%= simple_form_for [@exam, @question], :html => {:class => 'form-horizontal'} do |f| %>
+  <%= f.input :title, :label => "题干：" %>
+  <%= f.simple_fields_for :options do |option_form| %>
+    <%= option_form.input :content, :label => "选项-1：" %>
+  <% end %>
+  <%= f.simple_fields_for :options do |option_form| %>
+    <%= option_form.input :content, :label => "选项-2：" %>
+  <% end %>
+  <%= f.simple_fields_for :options do |option_form| %>
+    <%= option_form.input :content, :label => "选项-3：" %>
+  <% end %>
+  <%= f.simple_fields_for :options do |option_form| %>
+    <%= option_form.input :content, :label => "选项-4：" %>
+  <% end %>
+  <%= f.input :answer, :collection => [[0, "选项-1"], [1, "选项-2"], [2, "选项-3"], [3, "选项-4"]], :value_method =>:first, :label_method => :last, :label => "正确答案：" %>
+  <%= f.hidden_field :question_type_str, :value => @question_type %>
+  <div class="form-actions">
+  <%= f.button :submit, '创建新题目', :class => "btn-primary"  %>
+  </div>
 <% end %>

@@ -12,7 +12,11 @@ class ExaminationsController < ApplicationController
     end
     session[:return_to] = request.referer
 
-    @exams = Examination.order(:id)
+    if current_user.admin?
+      @exams = Examination.order(:id)
+    else
+      @exams = current_user.examinations
+    end
 
     respond_to do |format|
       format.html
