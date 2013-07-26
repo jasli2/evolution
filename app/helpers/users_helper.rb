@@ -35,6 +35,9 @@ module UsersHelper
   end
 
   def todo_url(todo)
+    if todo.source.nil?
+      return "#myMode"
+    end
     case todo.source_type
     when 'TrainingPlan'
       if todo.todo_type == 'feedback'
