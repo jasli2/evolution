@@ -75,9 +75,11 @@ module UsersHelper
       end
     when 'Examination'
       if n.notification_type == 'all_feedback'
-        "考试管理：" + n.source.title + "已经结束"
+        "考试管理：" + n.source.title + " 所有考生已提交试卷"
       elsif n.notification_type == 'published'
         "考试管理：" + n.source.title + "  已发布，结束日期: #{n.source.deadline.to_date}"
+      elsif n.notification_type == 'finished'
+        "考试管理：" + n.source.title + " 已经结束"
       else
         "考试管理：未知状态"
       end
@@ -100,6 +102,12 @@ module UsersHelper
     case n.source_type
     when 'TrainingPlan'
       training_plan_path(n.source)
+    when 'Examination'
+      if n.source.state == "finished"
+        result_examination_path(n.source)
+      else
+        "#myMode"
+      end
     when 'CourseClass'
       class_path(n.source)
     else

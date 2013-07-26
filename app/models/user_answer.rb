@@ -21,5 +21,7 @@ class UserAnswer < ActiveRecord::Base
   belongs_to :paper
 
   scope :answer_result, lambda {|state| where(:correct => state)}
+  scope :get_user_answer, lambda{|type| where(:content => type)}
+  scope :get_all_answer, lambda{|qid| where(:question_id => qid) }
 
 end

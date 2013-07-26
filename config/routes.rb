@@ -44,6 +44,7 @@ Evolution::Application.routes.draw do
 
   resources :examinations do
     get "confirm_publish", :on => :member
+    get "result", :on => :member
     resources :exam_feedbacks
     resources :questions do
       collection {post :new_option}
