@@ -60,7 +60,7 @@
     <div class="divider15"></div>
     <div class="well">
       <a href="<%= new_examination_question_path(@exam) %>" class="btn btn-primary"><i class="iconfa-plus icon-white"></i> 添加新考题</a>
-      <a href="<%= edit_examination_path(@exam) %>" class="btn btn-warning"><i class="iconfa-edit icon-white"></i> 修改考试信息</a>
+      <%= link_to exam_state(e.state), exam_state_action(e, current_user), :class => "btn btn-warning" %>
     </div>
     <% end %>
   </div>

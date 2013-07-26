@@ -44,3 +44,19 @@ ul.exam-list {
     margin: 0 10px;
   }
 }
+
+.exam-feedback-question-list {
+  list-style-type: none;
+
+  li.question-type {
+    padding: 5px 10px;
+    background-color: #e3e3e3;
+  }
+
+  li.question-details {
+    padding: 10px 20px;
+    border-bottom: 1px solid #ddd;
+    &:last-child { border-bottom: 0; }
+    span.options { text-align: center; }
+  }
+}

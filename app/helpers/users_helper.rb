@@ -16,7 +16,7 @@ module UsersHelper
     case todo.source_type
     when 'TrainingPlan'
       if todo.todo_type == 'feedback'
-        "培训计划：" + todo.source.title + " 需要提供培训反馈。"
+        "培训计划：" + todo.source.title + " 需要提供培训反馈。" + "  结束日期：#{todo.source.feedback_deadline.to_date}"
       end
     when 'Examination'
       if todo.todo_type == 'published'
@@ -46,8 +46,8 @@ module UsersHelper
       elsif todo.todo_type == 'examination_pending'
         examinations_path()
       elsif todo.todo_type == 'published'
-        #new_examination_exam_feedback_path(todo.source)
-        examinations_path()
+        new_examination_exam_feedback_path(todo.source)
+        # examinations_path()
       end
     when 'Paper'
       if todo.todo_type == 'pending_finish'

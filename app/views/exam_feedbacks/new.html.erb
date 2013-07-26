@@ -20,63 +20,37 @@ function show_answere(question_id) {
 <div class="row-fluid">
   <div id="dashboard-left" class="span8">
     <%= form_tag examination_exam_feedbacks_path(@exam) do %>
-    <h4 class="widgettitle"><%= @exam.title %>（选择题:<%=@exam.get_choice_question.size %>  判断题:<%= @exam.get_judgement_question.size %>  问答题:<%= @exam.get_dialogical_question.size %>）<%=submit_tag  "提交试卷",  :class => "btn btn-warning" %></h4>
+    <h4 class="widgettitle"><%= @exam.title %>（选择题:<%=@exam.get_choice_question.size %>  判断题:<%= @exam.get_judgement_question.size %>  问答题:<%= @exam.get_dialogical_question.size %>）</h4>
     <% if @exam.questions.size > 0 %>
     <div class="widgetcontent nopadding">
-      <table class="table responsive">
-
-        <% @exam.get_choice_question.each do |question| %>
-        <tr>
-          <td width="1%"><%= get_question_index(@exam, question, "choice") %>、</td>
-          <td width="69%">
-            <p><%= eo_markdown(question.title) %></p>
-            <% question.options.each do |option| %>
-              <p><%= option.content %></p>
-            <% end %>
-            <div id="light_<%= question.id.to_s%>" style="display:none">
-              <p>请选择答案: </p>
-              <p><%= select_tag "answer[choice_#{question.id.to_s}]", options_for_select(["A", "B", "C", "D"], "A") %></p>
-            </div>
-          </td>
-          <td width="30%">
-          <%= link_to_function "<i class='iconfa-edit'></i> 回答该题：".html_safe, "show_answere('#{question.id}')", :class => "btn btn-primary btn-small"%>   
-          </td>
-        </tr>
+      <ul class='exam-feedback-question-list'>
+        <li class='question-type'><h5>选择题</h5></li>
+        <% @exam.get_choice_question.each_with_index do |question, index| %>
+        <li class="question-details">
+          <h6><%= (index+1).to_s + '. ' + question.title %></h6>
+          <% question.options.each_with_index do |op, index| %>
+          <span class='options'><%= radio_button_tag "answer[choice_#{question.id.to_s}]", "#{index}" %>  <%= op.content %></span> <br/>
+          <% end %>
+        </li>
         <% end %>
 
-        <% @exam.get_judgement_question.each do |question| %>
-        <tr>
-          <td width="1%"><%= get_question_index(@exam, question, "judgement") %>、</td>
-          <td width="69%">
-            <%= eo_markdown(question.title) %>
-            <div id="light_<%= question.id.to_s%>" style="display:none">
-              <p>请选择答案: </p>
-              <p><%= radio_button_tag "answer[judgement_#{question.id.to_s}]", "true" %> 正确 </p>
-              <p><%= radio_button_tag "answer[judgement_#{question.id.to_s}]", "false" %> 错误 </p>
-            </div>
-          </td>
-          <td width="30%">
-          <%= link_to_function "<i class='iconfa-edit'></i> 回答该题：".html_safe, "show_answere('#{question.id}')", :class => "btn btn-primary btn-small"%>   
-          </td>
-        </tr>      
+        <li class='question-type'><h5>判断题</h5></li>
+        <% @exam.get_judgement_question.each_with_index do |question, index| %>
+        <li class="question-details">
+          <h6><%= (index+1).to_s + '. ' + question.title %></h6>
+          <span class='options'><%= radio_button_tag "answer[judgement_#{question.id.to_s}]", "true" %> 正确</span> <br/>
+          <span class='options'><%= radio_button_tag "answer[judgement_#{question.id.to_s}]", "false" %> 错误</span> <br/> 
+        </li>      
         <% end %>
 
-        <% @exam.get_dialogical_question.each do |question| %>
-        <tr>
-          <td width="1%"><%= get_question_index(@exam, question, "dialogical") %>、</td>
-          <td width="69%">
-            <%= eo_markdown(question.title) %>
-            <div id="light_<%= question.id.to_s%>" style="display:none">
-              <p>请输入答案: </p>
-              <p><%= text_area_tag "answer[dialogical_#{question.id.to_s}]", nil,  rows: 4, cols: 50 %></p>
-            </div>
-          </td>
-          <td width="30%">
-          <%= link_to_function "<i class='iconfa-edit'></i> 回答该题：".html_safe, "show_answere('#{question.id}')", :class => "btn btn-primary btn-small"%>   
-          </td>
-        </tr>      
+        <li class='question-type'><h5>问答题</h5></li>
+        <% @exam.get_dialogical_question.each_with_index do |question, index| %>
+        <li class="question-details">
+          <h6><%= (index+1).to_s + '. ' + question.title %></h6>
+          <%= text_area_tag "answer[dialogical_#{question.id.to_s}]", nil, :placeholder => "请作答...", :rows => 4, :cols => 80 %>
+        </li>      
         <% end %>
-      </table>
+      </ul>
     </div>
     <% else %>
     <div class="widgetcontent">
@@ -85,5 +59,10 @@ function show_answere(question_id) {
     <% end %>
   <% end %>
   </div>
+
+  <div id="dashboard-right" class="span4">
+    <div class='well'>
+      <%=submit_tag  "提交试卷",  :class => "btn btn-warning" %>
+    </div>
   </div>
 </div>
