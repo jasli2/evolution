@@ -17,7 +17,7 @@
     <h4 class="widgettitle"><%= @exam.title %> (总题数：<%= @exam.questions.size %> | 选择题：<%=@exam.get_choice_question.size %> | 判断题：<%= @exam.get_judgement_question.size %> | 简答题：<%= @exam.get_dialogical_question.size %>  )</h4>
     <% if @exam.questions.size > 0 %>
     <div class="widgetcontent nopadding">
-      <ul class='exam-question-list'>
+    <ul class='exam-question-list'>
         <% @exam.questions.each do |q| %>
         <li class='question-details'>
           <div class='question-header'>
@@ -36,8 +36,8 @@
             </ul>
             <% elsif q.question_type_str.to_s == 'judgement' %>
             <ul class='option-list-judgement'>
-              <li class='options'>正确<%= content_tag :i, nil, :class => 'iconfa-check' if q.answer %></li> 
-              <li class='options'>错误<%= content_tag :i, nil, :class => 'iconfa-check' unless q.answer %></li> 
+              <li class='options'>正确<%= content_tag :i, nil, :class => 'iconfa-check' if q.answer == "true" %></li>
+              <li class='options'>错误<%= content_tag :i, nil, :class => 'iconfa-check' if q.answer == "true" %></li>
             </ul>
             <% else %>
             <h6>参考答案：</h6>

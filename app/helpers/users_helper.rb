@@ -103,7 +103,11 @@ module UsersHelper
     when 'TrainingPlan'
       training_plan_path(n.source)
     when 'Examination'
-      result_examination_path(n.source)
+      if n.source.state == "finished"
+        result_examination_path(n.source)
+      else
+        "#myMode"
+      end
     when 'CourseClass'
       class_path(n.source)
     else

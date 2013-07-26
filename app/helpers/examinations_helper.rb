@@ -1,5 +1,20 @@
 # encoding: utf-8
 module ExaminationsHelper
+
+  def exam_to_result(exam)
+    state = exam.state if exam
+    case state
+    when "pending_publish"
+      examination_path(e)
+    when "published"
+      result_examination_path(exam)
+    when "finished"
+      result_examination_path(exam)
+    else
+      "#myMode"
+    end
+  end
+
   def exam_state(state)
     case state
     when "pending_publish"

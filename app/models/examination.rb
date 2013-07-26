@@ -36,7 +36,7 @@ class Examination < ActiveRecord::Base
   has_many :papers, :dependent => :destroy
   belongs_to :creator, :class_name => "User"
 
-  after_create :determine_first_state, :gen_feedback_notification
+  after_create :determine_first_state
 
   #state machine
   state_machine :state, :initial => :created  do
@@ -133,6 +133,10 @@ class Examination < ActiveRecord::Base
     UserAnswer.get_user_answer(type).where(:question_id => qid)
   end
 
+  def answer_all_num(qid)
+    UserAnswer.get_all_answer(qid)
+  end
+
   def set_day(old, increment)
     return old + increment
   end
@@ -162,7 +166,7 @@ class Examination < ActiveRecord::Base
     #teacher should correct paper after examination  3 day
     paper = Paper.find(paper_id)
     paper.update_attributes(:examination_feedback_id => feedback_id)
-    creator.todos.create!(:source => paper, :todo_type => 'pending_finish', :deadline =>set_day(self.deadline, 3.day)) if creator
+    #creator.todos.create!(:source => paper, :todo_type => 'pending_finish', :deadline =>set_day(self.deadline, 3.day)) if creator
   end
 
   private
