@@ -38,22 +38,25 @@ class Examination < ActiveRecord::Base
   belongs_to :creator, :class_name => "User"
   belongs_to :course_class
 
-  after_create :determine_first_state, :gen_feedback_notification
+  after_create :determine_first_state
 
   #state machine
   state_machine :state, :initial => :created  do
 
     after_transition :on => :all_feedbacked do |exam, transition|
       exam.finished_at = Time.zone.now
-      exam.notifications.create!(:user_id => exam.creator.id, :notification_type => "finished") if exam.creator
+      exam.save
+      exam.notifications.create!(:user_id => exam.creator.id, :notification_type => "all_feedback") if exam.creator
     end
 
     after_transition :on => :cancel do |exam, transition|
       exam.cancelled_at = Time.zone.now
+      exam.save
     end
 
     after_transition :on => :feedback_timeout do |exam, transition|
       exam.finished_at = self.deadline
+      exam.save
     end
 
     after_transition :on => :publish do |exam, transition|
@@ -113,7 +116,7 @@ class Examination < ActiveRecord::Base
   end
 
   def feedback_created(feedback)
-    if feedbacks.count == users.count
+    if self.feedbacks.count == self.users.count
       self.all_feedbacked
     end
   end
@@ -126,6 +129,14 @@ class Examination < ActiveRecord::Base
     self.questions.all.each do |question|
        question.user_answers.create!(:paper_id => paper_id)
     end
+  end
+
+  def answer_kind_num(type, qid)
+    UserAnswer.get_user_answer(type).where(:question_id => qid)
+  end
+
+  def answer_all_num(qid)
+    UserAnswer.get_all_answer(qid)
   end
 
   def set_day(old, increment)
@@ -157,7 +168,7 @@ class Examination < ActiveRecord::Base
     #teacher should correct paper after examination  3 day
     paper = Paper.find(paper_id)
     paper.update_attributes(:examination_feedback_id => feedback_id)
-    creator.todos.create!(:source => paper, :todo_type => 'pending_finish', :deadline =>set_day(self.deadline, 3.day)) if creator
+    #creator.todos.create!(:source => paper, :todo_type => 'pending_finish', :deadline =>set_day(self.deadline, 3.day)) if creator
   end
 
   private
