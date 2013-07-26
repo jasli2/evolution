@@ -60,3 +60,36 @@ ul.exam-list {
     span.options { text-align: center; }
   }
 }
+
+.exam-details-progress {
+  h4 {
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .exam-course-progress-list {
+    list-style-type: none;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+
+
+    li.question-title {
+      padding: 15px 0px;
+      min-height: 20px;
+    }
+
+    li.question-option {
+      padding: 3px 0px;
+      .iconfa-check {
+        color: green;
+        margin-left: 10px;
+      }
+      span.option-content { display: inline-block; min-width: 60%;}
+    }
+
+  }
+}
+
+
