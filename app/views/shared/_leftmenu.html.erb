@@ -12,7 +12,7 @@
         <li class="<%= "active" if active == 'member' %>"><a href="#myModal" data-toggle="modal">我的案例</a></li>
         <li class="<%= "active" if active == 'member' %>"><a href="#myModal" data-toggle="modal">我的成长记录</a></li>
         <li class="<%= "active" if active == 'member' %>"><a href="#myModal" data-toggle="modal">我的荣誉</a></li>
-        <li class="<%= "active" if active == 'member' %>"><a href="#myModal" data-toggle="modal">我的权限</a></li>
+        <li class="<%= "active" if active == 'permission' %>"><a href="<%= permissions_path(current_user) %>" >我的权限</a></li>
       </ul>
       </li>
       

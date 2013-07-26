@@ -2,3 +2,23 @@
 zh-CN:
   end time is not precent: 结束时间不能为空。
   start time is not precent: 开始时间不能为空。
+
+  permission scope null: 无
+  permission scope self: 自身
+  permission scope department: 部门
+  permission scope global: 全部
+
+  permission role admin: 管理员
+  permission role manager: 部门经理
+  permission role teacher: 讲师
+  permission role staff: 普通员工
+
+  permission model user: 个人信息
+  permission model permission: 权限管理
+  permission model ability:	能力管理
+  permission model teacher: 讲师管理
+  permission model course: 课程管理
+  permission model plan: 培训管理
+  permission model knowledge: 知识管理
+
+

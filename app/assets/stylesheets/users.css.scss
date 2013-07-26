@@ -132,31 +132,17 @@ ul.notificaiton-list {
 
 }
 
-ul.active-training-list {
+ul.active-project-list {
   list-style-type: none;
   padding: 0;
   margin: 0;
 
-  li.training-plan-title {
-    background-color: #e3e3e3;
-    padding: 5px;
-  }
-
-  li.training-user-course {
+  li.active-class {
     padding: 8px;
     border-bottom: 1px solid #ddd;
     &:last-child { border-bottom: 0; }
 
-    ul.active-class-list {
-      clear: both;
-      list-style-type: none;
-      padding: 0;
-
-      li {
-        padding: 5px 0;
-        form { display: inline; }
-      }
-    }
+    form { display: inline; }
   }
 }
 

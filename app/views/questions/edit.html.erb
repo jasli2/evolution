@@ -19,7 +19,11 @@
     <div class="widgetcontent">
       <div class="divider15"></div>
         <% if judge_type(@question_type) %>
-          <%= render :partial => "#{@question_type}"  %>
+          <% if @question_type.to_s == 'choice' %>
+            <%= render :partial => "choice_edit"  %>
+          <% else %>
+            <%= render :partial => "#{@question_type}"  %>
+          <% end %>
         <% else %>
           <%= render :partial => "question_new" %>
         <% end %>
