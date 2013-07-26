@@ -20,7 +20,7 @@
         <% @exams.each do |e| %>
         <li>
           <span class="label label-info"><%= exam_progress(e.state) %></span>          
-          <%= link_to e.title, current_user.admin? ? examination_path(e) : "#MyExam" %>
+          <%= link_to e.title, current_user.admin? ? exam_to_result(e) : "#MyExam" %>
           <span>参考总人数: <%=e.users.size %></span>
           <span>考试日期：<%= e.published_at ? e.published_at.to_date : "待定 " %><%= ' - ' + e.deadline.to_date.to_s if e.deadline %></span>
           <% if current_user.admin? %>

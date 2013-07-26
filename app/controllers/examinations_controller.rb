@@ -23,6 +23,14 @@ class ExaminationsController < ApplicationController
     end
   end
 
+  def result
+    @exam = Examination.find(params[:id])
+
+    respond_to do |format|
+      format.html
+    end
+  end
+
   def show
     @menu_category = 'admin'
     @menu_active = 'exam'
@@ -83,7 +91,6 @@ class ExaminationsController < ApplicationController
   end
 
   def confirm_publish
-
     @exam = Examination.find(params[:id]) if current_user.admin?
     respond_to do |format|
       if @exam.confirm_publish

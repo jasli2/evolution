@@ -40,13 +40,12 @@ class Paper < ActiveRecord::Base
         question << answer.question
       end
     end
-
     return question
   end
 
   #get paper correct/error numbers
   def get_answer_numbers(state)
-    UserAnswer.get_answer_state_numbers(state).where(:id => self.id)
+    UserAnswer.answer_result(state).where(:id => self.id)
   end
 
 end
