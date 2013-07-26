@@ -46,7 +46,7 @@
         <ul class='option-list-choice'>
           <% cq.options.each_with_index  do |op, index| %>
           <div class="progress progress-info pull-right" style="width: 60%;">
-            <div style="width: <%= @exam.answer_kind_num(index.to_s, cq.id).count*100/@exam.users.count %>%" class="bar">
+            <div style="width: <%= @exam.answer_kind_num(index.to_s, cq.id).count*100/@exam.answer_all_num(cq.id).count %>%" class="bar">
               <%= @exam.answer_kind_num(index.to_s, cq.id).count.to_s + '/' + @exam.answer_all_num(cq.id).count.to_s  %>
             </div>
           </div>
@@ -73,8 +73,8 @@
         <li>
           <span class='qustion-title'>[选项]: <%= key %> <%= content_tag :i, nil, :class => 'iconfa-check' if cq.answer == value %></span>
           <div class="progress progress-info pull-right" style="width: 60%;">
-            <div style="width: <%= @exam.answer_kind_num(value, cq.id).count*100/@exam.users.count %>%" class="bar">
-              <%= @exam.answer_kind_num(value, cq.id).count.to_s + '/' + @exam.users.count.to_s  %>
+            <div style="width: <%= @exam.answer_kind_num(value, cq.id).count*100/@exam.answer_all_num(cq.id).count %>%" class="bar">
+              <%= @exam.answer_kind_num(value, cq.id).count.to_s + '/' +@exam.answer_all_num(cq.id).count.to_s  %>
             </div>
           </div>
         </li>
