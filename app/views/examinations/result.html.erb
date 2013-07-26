@@ -84,15 +84,20 @@
 
       <h5>简答题（<%= @exam.get_dialogical_question.count %>）</h5>
       <ul class="tp-course-progress-list">
-        <% @exam.get_dialogical_question.each do |cq| %>
+        <% @exam.get_dialogical_question.each_with_index do |cq, idx| %>
         <li>
-          <span class='qustion-title'>[<%= get_question_type(cq.question_type_str) %>]: <%= cq.title %></span>
+          <span class='qustion-title'>[<%= idx + 1 %>]: <%= cq.title %></span>
           <div class="progress progress-info pull-right" style="width: 60%;">
-            <div style="width: <%= @exam.feedbacks.count*100/@exam.users.count %>%" class="bar">
-              <%= @exam.feedbacks.count.to_s + '/' + @exam.users.count.to_s  %>
+            <div style="width: <%= @exam.answer_all_num(cq.id).count*100/@exam.users.count %>%" class="bar">
+              <%= @exam.answer_all_num(cq.id).count.to_s + '/' + @exam.users.count.to_s  %>
             </div>
           </div>
         </li>
+        <% @exam.answer_all_num(cq.id).each do |asw|  %>
+        <li>
+          <span class='qustion-title'>[<%= asw.paper.user.name %>]: <%= asw.content %></span>
+        </li>
+        <% end %>
         <% end %>
       </ul>
 
