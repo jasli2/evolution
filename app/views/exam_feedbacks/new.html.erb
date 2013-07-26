@@ -18,8 +18,8 @@ function show_answere(question_id) {
 <% end %>
 
 <div class="row-fluid">
+  <%= form_tag examination_exam_feedbacks_path(@exam) do %>
   <div id="dashboard-left" class="span8">
-    <%= form_tag examination_exam_feedbacks_path(@exam) do %>
     <h4 class="widgettitle"><%= @exam.title %>（选择题:<%=@exam.get_choice_question.size %>  判断题:<%= @exam.get_judgement_question.size %>  问答题:<%= @exam.get_dialogical_question.size %>）</h4>
     <% if @exam.questions.size > 0 %>
     <div class="widgetcontent nopadding">
@@ -57,7 +57,6 @@ function show_answere(question_id) {
       目前还没有添加任何考题
     </div>
     <% end %>
-  <% end %>
   </div>
 
   <div id="dashboard-right" class="span4">
@@ -65,4 +64,5 @@ function show_answere(question_id) {
       <%=submit_tag  "提交试卷",  :class => "btn btn-warning" %>
     </div>
   </div>
+  <% end %>
 </div>

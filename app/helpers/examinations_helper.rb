@@ -5,7 +5,7 @@ module ExaminationsHelper
     state = exam.state if exam
     case state
     when "pending_publish"
-      examination_path(e)
+      examination_path(exam)
     when "published"
       result_examination_path(exam)
     when "finished"
