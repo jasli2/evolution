@@ -9,6 +9,7 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require bootstrap.min
+ *= require header
  *= require bootstrap-responsive.min
  *= require jquery.ui
  *= require font-awesome.min
