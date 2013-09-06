@@ -221,6 +221,7 @@ en:
       title: "Permission Center"
       sub_title: "View Permission"
       action: "Modification"
+      role: "Role"
       name: "Module"
       create: "Creatable"
       read: "Readable"

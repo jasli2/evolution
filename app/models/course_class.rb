@@ -45,6 +45,18 @@ class CourseClass < ActiveRecord::Base
   attr_accessible :attachments_attributes
 
   has_many :discusses
+  has_many :examinations
+
+  before_save :gen_address_notification
+
+  def gen_address_notification
+    # only send out notification for the first time update start_time/end_time/address
+    if start_time_changed? and start_time_was == nil and end_time_changed? and end_time_was == nil and address_changed? and address_was == nil
+      students.each do |u|
+        u.notifications.create!(:source => self, :notification_type => "publish_time_address")
+      end
+    end
+  end
 
   # state machine
   state_machine :state, :initial => :erolling do 
@@ -62,6 +74,7 @@ class CourseClass < ActiveRecord::Base
   end
 
   scope :active, where(:state => [:erolling, :eroll_done])
+  scope :finished, where(:state => :finished)
 
   def eroll(u)
     students << u if u
@@ -89,6 +102,14 @@ class CourseClass < ActiveRecord::Base
 
   def student?(u)
     student_ids.include? u.id if u
+  end
+
+  def published?
+    if course.course_type != "E-LEARNING"
+      start_time and end_time and address
+    else
+      true
+    end
   end
 
   private

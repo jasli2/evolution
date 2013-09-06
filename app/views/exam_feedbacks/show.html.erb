@@ -1,0 +1,50 @@
+<% provide(:title, @exam.title) %>
+
+<% content_for :breadcrumbs do %>
+<li><%= link_to "考试管理", examinations_path %> <span class="separator"></span></li>
+<li><%= link_to @exam.title, examinations_path %> <span class="separator"></span></li>
+<%= content_tag(:li, @exam_feedback.user.name) %>
+<% end %>
+
+<% content_for :javascript do %>
+<% end %>
+
+<div class="row-fluid">
+  <div id="dashboard-left" class="span8">
+    <div class="widgetcontent nopadding">
+      <h4 class="widgettitle">考试结果</h4>
+      <div>
+        <p>考试总题数： <%= @exam.questions.size %></p>
+        <p>答对题数：<%= @paper.get_answer_result(true).size %> </p>
+        <p>答错题数：<%= @paper.get_answer_result(false).size %> </p>
+        <p> 问答题：<%= @paper.get_dialogical_result.size %></p>
+      </div>
+    </div>
+
+    <div class="widgetcontent nopadding">
+      <% if @paper.feedback_todo %>
+        <h4 class="widgettitle">等待处理题目</h4>
+        <div>
+          <% if @paper.feedback_todo.todo_type == "pending_finish" %>
+            <% @paper.get_dialogical_result.each do |answer| %>
+              <tr>
+                <td width="1%"><%= get_question_index(@exam, answer.question, "dialogical") %>、</td>
+                <td width="70%">
+                  <%= eo_markdown(answer.question.qdata) %>
+                  考生答案：<%= eo_markdown(answer.content) %>
+                  参考答案：<%= eo_markdown(answer.question.answer) %>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+        </div>
+      <% else %>
+
+      <% end %>
+
+    </div>
+
+  </div>
+    
+  </div>
+</div>

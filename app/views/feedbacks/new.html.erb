@@ -15,8 +15,8 @@
       <div class="divider15"></div>
       <%= simple_form_for(@feedback, :html => {:class => 'form-horizontal', :multipart => true }) do |f| %>
         <legend><%= @tp.title %></legend>
-        <%= f.association :courses, :multiple => true, :collection => @tp.courses %>
-        <%= f.input :note, :as => :text, :input_html => { :cols => 50, :rows => 3 }, :placeholder => '对培训计划有什么建议或者意见，请留言...' %>
+        <%= f.association :courses, :label => '有意愿参培课程', :multiple => true, :collection => @tp.courses %>
+        <%= f.input :note, :as => :text, :label => '培训计划反馈意见', :input_html => { :cols => 50, :rows => 3 }, :placeholder => '对培训计划有什么建议或者意见，请留言...' %>
         <%= f.hidden_field :user_id, :value => current_user.id %>
         <div class="form-actions">
         <%= f.button :submit, '提交培训反馈', :class => "btn-primary"  %>

@@ -29,10 +29,14 @@
         :end_year => Date.today.year + 10,
         :order => [:year, :month, :day]
         %>
-        <div > 请选择参考人：<div>
-        <div  style="width:260px;height:120px; overflow-y:scroll; border:0.1px solid;">
-        <%= f.collection_check_boxes :user_ids, User.staff, :id, :name %>
-        </div>
+        <% if @course_class %>
+        <%= f.association :users, :collection => @course_class.students, :label => "参考人员:" %>
+        <% else %>
+        <%= f.association :users, :collection => User.staff, :label => "参考人员:" %>
+        <% end %>
+        <% if @course_class %>
+        <%= f.hidden_field :course_class_id, :value => @course_class.id %>
+        <% end %>
         <%= f.hidden_field :creator_id, :value => current_user.id %>
         <div class="form-actions">
         <%= f.button :submit, '创建考试', :class => "btn-primary"  %>

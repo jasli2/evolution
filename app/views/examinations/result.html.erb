@@ -1,0 +1,104 @@
+<% provide(:title, @exam.title) %>
+
+<% content_for :breadcrumbs do %>
+<li><%= link_to "考试管理", examinations_path %> <span class="separator"></span></li>
+<%= content_tag(:li, @exam.title) %>
+<% end %>
+
+<% content_for :javascript do %>
+<% end %>
+
+<div class="row-fluid">
+  <div id="dashboard-left" class="span8">
+    <div class="well">
+      <h3><%= @exam.title %> <span class="label label-info pull-right"><%= @exam.state %></span></h3>
+      <div>
+        创建于<%= distance_of_time_in_words_to_now(@exam.created_at) + t("course.all.ago") %>&middot;
+        考试人数（<%= @exam.users.count %>）&middot;
+        考试总题数（<%= @exam.questions.count %>）&middot;
+      </div>
+    </div>
+
+    <div class="well">
+      <div>
+        <h4 class="pull-left">学生考试进度</h4>
+        <div class="progress progress-info pull-right" style="width: 40%">
+          <div style="width: <%= @exam.feedbacks.count*100/@exam.users.count %>%" class="bar">
+            <%= @exam.feedbacks.count.to_s + '/' + @exam.users.count.to_s %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="well exam-details-progress">
+      <h4>考试详细信息</h4>
+      <h5>选择题（<%= @exam.get_choice_question.count %>）</h5>
+      <ul class="exam-course-progress-list">
+        <% @exam.get_choice_question.each_with_index do |cq, idx| %>
+        <li class='question-title'>
+          <span><%= idx + 1 %>. <%= cq.title %></span>
+          <div class="progress progress-info pull-right" style="width: 40%">
+            <div style="width: <%= @exam.answer_all_num(cq.id).count*100/@exam.users.count %>%" class="bar">
+              <%= @exam.answer_all_num(cq.id).count.to_s + '/' + @exam.users.count.to_s  %>
+            </div>
+          </div>
+        </li>
+        <% cq.options.each_with_index  do |op, index| %>
+        <li class='question-option'>
+          <span class='option-content'><%= '[选项-' + (index+1).to_s + ']: ' + op.content %><%= content_tag :i, nil, :class => 'iconfa-check' if cq.answer.to_i == index %></span>
+            <span class='label label-info'><%= @exam.answer_kind_num(index.to_s, cq.id).count.to_s + '/' + @exam.users.count.to_s  %></span>
+        </li>
+        <% end %>
+        <% end %>
+      </ul>
+
+      <h5>判断题（<%= @exam.get_judgement_question.count %>）</h5>
+      <ul class="exam-course-progress-list">
+        <% @exam.get_judgement_question.each_with_index do |cq, idx| %>
+        <li class='question-title'>
+          <span class='qustion-title'>[<%= idx + 1 %>]: <%= cq.title %></span>
+          <div class="progress progress-info pull-right" style="width: 40%">
+            <div style="width: <%= @exam.answer_all_num(cq.id).count*100/@exam.users.count %>%" class="bar">
+              <%= @exam.answer_all_num(cq.id).count.to_s + '/' + @exam.users.count.to_s  %>
+            </div>
+          </div>
+        </li>
+        <% get_option_type(cq).each do |key, value|%>
+        <li class='question-option'>
+          <span class='option-content'>[选项]: <%= key %> <%= content_tag :i, nil, :class => 'iconfa-check' if cq.answer == value %></span>
+          <span class='label label-info'><%= @exam.answer_kind_num(value, cq.id).count.to_s + '/' + @exam.users.count.to_s  %></span>
+        </li>
+        <% end %>
+        <% end %>
+      </ul>
+
+      <h5>简答题（<%= @exam.get_dialogical_question.count %>）</h5>
+      <ul class="tp-course-progress-list">
+        <% @exam.get_dialogical_question.each_with_index do |cq, idx| %>
+        <li>
+          <span class='qustion-title'>[<%= idx + 1 %>]: <%= cq.title %></span>
+          <div class="progress progress-info pull-right" style="width: 60%;">
+            <div style="width: <%= @exam.answer_all_num(cq.id).count*100/@exam.users.count %>%" class="bar">
+              <%= @exam.answer_all_num(cq.id).count.to_s + '/' + @exam.users.count.to_s  %>
+            </div>
+          </div>
+        </li>
+        <% @exam.answer_all_num(cq.id).each do |asw|  %>
+        <li>
+          <span class='qustion-title'>[<%= asw.paper.user.name %>]: <%= asw.content %></span>
+        </li>
+        <% end %>
+        <% end %>
+      </ul>
+
+
+
+    </div>
+
+  </div>
+  <div id="dashboard-right" class="span4">
+    <div class="well">
+      <a href="#myModal" data -toggle="modal" class="btn btn-warning"><i class="iconfa-download-alt icon-white"></i> 导出考试计划</a>
+    </div>
+  </div>
+</div>

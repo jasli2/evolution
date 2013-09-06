@@ -14,22 +14,39 @@
 
 <div class="row-fluid">
   <div id="dashboard-left" class="span8">
-    <h4 class="widgettitle"><%= @exam.title %>（<%= @exam.questions.size %>）</h4>
+    <h4 class="widgettitle"><%= @exam.title %> (总题数：<%= @exam.questions.size %> | 选择题：<%=@exam.get_choice_question.size %> | 判断题：<%= @exam.get_judgement_question.size %> | 简答题：<%= @exam.get_dialogical_question.size %>  )</h4>
     <% if @exam.questions.size > 0 %>
     <div class="widgetcontent nopadding">
-      <table class="table responsive">
-        
+    <ul class='exam-question-list'>
         <% @exam.questions.each do |q| %>
-        <tr>
-          <td width="70%"><%= eo_markdown(q.qdata) %></td>
-          <td width="30%" id="qustion-action">
-            <%= link_to "<i class='iconfa-edit'></i> 修改试题".html_safe, edit_examination_question_path(@exam.id, q.id), :class => "btn btn-primary btn-small", "data-toggle" => "modal" %>
-            <%= link_to "<i class='iconfa-edit'></i> 删除试题".html_safe, examination_question_path(@exam.id, q.id), :data => {confirm: "确定删除？"}, :method => :delete, :class => "btn btn-danger btn-small", "data-toggle" => "modal" %>
-          </td>
-        </tr>
+        <li class='question-details'>
+          <div class='question-header'>
+            <span class='qustion-title'>[<%= get_question_type(q.question_type_str) %>]: <%= q.title %></span>
+            <span class='pull-right'>
+              <%= link_to "<i class='iconfa-edit'></i> 修改试题".html_safe, edit_examination_question_path(@exam.id, q.id), :class => "btn btn-primary btn-small", "data-toggle" => "modal" %>
+              <%= link_to "<i class='iconfa-edit'></i> 删除试题".html_safe, examination_question_path(@exam.id, q.id), :data => {confirm: "确定删除？"}, :method => :delete, :class => "btn btn-danger btn-small", "data-toggle" => "modal" %>
+            </span>
+          </div>
+          <div class='question-option-answer'>
+            <% if q.question_type_str.to_s == 'choice' %>
+            <ul class='option-list-choice'>
+              <% q.options.each_with_index  do |op, index| %>
+              <li class='options'><%= op.content %><%= content_tag :i, nil, :class => 'iconfa-check' if q.answer.to_i == index %></li>
+              <% end %>
+            </ul>
+            <% elsif q.question_type_str.to_s == 'judgement' %>
+            <ul class='option-list-judgement'>
+              <li class='options'>正确<%= content_tag :i, nil, :class => 'iconfa-check' if q.answer == "true" %></li>
+              <li class='options'>错误<%= content_tag :i, nil, :class => 'iconfa-check' if q.answer == "true" %></li>
+            </ul>
+            <% else %>
+            <h6>参考答案：</h6>
+            <%= q.answer %>
+            <% end %>
+          </div>
+        </li>
         <% end %>
-        
-      </table>
+      </ul>
     </div>
     <% else %>
     <div class="widgetcontent">
@@ -42,7 +59,8 @@
     <h3 class="subtitle">管理考题</h3>
     <div class="divider15"></div>
     <div class="well">
-      <a href="<%= new_examination_question_path(@exam.id) %>" data-toggle="modal" class="btn btn-primary"><i class="iconfa-plus icon-white"></i> 添加新考题</a>
+      <a href="<%= new_examination_question_path(@exam) %>" class="btn btn-primary"><i class="iconfa-plus icon-white"></i> 添加新考题</a>
+      <%= link_to exam_state(@exam.state), exam_state_action(@exam, current_user), :class => "btn btn-warning" %>
     </div>
     <% end %>
   </div>

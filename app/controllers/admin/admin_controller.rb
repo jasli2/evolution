@@ -12,9 +12,15 @@ class Admin::AdminController < ApplicationController
     @courses_count = Course.all.size
     @positions = Position.last(4).reverse
     @positions_count = Position.all.size
+    @active_notifications = current_user.notifications.active
+    @tps = current_user.created_training_plans.order("id DESC").active
 
     respond_to do |format|
       format.html
+    end
+
+    @active_notifications.each do |n|
+      n.update_attributes(:viewed_at => Time.zone.now)
     end
   end
 

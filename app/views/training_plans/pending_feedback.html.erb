@@ -11,7 +11,7 @@
 <div class="row-fluid">
   <div id="dashboard-left" class="span8">
     <div class="well">
-      <h3><%= @tp.title %> <span class="label label-info pull-right"><%= @tp.state %></span></h3>
+      <h3><%= @tp.title %> <span class="label label-info pull-right"><%= training_plan_state @tp %></span></h3>
       <div>
         创建于<%= distance_of_time_in_words_to_now(@tp.created_at) + t("course.all.ago") %>&middot;
         培训员工（<%= @tp.users.count %>）&middot;
@@ -20,6 +20,7 @@
       </div>
     </div>
 
+    <% if @tp.users.count > 0 %>
     <div class="well">
       <div>
         <h4 class="pull-left">培训员工反馈进度</h4>
@@ -60,11 +61,16 @@
         <% end %>
       </ul> 
     </div>
+    <% else %>
+    <div class='well'>
+      没有指定参培人员，请先指定参培人员。
+    </div>
+    <% end %>
     
   </div>
   <div id="dashboard-right" class="span4">
     <div class="well">
-      <a href="<%= new_user_path %>" class="btn btn-primary"><i class="iconfa-plus icon-white"></i> 修改培训计划</a>
+      <a href="<%= edit_training_plan_path(@tp) %>" class="btn btn-primary"><i class="iconfa-plus icon-white"></i> 修改培训计划</a>
       <a href="#myModal" data-toggle="modal" class="btn btn-warning"><i class="iconfa-download-alt icon-white"></i> <%= t('users.all.export') %></a>
     </div>
   </div>

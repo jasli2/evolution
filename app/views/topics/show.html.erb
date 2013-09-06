@@ -34,11 +34,12 @@ function show_view(comment_id) {
     </div>
     <% unless current_user.admin? %>
     <div class="well quest-input">
-      <%= form_tag  comments_path(:user_id => current_user.id, :topic_id => @topic.id) do %>
-      <%= text_area_tag "content", nil, :rows => 4, :cols => 25, :placeholder => "提问者正期待您的回答..." %>
-      <div>
-        <%= submit_tag  "提交回答",  :class => "btn btn-primary"  %>
-      </div>
+      <%= simple_form_for Comment.new do |f| %>
+      <%= f.input :content, :as => :text, :input_html => {:rows => 4, :cols => 25}, :placeholder => "提问者正期待您的回答...", :label => false %>
+      <%= f.hidden_field :commentable_type, :value => @topic.class.name.demodulize %>
+      <%= f.hidden_field :commentable_id, :value => @topic.id %>
+      <%= f.hidden_field :user_id, :value => current_user.id %>
+      <%= f.submit '发表回复', :class => 'btn btn-primary' %>
       <% end %>
     </div>
     <% end %>
@@ -58,11 +59,13 @@ function show_view(comment_id) {
               <p><%= comment.content %></p>
               <% unless current_user.admin? %>
               <div id="light_<%= comment.id.to_s%>" class="well quest-input " style="display:none">
-                <%= form_tag  comments_path(:user_id => current_user.id, :topic_id => @topic.id, :repcomment_id => comment.id) do %>
-                <%= text_area_tag "content", nil, :rows => 4, :cols => 25, :placeholder => "提问者正期待您的回答..." %>
-                <div>
-                  <%= submit_tag  "提交回答",  :class => "btn btn-primary"  %>
-                </div>
+                <%= simple_form_for Comment.new do |f| %>
+                <%= f.input :content, :as => :text, :input_html => {:rows => 4, :cols => 25}, :placeholder => "提问者正期待您的回答...", :label => false %>
+                <%= f.hidden_field :commentable_type, :value => @topic.class.name.demodulize %>
+                <%= f.hidden_field :commentable_id, :value => @topic.id %>
+                <%= f.hidden_field :user_id, :value => current_user.id %>
+                <%= f.hidden_field :repcomment_id, :value => comment.id %>
+                <%= f.submit '发表回复', :class => 'btn btn-primary' %>
                 <% end %>
               </div>
               <% end %>

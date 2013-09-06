@@ -12,7 +12,19 @@ class ExaminationsController < ApplicationController
     end
     session[:return_to] = request.referer
 
-    @exams = Examination.order(:id)
+    if current_user.admin?
+      @exams = Examination.order(:id)
+    else
+      @exams = current_user.examinations
+    end
+
+    respond_to do |format|
+      format.html
+    end
+  end
+
+  def result
+    @exam = Examination.find(params[:id])
 
     respond_to do |format|
       format.html
@@ -33,6 +45,7 @@ class ExaminationsController < ApplicationController
     @menu_category = 'admin'
     @menu_active = 'exam'
     @exam = Examination.new
+    @course_class = CourseClass.find(params[:course_class_id]) if params[:course_class_id]
     session[:return_to] = request.referer
 
     respond_to do |format|
@@ -45,7 +58,7 @@ class ExaminationsController < ApplicationController
     @exam = Examination.new(params[:examination])
 
     respond_to do |format|
-      if @exam.save
+      if @exam.save!
         format.html { redirect_to session.delete(:return_to), notice: '创建考试成功！'}
       else
         format.html { render 'new' }
@@ -78,7 +91,6 @@ class ExaminationsController < ApplicationController
   end
 
   def confirm_publish
-
     @exam = Examination.find(params[:id]) if current_user.admin?
     respond_to do |format|
       if @exam.confirm_publish

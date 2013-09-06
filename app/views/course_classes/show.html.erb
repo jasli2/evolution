@@ -51,17 +51,39 @@
           <li>所属胜任力级别：<%= @course.competency_levels.first.competency.name %> (<%=level_name(@course.competency_levels.first.level)%>)</li>
           <% end %>
         </ul>
-        <span class='label'>报名状态：10/30</span>
+        <span class='label'>报名状态：<%= @course_class.students.count.to_s + '/' + @course_class.max_students.to_s %></span>
       </div>
     </div>
     <div class="divider30"></div>
     <div class="clearfix"></div>
 
-    <% unless @course.lesson.url.nil? %>
+    <% if can_view_elearning?(@course_class, current_user) and not @course.lesson.url.nil? %>
     <div id="swf-content">
       <a class="btn btn-success btn-small" href="<%= @course.lesson.url %>" onclick="loadSWF(this.href, 1); return false;"> <i class="iconfa-play"></i> <%= t("course.all.clik_watch") %></a>
     </div>
     <div class="divider15"></div>
+    <% end %>
+
+    <% if @course.course_type != 'E-LEARNING' %>
+
+      <% unless @course_class.published? %>
+        <% if can_publish_address?(@course_class, current_user) %>
+        <div class='well'>
+          目前没有发布上课时间和地点。
+          <span class='pull-right'><%= link_to '现在发布', edit_class_path( @course_class, :publish => true), :class => 'btn btn-small btn-primary' %></span>
+        </div>
+        <% end %>
+      <% else %>
+        <% if can_view_publish_info?(@course_class, current_user) %>
+        <div class="alert alert-info alert-block">
+          <h6>上课时间及地点：</h6>
+          <%= content_tag(:i, nil, :class => "iconfa-time") %>  <%= l(@course_class.start_time, :format =>:long) + " - " + l(@course_class.end_time, :format => :long) %>
+          <%= content_tag(:i, nil, :class => "iconfa-map-marker") %>  <%= @course_class.address %>
+        </div>
+        <% end %>
+      <% end %>
+
+      <div class="divider15"></div>
     <% end %>
 
     <div class="tabbedwidget tab-primary">
@@ -70,6 +92,7 @@
         <li><a href="#tabs-2"><span class="iconfa-check"></span> 课程目标</a></li>
         <li><a href="#tabs-3"><span class="iconfa-file"></span>  <%= t("course.all.material") %></a></li>
         <li><a href="#tabs-4"><span class="iconfa-comments-alt"></span>  <%= t("course.all.discussion") %></a></li>
+        <li><a href="#tabs-5"><span class="iconfa-signal"></span> 考试和问卷调查</a></li>
       </ul>
       <div id="tabs-1" class="course-introduction">
         <%= eo_markdown(@course.description) unless @course.description.blank? %>
@@ -102,69 +125,116 @@
 
         <% if can_uploader_attachment?(@course_class, current_user) %>
         <div class='course-class-uploader-form'>
-        <%= simple_form_for(Attachment.new, :html => {:class => 'form-horizontal', :multipart => true }) do |f| %>
-            <%= f.input :description %>
-            <%= f.input :file, :as => :file %>
+        <%= form_for(Attachment.new, :html => { :multipart => true }) do |f| %>
+            <%= f.text_field :description, :label => false, :placeholder => "课程资料描述" %>
+            <%= f.file_field :file, :label => false %>
             <%= f.hidden_field :attachable_type, :value => @course_class.class.name.demodulize %>
             <%= f.hidden_field :attachable_id, :value => @course_class.id %>
-          <%= f.button :submit, '上传附件', :class => "btn-primary"  %>
+          <%= f.submit '上传附件', :class => "btn btn-primary"  %>
         <% end %>
         </div>
         <% end %>
 
         <% else %>
 
-        <p>课程讨论只对班级学员开放，请先报名。</p>
+        <p>课程资料只对班级学员开放，请先报名。</p>
 
         <% end %>
       </div>
       <div id="tabs-4" class="course-discussion">
         <% if can_view_class_discussion?(@course_class, current_user) %>
-        <div class="discuss-list"> 
-          <% if @course_class.discusses.count > 0 %>
-          <ul>
-            <% @course_class.discusses.each do |d| %>
-            <li>
-              <%= image_tag user_avatar_path(d.user, :small) %>
-              <div class='discuss-details'>
-              <%= link_to d.user.name, user_path(d.user) %>
-              <%= distance_of_time_in_words_to_now(d.created_at) %>
-              <h4><%= d.title %></h4>
-              </div>
-            </li>
-            <% end %>
-          </ul>
-          <% else %>
-          <%= t("course.all.notic2") %>
-          <% end %>
-        </div>
-
-        <% if can_post_discuss?(@course_class, current_user) %>
-        <div class="discuss-input-box">
-          <%= image_tag user_avatar_path(current_user, :small) %>
-          <div class="discuss-input">
-            <%= simple_form_for([@course_class, Discuss.new], :url => class_discusses_path(@course_class)) do |f| %>
-              <%= f.input :title, :as => :text, :input_html => { :cols => 50, :rows => 3 }, :placeholder => "发起讨论或话题...", :label => false %>
-              <%= f.hidden_field :user_id, :value => current_user.id %>
-              <%= f.submit "发布", :class => "btn, btn-primary" %>
+          <div class="discuss-list"> 
+            <% if @course_class.discusses.count > 0 %>
+            <ul>
+              <% @course_class.discusses.each do |d| %>
+              <li>
+                <%= image_tag user_avatar_path(d.user, :small) %>
+                <div class='discuss-details'>
+                <%= link_to d.user.name, user_path(d.user) %>
+                发布于<%= distance_of_time_in_words_to_now(d.created_at) %>前
+                <h4><%= d.title %></h4>
+                </div>
+              </li>
+              <% end %>
+            </ul>
+            <% else %>
+            <%= t("course.all.notic2") %>
             <% end %>
           </div>
-        </div>
-        <% end %>
+
+          <% if can_post_discuss?(@course_class, current_user) %>
+          <div class="discuss-input-box">
+            <%= image_tag user_avatar_path(current_user, :small) %>
+            <div class="discuss-input">
+              <%= simple_form_for([@course_class, Discuss.new], :url => class_discusses_path(@course_class)) do |f| %>
+                <%= f.input :title, :as => :text, :input_html => { :cols => 50, :rows => 3 }, :placeholder => "发起讨论或话题...", :label => false %>
+                <%= f.hidden_field :user_id, :value => current_user.id %>
+                <%= f.submit "发布", :class => "btn, btn-primary" %>
+              <% end %>
+            </div>
+          </div>
+          <% end %>
 
         <% else %>
-        <p>课程讨论只对班级学员开放，请先报名。</p>
+          <p>课程讨论只对班级学员开放，请先报名。</p>
         <% end %>
 
       </div>
+
+      <div id="tabs-5" class="course-exam">
+        <% if can_view_examination?(@course_class, current_user) %>
+          <% @course_class.examinations.count > 0 %>
+          <ul class='exam-list'>
+            <% if @course_class.examinations.each do |e| %>
+              <li>
+                <span class="label label-info"><%= exam_progress(e.state) %></span>          
+                <%= link_to e.title, current_user.admin? ? examination_path(e) : "#MyExam" %>
+                <span>参考总人数: <%=e.users.size %></span>
+                <span>考试日期：<%= e.published_at ? e.published_at.to_date : "待定 " %><%= ' - ' + e.deadline.to_date.to_s if e.deadline %></span>
+                <% if current_user.admin? %>
+                <span class='pull-right'><%= link_to exam_state(e.state), exam_state_action(e, current_user), :class => "btn btn-warning btn-small" %></span>
+                <% else %>
+                <span class='pull-right'><%= link_to "<i class='iconfa-check'></i> #{student_exam_state(e, current_user)}".html_safe, student_exam_todo_url(e, current_user), :class => "btn btn-warning btn-small" %></span>
+                <% end %>          
+              </li>
+            <% end %>
+          </ul>
+          <% else %>
+          <p>目前没有考试信息。</p>
+          <% end %>
+          <div class='examination-list'>
+            <%= link_to '创建考试', new_examination_path(:course_class_id => @course_class.id), {:class => "btn btn-primary btn-small"} %>
+          </div>
+
+          <div class='survey-list'>
+            目前没有调查问卷信息。
+            <%= link_to '创建问卷调查', "#myModal", {:class => "btn btn-primary btn-small disabled", "data-toggle" => "modal"} %>
+          </div>
+        <% else %>
+          <p>课程考试和问卷调查只对班级学员开放，请先报名。</p>
+        <% end %>
+      </div>
+
     </div>
   </div>
   <div id="dashboard-right" class="span4">
-    <% if current_user.admin? or @course_class.creator?(current_user) or @course_class.teacher?(current_user) %>
     <div class="well">
-      <a href="<%= edit_class_path(@course) %>" class="btn btn-success"><i class="iconfa-edit icon-white"></i>  编辑班级信息</a>
-    </div>
+    <% if current_user.admin? or @course_class.creator?(current_user) or @course_class.teacher?(current_user) %>
+      <a href="<%= edit_class_path(@course_class) %>" class="btn btn-success"><i class="iconfa-edit icon-white"></i>  编辑班级信息</a>
+    <% else %>
+      <% if @course_class.student?(current_user) %>
+        <%= form_for(@course_class, :url => uneroll_class_path(@course_class), html: { :method => :put }) do |f| %>
+        <%= f.hidden_field :user_id, :value => current_user.id %>
+        <%= f.submit "退出班级", :class => "btn btn-danger" %>
+        <% end %>
+      <% else %>
+        <%= form_for(@course_class, :url => eroll_class_path(@course_class), html: { :method => :put }) do |f| %>
+        <%= f.hidden_field :user_id, :value => current_user.id %>
+        <%= f.submit "点击报名", :class => "btn btn-warning" %>
+        <% end %>
+      <% end %>
     <% end %>
+    </div>
     
     <h3 class="subtitle"> <%= t("users.all.aboutteacher") %></h3>
     <% @course_class.teachers.each do |t| %>

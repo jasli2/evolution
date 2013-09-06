@@ -4,7 +4,7 @@
 
 .class-course { }
 .class-course img { width: 300px }
-.course-banner { margin-left: 320px; padding: 10px 0; }
+.course-banner { margin-left: 320px; min-height: 225px; }
 .course-banner ul {
   list-style-type: none; 
   padding: 10px 0; 
@@ -60,8 +60,6 @@ blockquote {
 
 .course-discussion {
   .discuss-list {
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 10px;
 
     ul {
       list-style-type: none;
@@ -85,7 +83,10 @@ blockquote {
   }
 
   .discuss-input-box {
-    padding-top: 20px;
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+    margin-top: 10px;
+    
     img {
       float: left; 
       width: 40px;
@@ -118,6 +119,47 @@ blockquote {
   }
 }
 
+.course-comments {
+  h4 {
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  ul.course-comments-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    li {
+      padding: 10px 0;
+      border-bottom: 1px solid #ddd;
+      &:last-child { border-bottom: 0; }
+
+      img { float: left; width: 40px; }
+      div.comment-details {
+        margin-left: 50px;
+      }
+    }
+  }
+
+  .course-comment-form {
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
+    margin-top: 20px;
+    img { float: left; width: 40px; }
+    div.comment-input {
+      margin-left: 50px;
+      textarea {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+
+        width: 100%;
+      }      
+    }
+  }
+}
+
 ul.course-class-attachment {
   padding: 10px 15px;
 
@@ -131,4 +173,21 @@ ul.course-class-attachment {
 .course-class-uploader-form {
   border-top: 1px dashed #ddd;
   padding-top: 20px;
+  margin-top: 20px;
+
+  form {
+    .control-group .controls .input { display: inline; }
+  }
 }
+
+.examination-list {
+  border-top: 1px solid #ddd;
+  padding: 10px 0;
+}
+
+.survey-list {
+  padding: 10px 0;
+  border-top: 1px solid #ddd;
+}
+
+

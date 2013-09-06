@@ -12,18 +12,22 @@
 #
 
 class Question < ActiveRecord::Base
-  attr_accessible :answer, :qdata, :question_type_str
+  attr_accessible :answer, :title, :question_type_str
 
   validates :answer, :presence => true
-  validates :qdata, :presence => true
+  validates :title, :presence => true
   validates :question_type_str, :inclusion => { :in => [:choice, :judgement, :dialogical], :message => "%{value} is not a valid question type"}
   #validates :type, :presence => true
+  #validate :check_option, :before => :create
 
   paginates_per 8
   has_many :examination_questions
   has_many :examinations, :through => :examination_questions
 
   has_many :user_answers, :dependent => :destroy
+  has_many :options, :dependent => :destroy
+  accepts_nested_attributes_for :options
+  attr_accessible :options_attributes
 
   QUESTION_TYPE = [:choice, :judgement, :dialogical]
 
@@ -38,5 +42,19 @@ class Question < ActiveRecord::Base
       self.question_type = nil
     end
   end
+
+  def check_question_options(user_options)
+    user_options.each do |key, value|
+      mdata = key.to_s + "\. "+  value.to_s
+      self.options.create(:content => mdata)
+    end
+  end
+
+  private
+    #TODO:
+    #should check different type for option
+    def check_option
+      puts "check option is start"
+    end
 
 end

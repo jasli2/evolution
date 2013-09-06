@@ -15,3 +15,25 @@ td#related-competency-level {
     padding: 0 10px;
   }
 }
+
+.overview {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    display: block;
+    margin: 6px 0;
+    a { 
+      color: #fff;
+      background: #0866c6;
+      padding: 10px 20px;
+      display: block;
+      font-size: medium;
+      &:hover { background: #282828; text-decoration: none; }
+      span.overview-icon { margin-right: 5px; }
+      span.overview-counter { float: right; } 
+    }
+  }
+}
+

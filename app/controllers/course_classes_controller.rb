@@ -20,7 +20,7 @@ class CourseClassesController < ApplicationController
 
     respond_to do |format|
       if @course_class.uneroll(@user)
-        format.html { redirect_to course_path(@course_class.course), :notice => "退出班级成功。" }
+        format.html { redirect_to :back, :notice => "退出班级成功。" }
       else
         format.html { redirect_to :back, :notice => "退出班级失败。" }
       end
@@ -46,6 +46,7 @@ class CourseClassesController < ApplicationController
 
   def edit
     @course_class = CourseClass.find(params[:id])
+    @is_publish = params[:publish]
 
     respond_to do |format|
       format.html

@@ -105,6 +105,8 @@ class TrainingPlan < ActiveRecord::Base
     end
   end
 
+  scope :active, where(:state => [:created, :pending_feedback, :pending_publish, :started])
+
   def feedback_created(feedback)
     if feedbacks.count == users.count
       self.all_feedbacked
@@ -126,6 +128,10 @@ class TrainingPlan < ActiveRecord::Base
     else
       false
     end
+  end
+
+  def required?(course)
+    required_course_ids.include? course.id
   end
 
   private

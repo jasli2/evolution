@@ -1,0 +1,8 @@
+<%= simple_form_for [@exam, @question], :html => {:class => 'form-horizontal '} do |f| %>
+  <%= f.input :title, label: "题干：", :input_html => { :class => "xlarge" }%>
+  <%= f.input :answer, label: "参考答案：", :as => :text, :input_html => { :class => "xlarge", :rows => 3 } %>
+  <%= f.hidden_field :question_type_str, :value => @question_type %>
+  <div class="form-actions">
+    <%= f.button :submit, '创建新题目', :class => "btn-primary" %>
+  </div>
+<% end %>

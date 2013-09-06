@@ -1,0 +1,20 @@
+<%= simple_form_for [@exam, @question], :html => {:class => 'form-horizontal'} do |f| %>
+  <%= f.input :title, :label => "题干：" %>
+  <%= f.simple_fields_for :options do |option_form| %>
+    <%= option_form.input :content, :label => "选项-1：" %>
+  <% end %>
+  <%= f.simple_fields_for :options do |option_form| %>
+    <%= option_form.input :content, :label => "选项-2：" %>
+  <% end %>
+  <%= f.simple_fields_for :options do |option_form| %>
+    <%= option_form.input :content, :label => "选项-3：" %>
+  <% end %>
+  <%= f.simple_fields_for :options do |option_form| %>
+    <%= option_form.input :content, :label => "选项-4：" %>
+  <% end %>
+  <%= f.input :answer, :collection => [[0, "选项-1"], [1, "选项-2"], [2, "选项-3"], [3, "选项-4"]], :value_method =>:first, :label_method => :last, :label => "正确答案：" %>
+  <%= f.hidden_field :question_type_str, :value => @question_type %>
+  <div class="form-actions">
+  <%= f.button :submit, '创建新题目', :class => "btn-primary"  %>
+  </div>
+<% end %>

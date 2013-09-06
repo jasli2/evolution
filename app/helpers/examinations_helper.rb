@@ -1,11 +1,28 @@
 # encoding: utf-8
 module ExaminationsHelper
+
+  def exam_to_result(exam)
+    state = exam.state if exam
+    case state
+    when "pending_publish"
+      examination_path(exam)
+    when "published"
+      result_examination_path(exam)
+    when "finished"
+      result_examination_path(exam)
+    else
+      "#myMode"
+    end
+  end
+
   def exam_state(state)
     case state
     when "pending_publish"
       "发布考试"
     when "published"
       "取消考试"
+    when "finished"
+      "查看考试结果"
     else
       "未知状态"
     end
@@ -32,6 +49,8 @@ module ExaminationsHelper
       confirm_publish_examination_path(exam.id)
     when "published"
       "#myMode"
+    when "finished"
+      result_examination_path(exam)
     else
       "#myMode"
     end

@@ -11,7 +11,7 @@
 <div class="row-fluid">
   <div id="dashboard-left" class="span8">
     <div class="well">
-      <h3><%= @tp.title %> <span class="label label-info pull-right"><%= @tp.state %></span></h3>
+      <h3><%= @tp.title %> <span class="label label-info pull-right"><%= training_plan_state @tp %></span></h3>
       <div>
         创建于<%= distance_of_time_in_words_to_now(@tp.created_at) + t("course.all.ago") %>&middot;
         培训员工（<%= @tp.users.count %>）&middot;
@@ -27,10 +27,14 @@
         <% @tp.required_courses.each do |c| %>
         <li>
           <%= image_tag course_cover_path(c, :small) %>
+          <a href="<%= new_course_class_path(c) %>" class="btn btn-warning btn-small action">开设班级</a>
           <div class='tp-course-info'>
-            <h4><%= link_to c.title, course_path(c) %></h4>
+            <%= link_to content_tag(:h4, c.title), course_path(c) %>
+            <span>
+              预计参培人数：<%= c.training_feedbacks.for_plan(@tp).count.to_s + '/' + @tp.users.count.to_s %> &middot;
+              已开设班级：<%= c.course_classes.active.count %>
+            </span>
           </div>
-          <a href="<%= new_course_class_path(c) %>" class="btn btn-warning btn-small action">开设班级</a> 
         </li>
         <% end %>
       </ul>
@@ -39,10 +43,14 @@
         <% @tp.optional_courses.each do |c| %>
         <li>
           <%= image_tag course_cover_path(c, :small) %>
+          <a href="<%= new_course_class_path(c) %>" class="btn btn-warning btn-small action">开设班级</a>
           <div class='tp-course-info'>
             <h4><%= link_to c.title, course_path(c) %></h4>
+            <span>
+              预计参培人数：<%= c.training_feedbacks.for_plan(@tp).count.to_s + '/' + @tp.users.count.to_s %> &middot;
+              已开设班级：<%= c.course_classes.active.count %>
+            </span>
           </div>
-          <a href="<%= new_course_class_path(c) %>" class="btn btn-warning btn-small action">开设班级</a> 
         </li>
         <% end %>
       </ul> 
@@ -50,6 +58,8 @@
     
   </div>
   <div id="dashboard-right" class="span4">
-
+    <div class='well'>
+      <a href="#myModal" data-toggle="modal" class="btn btn-warning"><i class="iconfa-download-alt icon-white"></i>关闭培训计划</a>
+    </div>
   </div>
 </div>
