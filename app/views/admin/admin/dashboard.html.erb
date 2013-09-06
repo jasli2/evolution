@@ -10,7 +10,32 @@
 <% content_for :javascript do %>
 <script type="text/javascript">
 $(function() {
-  $('#datepicker').datepicker();
+  var currDate = new Date();
+  $('#datepicker').datepicker({
+    onSelect: function(date, inst){
+      inst.inline = false;
+      $(".ui-datepicker-calendar .ui-datepicker-current-day").removeClass("ui-datepicker-current-day").children().removeClass("ui-state-active");
+      $(".ui-datepicker-calendar TBODY A").each(function(){
+        if ($(this).text() == inst.selectedDay) {
+          $(this).addClass("ui-state-active");
+          $(this).parent().addClass("ui-datepicker-current-day");
+	  var a = '<div id="date-event" class="alert alert-block"> <button data-dismiss="alert" class="close" type="button">×</button> <h4>系统提示：</h4> <p style="margin: 8px 0">体验版部分功能不可用，请升级成正式版</p></div>';
+          //$('#datepicker').after(a);
+          if('undefined' == typeof $('#datepicker ~ #date-event').html()) {
+            $('#datepicker').after(a);
+          }
+        }
+      });
+    },
+    beforeShowDay: function(date){  
+      var currDateClass = '';
+      if(15 == date.getDate()) {
+        currDateClass += 'has-info-event';
+	//alert(this.nodeName );
+      }
+      return [true, currDateClass, ''];
+    }
+  });
   $('.tabbedwidget').tabs();
   $('.accordion').accordion({
     collapsible: true,
