@@ -37,8 +37,8 @@
 
 .user-image-name {
   text-align: center;
-  width: 40px;
-  img { width: 40px; }
+  width: 60px;
+  img { width: 60px; }
 }
 
 .user-subordinates, .user-follower, .user-following {
@@ -48,7 +48,7 @@
     margin: 0;
     li {
       display: inline-block;
-      margin-right: 5px;
+      margin: 4px;
     }
   }
 }
