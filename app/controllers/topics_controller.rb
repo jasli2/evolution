@@ -15,7 +15,7 @@ class TopicsController < ApplicationController
   def show
     @topic = Topic.find(params[:id])
     @comments = @topic.comments.order('id DESC').page params[:page]
-    @reply = Comment.new
+    #@reply = Comment.new
   end
 
   def new
