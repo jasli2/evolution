@@ -108,6 +108,8 @@ h1,h2,h3,h4,h5 { font-weight: normal; line-height: normal; }
 .header { background: #0866c6; clear: both; height: 60px; }
 .headerinner { margin-left: 200px; }
 .header .logo { width: 200px; text-align: center; padding-top: 10px; padding-bottom: 10px; float: left; border-right: 1px solid rgba(255,255,255,0.15);}
+.header .logo img { opacity: 0.8;}
+.header .logo img:hover {opacity: 1;}
 
 .headmenu { list-style: none; }
 .headmenu .dropdown-menu { border: 2px solid #0866c6; border-top: 0; margin: 12px 0 0 0; left:auto; right:0;}
@@ -121,9 +123,10 @@ h1,h2,h3,h4,h5 { font-weight: normal; line-height: normal; }
 .headmenu > li:first-child {margin-right: 10px;}
 .headmenu > li.odd { background: rgba(255,255,255,0.1); }
 .headmenu > li.right { float: right; }
+.headmenu > li > a:hover { text-decoration: none; opacity: 1;}
 .headmenu > li > a {
 	min-width: 40px; position: relative; display: block; color: #fff;
-	padding: 0px; cursor: pointer; margin-top:15px;}
+	padding: 0px; cursor: pointer; margin-top:15px; opacity: 0.8;}
 .headmenu > li > a:hover { text-decoration: none; }
 .headmenu > li > a .count { position: absolute; top: 5px; right: 10px; opacity: 0.5; }
 .headmenu > li > a:hover .count, .headmenu > li.open > a .count { opacity: 1; }
@@ -167,6 +170,7 @@ right: -10px;
 .userloggedinfo { margin: 18px 0 12px 0; padding: 0px; color: #fff; }
 .userloggedinfo .caret {margin: 10px 0 0 5px;}
 .userloggedinfo img { margin: -6px 0 0 0; padding: 3px; background: rgba(255,255,255,0.2); width: 30px; float: left; }
+.userloggedinfo img:hover {background: rgba(255,255,255,0.5);}
 .userloggedinfo a {color: #fff; padding: 0px 10px 0 0;}
 .userloggedinfo a:hover {text-decoration: none;}
 .userloggedinfo .userinfo { float: left; margin-left: 10px; }
@@ -281,7 +285,7 @@ right: -10px;
 .widgettitle { background: #0866c6; color: #fff; padding: 12px 15px; font-size: 14px; }
 .widgettitle span { vertical-align: middle; display: inline-block; margin-right: 8px; }
 .widgetcontent { background: #fff; padding: 15px 12px; border: 2px solid #0866c6; border-top: 0; margin-bottom: 20px; }
-.widgetcontent2 { background: #fff; padding: 15px 12px; border: 2px solid #0866c6; margin-bottom: 20px; }
+.widgetcontent2 { background: #fff; padding: 15px 12px; border: 2px solid #CCC; margin-bottom: 20px; }
 .widgetcontent p { margin: 15px 0; }
 .wt1 { background: #333; color: #fff; }
 .wc1 { border-color: #333; }
@@ -291,7 +295,7 @@ right: -10px;
 .chart {height: 64px;cursor: pointer;}
 .chart .inlinebar {margin: 5px 0 0 0;}
 .chart .competency {width:64px;height:64px;}
-.chart .media-body {margin: 5px 0 0 0;padding-left: 12px;}
+.chart .media-body {float:right;margin: 5px 0 0 0;padding-left: 12px;text-align: right;}
 .chart .media-body small {color: gray;}
 .chart .iconfa-comments {font-size: 64px;margin-right:0;}
 .pull-center {text-align: center;}
@@ -341,6 +345,9 @@ right: -10px;
 .has-info-event .ui-state-default{background:#fdc;font-weight:bold;color:red;font-size:14px;}
 .has-info-event .ui-state-default:hover,
 .has-info-event .ui-state-default:active{ background:#fed; }
+.ui-datepicker-inline .ui-datepicker-header {
+	background-color: #0866c6;
+}
 .calendar_list {
 	min-height: 34px;
 	background: #f4f4f4;
@@ -379,15 +386,15 @@ right: -10px;
 	background-color: #f9f9f9;
 }
 .calendar_list #list li.low .time {
-	background: #c6cf52;
-	border: 1px solid #b9c14c;
+	background: #0866c6;/*#c6cf52;
+	border: 1px solid #b9c14c;*/
 }
 .calendar_list #list li .time {
 	-moz-border-radius: 3px;
 	border-radius: 3px;
 	border: 1px solid #ccc;
 	color: #F6F6F6;
-	font-size: 10px;
+	font-size: 14px;
 	padding: 2px 5px;
 	float: left;
 	font-weight: bold;
