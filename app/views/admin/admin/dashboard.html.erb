@@ -297,8 +297,8 @@ $(function() {
     <div class="divider15"></div>
 
     <h4 class="widgettitle"><span class="iconfa-check"></span> 项目进度跟踪（<%= @tps.count %>）</h4>
+    <% if @tps.count > 0 %>
     <div class="widgetcontent nopadding">
-      <% if @tps.count > 0 %>
       <ul class="tp-list">
       <% @tps.each do |tp| %>
       <li>
@@ -320,111 +320,12 @@ $(function() {
       </li>
       <% end %>
       </ul>
-      <% else %>
+    </div>
+    <% else %>
+    <div class="widgetcontent">
       <p>目前没有跟踪进度的培训计划。</p>
-      <% end %>
     </div>
-    
-
-    
-
-    <h3 class="subtitle"><%= t("dashboard.competency.title") %></h3>
-    <div class="divider15"></div>
-
-    <div class="widgetbox">
-      <div class="headtitle">
-        <h4 class="widgettitle"><span class="iconfa-sitemap"></span> <%= t('dashboard.competency.sub_title') %> <span class="pull-right"><%= link_to (t('dashboard.common.sub_title1') + "&#8594;").html_safe, admin_manage_competency_path %></span></h4>
-      </div>
-      <% if @competencies.size == 0 %>
-      <div class="widgetcontent">
-        <p><%= t('dashboard.competency.null_competency') %> </p>
-      </div>
-      <% else %>
-      <div class="widgetcontent nopadding">
-        
-        <div class="accordion">
-          <% @competencies.each do |c| %>
-          <div class="a-header">
-            <a href="#"><%= c.name %><span class="pull-right"><%= t('dashboard.common.create') + distance_of_time_in_words_to_now(c.created_at) + t('dashboard.common.ago') %></span></a>
-          </div>
-          <div class="a-content">
-            <%= content_tag(:h5, "胜任力描述： " + c.description) %>
-            <div class="divider15"></div>
-            <div class="tabbedwidget">
-              <ul>
-                <li><a href="#tabs-1"><%= level_name 1 %></a></li>
-                <li><a href="#tabs-2"><%= level_name 2 %></a></li>
-                <li><a href="#tabs-3"><%= level_name 3 %></a></li>
-                <li><a href="#tabs-4"><%= level_name 4 %></a></li>
-              </ul>
-            <% c.competency_levels.each_with_index do |cl, i| %>
-            <div class="competency-level-details" id="<%= 'tabs-' + (i+1).to_s %>">
-              <%= content_tag(:h6, "级别描述：" + cl.description) %>
-              <ul id="cl-requirements">
-              <% cl.competency_level_requirements.each do |clr| %>
-              <%= content_tag(:li, clr.description) %>
-              <% end %>
-              </ul>
-              <div class="divider15"></div>
-              <%= content_tag(:h6, "相关课程（" + cl.courses.size.to_s + "）：") %>
-              <ul id="cl-courses">
-                <% cl.courses.each do |course| %>
-                <li>
-                  <div class="cl-course-banner">
-                    <%= link_to image_tag(course_cover_path(course, :small)), course_path(course), {:title => "#{course.title}"} %>
-                    <%= link_to course.title, course_path(course) %>
-                  </div>
-                </li>
-                <% end %>
-              </ul>
-            </div>
-            <% end %>
-          </div>
-        </div>
-          <% end %>
-        </div>
-        
-      </div>
-      <% end %>
-    </div>
-    <div class="divider15"></div>
-
-    <h3 class="subtitle"><%= t('dashboard.course.title') %></h3>
-    <div class="divider15"></div>
-    <div class="widgetbox">
-      <div class="headtitle">
-        <h4 class="widgettitle"><span class="iconfa-folder-open"></span> <%= t('dashboard.course.sub_title') %> <span class="pull-right"><%= link_to (t('dashboard.common.sub_title1') +  "&#8594;").html_safe, admin_manage_course_path %></span></h4>
-      </div>
-      <% if @courses.size == 0 %>
-      <div class="widgetcontent">
-        <p><%= t('dashboard.course.null_course') %>t. </p>
-      </div>
-      <% else %>
-      <div class="widgetcontent nopadding">
-        <ul class="courselist">
-          <% @courses.each do |c| %>
-          <li>
-            <%= image_tag course_cover_path(c, :normal), :class => "pull-left" %>
-            <div class="course-info">
-              <h4><%= link_to c.title, course_path(c) %></h4>
-              <ul>
-                <li>目标学员：<%= c.audience %></li>
-                <li>授课老师：<%= c.teacher.name %></li>
-                <li>课程时长：<%= c.duration %> 小时</li>
-                <% if c.competency_levels.size > 0 %>
-                <li>所属胜任力级别：<%= c.competency_levels.first.competency.name %> (<%=level_name(c.competency_levels.first.level)%>)</li>
-                <% else %>
-                <li>所属胜任力级别：无</li>
-                <% end %>
-              </ul>
-              <a href="<%= course_path(c) %>" class="btn btn-primary btn-small"><span class="iconfa-info-sign icon-white"></span><%= t('dashboard.course.details') %></a>
-            </div>
-          </li>
-          <% end %>
-        </ul>
-      </div>
-      <% end %>
-    </div>
+    <% end %>
 
   </div> <!--span8-->
 
@@ -454,36 +355,6 @@ $(function() {
     </div--><!--alert-->
     <!--div class="divider15"></div-->
 
-    <ul class="overview">
-      <li class="events">
-        <a href="<%= admin_manage_users_path %>">
-          <span class="overview-icon iconfa-group"></span>
-          <span class="overview-label"><%= t('dashboard.overview.users') %></span>
-          <span class="overview-counter"><%= @users_count %></span>
-        </a>
-      </li>
-      <li class="events">
-        <a href="<%= admin_manage_competency_path %>">
-          <span class="overview-icon iconfa-sitemap"></span>
-          <span class="overview-label"><%= t('dashboard.overview.competencies') %></span>
-          <span class="overview-counter"><%= @competencies_count %></span>
-        </a>
-      </li>
-      <li class="events">
-        <a href="<%= admin_manage_course_path %>">
-          <span class="overview-icon iconfa-folder-open"></span>
-          <span class="overview-label"><%= t('dashboard.overview.courses') %></span>
-          <span class="overview-counter"><%= @courses_count %></span>
-        </a>
-      </li>
-      <li class="events">
-        <a href="<%= admin_manage_position_path %>">
-          <span class="overview-icon iconfa-reorder"></span>
-          <span class="overview-label"><%= t('dashboard.overview.positions') %></span>
-          <span class="overview-counter"><%= @positions_count %></span>
-        </a>
-      </li>
-    </ul>
     <div class="divider30"></div>
     
     <h4 class="widgettitle"><%= t('dashboard.calender.title') %></h4>
