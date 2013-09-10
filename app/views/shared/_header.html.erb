@@ -56,7 +56,7 @@
         <div class="userloggedinfo btn-group">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <%= image_tag user_avatar_path(current_user, :normal) %>
-            <!--<i class="iconfa-th"></i> &nbsp; <%= current_user.name %><small> - <%= current_user.email %></small><span class="caret"></span--></a>
+            <!--<i class="iconfa-th"></i> &nbsp; <%= current_user.name %><small> - <%= current_user.email %></small--><span class="caret"></span></a>
             <ul class="dropdown-menu">
               <% unless current_user.admin? %>
               <li><a href="<%= edit_user_path(current_user) %>"><%= t("share.header.edit") %></a></li>
@@ -81,12 +81,12 @@
       </li>
       <li class="right">
 	<a href="#" class="button">
-	  <i class="iconfa-rss"></i><span class="badge badge-important">20</span>
+	  <i class="iconfa-rss"></i><span class="badge badge-info">20</span>
 	</a>
       </li>
       <li class="right">
 	<a href="#" class="button">
-	  <i class="iconfa-question-sign"></i><span class="badge badge-important">2</span>
+	  <i class="iconfa-question-sign"></i><span class="badge badge-default">2</span>
 	</a>
       </li>
     </ul><!--headmenu-->
