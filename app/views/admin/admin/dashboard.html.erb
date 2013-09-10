@@ -10,7 +10,16 @@
 <% content_for :javascript do %>
 <script type="text/javascript">
 $(function() {
-  var currDate = new Date();
+  function hasEvent(day) {
+    for(var i in canlenderEvent)
+      if (canlenderEvent[i].day === day) {
+        return [true, i];
+      }
+    return [false];
+  }
+  var currDate = $.datepicker.formatDate('mm-dd', new Date());
+  var canlenderEvent = [{day:'2013-09-15',events:[{time:'09:50',title:'Event 3',desc:'Event 3 description'}]}, 
+      {day:'2013-09-18',events:[{time:'09:30',title:'Event 1',desc:'Event 1 description'},{time:'12:30',title:'Event 2',desc:'Event 2 description'}]}];
   $('#datepicker').datepicker({
     onSelect: function(date, inst){
       inst.inline = false;
@@ -19,28 +28,171 @@ $(function() {
         if ($(this).text() == inst.selectedDay) {
           $(this).addClass("ui-state-active");
           $(this).parent().addClass("ui-datepicker-current-day");
-	  var a = '<div id="date-event" class="alert alert-block"> <button data-dismiss="alert" class="close" type="button">×</button> <h4>系统提示：</h4> <p style="margin: 8px 0">体验版部分功能不可用，请升级成正式版</p></div>';
-          //$('#datepicker').after(a);
-          if('undefined' == typeof $('#datepicker ~ #date-event').html()) {
-            $('#datepicker').after(a);
+          // var a = '<div class="calendar_list"><ul id="list" class="unstyled"><li class="low"><div class="time">09:50</div><h1>Event 3</h1><div class="clear"></div><p style="display: none;">Description 3</p></li></ul></div>';
+          // if('undefined' == typeof $('#datepicker ~ #date-event').html()) {
+          //   $('#datepicker').after(a);
+          // }
+          var day = date.split("|");
+          console.log(day);
+          var content = '<ul id="list" class="unstyled">';
+          // var dateObject = $.datepicker.parseDate("mm/dd/yy", date);
+          // var bindDate = $.datepicker.formatDate('mm-dd', dateObject);
+          var result = hasEvent(day[0]);
+          if (result[0]) {
+            for(var i in canlenderEvent[result[1]].events) {
+              // $("#list li .time").text(canlenderEvent[result[1]].events[i].time);
+              // $("#list li h1").text(canlenderEvent[result[1]].events[i].title);
+              // $("#list li p").text(canlenderEvent[result[1]].events[i].desc);
+              content += '<li class="low" onclick="$(this).children(\'p\').toggleClass(\'show\');"><div class="time">' + 
+                  canlenderEvent[result[1]].events[i].time + '</div><h1>' +
+                  canlenderEvent[result[1]].events[i].title + '</h1><p class="clear">' +
+                  canlenderEvent[result[1]].events[i].desc +'</p></li>';
+            }        
+          } else {
+            // $("#list li .time").text("00:00");
+            // $("#list li h1").text("no event");
+            // $("#list li p").text("");
+            content += 'No results were found in this date.';
           }
+          content += '</ul>';
+          $("#list").replaceWith(content);
+          $(".calendar_list .title").text(day[1]);
         }
       });
+      // $("#list").html("");
+      console.log("onSelect: currDate",$.datepicker.formatDate('yy-mm-dd|yy年mm月dd日 DD', new Date()));
+      console.log("onSelect",$.datepicker.parseDate("yy-mm-dd|yy年m月d日 DD", date));      
     },
     beforeShowDay: function(date){  
       var currDateClass = '';
-      if(15 == date.getDate()) {
+      var bindDate = $.datepicker.formatDate('yy-mm-dd', date);
+      console.log('beforeShowDay',bindDate);
+      // for (var i in canlenderEvent) {
+      //   console.log(canlenderEvent[i].day);
+      //   if (canlenderEvent[i].day === bindDate) {
+      //     currDateClass += 'has-info-event ';
+      //     break;
+      //   }
+      // }
+      if(hasEvent(bindDate)[0]) {
         currDateClass += 'has-info-event';
-	//alert(this.nodeName );
       }
       return [true, currDateClass, ''];
+    },
+
+  });
+  var data = [{ label: "助理",  data: 12},
+    { label: "经理",  data: 12},
+    { label: "高级经理",  data: 9},
+    { label: "资深经理",  data: 7}];
+  $.plot($('#competency'), data, {
+    series: {
+      pie: { 
+        innerRadius: 0.5,
+        show: true,
+        label: {
+          show: false
+        }
+      }
+    },
+    grid: {
+      // clickable: true,
+      hoverable: true
+    },
+    legend: {
+      show: false
+      //container: null
+      //noColumns: 1, 
+      //labelFormatter: null, 
+      //labelBoxBorderColor: "#000", 
+      //container: null,
+      //position: "ne",
+      //margin: [10, 0],
+      //backgroundColor: "#efefef",
+      //backgroundOpacity: 1
+      //noColumns: 1
     }
   });
+  var previousPoint = null, previousLabel = null;
+  $('#competency').bind("plothover", function(e, pos, item) {    
+    if (item) {  
+      if ((previousLabel != item.series.label) || (previousPoint != item.dataIndex)) {  
+        previousPoint = item.dataIndex;  
+        previousLabel = item.series.label;  
+        $("#tooltip").remove();  
+            
+        var x = item.datapoint[0];  
+        var y = item.datapoint[1];  
+
+        var color = item.series.color;  
+        //console.log(item);  
+        showTooltip(pos.pageX,  
+            pos.pageY,  
+            color,  
+            "<span>" + item.series.label + "</span>: <span>" + item.datapoint[1][0][1] + "</span>人");  
+      }  
+    } else {  
+      $("#tooltip").remove();  
+      previousPoint = null;  
+    }
+    // if (!obj) {
+    //   return;
+    // }    
+    // var percent = parseFloat(obj.series.percent).toFixed(2);
+    // var toolTip = "<div id='tooltip' style='position:absolute;border:solid #aaa 1px;background-color:#F9F9F9;font-weight:bold; color:" + obj.series.color + "'>" + obj.series.label + " (" + percent + "%)</div>";
+    // alert("event: " + $(event).pageX + "," + event.pageY + " obj:" + $(obj).pageX + "," + obj.pageY + " pos:" + $(pos).x + "," + pos.y.toFixed(2) + " color: " + obj.series.color + " label: " + obj.series.label);
+    // $("body").append(toolTip);
+    // $("#tooltip").css({
+    //   "top" :obj.pageY + "px",
+    //   "left" :obj.pageX + "px"
+    // });
+  });
+  function showTooltip(x, y, color, contents) {  
+    $('<div id="tooltip">' + contents + '</div>').css({  
+      'position': 'absolute',  
+      'display': 'none',  
+      'top': y - 5,  
+      'left': x + 5,  
+      'border': '1px solid' + color,  
+      'padding': '1px',  
+      'font-size': '9px',  
+      'border-radius': '2px',  
+      'background-color': '#fff',  
+      'font-family': 'Verdana, Arial, Helvetica, Tahoma, sans-serif',  
+      'opacity': 0.8  
+    }).appendTo("body").fadeIn(200);  
+  }
   $('.tabbedwidget').tabs();
+  $('.chart0').easyPieChart({
+    size: 64,
+    lineCap: 'square',
+    lineWidth: 5,
+    scaleColor: '#b2b1b1',
+    trackColor: '#d0d0d0',
+    barColor: '#ef5f3c',
+    animate: 1000
+  });
+  $('.chart1').easyPieChart({
+    size: 64,
+    lineCap: 'square',
+    lineWidth: 5,
+    scaleColor: '#b2b1b1',
+    trackColor: '#d0d0d0',
+    barColor: '#0099cc',
+    animate: 1000
+  });
   $('.accordion').accordion({
     collapsible: true,
     heightStyle: "content",
     header: ".a-header"
+  });
+  $('.inlinebar').sparkline('html',{
+    enableTagOptions: true,
+    width: 64,
+    height: 54,
+    barWidth: 5,
+    barSpacing: 1,
+    type: 'bar'
   });
 });
 </script>
@@ -48,6 +200,71 @@ $(function() {
 
 <div class="row-fluid">
   <div id="dashboard-left" class="span8">
+      <div class="row-fluid">
+        <div class="span4">
+          <!--h4 class="widgettitle"><span class="iconfa-check"></span>员工能力分布</h4-->
+          <div class="widgetcontent2 chart" onClick="location.href='/admin/manage_users'">
+            <div id="competency" class="competency pull-left"></div>    
+            <div class="media-body">
+              <h3 class="media-heading">43</h3>
+              <small>员工总数</small>
+            </div>
+          </div>
+        </div>
+        <div class="span4">
+          <!--h4 class="widgettitle"><span class="iconfa-check"></span>当月和历史开课数</h4-->
+          <div class="widgetcontent2 chart" onClick="location.href='/training_plans'">
+            <div class="inlinebar competency pull-left" sparkBarColor="#ef5f3c"><!--1,12,22,11,12,13,14,25,7,4,18,8--></div>
+            <div class="media-body">
+              <h3 class="media-heading">23 / 527</h3>
+              <small>当月开课/全年开课数</small>
+            </div>
+          </div>
+        </div>
+        <div class="span4">
+          <!--h4 class="widgettitle"><span class="iconfa-check"></span>当月和历史参培人次</h4-->
+          <div class="widgetcontent2 chart" onClick="location.href='/training_plans'">
+            <div class="inlinebar competency pull-left" sparkBarColor="#0099cc"><!--9,12,2,1,22,3,14,5,32,12,11,19--></div>
+            <div class="media-body">
+              <h3 class="media-heading">57 / 1211</h3>
+              <small>当月参培/全年参培人次</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row-fluid">
+        <div class="span4">
+          <!--h4 class="widgettitle"><span class="iconfa-check"></span>线上和线下课程比例</h4-->
+          <div class="widgetcontent2 chart" onClick="location.href='/admin/manage_course'">
+            <div class="chart0 easyPieChart pull-left" data-percent="73">73</div>
+            <div class="media-body">
+              <h3 class="media-heading">73</h3>
+              <small>线上课程比例</small>
+            </div>
+          </div>
+        </div>
+        <div class="span4">
+          <!--h4 class="widgettitle"><span class="iconfa-check"></span>内部和外部讲师比例</h4-->
+          <div class="widgetcontent2 chart" onClick="location.href='/admin/manage_users'">
+            <div class="chart1 easyPieChart pull-left" data-percent="36">36</div>
+            <div class="media-body">
+              <h3 class="media-heading">36</h3>
+              <small>内部讲师比例</small>
+            </div>
+          </div>
+        </div>
+        <div class="span4">
+          <!--h4 class="widgettitle"><span class="iconfa-check"></span>知识社区信息数量</h4-->
+          <div class="widgetcontent2 chart" onClick="location.href='/knowledge'">
+            <!--i class="iconfa-comments pull-left"></i-->
+            <div class="inlinebar competency pull-left" sparkType="line"><!--9,12,2,1,22,3,14,5,32,12,11,19--></div>
+            <div class="media-body">
+              <h3 class="media-heading">95</h3>
+              <small>论坛总话题: 95328</small>
+            </div>
+          </div>
+        </div>
+    </div>
     <% if @active_notifications.count > 0 %>
     <div class="alert alert-info alert-block">
       <button data-dismiss="alert" class="close" type="button">&times;</button>
@@ -212,12 +429,30 @@ $(function() {
   </div> <!--span8-->
 
   <div id="dashboard-right" class="span4">
-    <div class="alert alert-block">
+    <div class="row-fluid">
+      <span class="span4 btn"><i class="iconfa-user"></i>&nbsp;创建用户</span>
+      <span class="span4 btn"><i class="iconfa-book"></i>&nbsp;创建课程</span>
+      <span class="span4 btn"><i class="iconfa-plane"></i>&nbsp;培训计划</span>
+    </div>
+    <div class="row-fluid">
+      <span class="span4 btn"><i class="iconfa-pencil"></i>&nbsp;创建考试</span>
+      <span class="span4 btn"><i class="iconfa-sitemap"></i>&nbsp;创建职位</span>
+      <span class="span4 btn"><i class="iconfa-question-sign"></i>&nbsp;还没想好</span>
+    </div>
+    <!--div class="row-fluid">
+      <span class="span2 btn"></span>
+      <span class="span2 btn"></span>
+      <span class="span2 btn"></span>
+      <span class="span2 btn"></span>
+      <span class="span2 btn"></span>
+      <span class="span2 btn"></span>
+    </div-->
+    <!--div class="alert alert-block">
       <button data-dismiss="alert" class="close" type="button">&times;</button>
       <h4>系统提示：</h4>
       <p style="margin: 8px 0">体验版部分功能不可用，请升级成正式版</p>
-    </div><!--alert-->
-    <div class="divider15"></div>
+    </div--><!--alert-->
+    <!--div class="divider15"></div-->
 
     <ul class="overview">
       <li class="events">
@@ -254,6 +489,16 @@ $(function() {
     <h4 class="widgettitle"><%= t('dashboard.calender.title') %></h4>
     <div class="widgetcontent nopadding">
       <div id="datepicker"></div>
+      <div class="calendar_list">
+        <div class="title">2013年9月10日 星期二</div>
+        <ul id="list" class="unstyled">
+          <li class="low" onclick="$(this).children('p').toggleClass('show');">
+            <div class="time">09:50</div>
+            <h1>内部讲师内部讲师内部讲师内部</h1>
+            <p class="clear">Description 3</p>
+          </li>
+        </ul>
+      </div>
     </div>
     <div class="divider15"></div>
 

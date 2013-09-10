@@ -165,6 +165,7 @@ right: -10px;
 .newusers small { color: #999; line-height: normal; }
 
 .userloggedinfo { margin: 18px 0 12px 0; padding: 0px; color: #fff; }
+.userloggedinfo .caret {margin: 10px 0 0 5px;}
 .userloggedinfo img { margin: -6px 0 0 0; padding: 3px; background: rgba(255,255,255,0.2); width: 30px; float: left; }
 .userloggedinfo a {color: #fff; padding: 0px 10px 0 0;}
 .userloggedinfo a:hover {text-decoration: none;}
@@ -280,12 +281,20 @@ right: -10px;
 .widgettitle { background: #0866c6; color: #fff; padding: 12px 15px; font-size: 14px; }
 .widgettitle span { vertical-align: middle; display: inline-block; margin-right: 8px; }
 .widgetcontent { background: #fff; padding: 15px 12px; border: 2px solid #0866c6; border-top: 0; margin-bottom: 20px; }
+.widgetcontent2 { background: #fff; padding: 15px 12px; border: 2px solid #0866c6; margin-bottom: 20px; }
 .widgetcontent p { margin: 15px 0; }
 .wt1 { background: #333; color: #fff; }
 .wc1 { border-color: #333; }
 
 
 /*** DASHBOARD ***/
+.chart {height: 64px;cursor: pointer;}
+.chart .inlinebar {margin: 5px 0 0 0;}
+.chart .competency {width:64px;height:64px;}
+.chart .media-body {margin: 5px 0 0 0;padding-left: 12px;}
+.chart .media-body small {color: gray;}
+.chart .iconfa-comments {font-size: 64px;margin-right:0;}
+.pull-center {text-align: center;}
 
 .commentlist { list-style: none; clear: both; }
 .commentlist li { display: block; border-bottom: 1px solid #ddd; padding: 15px; }
@@ -328,7 +337,81 @@ right: -10px;
 .userlist-favorites li .link a:hover { text-decoration: none; color: #fff; }
 
 
-
+/** calendar **/
+.has-info-event .ui-state-default{background:#fdc;font-weight:bold;color:red;font-size:14px;}
+.has-info-event .ui-state-default:hover,
+.has-info-event .ui-state-default:active{ background:#fed; }
+.calendar_list {
+	min-height: 34px;
+	background: #f4f4f4;
+	text-align: left;
+	padding: 0px;
+	clear: left;
+	border-top: 1px solid #ccc;	
+}
+.calendar_list .title {
+	min-height: 18px;
+	background-color: #eee;
+	padding: 2px 7px;
+	border-bottom: 1px solid #ccc;
+	font-size: 12px;
+	font-weight: bold;
+	color: gray;
+}
+.calendar_list .clear {
+	clear: both;
+}
+.calendar_list #list {
+	padding: 7px;
+}
+.calendar_list #list li {
+	min-height: 18px;
+	padding: 7px;
+	font-family: 'Open Sans Condensed', sans-serif;
+	cursor: pointer;
+	background: none;
+	line-height: normal;
+	list-style: none;
+	border: 1px solid #f4f4f4;
+}
+.calendar_list #list li:hover {
+	border: 1px solid #ccc;
+	background-color: #f9f9f9;
+}
+.calendar_list #list li.low .time {
+	background: #c6cf52;
+	border: 1px solid #b9c14c;
+}
+.calendar_list #list li .time {
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	border: 1px solid #ccc;
+	color: #F6F6F6;
+	font-size: 10px;
+	padding: 2px 5px;
+	float: left;
+	font-weight: bold;
+	line-height: 100%;
+}
+.calendar_list #list li h1 {
+	font-size: 16px;
+	margin: 0 0 0 10px;
+	float: left;
+	font-weight: normal;
+	color: inherit;
+	clear: none;
+	line-height: 100%;
+}
+.calendar_list #list li p {
+	margin: 10px 0 0 0;
+	padding: 5px 0 0;
+	display: none;
+	font-size: 12px;
+	line-height: 100%;
+}
+.calendar_list #list li p.show {
+	display: block;
+}
 
 /*** HEADERS AND BOXES ***/
 
@@ -1533,7 +1616,7 @@ table td.center, table th.center { text-align: center; }
 .no-rgba .accordion-inverse.ui-accordion .ui-accordion-header { border-top: 1px solid #707070; }
 
 .no-rgba .fc-event { background: #333; }
-.has-info-event a {background: red;}
+
 
 
 /*** MEDIA QUERIES ***/
