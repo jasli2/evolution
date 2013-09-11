@@ -1,0 +1,11 @@
+
+<%= image_tag user_avatar_path(current_user, :small) %>
+<div class='well quest-input'>
+  <%= simple_form_for Comment.new, :url => comments_path, :method => :post do |f| %>
+    <%= f.input :content, :as => :text, :input_html => { :cols => 50, :rows => 3 }, :placeholder => "发表评论...", :label => false %>
+    <%= f.hidden_field :user_id, :value => current_user.id %>
+    <%= f.hidden_field :commentable_type, :value => commentable.class.name.demodulize  %>
+    <%= f.hidden_field :commentable_id, :value => commentable.id %>
+    <%= f.submit "发表评论", :class => "btn, btn-primary" %>
+  <% end %>
+</div>
