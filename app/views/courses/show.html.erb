@@ -93,35 +93,13 @@
     <div class='well course-comments'>
       <h4>课程评论：<%= @course.comments.count %></h4>
       <% if @course.comments.count > 0 %>
-      <ul class='course-comments-list'>
-        <% @course.comments.each do |com| %>
-        <li>
-        <%= image_tag user_avatar_path(com.user, :small) %>
-          <div class='comment-details'>
-            <%= link_to com.user.name, user_path(com.user) %>
-            <span class='pull-right'> 发表于<%= distance_of_time_in_words_to_now(com.created_at) %>前</span>
-            <p><%= com.content %><p>
-          </div>
-        </li>
-        <% end %>
-      </ul>
+        <%= render :partial =>  "comments/show_comments", :locals => {:commentable =>  @course}%>
       <% else %>
       <p>目前还没有评论。</p>
       <% end %>
-
-      <div class='course-comment-form'>
-      <%= image_tag user_avatar_path(current_user, :small) %>
-      <div class='comment-input'>
-      <%= simple_form_for Comment.new, :url => comments_path, :method => :post do |f| %>
-        <%= f.input :content, :as => :text, :input_html => { :cols => 50, :rows => 3 }, :placeholder => "发表评论...", :label => false %>
-        <%= f.hidden_field :user_id, :value => current_user.id %>
-        <%= f.hidden_field :commentable_type, :value => @course.class.name.demodulize  %>
-        <%= f.hidden_field :commentable_id, :value => @course.id %>
-        <%= f.submit "发表评论", :class => "btn, btn-primary" %>
-      <% end %>
-      </div>
-      </div>
-
+    <div class='course-comment-form'>
+      <%= render :partial =>  "comments/new_comment", :locals => {:commentable =>  @course}%>
+    </div>
     </div>
 
   </div>
