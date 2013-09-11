@@ -8,14 +8,7 @@
 <%= content_tag(:li, @topic.title ) %>
 <% end %>
 
-<% content_for :javascript do %>
-<script type="text/javascript">
-function show_view(comment_id) {
-  var dispmode = document.getElementById('light_' + comment_id).style.display
-  document.getElementById('light_' + comment_id).style.display = (dispmode == 'block') ? 'none' : 'block'
-}
-</script>
-<% end %>
+
 
 <div class="row-fluid">
   <div id="dashboard-left" class="span8">
@@ -33,55 +26,18 @@ function show_view(comment_id) {
       <p> <%= @topic.content %> </p>
     </div>
     <% unless current_user.admin? %>
-    <div class="well quest-input">
-      <%= simple_form_for Comment.new do |f| %>
-      <%= f.input :content, :as => :text, :input_html => {:rows => 4, :cols => 25}, :placeholder => "提问者正期待您的回答...", :label => false %>
-      <%= f.hidden_field :commentable_type, :value => @topic.class.name.demodulize %>
-      <%= f.hidden_field :commentable_id, :value => @topic.id %>
-      <%= f.hidden_field :user_id, :value => current_user.id %>
-      <%= f.submit '发表回复', :class => 'btn btn-primary' %>
-      <% end %>
-    </div>
+      <%= render :partial =>  "comments/new_comment", :locals => {:commentable =>  @topic}%>
     <% end %>
     <div class="well quest-answer-list">
     <% if @comments.size == 0 %>
       <div class="nopadding">
         <div class="answer-sammary"> <h4>当前还没有人回复主题 </h4></div>
-      </div> 
+      </div>
     <% else %>
-      
-        <div class="answer-sammary"><h4><%= @comments.size %>条回答</h4></div>
-        <ul>
-          <% @comments.each do | comment | %>
-          <% if (1073741823 == comment.repcomment_id) %>
-            <li> 
-              <div class="awswer-header"><%= link_to comment.user.name, user_path(comment.user.id) %> &#124; <span><i class="iconfa-time"></i> 发布于<%= distance_of_time_in_words_to_now(comment.created_at) %>前</span><span class="pull-right"><%= link_to_function "评论", "show_view('#{comment.id}')" %>&#124;<i class="iconfa-thumbs-up"></i> 0</span></div>
-              <p><%= comment.content %></p>
-              <% unless current_user.admin? %>
-              <div id="light_<%= comment.id.to_s%>" class="well quest-input " style="display:none">
-                <%= simple_form_for Comment.new do |f| %>
-                <%= f.input :content, :as => :text, :input_html => {:rows => 4, :cols => 25}, :placeholder => "提问者正期待您的回答...", :label => false %>
-                <%= f.hidden_field :commentable_type, :value => @topic.class.name.demodulize %>
-                <%= f.hidden_field :commentable_id, :value => @topic.id %>
-                <%= f.hidden_field :user_id, :value => current_user.id %>
-                <%= f.hidden_field :repcomment_id, :value => comment.id %>
-                <%= f.submit '发表回复', :class => 'btn btn-primary' %>
-                <% end %>
-              </div>
-              <% end %>
-            </li>
-          <% end %>
-          <% if comment.replies.size != 0 %>
-            <% comment.replies.each do |reply| %>
-              <li>
-                <div class="awswer-header"><%= link_to reply.user.name, user_path(reply.user.id) %> &#124; <span><i class="iconfa-time"></i> 发布于<%= distance_of_time_in_words_to_now(reply.created_at) %>前</span><span class="pull-right"><i class="iconfa-thumbs-up"></i> 0</span></div>
-                <p><%= link_to reply.user.name, user_path(reply.user.id)%>回复<%= link_to comment.user.name, user_path(reply.user.id) %>：<%= reply.content %></p>
-              </li>
-            <% end %>
-          <% end %>
-          <% end %>
-        </ul>
-    
+      <div class="answer-sammary"><h4><%= @comments.size %>条回答</h4></div>
+      <ul>
+         <%= render :partial =>  "comments/show_comments", :locals => {:commentable => @topic}%>
+      </ul>
     <% end %>
     </div>
 

@@ -7,8 +7,7 @@ class CommentsController < ApplicationController
 
   def create
     @comment = Comment.new(params[:comment])
-    # TODO remove this migic number
-    @comment.repcomment_id = (params[:repcomment_id].nil?) ? 1073741823 : params[:repcomment_id]
+    @comment.repcomment_id = (params[:comment][:repcomment_id].nil?) ? nil : params[:comment][:repcomment_id]
 
     respond_to do |format|
       if @comment.save
