@@ -81,6 +81,9 @@ Evolution::Application.routes.draw do
     match '/manage_position'    => 'admin#position', :via => :get
   end
 
+  #ajax template
+  get '/ajax/:action/:model/:type/:id', :controller => :ajax
+
   root :to => 'sessions#new'
 
   unless Rails.application.config.consider_all_requests_local

@@ -1,0 +1,40 @@
+<%= simple_form_for(@user, :html => {:class => 'form-horizontal', :multipart => true }) do |f| %>
+  <%= f.input :name, :label => '姓名：' %>
+  <%= f.input :email, :label => '电子邮件：', :hint => '' %>
+  <%= f.input :password, :label => '密码：', :hint => '不支持特殊字符，长度必须大于6字符' %>
+  <%= f.input :password_confirmation, :label => '密码重复：' %>
+  <%= f.association :position, :label => '职位：', label_method: :name, value_method: :id, include_blank: false %>
+  <%= f.association :manager, :label => '上级主管：', collection: User.staff, label_method: :name, value_method: :id %>
+  <%= f.input :department, :label => '部门名称：' %>
+  <%= f.input :department_level, :label => '部门级别：' %>
+  <%= f.input :staff_id, :label => '员工号：' %>
+  <%= f.input :self_intro, :label => '个人介绍：', :as => :text, :input_html => { :class => "span5",  :cols => 50, :rows => 8 } %>
+  <%= f.input :joined_at, :label => '入职时间：', as: :date, start_year: Date.today.year - 90,
+                        end_year: Date.today.year - 12,
+                        order: [:year, :month, :day] %>
+  <%= f.input :birthday, :label => '出身年月：', as: :date, start_year: Date.today.year - 90,
+                        end_year: Date.today.year - 12,
+                        order: [:year, :month, :day] %>
+  <div class="control-group file optional">
+    <label class="file optional control-label" for="user_avatar">上传头像：</label>
+    <div class="controls">
+      <div class="fileupload fileupload-new" data-provides="fileupload">
+      <div class="input-append">
+        <div class="uneditable-input span2">
+        <i class="iconfa-file fileupload-exists"></i>
+        <span class="fileupload-preview"></span>
+        </div>
+        <span class="btn btn-file"><span class="fileupload-new"><%= t("course.all.select") %></span>
+        <span class="fileupload-exists"><%= t("course.all.change") %></span>
+        <input class="file optional" id="user_avatar" name="user[avatar]" type="file" /></span>
+        <a href="#" class="btn fileupload-exists" data-dismiss="fileupload"><%= t("course.all.remove") %></a>
+      </div>
+      <p class="help-block">支持格式（png, jpg, gif, bmp），大小不超过1MB，建议分辨率大于200x200</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-actions">
+  <%= f.button :submit, '创建用户', :class => "btn-primary"  %>
+  </div>
+<% end %>
