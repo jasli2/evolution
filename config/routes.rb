@@ -82,7 +82,7 @@ Evolution::Application.routes.draw do
   end
 
   #ajax template
-  get '/ajax/:action/:model/:type/:id', :controller => :ajax
+  get '/ajax/:action/:model/:type(/:id)', :controller => :ajax
 
   root :to => 'sessions#new'
 
