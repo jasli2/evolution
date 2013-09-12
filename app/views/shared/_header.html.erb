@@ -4,6 +4,10 @@
   </div>
   <div class="headerinner">
     <ul class="headmenu">
+      <li><a class="navbar-toggle" data-toggle="dropdown" data-target=".leftpanel"
+        onclick="$('.rightpanel,.header .logo').toggleClass('open');console.log($('.rightpanel,.head .logo').html());">
+        <span class="iconfa-reorder"></span>
+      </a></li>
       <% unless current_user.admin? %>
       <li class="odd <%= 'open' if @menu_category == 'header' and @menu_active == 'course' %>">
         <a href="<%= current_user.admin? ?  admin_manage_course_path : courses_path %>">
