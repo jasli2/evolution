@@ -111,7 +111,7 @@ h1,h2,h3,h4,h5 { font-weight: normal; line-height: normal; }
 .header .logo img {margin: 5px 0;width: 120px;}
 .header .logo img:hover {opacity: 1;}
 
-.headmenu { list-style: none; }
+.headmenu { list-style: none; height: 60px;}
 .headmenu .dropdown-menu { border: 2px solid #0866c6; border-top: 0; margin: 12px 0 0 0; left:auto; right:0;}
 .headmenu .nav-header { text-shadow: none; font-weight: normal; }
 .headmenu .dropdown-menu::after {
@@ -126,7 +126,11 @@ h1,h2,h3,h4,h5 { font-weight: normal; line-height: normal; }
 .headmenu > li > a:hover { text-decoration: none; opacity: 1;}
 .headmenu > li > a {
 	min-width: 40px; position: relative; display: block; color: #fff;
-	padding: 0px; cursor: pointer; margin-top:15px; opacity: 0.8;}
+	padding: 0px; cursor: pointer; margin-top:15px; }
+.headmenu > li > a > i {opacity: 0.8;}
+.headmenu > li > a > i:hover {opacity: 1;}
+.headmenu > li > a.navbar-toggle {display: none;}
+.headmenu > li > a.navbar-toggle > .iconfa-reorder {font-size: 30px;}
 .headmenu > li > a:hover { text-decoration: none; }
 .headmenu > li > a .count { position: absolute; top: 5px; right: 10px; opacity: 0.5; }
 .headmenu > li > a:hover .count, .headmenu > li.open > a .count { opacity: 1; }
@@ -188,6 +192,7 @@ right: -10px;
 /*** LEFT PANEL ***/
 
 .leftpanel { width: 200px; color: #fff; float: left; }
+.leftpanel.open { width: 200px; color: #fff; float: left;height: auto;}
 
 .leftmenu .nav-header {
 	font-weight: normal; font-size: 11px; padding: 5px 20px; text-shadow: none; background: #232323;
@@ -296,7 +301,7 @@ right: -10px;
 .chart .inlinebar {margin: 5px 0 0 0;}
 .chart .competency {width:64px;height:64px;}
 .chart .media-body {float:right;margin: 5px 0 0 0;padding-left: 12px;text-align: right;}
-.chart .media-body small {color: gray;}
+.chart .media-body span {color: gray;}
 .chart .iconfa-comments {font-size: 64px;margin-right:0;}
 .pull-center {text-align: center;}
 
@@ -339,7 +344,6 @@ right: -10px;
 .userlist-favorites li .link a:last-child { background: #86c91d; color: #fff; }
 .userlist-favorites li .link a:first-child { background: #e9c72a; color: #fff; }
 .userlist-favorites li .link a:hover { text-decoration: none; color: #fff; }
-
 
 /** calendar **/
 .has-info-event .ui-state-default{background:#fdc;font-weight:bold;color:red;font-size:14px;}
@@ -394,14 +398,14 @@ right: -10px;
 	border-radius: 3px;
 	border: 1px solid #ccc;
 	color: #F6F6F6;
-	font-size: 14px;
+	font-size: 12px;
 	padding: 2px 5px;
 	float: left;
 	font-weight: bold;
 	line-height: 100%;
 }
 .calendar_list #list li h1 {
-	font-size: 16px;
+	font-size: 14px;
 	margin: 0 0 0 10px;
 	float: left;
 	font-weight: normal;
@@ -1540,8 +1544,10 @@ input[type="search"], input[type="tel"], input[type="color"], .uneditable-input,
 	-moz-border-radius: 50px; -webkit-border-radius: 50px; border-radius: 50px; 
 }
 
-.modal { -moz-border-radius: 0; -webkit-border-radius: 0; border-radius: 0; }
+.modal {width: 60%; margin-left: -30%;}
+.modal .modal-body .form-actions {display: none;}
 .modal-footer .btn { margin: 0; }
+.modal-backdrop, .modal-backdrop.fade.in { opacity: 0.5; filter: alpha(opacity=50); } 
 
 .popover, .popover-title { -moz-border-radius: 0; -webkit-border-radius: 0; border-radius: 0; }
 .popover { padding: 0; }
@@ -1629,15 +1635,17 @@ table td.center, table th.center { text-align: center; }
 /*** MEDIA QUERIES ***/
 
 @media screen and (max-width: 1024px) {
-		  
+		  .headmenu > li > a.navbar-toggle {display: block;}
 		  /* general */
 		  .mainwrapper { overflow: hidden; }
 		  .header .logo { margin-left: -260px; }
+		  .header .logo.open {margin-left: 0;}
 		  .header { width: 100%; }
 		  .headerinner { width: 100%; margin-left: 0; }
 		  .leftpanel { margin-left: -260px; }
 		  .rightpanel { margin-left: 0; width: 100%; }
-		  
+		  .leftpanel.open {margin-left: 0;}
+		  .rightpanel.open {margin-left: 200px;}
 		  .topbar { display: block; background: #272727; height: 50px; }
 		  .barmenu {
 					 font-size: 18px; color: #fff; background: url(../images/barmenu.png) no-repeat center center;
@@ -1646,6 +1654,12 @@ table td.center, table th.center { text-align: center; }
 			/* error page */		 
 		  .errorpage .topbar { display: none; }
 		  
+}
+
+@media screen and (max-width: 979px) {
+	/*.header {margin-bottom: 0;}*/
+	.navbar-fixed-top {margin-bottom: 0;position: fixed;}
+	.leftpanel.open {margin-top: 60px;}
 }
 
 @media screen and (max-width: 800px) {
@@ -1687,7 +1701,8 @@ table td.center, table th.center { text-align: center; }
 		  .mediaWrapper { width: 500px; }
 		  .row-fluid .span5.imginfo { width: auto; float: none; margin-bottom: 20px; }
 		  .row-fluid .span7.imgdetails { width: auto; margin: 0; float: none; }
-
+		  body {padding: 0;}
+		  .navbar-fixed-top {margin: 0;}
 
 		  
 }
@@ -1744,7 +1759,7 @@ table td.center, table th.center { text-align: center; }
 
 @media screen and (max-width: 640px) {
 	  
-		  .headmenu > li > a { padding: 25px 10px 9px; }
+		  /*.headmenu > li > a { padding: 25px 10px 9px; }*/
 		  
 		  /* buttons */
 		  .glyphicons li { width: 50%; }
@@ -1763,9 +1778,9 @@ table td.center, table th.center { text-align: center; }
 
 @media screen and (max-width: 603px) {
 		  
-		  .headmenu > li > a { padding: 25px 15px 9px; }
+		  /*.headmenu > li > a { padding: 25px 15px 9px; }*/
 		  .userloggedinfo .userinfo small { display: none; }
-		  .userloggedinfo { width: 220px; }
+		  /*.userloggedinfo { width: 220px; }*/
 		  .userloggedinfo .userinfo { float: none; margin-left: 100px; }
 		  
 		  /* media */
@@ -1784,9 +1799,9 @@ table td.center, table th.center { text-align: center; }
 
 
 @media screen and (max-width: 480px) {
-		  
+		  /*.leftpanel {margin-top: -13px;}
 		  .headmenu > li > a { padding: 25px 20px 9px; }
-		  .headmenu > li.right { padding-bottom: 13px; }
+		  .headmenu > li.right { padding-bottom: 13px; }*/
 		  .userloggedinfo { width: auto; }
 		  .userloggedinfo img { cursor: pointer; }
 		  .userloggedinfo .userinfo {
@@ -1863,15 +1878,16 @@ table td.center, table th.center { text-align: center; }
 
 @media screen and (max-width: 360px) {
 		  
-		  .header { height: 90px; }
+		  /*.header { height: 90px; }*/
+		  .headmenu {overflow: hidden;}
 		  .headmenu > li { font-size: 12px; }
-		  .headmenu > li > a { padding: 25px 5px 9px; }
+		  /*.headmenu > li > a { padding: 25px 5px 9px; }*/
 		  .headmenu > li > a .head-icon { width: 30px; height: 30px; background-size: cover; }
 		  .leftmenu .nav-tabs.nav-stacked li a { font-size: 13px; }
 		  .leftmenu .nav-tabs.nav-stacked .dropdown ul li a { font-size: 12px; }
-		  .userloggedinfo img { width: 60px; }
+		  /*.userloggedinfo img { width: 60px; }*/
 		  .userloggedinfo .userinfo { top: 90px; }
-		  .header .logo { padding-top: 30px; }
+		  /*.header .logo { padding-top: 30px; }*/
 		  .headmenu .dropdown-menu:after { left: 25px; }
 		  .userloggedinfo .userinfo:after { right: 35px; }
 		  .searchbar input { background-position: 285px 10px; }
@@ -1936,10 +1952,10 @@ table td.center, table th.center { text-align: center; }
 @media screen and (max-width: 320px) {
 		  
 		  body { font-size: 11px; line-height: 18px; }
-		  
+		  /*
 		  .leftpanel { width: 240px; }
-		  .header .logo { width: 240px; }
-		  .headmenu > li > a { padding: 25px 0 9px; }
+		  .header .logo { width: 240px; }/*
+		  /*.headmenu > li > a { padding: 25px 0 9px; }*/
 		  .searchbar input { background-position: 245px 10px; }
 		  .pagetitle h1 { font-size: 24px; }
 		  .pageicon { font-size: 32px; padding: 10px 5px; }
