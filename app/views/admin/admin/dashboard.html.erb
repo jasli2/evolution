@@ -195,6 +195,10 @@ $(function() {
     barSpacing: 1,
     type: 'bar'
   });
+  $("#users_form").on("hidden", function() {
+    console.log("users_form hidden");
+    $(this).removeData('modal');
+  })
 });
 </script>
 <% end %>
@@ -208,7 +212,7 @@ $(function() {
             <div id="competency" class="competency pull-left"></div>    
             <div class="media-body">
               <h3 class="media-heading">43</h3>
-              <small>员工总数</small>
+              <span>员工总数</span>
             </div>
           </div>
         </div>
@@ -218,7 +222,7 @@ $(function() {
             <div class="inlinebar competency pull-left" sparkBarColor="#ef5f3c"><!--1,12,22,11,12,13,14,25,7,4,18,8--></div>
             <div class="media-body">
               <h3 class="media-heading">23 / 527</h3>
-              <small>当月开课/全年开课数</small>
+              <span>当月开课/全年开课数</span>
             </div>
           </div>
         </div>
@@ -228,7 +232,7 @@ $(function() {
             <div class="inlinebar competency pull-left" sparkBarColor="#0099cc"><!--9,12,2,1,22,3,14,5,32,12,11,19--></div>
             <div class="media-body">
               <h3 class="media-heading">57 / 1211</h3>
-              <small>当月参培/全年参培人次</small>
+              <span>当月参培/全年参培人次</span>
             </div>
           </div>
         </div>
@@ -240,7 +244,7 @@ $(function() {
             <div class="chart0 easyPieChart pull-left" data-percent="73">73%</div>
             <div class="media-body">
               <h3 class="media-heading">73%</h3>
-              <small>线上课程比例</small>
+              <span>线上课程比例</span>
             </div>
           </div>
         </div>
@@ -250,7 +254,7 @@ $(function() {
             <div class="chart1 easyPieChart pull-left" data-percent="36">36%</div>
             <div class="media-body">
               <h3 class="media-heading">36%</h3>
-              <small>内部讲师比例</small>
+              <span>内部讲师比例</span>
             </div>
           </div>
         </div>
@@ -261,7 +265,7 @@ $(function() {
             <div class="inlinebar competency pull-left" sparkType="line"><!--9,12,2,1,22,3,14,5,32,12,11,19--></div>
             <div class="media-body">
               <h3 class="media-heading">95</h3>
-              <small>论坛总话题: 95328</small>
+              <span>论坛总话题: 95328</span>
             </div>
           </div>
         </div>
@@ -332,10 +336,12 @@ $(function() {
 
   <div id="dashboard-right" class="span4">
     <div class="row-fluid">
-      <span class="span4 btn btn-primary" data-toggle="modal" data-target="#users_form">
+      <span class="span4 btn btn-primary" data-target="#users_form" data-toggle="modal" 
+          href="/ajax/form/users/new">
         <i class="iconfa-user"></i>&nbsp;创建用户
       </span>
-      <span class="span4 btn btn-primary">
+      <span class="span4 btn btn-primary" data-target="#courses_form" data-toggle="modal" 
+          href="/ajax/form/courses/new">
         <i class="iconfa-book"></i>&nbsp;创建课程
       </span>
       <span class="span4 btn btn-primary">
@@ -414,48 +420,24 @@ $(function() {
   </div>
 </div> <!--row-fluid-->
 <div id="users_form" class="modal hide fade">
-  <h4 class="widgettitle"><%= t("users.all.create")%></h4>
-  <div class="widgetcontent">
-    <div class="divider15"></div>
-    <%= simple_form_for(User.new, :html => {:class => 'form-horizontal', :multipart => true }) do |f| %>
-      <%= f.input :name, :label => '姓名：' %>
-      <%= f.input :email, :label => '电子邮件：', :hint => '' %>
-      <%= f.input :password, :label => '密码：', :hint => '不支持特殊字符，长度必须大于6字符' %>
-      <%= f.input :password_confirmation, :label => '密码重复：' %>
-      <%= f.association :position, :label => '职位：', label_method: :name, value_method: :id, include_blank: false %>
-      <%= f.association :manager, :label => '上级主管：', collection: User.staff, label_method: :name, value_method: :id %>
-      <%= f.input :department, :label => '部门名称：' %>
-      <%= f.input :department_level, :label => '部门级别：' %>
-      <%= f.input :staff_id, :label => '员工号：' %>
-      <%= f.input :self_intro, :label => '个人介绍：', :as => :text, :input_html => { :class => "span5",  :cols => 50, :rows => 8 } %>
-      <%= f.input :joined_at, :label => '入职时间：', as: :date, start_year: Date.today.year - 90,
-                            end_year: Date.today.year - 12,
-                            order: [:year, :month, :day] %>
-      <%= f.input :birthday, :label => '出身年月：', as: :date, start_year: Date.today.year - 90,
-                            end_year: Date.today.year - 12,
-                            order: [:year, :month, :day] %>
-      <div class="control-group file optional">
-        <label class="file optional control-label" for="user_avatar">上传头像：</label>
-        <div class="controls">
-          <div class="fileupload fileupload-new" data-provides="fileupload">
-          <div class="input-append">
-            <div class="uneditable-input span2">
-            <i class="iconfa-file fileupload-exists"></i>
-            <span class="fileupload-preview"></span>
-            </div>
-            <span class="btn btn-file"><span class="fileupload-new"><%= t("course.all.select") %></span>
-            <span class="fileupload-exists"><%= t("course.all.change") %></span>
-            <input class="file optional" id="user_avatar" name="user[avatar]" type="file" /></span>
-            <a href="#" class="btn fileupload-exists" data-dismiss="fileupload"><%= t("course.all.remove") %></a>
-          </div>
-          <p class="help-block">支持格式（png, jpg, gif, bmp），大小不超过1MB，建议分辨率大于200x200</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-actions">
-      <%= f.button :submit, '创建用户', :class => "btn-primary", :id => "user_submit" %>
-      </div>
-    <% end %>
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 class="ModalLabel">创建新用户</h3>
   </div>
+  <div class="modal-body"></div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal">关闭</button>
+    <button class="btn btn-primary" id="newUsers">创建用户</button>
+  </div>  
+</div>
+<div id="courses_form" class="modal hide fade">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 class="ModalLabel">创建新课程</h3>
+  </div>
+  <div class="modal-body"></div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal">关闭</button>
+    <button class="btn btn-primary" id="newcourses">创建课程</button>
+  </div>  
 </div>

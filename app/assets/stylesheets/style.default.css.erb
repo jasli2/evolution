@@ -301,7 +301,7 @@ right: -10px;
 .chart .inlinebar {margin: 5px 0 0 0;}
 .chart .competency {width:64px;height:64px;}
 .chart .media-body {float:right;margin: 5px 0 0 0;padding-left: 12px;text-align: right;}
-.chart .media-body small {color: gray;}
+.chart .media-body span {color: gray;}
 .chart .iconfa-comments {font-size: 64px;margin-right:0;}
 .pull-center {text-align: center;}
 
@@ -1544,8 +1544,10 @@ input[type="search"], input[type="tel"], input[type="color"], .uneditable-input,
 	-moz-border-radius: 50px; -webkit-border-radius: 50px; border-radius: 50px; 
 }
 
-.modal { -moz-border-radius: 0; -webkit-border-radius: 0; border-radius: 0; width: 60%; margin-left: -30%; height: 600px; overflow: scroll;}
+.modal {width: 60%; margin-left: -30%;}
+.modal .modal-body .form-actions {display: none;}
 .modal-footer .btn { margin: 0; }
+.modal-backdrop, .modal-backdrop.fade.in { opacity: 0.5; filter: alpha(opacity=50); } 
 
 .popover, .popover-title { -moz-border-radius: 0; -webkit-border-radius: 0; border-radius: 0; }
 .popover { padding: 0; }
