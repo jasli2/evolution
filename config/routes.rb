@@ -20,6 +20,7 @@ Evolution::Application.routes.draw do
     get 'dashboard', :on => :member
     get 'mgr_assessments', :on => :member
     get 'assessment', :on => :member
+    get 'notifications', :on => :member
     post 'assessment', :action => :update_assessment, :as => :update_assessment, :on => :member
     collection {post :import}
     collection {get :export}

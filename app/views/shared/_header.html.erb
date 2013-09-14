@@ -83,17 +83,24 @@
       </li>
       <li class="right">
       	<a href="#" class="dropdown-toggle button" data-toggle="dropdown">
-      	  <i class="iconfa-envelope"></i><span class="badge badge-important">21</span>
+      	  <i class="iconfa-envelope"></i>
+          <% if current_user.notifications.active.count > 0 %>
+          <span class="badge badge-important"><%= current_user.notifications.active.count %></span>
+          <% end %>
       	</a>
         <ul class="dropdown-menu">
-          <% unless current_user.admin? %>
-          <li><a href="<%= edit_user_path(current_user) %>"><%= t("share.header.edit") %></a></li>
-          <li><a href=""><%= t("share.header.setting") %></a></li>
-          <% else %> 
-          <li><a href=""><%= t("share.header.edit") %></a></li>
-          <li><a href=""><%= t("share.header.setting") %></a></li>
+          <% if current_user.notifications.active.count > 0 %>
+            <li class='nav-header'>未读消息</li>
+            <% current_user.notifications.active.each do |n|  %>
+            <li><a herf="<%= notice_url(n) %>">
+              <%= notice_description(n) %>
+              <small class='muted'> - <%= distance_of_time_in_words_to_now(n.created_at) + t("course.all.ago")%></small>
+            </a><li>
+            <% end %>
+          <% else %>
+          <li class='nav-header'>没有未读消息</li>
           <% end %>
-          <li><%= link_to t("share.header.out"), logout_path %></li>
+          
           <!-- <li><a href="#"><i class="iconfa-music"></i> &nbsp;Music</a></li>
            <li><a href="#"><i class="iconfa-star"></i> &nbsp;Favorites</a></li>
            <li><a href="#"><i class="iconfa-globe"></i> &nbsp;Notification</a></li>

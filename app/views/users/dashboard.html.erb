@@ -22,29 +22,22 @@
 
 <div class="row-fluid">
   <div id="dashboard-left" class="span8">
-    <% if @active_notifications.count > 0 %>
-    <div class="alert alert-info alert-block">
-      <button data-dismiss="alert" class="close" type="button">&times;</button>
-      <h6>最新消息：</h6>
-      <ul class='notificaiton-list'>
-        <% @active_notifications.each do |n| %>
-        <li><%= notice_description(n) %> <%= link_to '点击查看', notice_url(n) %></li>
-        <% end %>
-      </ul>
-    </div><!--notifications-->
-    <div class="divider15"></div>
-    <% end %>
 
     <h4 class="widgettitle"><span class="iconfa-check"></span> 待办事项（<%= current_user.pending_todos.count %>）</h4>
     <% if current_user.pending_todos.count > 0 %>
     <div class="widgetcontent nopadding">
-      <ul class="user-todo-list">
-        <% current_user.pending_todos.each do |todo| %>
-        <li>
-          <%= todo_description(todo) %><span class='todo-action'><%= link_to "点击处理", todo_url(todo), :class => 'btn btn-primary btn-small' %></span>
-        </li>
-        <% end %>
-      </ul>
+      <table class='table responsive todo-table'>
+        <tbody>
+          <% current_user.pending_todos.each do |todo| %>
+          <tr>
+            <td><%= todo_type(todo) %></td>
+            <td><%= todo_description(todo) %></td>
+            <td><%= todo_deadline(todo) %></td>
+            <td class='center'><span class='todo_action'><%= link_to "点击处理", todo_url(todo), :class => 'btn btn-primary btn-small' %></span></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
     </div>
     <% else %>
     <div class="widgetcontent">

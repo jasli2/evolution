@@ -24,42 +24,41 @@ $(function() {
         <li><a href="#tabs-3"><span>未解决问题</span></a></li>
       </ul>
       <div id="tabs-1" class="nopadding">
-                                <ul class="topiclist">
-                                    <% if @topics.size == 0 %>
-                                    <div class="nopadding">
-                                        <p> 目前还没有讨论主题</p>
-                                    </div>
-                                    <% else %>
-                                        <% @topics.each do | topic | %>
-                                         <li>
-                                            <%= image_tag user_avatar_path(topic.user, :normal), :class => "pull-left" %>
-                                            <div class="topic-info">
-                                                <h4><%= link_to topic.title, topic_path(topic) %> </h4>
-                                                <p><%= link_to topic.user.name, user_path(topic.user) %> <%= t("course.all.create")%><%= distance_of_time_in_words_to_now(topic.created_at)  + t("course.all.ago") %></p>
-                                                <p class="topic-content"><%= topic.content %></p>
-                                                <i class="iconfa-tags"></i>
-                                                <span class="label label-info">投诉</span>
-                                                <span class="label label-info">处理</span>
-                                                <p class="pull-right">
-                                                  <i class="iconfa-comments-alt"></i><span> <%= link_to topic.comments.size.to_s + ' 回答', topic_path(topic) %></span>
-                                                  <i class="iconfa-thumbs-up"></i><span> 4 关注</span>
-                                                </p>
-                                            </div>
-                                        <% end %>
-                                         </li> 
-                                    <% end %>  
-                                  <div class="page-wrapper"><%= paginate @topics %></div> 
-                            </div>
-                            <div id="tabs-2" class="nopadding">
-                                <h5 class="tabtitle">No Content</h5>
-                               
-                            </div>
-                            <div id="tabs-3" class="nopadding">
-                                <h5 class="tabtitle">No Content</h5>
-                                
-                            </div>
-                        </div><!--tabbedwidget-->
- 
+        <ul class="topiclist">
+          <% if @topics.size == 0 %>
+          <div class="nopadding">
+            <p> 目前还没有讨论主题</p>
+          </div>
+          <% else %>
+            <% @topics.each do | topic | %>
+             <li>
+                <%= image_tag user_avatar_path(topic.user, :normal), :class => "pull-left" %>
+                <div class="topic-info">
+                  <h4><%= link_to topic.title, topic_path(topic) %> </h4>
+                  <p><%= link_to topic.user.name, user_path(topic.user) %> <%= t("course.all.create")%><%= distance_of_time_in_words_to_now(topic.created_at)  + t("course.all.ago") %></p>
+                  <p class="topic-content"><%= topic.content %></p>
+                  <i class="iconfa-tags"></i>
+                  <span class="label label-info">投诉</span>
+                  <span class="label label-info">处理</span>
+                  <p class="pull-right">
+                    <i class="iconfa-comments-alt"></i><span> <%= link_to topic.comments.size.to_s + ' 回答', topic_path(topic) %></span>
+                    <i class="iconfa-thumbs-up"></i><span> 4 关注</span>
+                  </p>
+                </div>
+             </li> 
+            <% end %>
+          <% end %>  
+          </ul>
+          <div class="page-wrapper"><%= paginate @topics %></div> 
+        </div>
+        <div id="tabs-2" class="nopadding">
+          <h5 class="tabtitle">No Content</h5>
+        </div>
+        <div id="tabs-3" class="nopadding">
+          <h5 class="tabtitle">No Content</h5>
+        </div>
+    </div><!--tabbedwidget-->
+
     <br/>
 
   </div>

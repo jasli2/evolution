@@ -8,6 +8,28 @@ module UsersHelper
     "Lv" + ( 2 + u.teacher_rate.to_i ).to_s
   end
 
+  def todo_type(todo)
+    case todo.source_type
+    when 'TrainingPlan'
+      '培训计划'
+    when 'Examination'
+      '考试'
+    else
+      'unknown todo type!'
+    end
+  end
+
+  def todo_deadline(todo)
+    case todo.source_type
+    when 'TrainingPlan'
+      todo.source.feedback_deadline.to_date
+    when 'Examination'
+      todo.source.deadline.to_date
+    else
+      '无到期日期'
+    end  
+  end
+
   def todo_description(todo)
     if todo.source.nil?
       return "未知错误"
@@ -16,11 +38,11 @@ module UsersHelper
     case todo.source_type
     when 'TrainingPlan'
       if todo.todo_type == 'feedback'
-        "培训计划：" + todo.source.title + " 需要提供培训反馈。" + "  结束日期：#{todo.source.feedback_deadline.to_date}"
+        todo.source.title + " 需要提供培训反馈。"
       end
     when 'Examination'
       if todo.todo_type == 'published'
-        "请及时参加考试：" + todo.source.title + "  结束日期：#{todo.source.deadline.to_date}"
+        "请及时参加考试：" + todo.source.title
       elsif todo.todo_type == 'examination_pending'
         "考试管理：" + todo.source.title + "即将发布"
       end

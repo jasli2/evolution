@@ -30,6 +30,18 @@ class UsersController < ApplicationController
     end
   end
 
+  def notifications
+    @new_notification = current_user.notifications.active
+
+    respond_to do |format|
+      format.json { render json: @new_notification }
+    end
+
+    @new_notification.each do |n|
+      n.update_attributes(:viewed_at => Time.zone.now)
+    end
+  end
+
   def dashboard
     @menu_category = 'user'
     @menu_active = 'home'
