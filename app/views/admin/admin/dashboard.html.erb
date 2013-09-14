@@ -135,17 +135,6 @@ $(function() {
       $("#tooltip").remove();  
       previousPoint = null;  
     }
-    // if (!obj) {
-    //   return;
-    // }    
-    // var percent = parseFloat(obj.series.percent).toFixed(2);
-    // var toolTip = "<div id='tooltip' style='position:absolute;border:solid #aaa 1px;background-color:#F9F9F9;font-weight:bold; color:" + obj.series.color + "'>" + obj.series.label + " (" + percent + "%)</div>";
-    // alert("event: " + $(event).pageX + "," + event.pageY + " obj:" + $(obj).pageX + "," + obj.pageY + " pos:" + $(pos).x + "," + pos.y.toFixed(2) + " color: " + obj.series.color + " label: " + obj.series.label);
-    // $("body").append(toolTip);
-    // $("#tooltip").css({
-    //   "top" :obj.pageY + "px",
-    //   "left" :obj.pageX + "px"
-    // });
   });
   function showTooltip(x, y, color, contents) {  
     $('<div id="tooltip">' + contents + '</div>').css({  
@@ -194,11 +183,7 @@ $(function() {
     barWidth: 5,
     barSpacing: 1,
     type: 'bar'
-  });
-  $("#users_form").on("hidden", function() {
-    console.log("users_form hidden");
-    $(this).removeData('modal');
-  })
+  });    
 });
 </script>
 <% end %>
@@ -336,15 +321,16 @@ $(function() {
 
   <div id="dashboard-right" class="span4">
     <div class="row-fluid">
-      <span class="span4 btn btn-primary" data-target="#users_form" data-toggle="modal" 
-          href="/ajax/form/users/new">
+      <span class="span4 btn btn-primary" modal-label="创建新用户" modal-type="user"
+          data-target="#quick_form" data-toggle="modal" href="/ajax/form/users/new">
         <i class="iconfa-user"></i>&nbsp;创建用户
       </span>
-      <span class="span4 btn btn-primary" data-target="#courses_form" data-toggle="modal" 
-          href="/ajax/form/courses/new">
+      <span class="span4 btn btn-primary" modal-label="创建新课程" modal-type="course" prefix="/users/1"
+          data-target="#quick_form" data-toggle="modal" href="/ajax/form/courses/new">
         <i class="iconfa-book"></i>&nbsp;创建课程
       </span>
-      <span class="span4 btn btn-primary">
+      <span class="span4 btn btn-primary" modal-label="创建新培训计划" modal-type="training_plan"
+          data-target="#quick_form" data-toggle="modal" href="/ajax/form/training_plans/new">
         <i class="iconfa-plane"></i>&nbsp;培训计划
       </span>
     </div>
@@ -359,24 +345,7 @@ $(function() {
         <i class="iconfa-question-sign"></i>&nbsp;还没想好
       </span>
     </div>
-    <!--div class="row-fluid">
-      <span class="span2 btn"></span>
-      <span class="span2 btn"></span>
-      <span class="span2 btn"></span>
-      <span class="span2 btn"></span>
-      <span class="span2 btn"></span>
-      <span class="span2 btn"></span>
-    </div-->
-    <!--div class="alert alert-block">
-      <button data-dismiss="alert" class="close" type="button">&times;</button>
-      <h4>系统提示：</h4>
-      <p style="margin: 8px 0">体验版部分功能不可用，请升级成正式版</p>
-    </div--><!--alert-->
     <div class="divider15"></div>
-
-    <!--div class="divider30"></div>
-    
-    <h4 class="widgettitle"><%= t('dashboard.calender.title') %></h4-->
     <div class="widgetcontent2 nopadding">
       <div id="datepicker"></div>
       <div class="calendar_list">
@@ -419,25 +388,5 @@ $(function() {
     </div>
   </div>
 </div> <!--row-fluid-->
-<div id="users_form" class="modal hide fade">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 class="ModalLabel">创建新用户</h3>
-  </div>
-  <div class="modal-body"></div>
-  <div class="modal-footer">
-    <button class="btn" data-dismiss="modal">关闭</button>
-    <button class="btn btn-primary" id="newUsers">创建用户</button>
-  </div>  
-</div>
-<div id="courses_form" class="modal hide fade">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 class="ModalLabel">创建新课程</h3>
-  </div>
-  <div class="modal-body"></div>
-  <div class="modal-footer">
-    <button class="btn" data-dismiss="modal">关闭</button>
-    <button class="btn btn-primary" id="newcourses">创建课程</button>
-  </div>  
+<div id="quick_form">  
 </div>
