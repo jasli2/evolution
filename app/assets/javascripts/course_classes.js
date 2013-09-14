@@ -4,35 +4,35 @@
 
 
 (function() {
-    $("#newUsers").click (function() {
-        console.log("newUsers click");
+    $("#newCourse").click (function() {
+        console.log("newCourse click");
         $.ajax({
-            url: "/users.json",
+            url: "/courses.json",
             type: "POST",
-            data: $("#new_user").serialize(),
+            data: $("#new_course").serialize(),
             cache: false,
             async: false,
             error: function (request) {
                 console.log("Connection error", request);            
                 for(var i in request.responseJSON) {
-                    if (undefined == $("#user_" + i).next(".help-inline").html()) {
-                        $("#user_" + i).after('<span class="help-inline">' + request.responseJSON[i] + '</span>');
+                    if (undefined == $("#course_" + i).next(".help-inline").html()) {
+                        $("#course_" + i).after('<span class="help-inline">' + request.responseJSON[i] + '</span>');
                     } else {
-                        $("#user_" + i).next(".help-inline").text(request.responseJSON[i]);
+                        $("#course_" + i).next(".help-inline").text(request.responseJSON[i]);
                     }                
-                    $("#user_" + i).parents(".control-group").addClass("error");
+                    $("#course_" + i).parents(".control-group").addClass("error");
                     console.log(i,request.responseJSON[i], 
-                        $("#user_" + i).parents(".control-group").html());
+                        $("#course_" + i).parents(".control-group").html());
                 }
             },
             success: function(data){
-                var beforeEmployeeCount = $("#competency").next(".media-body").children(".media-heading").text();
-                $("#competency").next(".media-body").children(".media-heading").text(++ beforeEmployeeCount);
+                // var beforeEmployeeCount = $("#competency").next(".media-body").children(".media-heading").text();
+                // $("#competency").next(".media-body").children(".media-heading").text(++ beforeEmployeeCount);
                 console.log(beforeEmployeeCount, data);
                 var a = '<div class="alert fade in alert-info"><button class="close" data-dismiss="alert">×</button>成功创建用户 <strong>' +
                     data.name + '</strong></div>';
                 $(".breadcrumbs").after(a);
-                $("#users_form").modal("hide");
+                $("#courses_form").modal("hide");
             },
             beforeSend: function(){
                 var control_groups = $(".control-group");

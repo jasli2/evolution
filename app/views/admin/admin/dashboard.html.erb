@@ -198,7 +198,11 @@ $(function() {
   $("#users_form").on("hidden", function() {
     console.log("users_form hidden");
     $(this).removeData('modal');
-  })
+  });
+  $("#courses_form").on("hidden", function() {
+    console.log("courses_form hidden");
+    $(this).removeData('modal');
+  });
 });
 </script>
 <% end %>
@@ -438,6 +442,6 @@ $(function() {
   <div class="modal-body"></div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal">关闭</button>
-    <button class="btn btn-primary" id="newcourses">创建课程</button>
+    <button class="btn btn-primary" id="newCourse">创建课程</button>
   </div>  
 </div>
