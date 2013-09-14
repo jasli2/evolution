@@ -6,12 +6,6 @@ class Admin::AdminController < ApplicationController
     @menu_active = 'dashboard'
     @users = User.staff.last(4).reverse
     @users_count = User.staff.size
-    @competencies = Competency.last(4).reverse
-    @competencies_count = Competency.all.size
-    @courses = Course.last(4).reverse
-    @courses_count = Course.all.size
-    @positions = Position.last(4).reverse
-    @positions_count = Position.all.size
     @active_notifications = current_user.notifications.active
     @tps = current_user.created_training_plans.order("id DESC").active
 

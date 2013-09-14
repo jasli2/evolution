@@ -15,7 +15,7 @@ class TrainingPlansController < ApplicationController
     @menu_category = 'admin'
     @menu_active = 'plan'
 
-    @tp = TrainingPlan.new
+    @training_plan = TrainingPlan.new
     session[:return_to] = request.referer
 
     respond_to do |format|
@@ -27,10 +27,10 @@ class TrainingPlansController < ApplicationController
     @menu_category = 'admin'
     @menu_active = 'plan'
 
-    @tp = TrainingPlan.find(params[:id])
+    @training_plan = TrainingPlan.find(params[:id])
 
     respond_to do |format|
-      format.html { render @tp.state }
+      format.html { render @training_plan.state }
     end
   end
 
@@ -38,7 +38,7 @@ class TrainingPlansController < ApplicationController
     @menu_category = 'admin'
     @menu_active = 'plan'
 
-    @tp = TrainingPlan.find(params[:id])
+    @training_plan = TrainingPlan.find(params[:id])
     session[:return_to] = request.referer
 
     respond_to do |format|
@@ -52,8 +52,10 @@ class TrainingPlansController < ApplicationController
     respond_to do |format|
       if @tp.save
         format.html { redirect_to session.delete(:return_to), :notice => "培训计划：#{@tp.title}，已经创建成功！" }
+        format.json { render json: @tp, status: :created, location: @tp }
       else
         format.html { render 'new' }
+        format.json { render json: @tp.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -64,8 +66,10 @@ class TrainingPlansController < ApplicationController
     respond_to do |format|
       if @tp.update_attributes(params[:training_plan])
         format.html { redirect_to session.delete(:return_to), :notice => "培训计划：#{@tp.title}，更新成功！" }
+        format.json { render json: @tp, status: :updated, location: @tp }
       else
-        format.html { render 'edit' }
+        format.html { render action: "edit" }
+        format.json { render json: @tp.errors, status: :unprocessable_entity }
       end
     end
   end
