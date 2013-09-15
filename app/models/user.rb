@@ -158,8 +158,8 @@ class User < ActiveRecord::Base
     active_training_plans.each do |tp| 
       count += tp.course_for_user(self).count
     end
-
-    count += teach_classes.count
+    
+    count
   end
 
   def latest_comments

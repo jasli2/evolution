@@ -9,7 +9,9 @@
 
 <% content_for :javascript do %>
 <script type="text/javascript">
-$(function() {
+$(function() {  
+  $('.tabbedwidget').tabs();
+
   function hasEvent(day) {
     for(var i in canlenderEvent)
       if (canlenderEvent[i].day === day) {
@@ -152,7 +154,6 @@ $(function() {
       'opacity': 0.6  
     }).appendTo("body").fadeIn(200);  
   }
-  $('.tabbedwidget').tabs();
   $('.chart0').easyPieChart({
     size: 64,
     lineCap: 'square',
@@ -279,34 +280,42 @@ $(function() {
     <% end %>
     <div class="divider15"></div>
 
+    <% unless @tps.count %>
     <h4 class="widgettitle"><span class="iconfa-check"></span> 项目进度跟踪（<%= @tps.count %>）</h4>
-    <% if @tps.count > 0 %>
-    <div class="widgetcontent nopadding">
-      <ul class="tp-list">
-      <% @tps.each do |tp| %>
-      <li>
-        <% if tp.state == 'pending_publish' %>
-        <a href="<%= publish_training_plan_path(tp) %>" class="btn btn-warning btn-small pull-right">发布计划</a>
-        <% end %>
-        <div class='tp-header'>
-        [培训计划] <%= link_to tp.title, training_plan_path(tp) %>
-        <span class="deadline"> 反馈截止日期：<%= tp.feedback_deadline %></span>
-        </div>
-        <span>
-          <span class="label label-info" ><%= training_plan_state(tp) %></span> &middot;
-          计划参培人员（<%= tp.users.count %>） &middot;
-          培训课程（<%= tp.required_courses.count + tp.optional_courses.count %>）
-          <% if tp.state == 'pending_feedback' %>
-           &middot; 反馈进度（<%= tp.feedbacks.count.to_s + '/' + tp.users.count.to_s %>）
-          <% end %>
-        </span>
-      </li>
-      <% end %>
-      </ul>
-    </div>
-    <% else %>
     <div class="widgetcontent">
-      目前没有跟踪进度的培训计划。
+      目前没有跟踪的项目
+    </div>  
+    <% end %>
+
+    <% if @tps.count %>
+    <div class='tabbedwidget tab-primary'>
+      <ul>
+        <li><a href='#tab-tps'>培训计划（<%= @tps.count %>）</a></li>
+      </ul>
+
+      <div class='nopadding' id='tab-tps'>
+        <ul class="tp-list">
+        <% @tps.each do |tp| %>
+        <li>
+          <% if tp.state == 'pending_publish' %>
+          <a href="<%= publish_training_plan_path(tp) %>" class="btn btn-warning btn-small pull-right">发布计划</a>
+          <% end %>
+          <div class='tp-header'>
+          [培训计划] <%= link_to tp.title, training_plan_path(tp) %>
+          <span class="deadline"> 反馈截止日期：<%= tp.feedback_deadline %></span>
+          </div>
+          <span>
+            <span class="label label-info" ><%= training_plan_state(tp) %></span> &middot;
+            计划参培人员（<%= tp.users.count %>） &middot;
+            培训课程（<%= tp.required_courses.count + tp.optional_courses.count %>）
+            <% if tp.state == 'pending_feedback' %>
+             &middot; 反馈进度（<%= tp.feedbacks.count.to_s + '/' + tp.users.count.to_s %>）
+            <% end %>
+          </span>
+        </li>
+        <% end %>
+        </ul>
+      </div>
     </div>
     <% end %>
 
