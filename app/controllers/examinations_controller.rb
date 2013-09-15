@@ -44,13 +44,13 @@ class ExaminationsController < ApplicationController
   def new
     @menu_category = 'admin'
     @menu_active = 'exam'
-    @exam = Examination.new
+    @examination = Examination.new
     @course_class = CourseClass.find(params[:course_class_id]) if params[:course_class_id]
     session[:return_to] = request.referer
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @exam }
+      format.json { render json: @examination }
     end
   end
 
@@ -60,8 +60,10 @@ class ExaminationsController < ApplicationController
     respond_to do |format|
       if @exam.save!
         format.html { redirect_to session.delete(:return_to), notice: '创建考试成功！'}
+        format.json { render json: @exam, status: :created, location: @exam }
       else
         format.html { render 'new' }
+        format.json { render json: @exam.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -69,12 +71,12 @@ class ExaminationsController < ApplicationController
   def edit
     @menu_category = 'admin'
     @menu_active = 'exam'
-    @exam = Examination.find(params[:id])
+    @examination = Examination.find(params[:id])
     session[:return_to] = request.referer
 
     respond_to do |format|
       format.html 
-      format.json { render json: @exam }
+      format.json { render json: @examination }
     end
   end
 
@@ -84,8 +86,10 @@ class ExaminationsController < ApplicationController
     respond_to do |format|
       if @exam.update_attributes(params[:examination])
         format.html { redirect_to session.delete(:return_to), notice: '更新考试信息成功！'}
+        format.json { render json: @exam, status: :updated, location: @exam }
       else
         format.html { render 'edit' }
+        format.json { render json: @exam.errors, status: :unprocessable_entity }
       end
     end
   end

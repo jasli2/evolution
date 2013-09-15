@@ -17,27 +17,7 @@
     <h4 class="widgettitle">修改考试信息</h4>
     <div class="widgetcontent">
       <div class="divider15"></div>
-      <%= simple_form_for(@exam, :html => {:class => 'form-horizontal'}) do |f| %>
-        <%= f.input :title, :label => "考试标题：", :input_html => { :class => "span5" } %>
-        <%= f.input :published_at, :label => "考试日期:", :as => :date,
-        :start_year => Date.today.year,
-        :end_year => Date.today.year + 10,
-        :order => [:year, :month, :day]
-        %>
-        <%= f.input :deadline, :label => "截止日期:", :as => :date,
-        :start_year => Date.today.year,
-        :end_year => Date.today.year + 10,
-        :order => [:year, :month, :day]
-        %>
-        <% if @exam.course_class %>
-        <%= f.association :users, :collection => @exam.course_class.students, :label => "参考人员:" %>
-        <% else %>
-        <%= f.association :users, :collection => User.staff, :label => "参考人员:" %>
-        <% end %>
-        <div class="form-actions">
-        <%= f.button :submit, '更新考试信息', :class => "btn-primary"  %>
-        </div>
-      <% end %>
+      <%= render :partial => 'form' %>
     </div>
   </div>
   <div id="dashboard-right" class="span4">
