@@ -58,7 +58,7 @@ class ExaminationsController < ApplicationController
     @exam = Examination.new(params[:examination])
 
     respond_to do |format|
-      if @exam.save!
+      if @exam.save
         format.html { redirect_to session.delete(:return_to), notice: '创建考试成功！'}
         format.json { render json: @exam, status: :created, location: @exam }
       else
