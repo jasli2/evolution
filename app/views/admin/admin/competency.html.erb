@@ -46,28 +46,28 @@ $(function() {
               <li><a href="#tabs-3"><%= level_name 3 %></a></li>
               <li><a href="#tabs-4"><%= level_name 4 %></a></li>
             </ul>
-          <% c.competency_levels.each_with_index do |cl, i| %>
-          <div class="competency-level-details" id="<%= 'tabs-' + (i+1).to_s %>">
-            <%= content_tag(:h6, "级别描述：" + cl.description) %>
-            <ul id="cl-requirements">
-            <% cl.competency_level_requirements.each do |clr| %>
-            <%= content_tag(:li, clr.description) %>
-            <% end %>
-            </ul>
-            <div class="divider15"></div>
-            <%= content_tag(:h6, "相关课程（" + cl.courses.size.to_s + "）：") %>
-            <ul id="cl-courses">
-              <% cl.courses.each do |course| %>
-              <li>
-                <div class="cl-course-banner">
-                  <%= link_to image_tag(course_cover_path(course, :small)), course_path(course), {:title => "#{course.title}"} %>
-                  <%= link_to course.title, course_path(course) %>
-                </div>
-              </li>
+            <% c.competency_levels.each_with_index do |cl, i| %>
+            <div class="competency-level-details" id="<%= 'tabs-' + (i+1).to_s %>">
+              <%= content_tag(:h6, "级别描述：" + cl.description) %>
+              <ul id="cl-requirements">
+              <% cl.competency_level_requirements.each do |clr| %>
+              <%= content_tag(:li, clr.description) %>
               <% end %>
-            </ul>
-          </div>
-          <% end %>
+              </ul>
+              <div class="divider15"></div>
+              <%= content_tag(:h6, "相关课程（" + cl.courses.size.to_s + "）：") %>
+              <ul id="cl-courses">
+                <% cl.courses.each do |course| %>
+                <li>
+                  <div class="cl-course-banner">
+                    <%= link_to image_tag(course_cover_path(course, :small)), course_path(course), {:title => "#{course.title}"} %>
+                    <%= link_to course.title, course_path(course) %>
+                  </div>
+                </li>
+                <% end %>
+              </ul>
+            </div>
+            <% end %>
           </div>
         </div>
         <% end %>

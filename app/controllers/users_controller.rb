@@ -30,6 +30,18 @@ class UsersController < ApplicationController
     end
   end
 
+  def notifications
+    @new_notification = current_user.notifications.active
+
+    respond_to do |format|
+      format.json { render json: @new_notification }
+    end
+
+    @new_notification.each do |n|
+      n.update_attributes(:viewed_at => Time.zone.now)
+    end
+  end
+
   def dashboard
     @menu_category = 'user'
     @menu_active = 'home'
@@ -124,7 +136,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.update_attributes(params[:user])
         format.html { redirect_to session.delete(:return_to), notice:t("users.all.notice4") }
-        format.json { head :no_content }
+        format.json { render json: @user, status: :updated, location: @user }
       else
         format.html { render action: "edit" }
         format.json { render json: @user.errors, status: :unprocessable_entity }

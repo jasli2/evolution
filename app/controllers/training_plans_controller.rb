@@ -27,10 +27,10 @@ class TrainingPlansController < ApplicationController
     @menu_category = 'admin'
     @menu_active = 'plan'
 
-    @training_plan = TrainingPlan.find(params[:id])
+    @tp = TrainingPlan.find(params[:id])
 
     respond_to do |format|
-      format.html { render @training_plan.state }
+      format.html { render @tp.state }
     end
   end
 
