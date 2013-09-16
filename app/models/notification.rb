@@ -14,6 +14,8 @@
 #
 
 class Notification < ActiveRecord::Base
+  include Rails.application.routes.url_helpers
+
   attr_accessible :notification_type, :source_id, :source_type, :viewed_at, :user_id
 
   validates :user_id, :presence => true

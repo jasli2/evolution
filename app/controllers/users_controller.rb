@@ -1,5 +1,7 @@
 # encoding: utf-8
 class UsersController < ApplicationController
+  include ActionView::Helpers::DateHelper
+
   before_filter :need_admin!, :only => [:new, :create]
 
   # for demo assessment process TODO: revisit it
@@ -34,7 +36,7 @@ class UsersController < ApplicationController
     @new_notification = current_user.notifications.active
     @n_json = []
     @new_notification.each do |n|
-      @n_json.push({:id => n.id, :description => n._description, :url => n._url, :created_at => n.created_at})
+      @n_json.push({:id => n.id, :description => n._description, :url => n._url, :created_at => distance_of_time_in_words_to_now(n.created_at) + t("course.all.ago")})
     end
 
     respond_to do |format|
