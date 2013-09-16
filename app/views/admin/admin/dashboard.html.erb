@@ -255,6 +255,7 @@ $(function() {
           </div>
         </div>
     </div>
+    <div class="divider15"></div>                    
     <% if @active_notifications.count > 0 %>
     <div class="alert alert-info alert-block">
       <button data-dismiss="alert" class="close" type="button">&times;</button>
@@ -325,7 +326,7 @@ $(function() {
           data-target="#quick_form" data-toggle="modal" href="/ajax/form/users/new">
         <i class="iconfa-user"></i>&nbsp;创建用户
       </span>
-      <span class="span4 btn btn-primary" modal-label="创建新课程" modal-type="course" prefix="/users/1"
+      <span class="span4 btn btn-primary" modal-label="创建新课程" modal-type="course" prefix="/users/<%=current_user.id %>"
           data-target="#quick_form" data-toggle="modal" href="/ajax/form/courses/new">
         <i class="iconfa-book"></i>&nbsp;创建课程
       </span>
