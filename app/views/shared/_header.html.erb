@@ -82,7 +82,7 @@
             </ul>
          </div>
       </li>
-      <li class="right">
+      <li class="right notification">
       	<a href="#" class="dropdown-toggle button" data-toggle="dropdown">
       	  <i class="iconfa-envelope"></i>
           <% if current_user.notifications.active.count > 0 %>
@@ -93,10 +93,10 @@
           <% if current_user.notifications.active.count > 0 %>
             <li class='nav-header'>未读消息</li>
             <% current_user.notifications.active.each do |n|  %>
-            <li><a herf="<%= n._url %>">
+            <li id="<%= n.id %>"><a href="<%= n._url %>">
               <%= n._description %>
               <small class='muted'> - <%= distance_of_time_in_words_to_now(n.created_at) + t("course.all.ago")%></small>
-            </a><li>
+            </a></li>
             <% end %>
           <% else %>
           <li class='nav-header'>无未读消息</li>
