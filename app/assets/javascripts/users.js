@@ -28,14 +28,16 @@
     }, 60 * 1000);
     $(".notification li[id]").click(function() {
 		var nid = $(this).attr("id");
+		var href = $(this).children("a").attr("href");
 		console.log(nid);
 		// $.post("/users/" + uid + "/notifications.json", { 'notifications[]': [nid] }, function() {});
 		$.ajax({ url: "/users/" + uid + "/notifications.json", 
 			data: { 'notifications[]': [nid] }, 
 			async: false,
-			type: "PUT",
+			type: "POST",
 			success: function(){
-				location.href = $(this).children("a").attr("href");
+				// location.href = $(this).children("a").attr("href");
+				location.href = href;
 			}
 		});
 		return false;
