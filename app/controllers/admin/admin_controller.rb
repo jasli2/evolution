@@ -13,9 +13,9 @@ class Admin::AdminController < ApplicationController
       format.html
     end
 
-    @active_notifications.each do |n|
-      n.update_attributes(:viewed_at => Time.zone.now)
-    end
+    #@active_notifications.each do |n|
+    #  n.update_attributes(:viewed_at => Time.zone.now)
+    #end
   end
 
   def user
