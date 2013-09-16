@@ -32,13 +32,36 @@ class UsersController < ApplicationController
 
   def notifications
     @new_notification = current_user.notifications.active
-
-    respond_to do |format|
-      format.json { render json: @new_notification }
+    @n_json = []
+    @new_notification.each do |n|
+      @n_json.push({:id => n.id, :description => n._description, :url => n_url, :created_at => n.created_at})
     end
 
-    @new_notification.each do |n|
-      n.update_attributes(:viewed_at => Time.zone.now)
+    respond_to do |format|
+      format.json { render json: @n_json }
+    end
+
+    #@new_notification.each do |n|
+    #  n.update_attributes(:viewed_at => Time.zone.now)
+    #end
+  end
+
+  # PUT 
+  def update_notifications
+    notifications = params[:notifications]
+    if notifications && notifications.class == 'Array'
+      notifications.each do |nid|
+        n = current_user.notifications.find(nid)
+        n.update_attributes(:viewed_at => Time.zone.now) if n
+      end
+
+      respond_to do |format|
+        format.json { render json: {:status => "OK"} }
+      end
+    else
+      respond_to do |format|
+        format.json { render json: {:status => "Invalid parameters."}, :status => :unprocessable_entity }
+      end
     end
   end
 
@@ -53,9 +76,9 @@ class UsersController < ApplicationController
       format.html
     end
     
-    @active_notifications.each do |n|
-      n.update_attributes(:viewed_at => Time.zone.now)
-    end
+    #@active_notifications.each do |n|
+    #  n.update_attributes(:viewed_at => Time.zone.now)
+    #end
   end
 
   # GET /users
