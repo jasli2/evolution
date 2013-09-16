@@ -93,7 +93,7 @@
             <li class='nav-header'>未读消息</li>
             <% current_user.notifications.active.each do |n|  %>
             <li><a herf="<%= n._url %>">
-              <%= n._description(n) %>
+              <%= n._description %>
               <small class='muted'> - <%= distance_of_time_in_words_to_now(n.created_at) + t("course.all.ago")%></small>
             </a><li>
             <% end %>
