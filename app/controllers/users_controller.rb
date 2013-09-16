@@ -51,7 +51,7 @@ class UsersController < ApplicationController
   # PUT 
   def update_notifications
     notifications = params[:notifications]
-    if notifications && notifications.class == 'Array'
+    if notifications && notifications.class == Array
       notifications.each do |nid|
         n = current_user.notifications.find(nid)
         n.update_attributes(:viewed_at => Time.zone.now) if n
