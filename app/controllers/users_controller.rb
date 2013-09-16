@@ -34,7 +34,7 @@ class UsersController < ApplicationController
     @new_notification = current_user.notifications.active
     @n_json = []
     @new_notification.each do |n|
-      @n_json.push({:id => n.id, :description => n._description, :url => n_url, :created_at => n.created_at})
+      @n_json.push({:id => n.id, :description => n._description, :url => n._url, :created_at => n.created_at})
     end
 
     respond_to do |format|
