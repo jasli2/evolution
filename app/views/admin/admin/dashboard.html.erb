@@ -322,7 +322,37 @@ $(function() {
 
   <div id="dashboard-right" class="span4">
     <div class="row-fluid">
-      <span class="span4 btn btn-primary" modal-label="创建新用户" modal-type="user"
+      <ul class="shortcuts2">
+          <li class="events">
+              <a title="创建新用户" modal-type="user" data-toggle="modal" 
+                      data-target="#quick_form" href="/ajax/form/users/new">
+                  <span class="shortcuts-icon iconfa-user"></span>
+                  <span class="shortcuts-label">创建用户</span>
+              </a>
+          </li>
+          <li class="products">
+              <a title="创建新课程" modal-type="course" prefix="/users/<%=current_user.id %>"
+                      data-target="#quick_form" data-toggle="modal" href="/ajax/form/courses/new">
+                  <span class="shortcuts-icon iconfa-book"></span>
+                  <span class="shortcuts-label">创建课程</span>
+              </a>
+          </li>
+          <li class="archive">
+              <a title="创建新培训计划" modal-type="training_plan" data-target="#quick_form" 
+                      data-toggle="modal" href="/ajax/form/training_plans/new">
+                  <span class="shortcuts-icon iconfa-plane"></span>
+                  <span class="shortcuts-label">创建培训计划</span>
+              </a>
+          </li>
+          <li class="help">
+              <a title="创建新考试" modal-type="examination" data-target="#quick_form" 
+                      data-toggle="modal" href="/ajax/form/examinations/new">
+                  <span class="shortcuts-icon iconfa-pencil"></span>
+                  <span class="shortcuts-label">创建考试</span>
+              </a>
+          </li>
+      </ul>
+      <!--span class="span4 btn btn-primary" modal-label="创建新用户" modal-type="user"
           data-target="#quick_form" data-toggle="modal" href="/ajax/form/users/new">
         <i class="iconfa-user"></i>&nbsp;创建用户
       </span>
@@ -345,7 +375,7 @@ $(function() {
       </span>
       <span class="span4 btn btn-primary">
         <i class="iconfa-question-sign"></i>&nbsp;还没想好
-      </span>
+      </span-->
     </div>
     <div class="divider15"></div>
     <div class="widgetcontent2 nopadding">
