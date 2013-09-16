@@ -68,14 +68,7 @@ $(function() {
     beforeShowDay: function(date){  
       var currDateClass = '';
       var bindDate = $.datepicker.formatDate('yy-mm-dd', date);
-      console.log('beforeShowDay',bindDate);
-      // for (var i in canlenderEvent) {
-      //   console.log(canlenderEvent[i].day);
-      //   if (canlenderEvent[i].day === bindDate) {
-      //     currDateClass += 'has-info-event ';
-      //     break;
-      //   }
-      // }
+      // console.log('beforeShowDay',bindDate);
       if(hasEvent(bindDate)[0]) {
         currDateClass += 'has-info-event';
       }
