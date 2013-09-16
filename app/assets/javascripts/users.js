@@ -15,15 +15,20 @@
     			menu += '<li class="nav-header">未读消息</li>';
     			for(var i in data) {
     				menu += '<li id="' + data[i].id + '"><a href="' + data[i].url + '">' + data[i].description + '<small class="muted"> - ' + data[i].created_at + '</small></a></li>';
+    			}    			
+    			if (undefined == $(".notification span.badge").html()) {
+    				$(".notification i.iconfa-envelope").after('<span class="badge badge-important">' + data.length + '</span>');
+    			} else {
+    				$(".notification span.badge").text(data.length);
     			}
     		} else {
     			menu += '<li class="nav-header">无未读消息</li>';
+    			$(".notification span.badge").remove();
     		}
     		menu += "</ul>"
     		// console.log(menu);
     		// console.log($(".headmenu .notification").children("ul.dropdown-menu"));
     		$(".notification ul.dropdown-menu").replaceWith(menu);
-    		$(".notification span.badge").text(data.length);
     	});
     }, 60 * 1000);
     $(".notification li[id]").click(function() {
