@@ -3,9 +3,9 @@
         console.log("quick_form hidden");
         $(this).removeData('modal');
     });    
-    $("span[data-toggle='modal']").click(function(e) {
+    $("a[data-toggle='modal']").click(function(e) {
         var prefix = $(this).attr("prefix");
-        var title = $(this).attr("modal-label");
+        var title = $(this).attr("title");
         var type = $(this).attr("modal-type");
         console.log("quick button click: prefix:" + prefix, e);
         var modalForm = '<div id="quick_form" class="modal hide fade">' + 
