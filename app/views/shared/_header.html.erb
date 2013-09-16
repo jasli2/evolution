@@ -2,7 +2,7 @@
   <div class="logo">
     <!--<%= link_to image_tag('logo.png'), current_user.admin? ? admin_dashboard_path : dashboard_user_path(current_user) %>-->
     <a href="<%= current_user.admin? ? admin_dashboard_path : dashboard_user_path(current_user)%>">
-      <span>Evolve</span>
+      <span>Logo</span>
     </a>
   </div>
   <div class="headerinner">
@@ -61,6 +61,7 @@
 <!--          </div> -->
 <!--        </div> -->
         <div class="userloggedinfo btn-group">
+            <input type="hidden" value="<%= current_user.id %>" />
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <%= image_tag user_avatar_path(current_user, :normal) %>
             <!--<i class="iconfa-th"></i> &nbsp; <%= current_user.name %><small> - <%= current_user.email %></small--><span class="caret"></span></a>
@@ -81,7 +82,7 @@
             </ul>
          </div>
       </li>
-      <li class="right">
+      <li class="right notification">
       	<a href="#" class="dropdown-toggle button" data-toggle="dropdown">
       	  <i class="iconfa-envelope"></i>
           <% if current_user.notifications.active.count > 0 %>
@@ -92,10 +93,10 @@
           <% if current_user.notifications.active.count > 0 %>
             <li class='nav-header'>未读消息</li>
             <% current_user.notifications.active.each do |n|  %>
-            <li><a herf="<%= n._url %>">
+            <li id="<%= n.id %>"><a href="<%= n._url %>">
               <%= n._description %>
               <small class='muted'> - <%= distance_of_time_in_words_to_now(n.created_at) + t("course.all.ago")%></small>
-            </a><li>
+            </a></li>
             <% end %>
           <% else %>
           <li class='nav-header'>无未读消息</li>

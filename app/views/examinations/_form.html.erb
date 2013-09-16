@@ -1,5 +1,5 @@
 <%= simple_form_for(@examination, :html => {:class => 'form-horizontal', :multipart => true}) do |f| %>
-  <%= f.input :title, :label => "考试标题:", :input_html => { :class => "span5" } %>
+  <%= f.input :title, :label => "考试标题:" %>
   <%= f.input :published_at, :label => "考试日期:", :as => :date,
   :start_year => Date.today.year,
   :end_year => Date.today.year + 10,
