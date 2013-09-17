@@ -40,7 +40,9 @@
           <% @users.each do |u| %>
           <tr>
             <td class="center">
-              <%= link_to "编辑", edit_user_path(u), {:class => "btn btn-primary"} %>
+              <%= link_to "编辑", "/ajax/form/users/edit/" + u.id.to_s(),
+                {:class => "btn btn-primary", :title => "修改用户资料", "data-id" => u.id,
+                "modal-type-edit" => "user", "data-toggle" => "modal",  "data-target" => "#quick_form"} %>
             </td>
             <td class="center"><%= link_to u.name, user_path(u) %></td>
             <td class="center"><%= u.staff_id %></td>
