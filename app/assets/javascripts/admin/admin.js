@@ -3,11 +3,7 @@
         console.log("quick_form hidden");
         $(this).removeData('modal');
     });    
-    $("a[modal-type]").click(function(e) {
-        var prefix = $(this).attr("prefix");
-        var title = $(this).attr("title");
-        var type = $(this).attr("modal-type");
-        console.log("quick button click: prefix:" + prefix, e);
+    var generatForm = function(title, type, label) {
         var modalForm = '<div id="quick_form" class="modal hide fade">' + 
         '<div class="modal-header">' +
         '    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>' +
@@ -16,10 +12,32 @@
         '  <div class="modal-body"></div>' +
         '  <div class="modal-footer">' +
         '    <button class="btn" data-dismiss="modal">关闭</button>' +
-        '    <button class="btn btn-primary" form-type="' + type + '">' + $(this).text() + '</button>' +
+        '    <button class="btn btn-primary" form-type="' + type + '">' + label + '</button>' +
         '  </div>' + 
         '</div>';
-        $("#quick_form").replaceWith(modalForm);  
+        return modalForm;
+    };
+    var generatAlert = function(title) {
+        var alertInfo = '<div class="alert fade in alert-info"><button class="close" data-dismiss="alert">×</button>成功' + 
+            title + ' &nbsp;<strong>' + '' + '</strong></div>';
+        return alertInfo;
+    };
+    var beforeSendFunc = function() {
+        var control_groups = $(".control-group");
+        console.log("beforeSend ", control_groups);            
+        for(var i = 0; i < control_groups.length; i ++) {
+            $(control_groups[i]).removeClass("error");
+            $(control_groups[i]).find(".help-inline").text("");
+        }
+    };
+    $("a[modal-type]").click(function(e) {
+        var prefix = $(this).attr("prefix");
+        var title = $(this).attr("title");
+        var type = $(this).attr("modal-type");
+        var label = $(this).text();
+        console.log("quick button click: prefix:" + prefix, e);
+        
+        $("#quick_form").replaceWith(generatForm(title, type, label));  
         $("button[form-type]").click(function(e) {            
             prefix = undefined === prefix ? "" : prefix;
             console.log("form submit button clicked! " + prefix, e);
@@ -50,24 +68,14 @@
                         console.log(beforeEmployeeCount, data);
                     };
                     $("#quick_form").modal("hide");
-                    var a = '<div class="alert fade in alert-info"><button class="close" data-dismiss="alert">×</button>成功' + 
-                            title + ' &nbsp;<strong>' + '' + '</strong></div>';
                     setTimeout(function() {
-                        $(".breadcrumbs").after(a);
+                        $(".breadcrumbs").after(generatAlert(title));
                     }, 100);
-                    // setTimeout($(".alert")alert('close'), 5000);
                     setTimeout(function() {
                         $(".alert").alert('close');
                     }, 5000);                
                 },
-                beforeSend: function(){
-                    var control_groups = $(".control-group");
-                    console.log("beforeSend ", control_groups);            
-                    for(var i = 0; i < control_groups.length; i ++) {
-                        $(control_groups[i]).removeClass("error");
-                        $(control_groups[i]).find(".help-inline").text("");
-                    }
-                }
+                beforeSend: beforeSendFunc
             });
         });
     });
@@ -75,20 +83,10 @@
         var prefix = $(this).attr("prefix");
         var title = $(this).attr("title");
         var type = $(this).attr("modal-type-edit");
+        var label = $(this).text();
         var id = $(this).attr("data-id");
         console.log("quick button click: prefix:" + prefix, e);
-        var modalForm = '<div id="quick_form" class="modal hide fade">' + 
-        '<div class="modal-header">' +
-        '    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>' +
-        '    <h3 class="ModalLabel">' + title + '</h3>' +
-        '  </div>' +
-        '  <div class="modal-body"></div>' +
-        '  <div class="modal-footer">' +
-        '    <button class="btn" data-dismiss="modal">关闭</button>' +
-        '    <button class="btn btn-primary" form-type="' + type + '">' + $(this).text() + '</button>' +
-        '  </div>' + 
-        '</div>';
-        $("#quick_form").replaceWith(modalForm);  
+        $("#quick_form").replaceWith(generatForm(title, type, label));  
         $("button[form-type]").click(function(e) {            
             prefix = undefined === prefix ? "" : prefix;
             console.log("form submit button clicked! " + prefix, e);
@@ -114,24 +112,15 @@
                 },
                 success: function(data){
                     $("#quick_form").modal("hide");
-                    var a = '<div class="alert fade in alert-info"><button class="close" data-dismiss="alert">×</button>成功' + 
-                            title + ' &nbsp;<strong>' + '' + '</strong></div>';
                     setTimeout(function() {
-                        $(".breadcrumbs").after(a);
+                        $(".breadcrumbs").after(generatAlert(title));
                     }, 100);
                     // setTimeout($(".alert")alert('close'), 5000);
                     setTimeout(function() {
                         $(".alert").alert('close');
                     }, 5000);                
                 },
-                beforeSend: function(){
-                    var control_groups = $(".control-group");
-                    console.log("beforeSend ", control_groups);            
-                    for(var i = 0; i < control_groups.length; i ++) {
-                        $(control_groups[i]).removeClass("error");
-                        $(control_groups[i]).find(".help-inline").text("");
-                    }
-                }
+                beforeSend: beforeSendFunc
             });
         });
     });
