@@ -43,7 +43,10 @@
     <h3 class="subtitle">管理考试</h3>
     <div class="divider15"></div>
     <div class="well">
-      <a href="<%= new_examination_path %>" data-toggle="modal" class="btn btn-primary"><i class="iconfa-plus icon-white"></i> 创建新考试</a>
+      <a title="创建新考试" modal-type="examination" data-target="#quick_form" 
+        data-toggle="modal" href="/ajax/form/examinations/new" class="btn btn-primary">
+        <i class="iconfa-plus icon-white"></i> 创建新考试
+      </a>
     </div>
     <% end %>
   </div>
