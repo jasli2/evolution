@@ -161,7 +161,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.update_attributes(params[:user])
         format.html { redirect_to session.delete(:return_to), notice:t("users.all.notice4") }
-        format.json { render json: @user, status: :updated, location: @user }
+        format.json { head :no_content }
       else
         format.html { render action: "edit" }
         format.json { render json: @user.errors, status: :unprocessable_entity }

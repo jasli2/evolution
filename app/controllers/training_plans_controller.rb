@@ -66,7 +66,7 @@ class TrainingPlansController < ApplicationController
     respond_to do |format|
       if @tp.update_attributes(params[:training_plan])
         format.html { redirect_to session.delete(:return_to), :notice => "培训计划：#{@tp.title}，更新成功！" }
-        format.json { render json: @tp, status: :updated, location: @tp }
+        format.json { head :no_content }
       else
         format.html { render action: "edit" }
         format.json { render json: @tp.errors, status: :unprocessable_entity }
