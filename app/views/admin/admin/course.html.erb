@@ -45,7 +45,7 @@
               <a href="<%= course_path(c) %>" class="btn btn-primary btn-small"><span class="iconfa-info-sign icon-white"></span> <%= t("course.all.details") %></a>
               <a href="/ajax/form/courses/edit/<%= c.id %>" class="btn btn-warning btn-small"
                   title="编辑课程"  data-id="<%= c.id %>" data-target="#quick_form" data-toggle="modal" 
-                  modal-type-edit="course"  prefix="/users/<%=current_user.id %>">
+                  modal-type-edit="course">
                 <span class="iconfa-edit icon-white"></span> 编辑课程
               </a>
             </div>

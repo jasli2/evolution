@@ -83,10 +83,9 @@
         var prefix = $(this).attr("prefix");
         var title = $(this).attr("title");
         var type = $(this).attr("modal-type-edit");
-        var label = $(this).text();
         var id = $(this).attr("data-id");
         console.log("quick button click: prefix:" + prefix, e);
-        $("#quick_form").replaceWith(generatForm(title, type, label));  
+        $("#quick_form").replaceWith(generatForm(title, type, "保存"));  
         $("button[form-type]").click(function(e) {            
             prefix = undefined === prefix ? "" : prefix;
             console.log("form submit button clicked! " + prefix, e);
