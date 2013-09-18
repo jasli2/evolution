@@ -20,8 +20,8 @@ $(function() {
     return [false];
   }
   var currDate = $.datepicker.formatDate('mm-dd', new Date());
-  var canlenderEvent = [{day:'2013-09-15',events:[{time:'09:50',title:'Event 3',desc:'Event 3 description'}]}, 
-      {day:'2013-09-18',events:[{time:'09:30',title:'Event 1',desc:'Event 1 description'},{time:'12:30',title:'Event 2',desc:'Event 2 description'}]}];
+  var canlenderEvent = [{day:'2013-09-27',events:[{time:'09:30',title:'半年培训计划到期',desc:'半年度培训计划收集发聩到期。'}]}, 
+      {day:'2013-09-18',events:[{time:'09:30',title:'课程：向军队学习执行力 开课',desc:'授课老师：段会农'},{time:'12:30',title:'项目管理考试截止',desc:'项目管理课程考试截止。'}]}];
   $('#datepicker').datepicker({
     onSelect: function(date, inst){
       inst.inline = false;
@@ -54,7 +54,7 @@ $(function() {
             // $("#list li .time").text("00:00");
             // $("#list li h1").text("no event");
             // $("#list li p").text("");
-            content += 'No results were found in this date.';
+            content += '无计划事件。';
           }
           content += '</ul>';
           $("#list").replaceWith(content);
@@ -374,12 +374,14 @@ $(function() {
     <div class="widgetcontent2 nopadding">
       <div id="datepicker"></div>
       <div class="calendar_list">
-        <div class="title">2013年9月10日 星期二</div>
+        <div class="title"><%= l Time.zone.now, :format => '%Y年%m月%d日 %A'%></div>
         <ul id="list" class="unstyled">
           <li class="low" onclick="$(this).children('p').toggleClass('show');">
             <div class="time">09:50</div>
-            <h1>内部讲师内部讲师内部讲师内部</h1>
-            <p class="clear">Description 3</p>
+            <h1>课程：国学思想与人生智慧 开课</h1>
+            <p class="clear">
+            授课老师：刘文红
+            </p>
           </li>
         </ul>
       </div>
