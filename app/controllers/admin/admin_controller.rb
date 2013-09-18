@@ -21,7 +21,7 @@ class Admin::AdminController < ApplicationController
   def user
     @menu_category = 'admin'
     @menu_active = 'users'
-    @users = User.staff.page params[:page]
+    @users = User.staff.order('id DESC').page params[:page]
 
     respond_to do |format|
       format.html
