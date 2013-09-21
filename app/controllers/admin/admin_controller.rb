@@ -13,15 +13,15 @@ class Admin::AdminController < ApplicationController
       format.html
     end
 
-    @active_notifications.each do |n|
-      n.update_attributes(:viewed_at => Time.zone.now)
-    end
+    #@active_notifications.each do |n|
+    #  n.update_attributes(:viewed_at => Time.zone.now)
+    #end
   end
 
   def user
     @menu_category = 'admin'
     @menu_active = 'users'
-    @users = User.staff.page params[:page]
+    @users = User.staff.order('id DESC').page params[:page]
 
     respond_to do |format|
       format.html

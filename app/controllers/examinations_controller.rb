@@ -58,7 +58,7 @@ class ExaminationsController < ApplicationController
     @exam = Examination.new(params[:examination])
 
     respond_to do |format|
-      if @exam.save!
+      if @exam.save
         format.html { redirect_to session.delete(:return_to), notice: '创建考试成功！'}
         format.json { render json: @exam, status: :created, location: @exam }
       else
@@ -86,7 +86,7 @@ class ExaminationsController < ApplicationController
     respond_to do |format|
       if @exam.update_attributes(params[:examination])
         format.html { redirect_to session.delete(:return_to), notice: '更新考试信息成功！'}
-        format.json { render json: @exam, status: :updated, location: @exam }
+        format.json { render json: @exam }
       else
         format.html { render 'edit' }
         format.json { render json: @exam.errors, status: :unprocessable_entity }

@@ -1,5 +1,7 @@
 # encoding: utf-8
 class UsersController < ApplicationController
+  include ActionView::Helpers::DateHelper
+
   before_filter :need_admin!, :only => [:new, :create]
 
   # for demo assessment process TODO: revisit it
@@ -32,13 +34,36 @@ class UsersController < ApplicationController
 
   def notifications
     @new_notification = current_user.notifications.active
-
-    respond_to do |format|
-      format.json { render json: @new_notification }
+    @n_json = []
+    @new_notification.each do |n|
+      @n_json.push({:id => n.id, :description => n._description, :url => n._url, :created_at => distance_of_time_in_words_to_now(n.created_at) + t("course.all.ago")})
     end
 
-    @new_notification.each do |n|
-      n.update_attributes(:viewed_at => Time.zone.now)
+    respond_to do |format|
+      format.json { render json: @n_json }
+    end
+
+    #@new_notification.each do |n|
+    #  n.update_attributes(:viewed_at => Time.zone.now)
+    #end
+  end
+
+  # PUT 
+  def update_notifications
+    notifications = params[:notifications]
+    if notifications && notifications.class == Array
+      notifications.each do |nid|
+        n = current_user.notifications.find(nid)
+        n.update_attributes(:viewed_at => Time.zone.now) if n
+      end
+
+      respond_to do |format|
+        format.json { render json: {:status => "OK"} }
+      end
+    else
+      respond_to do |format|
+        format.json { render json: {:status => "Invalid parameters."}, :status => :unprocessable_entity }
+      end
     end
   end
 
@@ -53,9 +78,9 @@ class UsersController < ApplicationController
       format.html
     end
     
-    @active_notifications.each do |n|
-      n.update_attributes(:viewed_at => Time.zone.now)
-    end
+    #@active_notifications.each do |n|
+    #  n.update_attributes(:viewed_at => Time.zone.now)
+    #end
   end
 
   # GET /users
@@ -136,7 +161,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.update_attributes(params[:user])
         format.html { redirect_to session.delete(:return_to), notice:t("users.all.notice4") }
-        format.json { render json: @user, status: :updated, location: @user }
+        format.json { render json: @user }
       else
         format.html { render action: "edit" }
         format.json { render json: @user.errors, status: :unprocessable_entity }

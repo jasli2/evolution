@@ -83,7 +83,7 @@ h1,h2,h3,h4,h5 { font-weight: normal; line-height: normal; }
 
 .loginpanel { position: absolute; top: 50%; left: 50%; height: 300px; }
 .loginpanelinner { position: relative; top: -150px; left: -50%; }
-.loginpanelinner .logo { text-align: center; padding: 20px 0; }
+.loginpanelinner .logo {font-size: 38px; color: #FFF; text-align: center; padding: 20px 0; }
 
 .inputwrapper input { border: 0; padding: 10px; background: #fff; width: 250px; }
 .inputwrapper input:active, .inputwrapper input:focus { background: #fff; border: 0; }
@@ -105,10 +105,10 @@ h1,h2,h3,h4,h5 { font-weight: normal; line-height: normal; }
 
 /*** HEADER ***/
 
-.header { background: #0866c6; clear: both; height: 60px; }
+.header { background: #0866c6; clear: both; height: 60px; border-bottom: 1px solid rgba(255,255,255,0.15);}
 .headerinner { margin-left: 200px; }
-.header .logo { width: 200px; text-align: center; padding: 10px 0; height: 40px; float: left; border-right: 1px solid rgba(255,255,255,0.15);}
-.header .logo a {font-size: 38px; color: #FFF; margin: 10px; display: inline-block;}
+.header .logo { width: 200px; text-align: center; padding: 10px 0; height: 40px; float: left; border-right: 1px solid rgba(255,255,255,0.15); }
+.header .logo a {font-family: 'RobotoLight', 'Helvetica Neue', Helvetica, sans-serif; font-size: 38px; color: #FFF; margin: 10px; display: inline-block;}
 .header .logo a:hover {text-decoration: none;}
 .header .logo img {margin: 5px 0;width: 120px;}
 .header .logo img:hover {opacity: 1;}
@@ -284,6 +284,18 @@ right: -10px;
 .shortcuts li .iconsi-help { background: url(../images/icons/icon-help.png) no-repeat center center; }
 .shortcuts li .iconsi-images { background: url(../images/icons/icon-images.png) no-repeat center center; }
 
+.shortcuts2 { list-style: none; margin-top: 0; overflow: hidden; clear: both; }
+.shortcuts2 li { display: inline-block; margin: 0 auto 0 0; position: relative; }
+.shortcuts2 li a { display: block; width: 60px; height: 60px; background: #0866c6; color: #fff; font-size: 14px; }
+.shortcuts2 li a:hover { background: #282828; text-decoration: none; }
+.shortcuts2 li .shortcuts-label { display: none; padding: 1px 6px; }
+.shortcuts2 li .shortcuts-icon { display: block; width: 40px; height: 40px; padding: 10px 0; margin: 0 auto; }
+.shortcuts2 li a .counter { position: absolute; top: 2px; right: 8px; font-size: 14px;}
+.shortcuts2 li .iconfa-user {font-size: 40px;}
+.shortcuts2 li .iconfa-book {font-size: 40px;}
+.shortcuts2 li .iconfa-plane {font-size: 40px;}
+.shortcuts2 li .iconfa-pencil {font-size: 40px;}
+
 .widget {
 	-moz-box-shadow: 1px 1px 8px rgba(0,0,0,0.3);
 	-webkit-box-shadow: 1px 1px 8px rgba(0,0,0,0.3);
@@ -292,7 +304,7 @@ right: -10px;
 .widgettitle { background: #0866c6; color: #fff; padding: 12px 15px; font-size: 14px; }
 .widgettitle span { vertical-align: middle; display: inline-block; margin-right: 8px; }
 .widgetcontent { background: #fff; padding: 15px 12px; border: 2px solid #0866c6; border-top: 0; margin-bottom: 20px; }
-.widgetcontent2 { background: #fff; padding: 15px 12px; border: 2px solid #CCC; margin-bottom: 20px; }
+.widgetcontent2 { background: #fff; padding: 15px 12px; border: 2px solid #0866c6; margin-bottom: 20px; }
 .widgetcontent p { margin: 15px 0; }
 .wt1 { background: #333; color: #fff; }
 .wc1 { border-color: #333; }
@@ -348,7 +360,7 @@ right: -10px;
 .userlist-favorites li .link a:hover { text-decoration: none; color: #fff; }
 
 /** calendar **/
-.has-info-event .ui-state-default{background:#fdc;font-weight:bold;color:red;font-size:14px;}
+.has-info-event .ui-state-default{font-weight:bold; color:#0866c6;}
 .has-info-event .ui-state-default:hover,
 .has-info-event .ui-state-default:active{ background:#fed; }
 .ui-datepicker-inline .ui-datepicker-header {
@@ -380,7 +392,6 @@ right: -10px;
 .calendar_list #list li {
 	min-height: 18px;
 	padding: 7px;
-	font-family: 'Open Sans Condensed', sans-serif;
 	cursor: pointer;
 	background: none;
 	line-height: normal;
@@ -403,7 +414,6 @@ right: -10px;
 	font-size: 12px;
 	padding: 2px 5px;
 	float: left;
-	font-weight: bold;
 	line-height: 100%;
 }
 .calendar_list #list li h1 {

@@ -111,7 +111,7 @@ class CoursesController < ApplicationController
     respond_to do |format|
       if @course.update_attributes(params[:course])
         format.html { redirect_to session.delete(:return_to), notice: t("course.all.notic7") }
-        format.json { render json: @course, status: :updated, location: @course }
+        format.json { render json: @course }
       else
         format.html { render action: "edit" }
         format.json { render json: @course.errors, status: :unprocessable_entity }
