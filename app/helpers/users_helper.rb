@@ -20,6 +20,10 @@ module UsersHelper
   end
 
   def todo_deadline(todo)
+    if todo.source.nil?
+      return "未知错误"
+    end
+
     case todo.source_type
     when 'TrainingPlan'
       todo.source.feedback_deadline.to_date
