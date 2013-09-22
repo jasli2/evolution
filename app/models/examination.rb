@@ -46,7 +46,7 @@ class Examination < ActiveRecord::Base
     after_transition :on => :all_feedbacked do |exam, transition|
       exam.finished_at = Time.zone.now
       exam.save
-      exam.notifications.create!(:user_id => exam.creator.id, :notification_type => "all_feedback") if exam.creator
+      exam.creator.todos.create!(:source => exam, :todo_type => 'pending_finish', :deadline =>exam.set_day(exam.deadline, 3.day)) if exam.creator
     end
 
     after_transition :on => :cancel do |exam, transition|
@@ -55,8 +55,9 @@ class Examination < ActiveRecord::Base
     end
 
     after_transition :on => :feedback_timeout do |exam, transition|
-      exam.finished_at = self.deadline
+      exam.finished_at = exam.deadline
       exam.save
+      creator.todos.create!(:source => exam, :todo_type => 'pending_finish', :deadline =>exam.set_day(self.deadline, 3.day)) if exam.creator
     end
 
     after_transition :on => :publish do |exam, transition|
