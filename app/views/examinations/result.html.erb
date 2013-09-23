@@ -23,7 +23,7 @@
       <div>
         <h4 class="pull-left">学生考试进度</h4>
         <div class="progress progress-info pull-right" style="width: 40%">
-          <div style="width: <%= @exam.feedbacks.count*100/@exam.users.count %>%" class="bar">
+          <div style="width: <%= @exam.feedbacks.count*100/(@exam.users.count==0 ? 1 : @exam.users.count) %>%" class="bar">
             <%= @exam.feedbacks.count.to_s + '/' + @exam.users.count.to_s %>
           </div>
         </div>
@@ -38,7 +38,7 @@
         <li class='question-title'>
           <span><%= idx + 1 %>. <%= cq.title %></span>
           <div class="progress progress-info pull-right" style="width: 40%">
-            <div style="width: <%= @exam.answer_all_num(cq.id).count*100/@exam.users.count %>%" class="bar">
+            <div style="width: <%= @exam.answer_all_num(cq.id).count*100/(@exam.users.count==0 ? 1 : @exam.users.count) %>%" class="bar">
               <%= @exam.answer_all_num(cq.id).count.to_s + '/' + @exam.users.count.to_s  %>
             </div>
           </div>
@@ -58,7 +58,7 @@
         <li class='question-title'>
           <span class='qustion-title'>[<%= idx + 1 %>]: <%= cq.title %></span>
           <div class="progress progress-info pull-right" style="width: 40%">
-            <div style="width: <%= @exam.answer_all_num(cq.id).count*100/@exam.users.count %>%" class="bar">
+            <div style="width: <%= @exam.answer_all_num(cq.id).count*100/(@exam.users.count==0 ? 1 : @exam.users.count)%>%" class="bar">
               <%= @exam.answer_all_num(cq.id).count.to_s + '/' + @exam.users.count.to_s  %>
             </div>
           </div>
@@ -78,14 +78,14 @@
         <li>
           <span class='qustion-title'>[<%= idx + 1 %>]: <%= cq.title %></span>
           <div class="progress progress-info pull-right" style="width: 60%;">
-            <div style="width: <%= @exam.answer_all_num(cq.id).count*100/@exam.users.count %>%" class="bar">
+            <div style="width: <%= @exam.answer_all_num(cq.id).count*100/ (@exam.users.count==0 ? 1 : @exam.users.count)%>%" class="bar">
               <%= @exam.answer_all_num(cq.id).count.to_s + '/' + @exam.users.count.to_s  %>
             </div>
           </div>
         </li>
         <% @exam.answer_all_num(cq.id).each do |asw|  %>
         <li>
-          <span class='qustion-title'>[<%= asw.paper.user.name %>]: <%= asw.content %></span>
+          <span class='qustion-title'>[<%= asw.examination_feedback.user.name %>]: <%= asw.content %></span>
         </li>
         <% end %>
         <% end %>

@@ -16,21 +16,35 @@ class ExamFeedbacksController < ApplicationController
   def show
     @exam = Examination.find(params[:examination_id])
     @exam_feedback = ExaminationFeedback.find(params[:id])
-    @paper = @exam.check_user_paper(@exam_feedback.user_id)
+    #@paper = @exam.check_user_paper(@exam_feedback.id)
 
   end
 
   def create
     @exam = Examination.find(params[:examination_id])
-    @paper = @exam.check_user_paper(current_user.id)
-    @exam_feedback = @exam.feedbacks.create!(:user_id => current_user.id)
+    @exam_feedback = @exam.feedbacks.find_by_user_id(current_user.id)
+    if @exam_feedback.nil?
+      @exam_feedback = @exam.feedbacks.create!(:user_id => current_user.id)
+    end
+    @exam.exam_question_answere(@exam_feedback.id)
     respond_to do |format|
       if @exam_feedback
-        Resque.enqueue(ExaminationSque, @exam.id, @paper.id, @exam_feedback.id, params[:answer])
+        #fix me submit paper
+        @exam.finish_paper(@exam_feedback.id, params[:answer])
         format.html { redirect_to examinations_path, :notice => "考试结束！"}
       else
         format.html { redirect_to examinations_path, :notice => "考试系统出错！"}
       end
+    end
+  end
+
+  def index
+    @exam = Examination.find(params[:examination_id])
+
+    if current_user.admin?
+
+    else
+
     end
   end
 

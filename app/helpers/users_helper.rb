@@ -75,8 +75,8 @@ module UsersHelper
         examinations_path()
       elsif todo.todo_type == 'published'
         new_examination_exam_feedback_path(todo.source)
-        # examinations_path()
       elsif todo.todo_type == 'pending_finish'
+        examination_exam_feedbacks_path(:examination_id => todo.source.id)
         #exam_id = todo.source.examination.id
         #feedback_id = todo.source.examination_feedback.id
         #examination_exam_feedback_path(:examination_id => exam_id, :id => feedback_id)
