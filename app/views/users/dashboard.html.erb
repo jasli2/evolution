@@ -57,11 +57,11 @@
         <% if current_user.teach_classes.count > 0 %>
         <li><a href='#tab-teach'>管理班级（<%= current_user.teach_classes.count %>）</a></li>
         <% end %>
-        <% if current_user.active_course_count > 0 %>
-        <li><a href='#tab-course'>待培课程（<%= current_user.active_course_count %>）</a></li>
-        <% end %>
         <% if current_user.joined_classes.active.count > 0 %>        
         <li><a href='#tab-student'>参加班级（<%= current_user.joined_classes.count %>）</a></li>
+        <% end %>
+        <% if current_user.active_course_count > 0 %>
+        <li><a href='#tab-course'>待培课程（<%= current_user.active_course_count %>）</a></li>
         <% end %>
         <% if current_user.created_training_plans.active.count > 0 %>
         <li><a href='#tab-tp'>培训计划（<%= current_user.created_training_plans.active.count %>）</a></li>
@@ -96,6 +96,7 @@
 
       <% if current_user.active_course_count > 0 %>
       <div class='nopadding' id='tab-course'>
+        <ul class='active-project-list'>
         <% current_user.active_training_plans.each do |tp| %>
           <% tp.course_for_user(current_user).each do |c| %>
           <% if c.course_classes.active.count == 0 %>
@@ -132,15 +133,17 @@
           <% end %>
           <% end %>
         <% end %>
+        </ul>
       </div>
       <% end %>
 
       <% if current_user.joined_classes.active.count > 0 %>
       <div class='nopadding' id='tab-student'>
+      <ul class='active-project-list'>
       <% current_user.joined_classes.active.each do |cl| %>
         <li class='active-class'>
           <span class='label label-info'><%= user_course_state current_user, cl.course %></span>
-          <%= link_to c.title, course_path(c) %> &middot;
+          <%= link_to cl.course.title, course_path(cl.course) %> &middot;
 
           <%= link_to '班级(ID-' + cl.id.to_s + ')', class_path(cl) %>
           老师:
@@ -158,6 +161,7 @@
           <% end %>
         </li>
       <% end %>
+      </ul>
       </div>
       <% end %>
 
@@ -230,14 +234,6 @@
                     
   <div id="dashboard-right" class="span4">
 
-    <div class="alert alert-block">
-      <button data-dismiss="alert" class="close" type="button">&times;</button>
-      <h4>系统提示：</h4>
-      <p style="margin: 8px 0">体验版部分功能不可用，请升级成正式版</p>
-    </div><!--alert-->
-    <div class="divider15"></div>
-
-    <h4 class="widgettitle"><%= t("dashboard.calender.title") %></h4>
     <div class="widgetcontent nopadding">
         <div id="datepicker"></div>
     </div>
