@@ -20,7 +20,7 @@ class CoursesController < ApplicationController
     if @courses
       respond_to do |format|
         format.html {redirect_to courses_path, notice: t("course.all.notic5") }
-        format.csv { send_data @courses.to_csv }
+        format.csv { send_data @courses.to_csv(params[:export]) }
         #format.xls
       end
     end

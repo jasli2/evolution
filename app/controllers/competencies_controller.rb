@@ -22,7 +22,7 @@ class CompetenciesController < ApplicationController
     if @competencies
       respond_to do |format|
         format.html {redirect_to competencies_path, notice: t("competency.all.notice2") }
-        format.csv { send_data @competencies.to_csv, :type => "text/csv" }
+        format.csv { send_data @competencies.to_csv(params[:export]), :type => "text/csv" }
         #format.xls
       end
     end

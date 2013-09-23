@@ -20,7 +20,7 @@ class Competency < ActiveRecord::Base
   has_many :competency_users
   has_many :users, :through => :competency_users
 
-  def self.to_csv(options = {})
+  def self.to_csv(export_mode, options = {})
     header = ["competency_name","description","level","level_description"]
     i = 1;
     while i < 7 do
@@ -30,18 +30,21 @@ class Competency < ActiveRecord::Base
     end
     CSV.generate(options) do |csv|
       csv << header
-      Competency.order(:id).each do |competency|
-        competency.competency_levels.order(:level).each do |levels|
-          row_data = []
-          row_data << competency.name
-          row_data << competency.description
-          row_data << levels.level
-          row_data << levels.description
-          levels.competency_level_requirements.order(:weight).each do |requirements|
-            row_data << requirements.description
-            row_data << requirements.weight
+
+      if export_mode.blank?
+        Competency.order(:id).each do |competency|
+          competency.competency_levels.order(:level).each do |levels|
+            row_data = []
+            row_data << competency.name
+            row_data << competency.description
+            row_data << levels.level
+            row_data << levels.description
+            levels.competency_level_requirements.order(:weight).each do |requirements|
+              row_data << requirements.description
+              row_data << requirements.weight
+            end
+            csv << row_data
           end
-          csv << row_data
         end
       end
     end

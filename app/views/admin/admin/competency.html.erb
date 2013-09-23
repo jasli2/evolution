@@ -113,6 +113,7 @@ $(function() {
     <div class="well">
       <a href="#myModal" data-toggle="modal" class="btn btn-primary disabled"><i class="iconfa-plus icon-white"></i><%= t('competency.all.new') %></a>
       <a href="#myModal" data-toggle="modal" class="btn btn-warning"><i class="iconfa-download-alt icon-white"></i> <%= t('competency.all.export') %></a>
+      <a href="<%= export_competencies_path(format: 'csv', :export => "header") %>" data-toggle="modal" class="btn btn-warning"><i class="iconfa-download-alt icon-white"></i> <%= t('competency.all.export_sample') %></a>
     </div>
 
 

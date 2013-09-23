@@ -175,11 +175,6 @@ class Examination < ActiveRecord::Base
       sub_ans.update_attributes(:content => value, :correct => state)
     end
     puts "finis paper ~~~~~~~~~"
-    #to tell creator  about student  submit a paper and crorrect paper
-    #teacher should correct paper after examination  3 day
-    #paper = Paper.find(paper_id)
-    #paper.update_attributes(:examination_feedback_id => feedback_id)
-    #creator.todos.create!(:source => paper, :todo_type => 'pending_finish', :deadline =>set_day(self.deadline, 3.day)) if creator
   end
 
   private

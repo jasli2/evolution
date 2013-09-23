@@ -76,6 +76,7 @@
     <div class="well">
       <a href="#myModal" data-toggle="modal" class="btn btn-primary disabled"><i class="iconfa-plus icon-white"></i><%= t("position.all.create")%></a>
       <a href="#myModal" data-toggle="modal" class="btn btn-warning"><i class="iconfa-download-alt icon-white"></i> <%= t("position.all.export")%></a>
+      <a href="<%= export_positions_path(format: 'csv', :export => "header") %>" data-toggle="modal" class="btn btn-warning"><i class="iconfa-download-alt icon-white"></i> <%= t("position.all.export_sample")%></a>
     </div>
 
     <h4 class="widgettitle"><%= t("position.all.import") %></h4>
