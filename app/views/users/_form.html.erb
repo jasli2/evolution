@@ -9,12 +9,11 @@
   <%= f.input :department_level, :label => '部门级别：' %>
   <%= f.input :staff_id, :label => '员工号：' %>
   <%= f.input :self_intro, :label => '个人介绍：', :as => :text, :input_html => { :class => "span5",  :cols => 50, :rows => 8 } %>
-  <%= f.input :joined_at, :label => '入职时间：', as: :date, start_year: Date.today.year - 90,
+  <%# f.input :joined_at, :label => '入职时间：', as: :date, start_year: Date.today.year - 90,
                         end_year: Date.today.year - 12,
                         order: [:year, :month, :day] %>
-  <%= f.input :birthday, :label => '出身年月：', as: :date, start_year: Date.today.year - 90,
-                        end_year: Date.today.year - 12,
-                        order: [:year, :month, :day] %>
+  <%= f.input :joined_at, :label => '入职时间：', :as => :date_picker %>
+  <%= f.input :birthday, :label => '出身年月：', :as => :date_picker %>
   <div class="control-group file optional">
     <label class="file optional control-label" for="user_avatar">上传头像：</label>
     <div class="controls">
