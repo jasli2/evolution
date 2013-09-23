@@ -1,5 +1,12 @@
 class TopicsController < ApplicationController
   def index
+    if current_user.admin?
+      @menu_category = 'admin'
+    else
+      @menu_category = 'user'
+    end
+    @menu_active = 'knowledage'
+
     @user = User.find(params[:user_id]) if params[:user_id]
     @topics = Topic.order('id DESC').page params[:page]
 =begin
@@ -13,6 +20,13 @@ class TopicsController < ApplicationController
   end
 
   def show
+    if current_user.admin?
+      @menu_category = 'admin'
+    else
+      @menu_category = 'user'
+    end
+    @menu_active = 'knowledage'
+
     @topic = Topic.find(params[:id])
     @comments = @topic.comments.order('id DESC').page params[:page]
     #@reply = Comment.new

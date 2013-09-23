@@ -14,8 +14,6 @@
 
 <div class="row-fluid">
   <div id="dashboard-left" class="span8">
-    <h3 class="subtitle"><%= t("course.all.title") %></h3>
-    <div class="divider15"></div>
     <div class="widgetbox">
       <div class="headtitle">
         <h4 class="widgettitle"><span class="iconfa-folder-open"></span> <%= t("course.all.sub_title") %> (<%= @courses.total_count %>)</h4>
@@ -60,8 +58,6 @@
   </div>
 
   <div id="dashboard-right" class="span4">
-    <h3 class="subtitle"><%= t("course.all.manage")%></h3>
-    <div class="divider15"></div>
 
     <div class="well">
       <a title="<%= t("course.all.new") %>" modal-type="course" prefix="/users/<%=current_user.id %>"
