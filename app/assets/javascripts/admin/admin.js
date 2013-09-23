@@ -2,7 +2,7 @@
     $("#quick_form").on("hidden", function() {
         console.log("quick_form hidden");
         $(this).removeData('modal');
-    });    
+    });
     var generatForm = function(title, type, label) {
         var modalForm = '<div id="quick_form" class="modal hide fade">' + 
         '<div class="modal-header">' +
@@ -37,11 +37,18 @@
         var label = $(this).text();
         console.log("quick button click: prefix:" + prefix, e);
         
-        $("#quick_form").replaceWith(generatForm(title, type, label));  
+        $("#quick_form").replaceWith(generatForm(title, type, label));
+        $("#quick_form").on("shown", function() {
+            console.log("quick_form shown", $("input.date_picker"));
+            //$("input.date_picker").datepicker("option", "z-index", "1151 !important");
+            $("input.date_picker").datepicker({
+                dateFormat: "yy-mm-dd"
+            }); 
+        });
         $("button[form-type]").click(function(e) {            
             prefix = undefined === prefix ? "" : prefix;
             console.log("form submit button clicked! " + prefix, e);
-            type = $(this).attr("form-type");
+            type = $(this).attr("form-type");            
             $.ajax({
                 url: prefix + "/" + type + "s.json",
                 type: "POST",
@@ -85,7 +92,14 @@
         var type = $(this).attr("modal-type-edit");
         var id = $(this).attr("data-id");
         console.log("quick button click: prefix:" + prefix, e);
-        $("#quick_form").replaceWith(generatForm(title, type, "保存"));  
+        $("#quick_form").replaceWith(generatForm(title, type, "保存"));
+        $("#quick_form").on("shown", function() {
+            console.log("quick_form shown", $("input.date_picker"));
+            //$("input.date_picker").datepicker("option", "z-index", "1151 !important");
+            $("input.date_picker").datepicker({
+                dateFormat: "yy-mm-dd"
+            }); 
+        });
         $("button[form-type]").click(function(e) {            
             prefix = undefined === prefix ? "" : prefix;
             console.log("form submit button clicked! " + prefix, e);
