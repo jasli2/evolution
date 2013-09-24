@@ -201,7 +201,7 @@ class UsersController < ApplicationController
     @users = User.order(:staff_id)
     respond_to do |format|
       format.html {redirect_to :back, notice: t("users.all.notice7") }
-      format.csv { send_data @users.to_csv, :type => "text/csv" }
+      format.csv { send_data @users.to_csv(params[:export]), :type => "text/csv" }
     end
   end
 end

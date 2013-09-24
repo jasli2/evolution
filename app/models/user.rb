@@ -61,7 +61,6 @@ class User < ActiveRecord::Base
   has_many :course_progresses, :through => :user_course_progresses
 
   #examination
-  has_many :papers
   has_many :created_examinations, :class_name => "Examination", :foreign_key => "creator_id"
   has_many :examination_users
   has_many :examinations, :through => :examination_users
@@ -196,80 +195,86 @@ class User < ActiveRecord::Base
     end
   end
 
-  def self.to_csv(options = {})
+  def self.to_csv(export_mode, options = {})
     puts "***************************"
     puts "to csv is open"
+    puts options
+    puts export_mode
     puts "****************************"
+
     header = ["name","Staff Id", "email", "Tel", "Mobile", "manager_name", "birthday", "position_name",  \
               "department", "department level", "Enroll Date", "teacher rate", "introduction", "following"]
     puts header
 
     CSV.generate(options) do |csv|
       csv << header
-      all.each do |mUser|
-        unless mUser.name == "admin"
-          row_data = []
-          row_data << mUser.name
-          row_data << mUser.staff_id
-          row_data << mUser.email
-          row_data << mUser.phone_num
-          row_data << mUser.mobile_phone
-          if (!mUser.manager.nil?)
-            row_data << mUser.manager.name
-          else
-            row_data << " "
-          end
-          #row_data << mUser.manager.manager_id
-          if (mUser.birthday)
-            row_data << mUser.birthday
-          else
-            row_data << " "
-          end
-          if (!mUser.position.nil?)
-            row_data << mUser.position.name
-          else
-            row_data << " "
-          end
-          if (mUser.department)
-            row_data << mUser.department
-          else
-            row_data << " "
-          end
 
-          if (mUser.department_level)
-            row_data << mUser.department_level
-          else
-            row_data << " "
-          end
+      if export_mode.blank?
+        all.each do |mUser|
+          unless mUser.name == "admin"
+            row_data = []
+            row_data << mUser.name
+            row_data << mUser.staff_id
+            row_data << mUser.email
+            row_data << mUser.phone_num
+            row_data << mUser.mobile_phone
+            if (!mUser.manager.nil?)
+              row_data << mUser.manager.name
+            else
+              row_data << " "
+            end
+            #row_data << mUser.manager.manager_id
+            if (mUser.birthday)
+              row_data << mUser.birthday
+            else
+              row_data << " "
+            end
+            if (!mUser.position.nil?)
+              row_data << mUser.position.name
+            else
+              row_data << " "
+            end
+            if (mUser.department)
+              row_data << mUser.department
+            else
+              row_data << " "
+            end
 
-          if (mUser.joined_at)
-            row_data << mUser.joined_at
-          else
-            row_data << " "
-          end
+            if (mUser.department_level)
+              row_data << mUser.department_level
+            else
+              row_data << " "
+            end
 
-          if (mUser.teacher_rate)
-            row_data << mUser.teacher_rate
-          else
-            row_data << " "
-          end
+            if (mUser.joined_at)
+              row_data << mUser.joined_at
+            else
+              row_data << " "
+            end
 
-          if (mUser.self_intro)
-            row_data << mUser.self_intro
-          else
-            row_data << " "
+            if (mUser.teacher_rate)
+              row_data << mUser.teacher_rate
+            else
+              row_data << " "
+            end
+
+            if (mUser.self_intro)
+              row_data << mUser.self_intro
+            else
+              row_data << " "
+            end
+            followers = ""
+            mUser.followed_users.all.each do |user|
+              followers = followers + " " + user.name
+            end
+            if (!followers.empty?)
+              row_data << followers
+            else
+              row_data << " "
+            end
+            csv << row_data
           end
-          followers = ""
-          mUser.followed_users.all.each do |user|
-            followers = followers + " " + user.name
-          end
-          if (!followers.empty?)
-            row_data << followers
-          else
-            row_data << " "
-          end
-          csv << row_data
-          end
+        end
       end
 
     end

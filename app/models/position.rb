@@ -19,7 +19,7 @@ class Position < ActiveRecord::Base
   has_many :competency_levels, :through => :position_competency_levels
   has_many :users
 
-  def self.to_csv(options = {})
+  def self.to_csv(export_mode, options = {})
     header = ["name", "description", "Standard"]
     i = 1
     while i < 7 do
@@ -30,16 +30,18 @@ class Position < ActiveRecord::Base
 
     CSV.generate(options) do |csv|
       csv << header
-      all.each do |position|
-        row_data = []
-        row_data << position.name
-        row_data << position.description
-        row_data << position.standard
-        position.competency_levels.each do |levels|
-          row_data << levels.competency.name
-          row_data << levels.level
+      if export_mode.blank?
+        all.each do |position|
+          row_data = []
+          row_data << position.name
+          row_data << position.description
+          row_data << position.standard
+          position.competency_levels.each do |levels|
+            row_data << levels.competency.name
+            row_data << levels.level
+          end
+          csv << row_data
         end
-        csv << row_data
       end
     end
   end

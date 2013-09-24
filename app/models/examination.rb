@@ -28,13 +28,12 @@ class Examination < ActiveRecord::Base
   attr_accessible :user_ids
 
   
-  has_many :feedbacks, :class_name => 'ExaminationFeedback'
+  has_many :feedbacks, :class_name => 'ExaminationFeedback',:dependent => :destroy
   has_many :feedback_todos, :class_name => 'Todo', :as => :source, :conditions => {:todo_type => 'published'}
   has_many :notifications, :class_name => 'Notification', :as => :source
 
   has_many :examination_questions
   has_many :questions, :through => :examination_questions
-  has_many :papers, :dependent => :destroy
   belongs_to :creator, :class_name => "User"
   belongs_to :course_class
 
@@ -46,7 +45,7 @@ class Examination < ActiveRecord::Base
     after_transition :on => :all_feedbacked do |exam, transition|
       exam.finished_at = Time.zone.now
       exam.save
-      exam.notifications.create!(:user_id => exam.creator.id, :notification_type => "all_feedback") if exam.creator
+      exam.creator.todos.create!(:source => exam, :todo_type => 'pending_finish', :deadline =>exam.set_day(exam.deadline, 3.day)) if exam.creator
     end
 
     after_transition :on => :cancel do |exam, transition|
@@ -55,8 +54,9 @@ class Examination < ActiveRecord::Base
     end
 
     after_transition :on => :feedback_timeout do |exam, transition|
-      exam.finished_at = self.deadline
+      exam.finished_at = exam.deadline
       exam.save
+      creator.todos.create!(:source => exam, :todo_type => 'pending_finish', :deadline =>exam.set_day(self.deadline, 3.day)) if exam.creator
     end
 
     after_transition :on => :publish do |exam, transition|
@@ -65,6 +65,12 @@ class Examination < ActiveRecord::Base
         #todo =  exam.user_todo_exam(user)
         user.todos.create!(:source => exam, :todo_type => 'published', :deadline => exam.deadline)
         exam.notifications.create!(:user_id => user.id, :notification_type => "published") if user
+      end
+    end
+
+    after_transition :on => :complete do |exam|
+      exam.users.each do |user|
+        exam.notifications.create!(:user_id => user.id, :notification_type => "completed") if user
       end
     end
 
@@ -84,6 +90,10 @@ class Examination < ActiveRecord::Base
       transition :pending_publish => :published
     end
 
+    event :complete do
+      transition :pending_finish => :completed
+    end
+
   end
 
   def find_user_todo(current_user_id)
@@ -91,12 +101,12 @@ class Examination < ActiveRecord::Base
   end
 
   def check_user_paper(current_user_id)
-    paper =  self.papers.find_by_user_id(current_user_id)
-    if paper.nil?
-      paper = self.papers.create!(:user_id => current_user_id)
-      self.exam_question_answere(paper.id)
-    end
-    return paper
+    #paper =  self.papers.find_by_user_id(current_user_id)
+    #if paper.nil?
+      #paper = self.papers.create!(:user_id => current_user_id)
+      #self.exam_question_answere(paper.id)
+    #end
+    #return paper
   end
 
   def get_choice_question
@@ -125,9 +135,9 @@ class Examination < ActiveRecord::Base
     self.publish
   end
 
-  def exam_question_answere(paper_id)
+  def exam_question_answere(examfeed_id)
     self.questions.all.each do |question|
-       question.user_answers.create!(:paper_id => paper_id)
+       question.user_answers.create!(:examination_feedback_id => examfeed_id)
     end
   end
 
@@ -147,14 +157,14 @@ class Examination < ActiveRecord::Base
   #1、correct student paper 
   #2、create todo for examination creator to finish paper
   #TODO:paper processing should more perfect
-  def finish_paper(paper_id, feedback_id, answers)
+  def finish_paper(feedback_id, answers)
     answers.each do |key, value|
       puts key.split('_')[0]
       puts key.split('_')[1]
       q_type = key.split('_')[0]
       q_id = key.split('_')[1].to_i
       sub = Question.find(q_id)
-      sub_ans = sub.user_answers.where(:paper_id => paper_id).first
+      sub_ans = sub.user_answers.where(:examination_feedback_id => feedback_id).first
       unless q_type.eql?("dialogical")
         if value.nil?
           state = false
@@ -164,11 +174,7 @@ class Examination < ActiveRecord::Base
       end
       sub_ans.update_attributes(:content => value, :correct => state)
     end
-    #to tell creator  about student  submit a paper and crorrect paper
-    #teacher should correct paper after examination  3 day
-    paper = Paper.find(paper_id)
-    paper.update_attributes(:examination_feedback_id => feedback_id)
-    #creator.todos.create!(:source => paper, :todo_type => 'pending_finish', :deadline =>set_day(self.deadline, 3.day)) if creator
+    puts "finis paper ~~~~~~~~~"
   end
 
   private

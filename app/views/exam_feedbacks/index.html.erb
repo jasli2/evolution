@@ -5,7 +5,7 @@
 
 <% content_for :breadcrumbs do %>
 <li><%= link_to "考试管理", examinations_path %> <span class="separator"></span></li>
-<%= content_tag(:li, "考试详情") %>
+<%= content_tag(:li, "待阅试题") %>
 <% end %>
 
 <% content_for :javascript do %>
@@ -14,22 +14,18 @@
 
 <div class="row-fluid">
   <div id="dashboard-left" class="span8">
-    <h4 class="widgettitle"><%= @exam.title %>（<%= @exam.questions.size %>）</h4>
-    <% if @exam.questions.size > 0 %>
+    <h4 class="widgettitle"><%= @exam.title %>-待阅试题（<%= @exam.feedbacks.count %>）</h4>
+    <% if @exam.get_dialogical_question.count > 0 %>
     <div class="widgetcontent nopadding">
-      <table class="table responsive">
-        
-        <% @exam.questions.each do |q| %>
-        <tr>
-          <td width="70%"><%= eo_markdown(q.qdata) %></td>
-          <td width="30%" id="qustion-action">
-            <%= link_to "<i class='iconfa-edit'></i> 修改试题".html_safe, edit_examination_question_path(@exam.id, q.id), :class => "btn btn-primary btn-small", "data-toggle" => "modal" %>
-            <%= link_to "<i class='iconfa-edit'></i> 删除试题".html_safe, examination_question_path(@exam.id, q.id), :data => {confirm: "确定删除？"}, :method => :delete, :class => "btn btn-danger btn-small", "data-toggle" => "modal" %>
-          </td>
-        </tr>
+      <ul class="tp-course-progress-list">
+        <% @exam.get_dialogical_question.each_with_index do |cq, idx| %>
+          <li><span class='qustion-title'>[<%= idx + 1 %>]: <%= cq.title %></span></li>
+          <li><span class='question-title'>[参考答案]: <%= cq.answer %></span></li>
+           <% @exam.answer_all_num(cq.id).each do |asw|  %>
+            <li><span class='qustion-title'>[<%= asw.examination_feedback.user.name %>]: <%= asw.content %></span></li>
+           <% end %>
         <% end %>
-        
-      </table>
+      </ul>
     </div>
     <% else %>
     <div class="widgetcontent">
