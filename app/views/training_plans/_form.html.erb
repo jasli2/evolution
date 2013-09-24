@@ -4,6 +4,36 @@
   <%= f.association :required_courses, :label => '必修课程', :multiple => true %>
   <%= f.association :optional_courses, :label => '选修课程', :multiple => true %>
   <%= f.association :users, :label => '计划参培人员', :collection => User.staff, :multiple => true %>
+
+  <table id="dyntable" class="table table-bordered responsive">
+    <thead>
+      <tr>
+        <th class="head0 nosort"><input type="checkbox" class="checkall" /></th>
+        <th class="head0">ID</th>
+        <th class="head1">课程名称</th>
+        <th class="head0">时长</th>
+        <th class="head1">所属胜任力级别</th>
+      </tr>
+  </thead>
+  <tbody>
+  <% Course.all.each do |c| %>
+    <tr class="gradeA">
+      <td class="aligncenter"><span class="center">
+        <input type="checkbox" />
+      </span></td>
+      <td><%= c.id %></td>
+      <td><%= c.title %></td>
+      <td><%= c.duration %></td>
+      <% if c.competency_levels.size > 0 %>
+      <td><%= c.competency_levels.first.competency.name %> (<%=level_name(c.competency_levels.first.level)%>)</td>
+      <% else %>
+      <td>无</td>
+      <% end %>      
+    </tr>
+  <% end %>
+  </tbody>
+  </table>
+  
   <%= f.hidden_field :creator_id, :value => current_user.id %>
   <div class="form-actions">
   <%= f.button :submit, '创建培训计划', :class => "btn-primary"  %>
