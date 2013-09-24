@@ -87,6 +87,7 @@
         });
     });
     $("a[modal-type-edit]").click(function(e) {
+        var currBtn = $(this);
         var prefix = $(this).attr("prefix");
         var title = $(this).attr("title");
         var type = $(this).attr("modal-type-edit");
@@ -124,6 +125,7 @@
                     }
                 },
                 success: function(data){
+                    console.log(data);
                     $("#quick_form").modal("hide");
                     setTimeout(function() {
                         $(".breadcrumbs").after(generatAlert(title));
@@ -131,7 +133,34 @@
                     // setTimeout($(".alert")alert('close'), 5000);
                     setTimeout(function() {
                         $(".alert").alert('close');
-                    }, 5000);                
+                    }, 5000);
+                    switch(type){
+                        case "user":
+                            console.log($(currBtn).parent("td").nextAll());
+                            var tds = $(currBtn).parent("td").nextAll();
+                            $(tds[0]).children("a").text(data.name);
+                            $(tds[1]).text(data.staff_id);
+                            $(tds[2]).text(data.department);
+                            // tds[3].text(data.);
+                            $(tds[4]).text(data.joined_at);
+                            break;
+                        case "course":
+                            console.log($(currBtn).parents("li"));
+                            var li = $(currBtn).parents("li");
+                            // console.log(li.children(".course-info"));
+                            // console.log(li.find("h4 > a"));
+                            li.find("h4 > a").text(data.title);
+                            var lis = li.find("ul > li");
+                            // console.log(li.children("ul > li"));
+                            $(lis[0]).text("目标学员：" + data.audience);
+                            $(lis[1]).text("授课老师：");
+                            $(lis[2]).text("课程时长：" + data.duration + "小时");
+                            $(lis[3]).text("所属胜任力级别：无");
+                            break;
+                        default:
+                            console.log("default type");
+                            break;
+                    }                    
                 },
                 beforeSend: beforeSendFunc
             });
