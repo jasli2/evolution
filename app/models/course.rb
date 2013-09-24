@@ -96,36 +96,38 @@ class Course < ActiveRecord::Base
     end
   end
 
-  def self.to_csv(options = {})
+  def self.to_csv(export_mode, options = {})
     header = ["title","audience", "type", "sourcetype", "coursetype", "creator", "creator ID", \
               "duration", "Teacher", "competency", "level"]
     CSV.generate(options) do |csv|
       csv << header
-      all.each do |course|
-        row_data = []
-        row_data << course.title
-        puts course.title
-        row_data << course.audience
-        row_data << course.teach_type
-        row_data << course.source_type
-        row_data << course.course_type
+      if export_mode.blank?
+        all.each do |course|
+          row_data = []
+          row_data << course.title
+          puts course.title
+          row_data << course.audience
+          row_data << course.teach_type
+          row_data << course.source_type
+          row_data << course.course_type
 
-        row_data << course.creator.name
-        row_data << course.creator.staff_id
-        row_data << (course.duration / 60.0)
+          row_data << course.creator.name
+          row_data << course.creator.staff_id
+          row_data << (course.duration / 60.0)
 
-        row_data << course.teacher.name
-        levels = course.competency_levels
+          row_data << course.teacher.name
+          levels = course.competency_levels
 
-        if (!levels.empty? && !levels.nil?)
-          row_data << levels.first.competency.name
-          row_data << levels.first.level
-        else
-          row_data << " "
-          row_data << " "
+          if (!levels.empty? && !levels.nil?)
+            row_data << levels.first.competency.name
+            row_data << levels.first.level
+          else
+            row_data << " "
+            row_data << " "
+          end
+
+          csv << row_data
         end
-
-        csv << row_data
       end
     end
   end

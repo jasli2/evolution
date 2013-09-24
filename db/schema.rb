@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130725142330) do
+ActiveRecord::Schema.define(:version => 20130922084825) do
 
   create_table "action_permissions", :force => true do |t|
     t.integer  "model_permission_id"
@@ -166,6 +166,7 @@ ActiveRecord::Schema.define(:version => 20130725142330) do
     t.integer  "user_id"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+    t.integer  "score"
   end
 
   create_table "examination_questions", :force => true do |t|
@@ -235,15 +236,6 @@ ActiveRecord::Schema.define(:version => 20130725142330) do
     t.string   "content"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
-  end
-
-  create_table "papers", :force => true do |t|
-    t.integer  "score"
-    t.datetime "created_at",              :null => false
-    t.datetime "updated_at",              :null => false
-    t.integer  "user_id"
-    t.integer  "examination_id"
-    t.integer  "examination_feedback_id"
   end
 
   create_table "position_competency_levels", :force => true do |t|
@@ -349,10 +341,10 @@ ActiveRecord::Schema.define(:version => 20130725142330) do
   create_table "user_answers", :force => true do |t|
     t.string   "content"
     t.boolean  "correct"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
     t.integer  "question_id"
-    t.integer  "paper_id"
+    t.integer  "examination_feedback_id"
   end
 
   create_table "user_class_progresses", :force => true do |t|

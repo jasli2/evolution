@@ -47,7 +47,7 @@ class Notification < ActiveRecord::Base
       if notification_type == 'all_feedback'
         "考试管理：" + source.title + " 所有考生已提交试卷"
       elsif notification_type == 'published'
-        "考试管理：" + source.title + "  已发布，结束日期: #{n.source.deadline.to_date}"
+        "考试管理：" + source.title + "  已发布，结束日期: #{source.deadline.to_date}"
       elsif notification_type == 'finished'
         "考试管理：" + source.title + " 已经结束"
       else
@@ -73,7 +73,7 @@ class Notification < ActiveRecord::Base
     when 'TrainingPlan'
       training_plan_path(source)
     when 'Examination'
-      if n.source.state == "finished"
+      if source.state == "finished"
         result_examination_path(source)
       else
         "#myMode"

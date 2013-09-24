@@ -109,6 +109,7 @@ zh-CN:
       edit: '修改'
       create: '创建新用户'
       export: '导出用户'
+      export_sample: '导出用户模板'
       import: '导入用户'
       select: '选择文件'
       manage: '管理用户'
@@ -139,6 +140,7 @@ zh-CN:
       edit: '编辑'
       create: '创建新职位'
       export: '导出职位'
+      export_sample: '导出职位模板'
       import: '导入职位'
       select: '选择文件'
       manage: '管理职位'
@@ -157,6 +159,7 @@ zh-CN:
       requiremnet: '能力需求'
       new: '创建新能力项'
       export: '导出能力项'
+      export_sample: '导出能力项模板'
       import_title: '导入能力模型'
       import: '导入能力模型'
       select: '选择文件'
@@ -189,6 +192,7 @@ zh-CN:
       discussion: "课程讨论"
       new: '创建新课程'
       export: '导出课程'
+      export_sample: '导出课程模板'
       import_title: "导入课程"
       import: '导入课程'
       select: '选择文件'

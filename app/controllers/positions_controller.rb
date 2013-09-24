@@ -21,7 +21,7 @@ class PositionsController < ApplicationController
     if @positions
       respond_to do |format|
         format.html {redirect_to positions_path, notice: t("position.all.notice2") }
-        format.csv { send_data @positions.to_csv }
+        format.csv { send_data @positions.to_csv(params[:export]) }
         #format.xls
       end
     end

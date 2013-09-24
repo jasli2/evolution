@@ -68,6 +68,7 @@
         data-target="#quick_form" href="/ajax/form/users/new">
         <i class="iconfa-plus icon-white"></i><%= t('users.all.create')%></a>
       <a href="#myModal" data-toggle="modal" class="btn btn-warning"><i class="iconfa-download-alt icon-white"></i> <%= t('users.all.export') %></a>
+      <a href="<%= export_users_path(format: 'csv', :export => "header")  %>" class="btn btn-warning"><i class="iconfa-download-alt icon-white"></i> <%= t('users.all.export_sample') %></a>
     </div>
 
     <div class="well">

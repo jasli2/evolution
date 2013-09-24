@@ -8,17 +8,17 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  question_id :integer
-#  paper_id    :integer
+#  examination_feedback_id    :integer
 #
 
 class UserAnswer < ActiveRecord::Base
-  attr_accessible :content, :correct, :paper_id
+  attr_accessible :content, :correct, :examination_feedback_id
 
   validates :question_id , :presence => true
-  validates :paper_id , :presence => true
+  validates :examination_feedback_id , :presence => true
 
   belongs_to :question
-  belongs_to :paper
+  belongs_to :examination_feedback
 
   scope :answer_result, lambda {|state| where(:correct => state)}
   scope :get_user_answer, lambda{|type| where(:content => type)}
