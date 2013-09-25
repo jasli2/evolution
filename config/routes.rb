@@ -29,6 +29,7 @@ Evolution::Application.routes.draw do
     resources :topics
   end
   resources :user_relations, only: [:create, :destroy]
+  resources :user_course_relations, only: [:create, :destroy]
 
   resources :topics, :only => [:index] do
     resources :comments 

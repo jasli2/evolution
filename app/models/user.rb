@@ -73,6 +73,10 @@ class User < ActiveRecord::Base
   has_many :reverse_user_relations, :class_name => 'UserRelation', :foreign_key => 'leader_id', :dependent => :destroy
   has_many :fans, :through => :reverse_user_relations, :source => :follower
 
+  #user course relations - for followed
+  has_many :user_course_relations, :foreign_key => 'follower_id', :dependent => :destroy
+  has_many :followed_course, :through => :user_course_relations, :source => :leader
+
   #feeds
   has_many :feeds
   has_many :feed_items, :through => :feeds, :order => 'id DESC'
@@ -181,6 +185,20 @@ class User < ActiveRecord::Base
   def unfollow!(other_user)
     user_relations.find_by_leader_id(other_user.id).destroy
   end
+
+  #user course relationship
+  def following_course?(course)
+    user_course_relations.find_by_leader_id(course.id)
+  end
+
+  def follow_course!(course)
+    user_course_relations.create!(:leader_id => course.id)
+  end
+
+  def unfollow_course!(course)
+    user_course_relations.find_by_leader_id(course.id).destroy
+  end
+
 
   def admin?
     self.is_admin

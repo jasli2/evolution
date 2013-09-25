@@ -43,6 +43,18 @@
                 <% end %>
               </ul>
               <a href="<%= course_path(c) %>" class="btn btn-primary btn-small"><span class="iconfa-info-sign icon-white"></span> <%= t("course.all.details") %></a>
+              <% unless current_user.admin? %>
+                <% unless current_user.following_course?(c) %>
+                  <%= form_for(current_user.user_course_relations.build(leader_id: c.id)) do |f| %>
+                    <%= f.hidden_field :leader_id %>
+                    <%= f.submit "加关注", class: "btn btn-primary btn-small btn-success " %>
+                  <% end %>
+                <% else %>
+                  <%= form_for(current_user.user_course_relations.find_by_leader_id(c), html: { method: :delete }) do |f| %>
+                    <%= f.submit "取消关注", class: "btn btn-primary btn-small btn-warning " %>
+                  <% end %>
+                <% end %>
+              <% end %>
             </div>
           </li>
           <% end %>
