@@ -2,6 +2,8 @@
     $("#quick_form").on("hidden", function() {
         console.log("quick_form hidden");
         $(this).removeData('modal');
+    }).on("loaded", function() {
+        console.log("loaded");
     });
     var generatForm = function(title, type, label) {
         var modalForm = '<div id="quick_form" class="modal hide fade">' + 
@@ -30,21 +32,85 @@
             $(control_groups[i]).find(".help-inline").text("");
         }
     };
+    var addUser = function(data) {
+        var user = '<tr><td class="center">' +
+            '       <a href="/ajax/form/users/edit/' + data.id + 
+            '               " class="btn btn-primary" data-id="' + data.id + '" ' +
+            '               data-target="#quick_form" data-toggle="modal" modal-type-edit="user" ' +
+            '               title="修改用户资料">编辑</a> ' +
+            '   </td>' +
+            '   <td class="center"><a href="/users/' + data.id + '">' + data.name + '</a></td>' +
+            '   <td class="center">' + data.staff_id + '</td>' +
+            '   <td class="center">' + data.department + '</td>' +
+            '   <td class="center">' + data.department + '</td>' +
+            '   <td class="center">' + data.joined_at + '</td>' +
+            '</tr>';
+        $("table.table").children("tbody").prepend(user);;
+    };
+    var addCourse = function(data) {
+        var course = '<li><img alt="Default_cover_normal" class="pull-left" src="/assets/default_cover_normal.png">' +
+            '<div class="course-info">' +
+            '  <h4><a href="/courses/' + data.id + '">' + data.title + '</a></h4>' +
+            '  <ul>' +
+            '    <li>目标学员：' + data.audience + '</li>' +
+            '    <li>授课老师：' + data.duration + '</li>' +
+            '    <li>课程时长：' + data.duration + ' 小时</li>' +
+            '    <li>所属胜任力级别：无</li>' +
+            '  </ul>' +
+            '  <a href="/courses/43" class="btn btn-primary btn-small">' +
+            '    <span class="iconfa-info-sign icon-white"></span> 查看详情</a>' +
+            '  <a href="/ajax/form/courses/edit/' + data.id + '" ' +
+            '        class="btn btn-warning btn-small" title="编辑课程" ' +
+            '        data-id="43" data-target="#quick_form" ' +
+            '        data-toggle="modal" modal-type-edit="course">' +
+            '    <span class="iconfa-edit icon-white"></span> 编辑课程' +
+            '  </a></div></li>';
+        $("ul.courselist").prepend(course);
+    }
     $("a[modal-type]").click(function(e) {
+        e.preventDefault();
+        var target = $(this).attr("href");
         var prefix = $(this).attr("prefix");
         var title = $(this).attr("title");
         var type = $(this).attr("modal-type");
         var label = $(this).text();
         console.log("quick button click: prefix:" + prefix, e);
-        
         $("#quick_form").replaceWith(generatForm(title, type, label));
-        $("#quick_form").on("shown", function() {
-            console.log("quick_form shown", $("input.date_picker"));
-            //$("input.date_picker").datepicker("option", "z-index", "1151 !important");
+        // load the url and show modal on success
+        $("#quick_form .modal-body").load(target, function() {
             $("input.date_picker").datepicker({
                 dateFormat: "yy-mm-dd"
-            }); 
+            });
+            
+            $("#quick_form").modal("show");
+            $("#quick_form").on("shown", function() {
+                console.log("quick_form show");
+                $.fn.dataTableExt.afnSortData['dom-checkbox'] = function  ( oSettings, iColumn ){
+                    return $.map( oSettings.oApi._fnGetTrNodes(oSettings), function (tr, i) {
+                        return $('td:eq('+iColumn+') input', tr).prop('checked') ? '1' : '0';
+                    });
+                };
+                var dataTable = $("table.table").dataTable( {
+                    "bScrollInfinite": true,
+                    "bScrollCollapse": true,
+                    "sScrollY": "200px",
+                    "aoColumns": [{"sSortDataType": "dom-checkbox"},
+                        null, null, null, null]
+                });
+                $("input.checkall").change(function(){
+                    console.log($(":checkbox[name*=required_course_ids]", dataTable.fnGetNodes()));
+                    console.log($(":checkbox[name*=required_course_ids]", dataTable.fnIsOpen()));
+                    if ($(this).prop("checked")) {
+                        // $("checkboxSelector", dataTable.fnGetNodes()).attr("checked", true);
+                        $(":checkbox[name*=required_course_ids]", dataTable.fnIsOpen()).prop("checked", true);
+                    } else {
+                        // $("checkboxSelector", dataTable.fnGetNodes()).attr("checked", true);
+                        $(":checkbox[name*=required_course_ids]", dataTable.fnIsOpen()).prop("checked", false);
+                    }
+                });
+            });
         });
+        
         $("button[form-type]").click(function(e) {            
             prefix = undefined === prefix ? "" : prefix;
             console.log("form submit button clicked! " + prefix, e);
@@ -80,7 +146,18 @@
                     }, 100);
                     setTimeout(function() {
                         $(".alert").alert('close');
-                    }, 5000);                
+                    }, 5000);
+                    switch(type){
+                        case "user":
+                            addUser(data);
+                            break;
+                        case "course":
+                            addCourse(data);
+                            break;
+                        default:
+                            console.log("default type");
+                            break;
+                    }              
                 },
                 beforeSend: beforeSendFunc
             });

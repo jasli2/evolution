@@ -15,18 +15,18 @@
       <h4 class="widgettitle">考试结果</h4>
       <div>
         <p>考试总题数： <%= @exam.questions.size %></p>
-        <p>答对题数：<%= @paper.get_answer_result(true).size %> </p>
-        <p>答错题数：<%= @paper.get_answer_result(false).size %> </p>
-        <p> 问答题：<%= @paper.get_dialogical_result.size %></p>
+        <p>答对题数：<%= @exam_feedback.get_answer_result(true).size %> </p>
+        <p>答错题数：<%= @exam_feedback.get_answer_result(false).size %> </p>
+        <p> 问答题：<%= @exam_feedback.get_dialogical_result.size %></p>
       </div>
     </div>
 
     <div class="widgetcontent nopadding">
-      <% if @paper.feedback_todo %>
+      <% if @exam_feedback.feedback_todo %>
         <h4 class="widgettitle">等待处理题目</h4>
         <div>
-          <% if @paper.feedback_todo.todo_type == "pending_finish" %>
-            <% @paper.get_dialogical_result.each do |answer| %>
+          <% if @exam_feedback.feedback_todo.todo_type == "pending_finish" %>
+            <% @exam_feedback.get_dialogical_result.each do |answer| %>
               <tr>
                 <td width="1%"><%= get_question_index(@exam, answer.question, "dialogical") %>、</td>
                 <td width="70%">
