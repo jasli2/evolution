@@ -68,7 +68,11 @@
 
   <div id="dashboard-right" class="span4">
     <div class="well">
-      <a href="<%= new_user_course_path(current_user) %>" class="btn btn-primary"><i class="iconfa-plus icon-white"></i><%= t("course.all.new") %></a>
+      <a title="<%= t("course.all.new") %>" modal-type="course" prefix="/users/<%=current_user.id %>"
+        data-target="#quick_form" data-toggle="modal" href="/ajax/form/courses/new" class="btn btn-primary">
+      <!--a href="<%= new_user_course_path(current_user) %>" class="btn btn-primary"-->
+        <i class="iconfa-plus icon-white"></i><%= t("course.all.new") %>
+      </a>
     </div>
 
     <h3 class="subtitle"><%=t("course.all.filter") %></h3>

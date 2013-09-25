@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap-fileupload.min
+//= require jquery-ui-1.9.2.min
 //= require_tree .
 
 // for drop dowm manu

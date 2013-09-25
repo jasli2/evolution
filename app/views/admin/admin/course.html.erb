@@ -41,7 +41,11 @@
                 <% end %>
               </ul>
               <a href="<%= course_path(c) %>" class="btn btn-primary btn-small"><span class="iconfa-info-sign icon-white"></span> <%= t("course.all.details") %></a>
-              <a href="<%= edit_course_path(c) %>" class="btn btn-warning btn-small"><span class="iconfa-edit icon-white"></span> 编辑课程</a>
+              <a href="/ajax/form/courses/edit/<%= c.id %>" class="btn btn-warning btn-small"
+                  title="编辑课程"  data-id="<%= c.id %>" data-target="#quick_form" data-toggle="modal" 
+                  modal-type-edit="course">
+                <span class="iconfa-edit icon-white"></span> 编辑课程
+              </a>
             </div>
           </li>
           <% end %>
@@ -56,7 +60,10 @@
   <div id="dashboard-right" class="span4">
 
     <div class="well">
-      <a href="<%= new_user_course_path(current_user) %>" class="btn btn-primary"><i class="iconfa-plus icon-white"></i> <%= t("course.all.new") %></a>
+      <a title="<%= t("course.all.new") %>" modal-type="course" prefix="/users/<%=current_user.id %>"
+        data-target="#quick_form" data-toggle="modal" href="/ajax/form/courses/new" class="btn btn-primary">
+        <i class="iconfa-plus icon-white"></i> <%= t("course.all.new") %>
+      </a>
       <a href="#myModal" data-toggle="modal" class="btn btn-warning"><i class="iconfa-download-alt icon-white"></i> <%= t("course.all.export") %></a>
       <a href="<%= export_courses_path(format: 'csv', :export => "header") %>" data-toggle="modal" class="btn btn-warning"><i class="iconfa-download-alt icon-white"></i> <%= t("course.all.export_sample") %></a>
     </div>

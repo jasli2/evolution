@@ -70,7 +70,13 @@
   </div>
   <div id="dashboard-right" class="span4">
     <div class="well">
-      <a href="<%= edit_training_plan_path(@tp) %>" class="btn btn-primary"><i class="iconfa-plus icon-white"></i> 修改培训计划</a>
+      <!--a class="btn btn-primary" title="创建新培训计划" modal-type="training_plan" data-target="#quick_form" 
+          data-toggle="modal" href="/ajax/form/training_plans/edit"-->
+      <a href="/ajax/form/training_plans/edit/<%= @tp.id %>" class="btn btn-primary"
+                  title="编辑培训计划"  data-id="<%= @tp.id %>" data-target="#quick_form" data-toggle="modal" 
+                  modal-type-edit="training_plan">
+        <i class="iconfa-plus icon-white"></i> 修改培训计划
+      </a>
       <a href="#myModal" data-toggle="modal" class="btn btn-warning"><i class="iconfa-download-alt icon-white"></i> <%= t('users.all.export') %></a>
     </div>
   </div>
