@@ -47,6 +47,14 @@ class CourseClass < ActiveRecord::Base
   has_many :discusses
   has_many :examinations
 
+  has_one :feed_item, :as => :item, :dependent => :destroy
+
+  after_create {
+    puts "********aftercreate*************"
+    Resque.enqueue(ClassCourseSque, self.id)
+    puts "******create***************"
+  }
+
   before_save :gen_address_notification
 
   def gen_address_notification
@@ -110,6 +118,11 @@ class CourseClass < ActiveRecord::Base
     else
       true
     end
+  end
+
+  def gen_feed_item
+    f = create_feed_item
+    (self.course.fans).uniq.each{|u| u.feed_items << f}
   end
 
   private

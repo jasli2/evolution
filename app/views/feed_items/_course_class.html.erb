@@ -1,0 +1,10 @@
+<%
+feed_item ||= @feed_item
+course_class = feed_item.item
+course = course_class.course
+%>
+
+
+<i class="activity-icon iconfa-check"></i>
+<%= link_to course.title, course %> 已经开课 <%= link_to '班级(ID-' + course_class.id.to_s + ')', class_path(course_class) %>
+<span class="activity-time"><%= distance_of_time_in_words_to_now(course_class.created_at) + "前" %></span>
