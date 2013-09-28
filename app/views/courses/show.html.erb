@@ -108,8 +108,7 @@
     <div class="well">
       <!--a href="<%= edit_course_path(@course) %>" class="btn btn-success"-->
       <a href="/ajax/form/courses/edit/<%= @course.id %>" class="btn btn-success"
-                  title="编辑课程"  data-id="<%= @course.id %>" data-target="#quick_form" data-toggle="modal" 
-                  modal-type-edit="course">
+          title="编辑课程"  data-id="<%= @course.id %>" modal-type="course">
         <i class="iconfa-edit icon-white"></i>  编辑课程信息
       </a>
       <a href="<%= new_course_class_path(@course) %>" class="btn btn-warning"><i class="iconfa-plus icon-white"></i>  开设班级</a> 

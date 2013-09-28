@@ -42,7 +42,7 @@
             <td class="center">
               <%= link_to "编辑", "/ajax/form/users/edit/" + u.id.to_s(),
                 {:class => "btn btn-primary", :title => "修改用户资料", "data-id" => u.id,
-                "modal-type-edit" => "user", "data-toggle" => "modal",  "data-target" => "#quick_form"} %>
+                "modal-type" => "user"} %>
             </td>
             <td class="center"><%= link_to u.name, user_path(u) %></td>
             <td class="center"><%= u.staff_id %></td>
@@ -64,8 +64,8 @@
 
     <div class="well">
 
-      <a class="btn btn-primary" title="<%= t('users.all.create')%>" modal-type="user" data-toggle="modal" 
-        data-target="#quick_form" href="/ajax/form/users/new">
+      <a class="btn btn-primary" title="<%= t('users.all.create')%>" modal-type="user"
+          href="/ajax/form/users/new">
         <i class="iconfa-plus icon-white"></i><%= t('users.all.create')%></a>
       <a href="#myModal" data-toggle="modal" class="btn btn-warning"><i class="iconfa-download-alt icon-white"></i> <%= t('users.all.export') %></a>
       <a href="<%= export_users_path(format: 'csv', :export => "header")  %>" class="btn btn-warning"><i class="iconfa-download-alt icon-white"></i> <%= t('users.all.export_sample') %></a>

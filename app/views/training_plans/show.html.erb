@@ -66,8 +66,7 @@
     <div class="well">
       <!--a href="<%= new_user_path %>" class="btn btn-primary"-->
       <a href="/ajax/form/training_plans/edit/<%= @tp.id %>" class="btn btn-primary"
-                  title="编辑培训计划"  data-id="<%= @tp.id %>" data-target="#quick_form" data-toggle="modal" 
-                  modal-type-edit="training_plan">
+          title="编辑培训计划"  data-id="<%= @tp.id %>" modal-type="training_plan">
         <i class="iconfa-edit icon-white"></i> 修改培训计划
       </a>
       <a href="#myModal" data-toggle="modal" class="btn btn-warning"><i class="iconfa-download-alt icon-white"></i> 导出培训计划</a>
