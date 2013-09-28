@@ -1,42 +1,106 @@
 <%= simple_form_for(@training_plan, :html => {:class => 'form-horizontal', :multipart => true }) do |f| %>
   <%= f.input :title, :label => '培训计划标题' %>
   <%= f.input :feedback_deadline, :label => '学员反馈截止日期', :as => :date_picker %>
-  <%= f.association :required_courses, :label => '必修课程', :multiple => true %>
-  <%= f.association :optional_courses, :label => '选修课程', :multiple => true %>
-  <%= f.association :users, :label => '计划参培人员', :collection => User.staff, :multiple => true %>
+  <%# f.association :required_courses, :label => '必修课程', :multiple => true %>
+  <%# f.association :optional_courses, :label => '选修课程', :multiple => true %>
+  <%# f.association :users, :label => '计划参培人员', :collection => User.staff, :multiple => true %>
 
-<div class="control-group select optional"><label class="select optional control-label" for="training_plan_user_ids">必修课程</label><div class="controls">
-  <input name="training_plan[user_ids][]" type="hidden" value="" />
-    <table id="dyntable" class="table table-bordered responsive">
-    <thead>
-      <tr>
-        <th class="head0"><input type="checkbox" class="checkall" /></th>
-        <th class="head0">ID</th>
-        <th class="head1">课程名称</th>
-        <th class="head0">时长</th>
-        <th class="head1">所属胜任力级别</th>
-      </tr>
-  </thead>
-  <tbody>
-  <% Course.all.each do |c| %>
-    <tr class="gradeA">
-      <td class="aligncenter"><span class="center">
-        <input name="training_plan[required_course_ids][]" type="checkbox" value="<%= c.id %>" />
-      </span></td>
-      <td><%= c.id %></td>
-      <td><%= c.title %></td>
-      <td><%= c.duration %></td>
-      <% if c.competency_levels.size > 0 %>
-      <td><%= c.competency_levels.first.competency.name %> (<%=level_name(c.competency_levels.first.level)%>)</td>
-      <% else %>
-      <td>无</td>
-      <% end %>      
-    </tr>
-  <% end %>
-  </tbody>
-  </table>
-</div></div>
-
+<div class="control-group select optional">
+  <label class="select optional control-label" for="training_plan_required_course_ids">必修课程</label>
+  <div class="controls">
+    <input name="training_plan[required_course_ids][]" type="hidden" value="">
+    <table id="required_course_dyntable" class="table table-bordered responsive">
+      <thead>
+        <tr>
+          <th class="head0"><input type="checkbox" id="required_course" /></th>
+          <th class="head0">ID</th>
+          <th class="head1">课程名称</th>
+          <th class="head0">时长</th>
+          <th class="head1">所属胜任力级别</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% Course.all.each do |c| %>
+        <tr class="gradeA">
+          <td class="aligncenter"><span class="center">
+            <input name="training_plan[required_course_ids][]" type="checkbox" value="<%= c.id %>" />
+          </span></td>
+          <td><%= c.id %></td>
+          <td><%= c.title %></td>
+          <td><%= c.duration %></td>
+          <% if c.competency_levels.size > 0 %>
+          <td><%= c.competency_levels.first.competency.name %> (<%=level_name(c.competency_levels.first.level)%>)</td>
+          <% else %>
+          <td>无</td>
+          <% end %>      
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="control-group select optional">
+  <label class="select optional control-label" for="training_plan_optional_course_ids">选修课程</label>
+  <div class="controls">
+    <input name="training_plan[optional_course_ids][]" type="hidden" value="">
+    <table id="optional_course_dyntable" class="table table-bordered responsive">
+      <thead>
+        <tr>
+          <th class="head0"><input type="checkbox" id="optional_course" /></th>
+          <th class="head0">ID</th>
+          <th class="head1">课程名称</th>
+          <th class="head0">时长</th>
+          <th class="head1">所属胜任力级别</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% Course.all.each do |c| %>
+        <tr class="gradeA">
+          <td class="aligncenter"><span class="center">
+            <input name="training_plan[optional_course_ids][]" type="checkbox" value="<%= c.id %>" />
+          </span></td>
+          <td><%= c.id %></td>
+          <td><%= c.title %></td>
+          <td><%= c.duration %></td>
+          <% if c.competency_levels.size > 0 %>
+          <td><%= c.competency_levels.first.competency.name %> (<%=level_name(c.competency_levels.first.level)%>)</td>
+          <% else %>
+          <td>无</td>
+          <% end %>      
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="control-group select optional">
+  <label class="select optional control-label" for="training_plan_user_ids">计划参培人员</label>
+  <div class="controls">
+    <input name="training_plan[user_ids][]" type="hidden" value="">
+    <table id="users_dyntable" class="table table-bordered responsive">
+      <thead>
+        <tr>
+          <th class="head0"><input type="checkbox" id="optional_users" /></th>
+          <th class="head0">ID</th>
+          <th class="head1">姓名</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% User.staff.all.each do |c| %>
+        <tr class="gradeA">
+          <td class="aligncenter">
+            <span class="center">
+              <input name="training_plan[user_ids][]" type="checkbox" value="<%= c.id %>" />
+            </span>
+          </td>
+          <td><%= c.id %></td>
+          <td><%= c.name %></td>     
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
   
   <%= f.hidden_field :creator_id, :value => current_user.id %>
   <div class="form-actions">
