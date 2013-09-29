@@ -13,23 +13,46 @@
     // tabbed widget
     $('.tabbedwidget').tabs();
   });
-  function loadSWF(url, id){
-    if(url) {
-      var flashvars = {};
-      var swfwidth = $("#swf-content").width();
-      console.log(swfwidth);
-      var swfheigth = Math.floor(swfwidth * 3 / 4);
-      console.log(swfheigth);
-      flashvars.autoPlay = "true";
-      var params = {};
-      params.play = "true";
-      params.menu = "false";
-      params.quality = "high";
-      params.allowfullscreen = "true";
-      var attributes = {};
-      attributes.align = "middle";
-      swfobject.embedSWF(url, "swf-content", swfwidth.toString(), swfheigth.toString(), "9.0.0", false, flashvars, params, attributes);
-    }
+  $("a.playModal").bind("click", loadSWF);
+  function loadSWF(e) {
+    e.preventDefault();
+    var url = $(this).attr("href");
+    // if(url) {
+    //   var flashvars = {};
+    //   var swfwidth = $("#swf-content").width();
+    //   console.log(swfwidth);
+    //   var swfheigth = Math.floor(swfwidth * 3 / 4);
+    //   console.log(swfheigth);
+    //   flashvars.autoPlay = "true";
+    //   var params = {};
+    //   params.play = "true";
+    //   params.menu = "false";
+    //   params.quality = "high";
+    //   params.allowfullscreen = "true";
+    //   var attributes = {};
+    //   attributes.align = "middle";
+    //   swfobject.embedSWF(url, "swf-content", swfwidth.toString(), swfheigth.toString(), "9.0.0", false, flashvars, params, attributes);
+    // }
+    var modalPlay = '<div id="quick_form" class="modal hide fade">' + 
+        '<div class="modal-header">' +
+        '    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>' +
+        '    <h3 class="ModalLabel">&nbsp;</h3>' +
+        '  </div>' +
+        '  <div class="modal-body" id="modalPlayWindow"></div>' +
+        '  <div class="modal-footer">' +
+        '    <button class="btn" data-dismiss="modal">关闭</button>' +
+        '  </div>' + 
+        '</div>';
+    $("#quick_form").replaceWith(modalPlay);
+    $("#quick_form").modal("show");
+    $("#quick_form").on("shown", function() {
+      console.log("shown", url);
+      swfobject.embedSWF(url, "modalPlayWindow", "100%", "500px", "9.0.0", false, 
+        {autoPlay: "true"}, 
+        {play: true, menu: false, quality: "high", allowfullscreen: true}, 
+        {align: "middle"});
+    }); 
+    
   }
 </script>
 <% end %>
@@ -59,7 +82,9 @@
 
     <% if can_view_elearning?(@course_class, current_user) and not @course.lesson.url.nil? %>
     <div id="swf-content">
-      <a class="btn btn-success btn-small" href="<%= @course.lesson.url %>" onclick="loadSWF(this.href, 1); return false;"> <i class="iconfa-play"></i> <%= t("course.all.clik_watch") %></a>
+      <a class="btn btn-success btn-small playModal" href="<%= @course.lesson.url %>" >
+        <i class="iconfa-play"></i> <%= t("course.all.clik_watch") %>
+      </a>
     </div>
     <div class="divider15"></div>
     <% end %>
