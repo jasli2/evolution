@@ -41,8 +41,8 @@
                 <% end %>
               </ul>
               <a href="<%= course_path(c) %>" class="btn btn-primary btn-small"><span class="iconfa-info-sign icon-white"></span> <%= t("course.all.details") %></a>
-              <a href="/ajax/form/courses/edit/<%= c.id %>" class="btn btn-warning btn-small"
-                  title="编辑课程"  data-id="<%= c.id %>"  modal-type="course">
+              <a href="<%= edit_course_path c %>" class="btn btn-warning btn-small"
+                  title="编辑课程"  data-id="<%= c.id %>" >
                 <span class="iconfa-edit icon-white"></span> 编辑课程
               </a>
             </div>
@@ -59,8 +59,8 @@
   <div id="dashboard-right" class="span4">
 
     <div class="well">
-      <a title="<%= t("course.all.new") %>" modal-type="course" prefix="/users/<%=current_user.id %>"
-          href="/ajax/form/courses/new" class="btn btn-primary">
+      <a title="<%= t("course.all.new") %>" prefix="/users/<%=current_user.id %>"
+          href="<%= new_user_course_path current_user %>" class="btn btn-primary">
         <i class="iconfa-plus icon-white"></i> <%= t("course.all.new") %>
       </a>
       <a href="#myModal" data-toggle="modal" class="btn btn-warning"><i class="iconfa-download-alt icon-white"></i> <%= t("course.all.export") %></a>
