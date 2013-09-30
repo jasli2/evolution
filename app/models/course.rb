@@ -51,6 +51,10 @@ class Course < ActiveRecord::Base
   has_many :training_feedback_courses
   has_many :training_feedbacks, :through => :training_feedback_courses, :source => :training_plan_feedback
 
+  #user course relations - for fans
+  has_many :reverse_user_course_relations, :class_name => 'UserCourseRelation', :foreign_key => 'leader_id', :dependent => :destroy
+  has_many :fans, :through => :reverse_user_course_relations, :source => :follower
+
   has_many :course_classes
 
   has_many :comments, :as => :commentable

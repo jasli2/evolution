@@ -1,0 +1,11 @@
+<%
+feed_item ||= @feed_item
+user_course_relation = feed_item.item
+course = user_course_relation.leader
+follower = user_course_relation.follower
+%>
+
+
+<i class="activity-icon iconfa-check"></i>
+<%= link_to follower.name, follower %> 已经关注了<%= link_to course.title, course%> 课程
+<span class="activity-time"><%= distance_of_time_in_words_to_now(user_course_relation.created_at) + "前" %></span>
