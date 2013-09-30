@@ -83,6 +83,9 @@
           <th class="head0"><input type="checkbox" id="optional_users" /></th>
           <th class="head0">ID</th>
           <th class="head1">姓名</th>
+          <th class="head0">职位</th>
+          <th class="head1">部门</th>
+          <th class="head0">入职日期</th>
         </tr>
       </thead>
       <tbody>
@@ -95,6 +98,9 @@
           </td>
           <td><%= c.id %></td>
           <td><%= c.name %></td>     
+          <td><%= c.position.name if c.position %></td>     
+          <td><%= c.department %></td>     
+          <td><%= c.joined_at %></td>     
         </tr>
       <% end %>
       </tbody>
