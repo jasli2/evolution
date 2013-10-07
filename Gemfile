@@ -66,4 +66,5 @@ gem 'state_machine'
 gem 'clockwork'
 
 gem 'cancan'
+gem 'declarative_authorization'
 

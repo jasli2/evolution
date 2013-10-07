@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :authenticate_user!
+  before_filter :set_current_user
 
   helper_method :current_user
   helper_method :user_signed_in?
@@ -14,6 +15,11 @@ class ApplicationController < ActionController::Base
     rescue_from ActionController::RoutingError, ActionController::UnknownController, ::AbstractController::ActionNotFound, ActiveRecord::RecordNotFound, with: lambda { 
       |exception| render_error 404, exception 
     }
+  end
+
+  protected
+  def set_current_user
+    Authorization.current_user = current_user
   end
 
   private
@@ -43,6 +49,10 @@ class ApplicationController < ActionController::Base
 
     def forbidden
       raise ActionController::RoutingError.new('Forbidden')
+    end
+
+    def permission_denied
+      raise ActionController::RoutingError.new('Permission Denied')
     end
 
     def render_error(status, exception)

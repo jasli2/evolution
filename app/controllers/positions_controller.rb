@@ -1,6 +1,7 @@
 # encoding: utf-8
 class PositionsController < ApplicationController
-
+  filter_access_to :all
+  filter_access_to [:index, :show], :attribute_check => true
   def import
     error_info = Hash.new
     error_info =  Position.import(params[:file])

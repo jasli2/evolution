@@ -1,6 +1,7 @@
 # encoding: utf-8
 class CompetenciesController < ApplicationController
-
+  filter_access_to :all
+  filter_access_to :index, :attribute_check => true
   #POST /competency/import
   def import
     error_info = Hash.new
