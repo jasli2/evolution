@@ -19,14 +19,12 @@
     <div class="widgetcontent">
       <div class="divider15"></div>
       <%= simple_form_for(@authority, :url => permission_path, :method => 'put',:html => {:class => 'form-horizontal'}) do |f| %>
-      	<% f.hidden_field :id, :value => @authority.id %>
-        <%= f.input :role,:label => '角色', :disabled => true %>
-        <%= f.input :model_name, :label => '模块', :disabled => true %>
-        <%= f.input :create_permit, collection: @scope_list, :label => '创建权' %>
-        <%= f.input :edit_permit, collection: @scope_list, :label => '修改权' %>
-        <%= f.input :read_permit, collection: @scope_list, :label => '查阅权' %>
+        <% f.hidden_field :default_role, :value => @authority.role %>
+      	<%= f.input :user_id, :value => @authority.user_id %>
+        <%= f.input :module_name, :label => '模块' ,:value => @authority.module_name %>
+        <%= f.input :role, collection: @scope_list, :label => '角色' %>
         <div class="form-actions">
-        <%= f.button :submit, '修改默认权限', :class => "btn-primary"  %>
+        <%= f.button :submit, '修改权限', :class => "btn-primary"  %>
         </div>
       <% end %>
     </div>

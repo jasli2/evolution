@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   include ActionView::Helpers::DateHelper
 
   before_filter :need_admin!, :only => [:new, :create]
+  filter_access_to :all
 
   # for demo assessment process TODO: revisit it
   def mgr_assessments
