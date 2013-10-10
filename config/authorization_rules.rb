@@ -1,10 +1,26 @@
 authorization do
 	role :admin do
 		has_permission_on :admin_admin, :to => [:dashboard, :user, :position, :competency, :course]
-		includes :user_manager
-		includes :competency_senior_manager
+		includes :user_admin
+		includes :competency_admin
+		includes :course_admin
+		includes :plan_admin
+		includes :permission_admin
+		includes :examination_admin
+		includes :knowledge_admin
+		includes :report_admin
 	end
-
+	role :default_user do
+		includes :user_user
+		includes :competency_user
+		includes :course_user
+		includes :plan_guest
+		includes :permission_user
+		includes :examination_user
+		includes :knowledge_user
+		includes :report_guest
+		has_permission_on :admin_admin, :to => [:dashboard, :user, :position, :competency, :course]
+	end
 #User Module
 #user_controller : dashboard, index, show, new, edit, create, update, destroy, import, export
 # 				   mgr_assessments, assessment, update_assessment, notifications, update_notifications
@@ -100,10 +116,17 @@ authorization do
 	role :permission_guest do
 	end
 	role :permission_user do
+		has_permission_on :permissions, :to => :read
 	end
 	role :permission_manager do
+		includes :permission_user
+		has_permission_on :permissions, :to => :update
+		has_permission_on :permission_roles, :to => :update do
+			if_attribute :user_id => is_not { user.id }
+		end
 	end
 	role :permission_admin do
+		includes :permission_manager
 	end
 
 #examination

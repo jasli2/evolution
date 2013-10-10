@@ -17,37 +17,30 @@
       <div class="headtitle">
         <h4 class="widgettitle"><span class="iconfa-group"></span> <%= t('permissions.all.title') %></h4>
       </div>
-      <% if @authority.size == 0 %>
+      <% if @users.size == 0 %>
       <div class="widgetcontent">
-        <p>No Competency Model setup yet. please setup it first. </p>
+        <p>No Permission Role setup yet. please setup it first. </p>
       </div>
       <% else %>
       <table class="table table-bordered responsive">
         <thead>
           <tr>
+            <th class="center"><%= t('users.all.name') %></th>
             <th class="center"><%= t('users.all.action') %></th>
-            <th class="center"><%= t('permissions.all.role')%></th>
-            <th class="center"><%= t('permissions.all.name') %></th>
-            <th class="center"><%= t('permissions.all.create')%></th>
-            <th class="center"><%= t('permissions.all.read') %></th>
-            <th class="center"><%= t('permissions.all.update')%></th>
           </tr>
         </thead>
         <tbody>
-        <% @authority.each do |p| %>
+        <% @users.each do |u| %>
           <tr>
+            <td class="center"><%= u.name %></td>
             <td class="center">
-              <%= link_to "编辑", edit_permission_path(p), {:class => "btn btn-primary"} %>
-            </td>
-            <td class="center"><%= p.get_role_name(p.role) %></td>
-            <td class="center"><%= p.get_model_name(p.model_name) %></td>
-            <td class="center"><%= p.get_permit_scope(p.create_permit) %></td> 
-            <td class="center"><%= p.get_permit_scope(p.read_permit) %></td>  
-            <td class="center"><%= p.get_permit_scope(p.edit_permit) %></td>   
+              <%= link_to "查看详细", permission_path(u), {:class => "btn btn-primary"} %>
+            </td>   
           </tr>
           <% end %>
         </tbody>
-      </table>     
+      </table>
+      <div class="page-wrapper"><%= paginate @users if @users %></div>     
       <% end %>
     </div>
   </div> 

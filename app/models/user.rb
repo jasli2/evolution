@@ -108,8 +108,7 @@ class User < ActiveRecord::Base
   has_many :class_progresses, :class_name => 'UserClassProgress'
 
   # model permission
-  has_many :model_permissions
-  #accepts_nested_attributes_for :model_permissions
+  has_many :permission_roles, :class_name => 'PermissionRole'
 
   def erolled_class_for_course(c)
     class_progresses.find_by_course_class_id c.course_class_ids
@@ -396,5 +395,17 @@ class User < ActiveRecord::Base
       else raise "Unknown file type: #{file.original_filename}"
     end
   end
-
+  def role_symbols
+    roles = permission_roles.where("user_id =?", self.id)
+    if roles.blank?
+      if self.admin?
+        [:admin]
+      else
+        [:default_user]
+      end
+    else
+      role = (roles || []).map {|r| (r.module_name + "_" + r.role).to_sym}
+      role << :default_user
+    end
+  end
 end
