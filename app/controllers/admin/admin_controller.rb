@@ -1,5 +1,6 @@
 class Admin::AdminController < ApplicationController
   before_filter :need_admin!
+  filter_access_to :all
 
   def dashboard
     @menu_category = 'admin'

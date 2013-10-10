@@ -11,15 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130925053840) do
-
-  create_table "action_permissions", :force => true do |t|
-    t.integer  "model_permission_id"
-    t.string   "action_name"
-    t.integer  "user_scope"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
-  end
+ActiveRecord::Schema.define(:version => 20131009145000) do
 
   create_table "activities", :force => true do |t|
     t.string   "description"
@@ -143,16 +135,6 @@ ActiveRecord::Schema.define(:version => 20130925053840) do
     t.string   "lesson"
   end
 
-  create_table "default_permissions", :force => true do |t|
-    t.string   "role"
-    t.string   "model_name"
-    t.integer  "create_permit"
-    t.integer  "edit_permit"
-    t.integer  "read_permit"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-  end
-
   create_table "discusses", :force => true do |t|
     t.integer  "user_id"
     t.integer  "course_class_id"
@@ -214,13 +196,6 @@ ActiveRecord::Schema.define(:version => 20130925053840) do
 
   add_index "feeds", ["user_id", "feed_item_id"], :name => "index_feeds_on_user_id_and_feed_item_id"
 
-  create_table "model_permissions", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "model_name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
   create_table "notifications", :force => true do |t|
     t.string   "source_type"
     t.integer  "source_id"
@@ -236,6 +211,14 @@ ActiveRecord::Schema.define(:version => 20130925053840) do
     t.string   "content"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+  end
+
+  create_table "permission_roles", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "role"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.string   "module_name"
   end
 
   create_table "position_competency_levels", :force => true do |t|

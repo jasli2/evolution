@@ -19,37 +19,31 @@
       <div class="headtitle">
         <h4 class="widgettitle"><span class="iconfa-group"></span> <%= t('permissions.all.title') %></h4>
       </div>
-      <% if @authority.size == 0 %>
-      <div class="widgetcontent">
-        <p>还没有设置各用户的默认权限，请先创建角色默认权限。 </p>
-      </div>
-      <% else %>
-      <table class="table table-bordered responsive">
-        <thead>
-          <tr>
-            <th class="center"><%= t('users.all.action') %></th>
-            <th class="center"><%= t('users.all.name')%></th>
-            <th class="center"><%= t('permissions.all.name') %></th>
-            <th class="center"><%= t('permissions.all.create')%></th>
-            <th class="center"><%= t('permissions.all.read') %></th>
-            <th class="center"><%= t('permissions.all.update')%></th>
-          </tr>
-        </thead>
-        <tbody>
-        <% @authority.each do |p| %>
-          <tr>
-            <td class="center">
-              <%= link_to "编辑", "#myModal", {:class => "btn btn-primary",  "data-toggle" => "modal"} %>
-            </td>
-            <td class="center"><%= @user.name %></td>
-            <td class="center"><%= p.get_model_name(p.model_name) %></td>
-            <td class="center"><%= p.get_permit_scope(p.create_permit) %></td> 
-            <td class="center"><%= p.get_permit_scope(p.read_permit) %></td>  
-            <td class="center"><%= p.get_permit_scope(p.edit_permit) %></td>   
-          </tr>
+      <% if @permit.size != 0 %>
+        <table class="table table_bordered responsive">
+          <thead>
+            <tr>
+              <th class="center"><%= t('users.all.action') %></th>
+              <th class="center"><%= "功能模块" %></th>
+              <th class="center"><%= "角色" %></th>
+            </tr>
+          </thead>
+          <tbody>
+          <% @permit.each do |key, value| %>
+            <tr>
+              <td class="center">
+                <%= link_to "编辑", {:controller=>"permissions", :action=>"edit", :module=>key, :role=>value}, {:class => "btn btn-primary",  "data-toggle" => "modal"} %>
+              </td>
+              <td class="center"><%= key %></td>
+              <td class="center"><%= value %></td>  
+            </tr>
           <% end %>
-        </tbody>
-      </table>     
+          </tbody>
+        </table>
+      <% else %>
+        <div class="widgetcontent">
+          <p>还没有设置各用户的默认权限，请先创建角色默认权限。 </p>
+        </div>
       <% end %>
     </div>
   </div> 

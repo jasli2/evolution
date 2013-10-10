@@ -1,47 +1,21 @@
 #encoding: utf-8
 class PermissionsController < ApplicationController
+  filter_access_to :all
   def index
     @menu_category = 'admin'
     @menu_active = 'permission'
 
-    if params[:user_id]
-      @user = User.find(params[:user_id])
-      if @user.admin?
-        @authority = DefaultPermission.where("role =?", "Admin")
-      else
-        if @user.position_id == 4
-          @authority = DefaultPermission.where("role =?", "Manager")   
-        else
-          @authority = DefaultPermission.where("role =?", "Staff")
-        end  
-      end  
+    if params[:id]
       respond_to do |format|
         format.html { render 'show' }
-      end
-    else  
-      if params[:model_name] == nil && params[:role] == nil
-        @authority = DefaultPermission.order(:model_name)
-      else
-        if params[:model_name] != "nil" && params[:role] != "nil"
-          @authority = DefaultPermission.where("model_name =? AND role =?", params[:model_name], params[:role])
-        else
-          if (params[:role] == "nil" && params[:model_name] == "nil")
-            @authority = DefaultPermission.order(:model_name)
-          else
-            if params[:role] == "nil"  
-              @authority = DefaultPermission.where("model_name =?", params[:model_name])
-            else
-              if params[:model_name] == "nil"
-                @authority = DefaultPermission.where("role =?", params[:role])
-              end
-            end
-          end           
-        end    
-      end 
+      end  
+    else 
+      @users = User.staff.order('id DESC').page params[:page]
+
       respond_to do |format|
         format.html
-      end
-    end         
+      end   
+    end
   end
 
   def show
@@ -50,89 +24,108 @@ class PermissionsController < ApplicationController
 
     if params[:id]
       @user = User.find(params[:id])
-      if @user.admin?
-        @authority = DefaultPermission.where("role =?", "Admin")
-      else
-        if @user.position_id == 4
-          @authority = DefaultPermission.where("role =?", "Manager")   
-        else
-          @authority = DefaultPermission.where("role =?", "Staff")
-        end  
-      end  
-    end  
-    respond_to do |format|
-      format.html
-    end
-  end
-
-  def new
-    @menu_category = 'admin'
-    @menu_active = 'permission'
-
-    @authority = DefaultPermission.new
-    session[:return_to] = request.referer
-
-    @scope_list = {
-      I18n.t("permission scope null") => 0,
-      I18n.t("permission scope self") => 1,
-      I18n.t("permission scope department") => 2,
-      I18n.t("permission scope global") => 3
-    }
-
-    @role_list = {
-      I18n.t("permission role admin") => "Admin",
-      I18n.t("permission role manager") => "Manager",
-      I18n.t("permission role teacher") => "Teacher",
-      I18n.t("permission role staff") => "Staff"
-    }
-
-    @model_list = {
-      I18n.t("permission model user") => "User",
-      I18n.t("permission model permission") => "Permission",
-      I18n.t("permission model ability") => "Ability",
-      I18n.t("permission model teacher") => "Teacher",
-      I18n.t("permission model course") => "Course",
-      I18n.t("permission model plan") => "Plan",
-      I18n.t("permission model knowledge") => "Knowledge",
-    }
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @authority }
-    end
-  end
-
-  def create    
-    @authority = DefaultPermission.new(params[:default_permission])
-
-    respond_to do |format|
-      if @authority.save
-        format.html { redirect_to session.delete(:return_to), notice: '创建权限成功！'}
-      else
-        format.html { render 'new' }
+      authority = PermissionRole.where("user_id =?", @user.id) 
+      @permit = Hash.new
+      module_list = ["user","competency","course","plan","permission","examination", "knowledge", "report"]
+      module_list.each do |n|
+        @permit[n] = "user"
+        if n = "plan" || n = "report"
+          @permit[n] = "guest"
+        end
+      end
+      if authority.size != 0 
+        authority.each do |a|
+          @permit[a.module_name] = a.role
+        end
+      end
+      respond_to do |format|
+        format.html
       end
     end
   end
 
+  def new
+
+  end
+
+  def create    
+
+  end
+
   def edit
-    @authority = DefaultPermission.find(params[:id])
-    @scope_list = {
-      I18n.t("permission scope null") => 0,
-      I18n.t("permission scope self") => 1,
-      I18n.t("permission scope department") => 2,
-      I18n.t("permission scope global") => 3
-    }
+    if params[:module] == "user" || params[:module] == "permission"
+      @scope_list = [
+        "guest",
+        "user",
+        "manage",
+        "admin"
+      ]
+    end
+    if params[:module] == "competency"
+      @scope_list = [
+        "guest",
+        "user",
+        "manage",
+        "senior_manager",
+        "admin"
+      ]
+    end
+    if params[:module] == "course"
+      @scope_list = [
+        "guest",
+        "user",
+        "manage",
+        "teacher",
+        "admin"
+      ]
+    end
+    if params[:module] == "plan" || params[:module] == "report"
+      @scope_list = [
+        "guest",
+        "admin"
+      ]
+    end
+    if params[:module] == "examination"
+      @scope_list = [
+        "guest",
+        "user",
+        "teacher",
+        "admin"
+      ]
+    end
+    if params[:module] == "knowledge"
+      @scope_list = [
+        "guest",
+        "user",
+        "admin"
+      ]
+    end
+    @authority = PermissionRole.where(:id => params[:id], :module_name => params[:module])
+    if @authority.size == 0
+      @authority = PermissionRole.new
+      @authority.user_id = params[:id]
+      @authority.module_name = params[:module]
+      @authority.role = params[:role]
+    end
     session[:return_to] = request.referer
   end
 
   def update
-    @authority = DefaultPermission.find(params[:id])
-
+    @authority = PermissionRole.where(:user_id => params[:permission_role][:user_id], :module_name => params[:permission_role][:module_name])
     respond_to do |format|
-      if @authority.update_attributes(params[:default_permission])
-        format.html { redirect_to session.delete(:return_to), notice: '更新权限信息成功！'}
+      if @authority.size == 0
+        @authority = PermissionRole.new(params[:permission_role])
+        if @authority.save
+          format.html { redirect_to session.delete(:return_to), notice: '更新权限信息成功！'}
+        else
+          format.html { render 'edit' }
+        end
       else
-        format.html { render 'edit' }
+        if @authority.update_attributes(params[:permission_role])
+          format.html { redirect_to session.delete(:return_to), notice: '更新权限信息成功！'}
+        else
+          format.html { render 'edit' }
+        end
       end
     end
   end
