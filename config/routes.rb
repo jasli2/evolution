@@ -1,4 +1,8 @@
 Evolution::Application.routes.draw do
+  get "contracts/index"
+
+  get "contracts/show"
+
   mount Resque::Server, :at => "/resque"
 
   resources :courses, :only => [:index], :shallow => true do
@@ -63,6 +67,8 @@ Evolution::Application.routes.draw do
     put 'confirm_publish', :on => :member
     resources :feedbacks
   end
+
+  resources :contracts, only: [:index, :show]
 
   match  '/about'         => 'site#about', :via => :get
   match  '/help'          => 'site#help', :via => :get

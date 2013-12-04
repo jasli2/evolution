@@ -13,6 +13,7 @@
         <li class="<%= "active" if active == 'member' %>"><a href="#myModal" data-toggle="modal">我的成长记录</a></li>
         <li class="<%= "active" if active == 'member' %>"><a href="#myModal" data-toggle="modal">我的荣誉</a></li>
         <li class="<%= "active" if active == 'permission' %>"><a href="<%= permission_path(current_user) %>" >我的权限</a></li>
+        <li class="<%= "active" if active == 'contract' %>"><a href="<%= contracts_path %>" >我的合同</a></li>
       </ul>
       </li>
       
@@ -52,6 +53,7 @@
         <li class="<%= "active" if active == 'knowledage' %>"><a href="<%= knowledge_path %>">社区管理</a></li>
         <li class="<%= "active" if active == 'datamining' %>"><a href="<%= datamining_path %>">统计中心</a></li>
         <li class="<%= "active" if active == 'permission' %>"><a href="<%= permissions_path %>">权限管理</a></li>
+        <li class="<%= "active" if active == 'contract' %>"><a href="<%= contracts_path %>">合同管理</a></li>
       </ul>
       </li>
       <% end %>
