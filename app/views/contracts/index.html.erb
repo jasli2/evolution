@@ -1,4 +1,88 @@
 <% provide(:title, current_user.is_admin? ? "合同管理" : "我的合同") %>
 
-<h1>Contracts#index</h1>
-<p>Find me in app/views/contracts/index.html.erb</p>
+<% content_for :breadcrumbs do %>
+<li><%= current_user.is_admin? ? "合同管理" : "我的合同" %></li>
+<% end %>
+
+<% content_for :javascript do %>
+<script type="text/javascript">
+</script>
+<% end %>
+
+<div class="row-fluid">
+  <div id="dashboard-left" class="span8">
+    <table class="table table-striped table-bordered responsive">
+      <thead>
+        <tr>
+          <th class="center">合同编号</th>
+          <th class="center">人天量</th>
+          <th class="center">班天量</th>
+          <th class="center">合同项目数量</th>
+          <th class="center">完成进度</th>
+          <th class="center">签定时间</th>
+          <th class="center">签定人</th>
+          <th class="center">合同金额</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @contracts.each_with_index  do |c, index| %>
+        <tr>
+          <td class="center"><%= link_to c.contract_id, contract_path(index) %></td>
+          <td class="center"><%= c.man_per_day %></td>
+          <td class="center"><%= c.class_per_day %></td>
+          <td class="center"><%= c.courses.count %></td>
+          <td class="center"><%= c.finished_course_number %></td>
+          <td class="center"><%= c.sign_date %></td>
+          <td class="center"><%= link_to c.user.name, user_path(c.user.id) %></td>
+          <td class="center"><%= c.price %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <div class="pagination">
+      <ul>
+        <li class="active"><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li><a href="#">下一页</a></li>
+        <li><a href="#">末页</a></li>
+      </ul>
+    </div><!--pagination-->
+  </div>
+  <div id="dashboard-right" class="span4">
+    <div class="well">
+      <a title="创建新合同" href="#" class="btn btn-primary">
+      <!--a href="<%= new_user_course_path(current_user) %>" class="btn btn-primary"-->
+        <i class="iconfa-plus icon-white"></i> 创建新合同
+      </a>
+    </div>
+
+    <div class="divider15"></div>
+    <h4 class="widgettitle"> <%=t("course.all.filter") %></h4>
+    <div class="widgetcontent">
+      <form action="#" method="post">
+        <fieldset>
+          <label>合同编号</label>
+          <input type="text" name="input1" class="span8" placeholder="输入合同编号" />
+          <label>客户</label>
+          <input type="text" name="input1" class="span8" placeholder="" />
+          <label>培训类型</label>
+          <input type="text" name="input1" class="span8" placeholder="" />
+          <label>交付进度</label>
+          <input type="text" name="input1" class="span4" placeholder="" />
+          ~ <input type="text" name="input1" class="span4" placeholder="" />
+          <label>签订时间（起止时间）</label>
+          <input type="text" name="input1" class="span4" placeholder="" />
+          ~ <input type="text" name="input1" class="span4" placeholder="" />
+                    
+          <p>
+            <%= submit_tag "筛选合同", :class => "btn btn-primary" %>
+            <%= link_to t("course.all.clear_filter"),  "#" %>
+          </p>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div>

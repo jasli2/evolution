@@ -8,6 +8,87 @@ class Contract
       :man_per_day => 13,
       :class_per_day => 1,
       :courses => Course.find([2, 3, 5]),
+      :finished_course_number => 0,
+      :user => User.find(4),
+      :sign_date => Date.new(2013, 1, 15),
+      :price => 120000
+    ),
+    OpenStruct.new(
+      :contract_id => '55103030422AC',
+      :man_per_day => 13,
+      :class_per_day => 1,
+      :courses => Course.find([2, 3, 5]),
+      :finished_course_number => 0,
+      :user => User.find(4),
+      :sign_date => Date.new(2013, 1, 15),
+      :price => 120000
+    ),
+    OpenStruct.new(
+      :contract_id => '55103030422AC',
+      :man_per_day => 13,
+      :class_per_day => 1,
+      :courses => Course.find([2, 3, 5]),
+      :finished_course_number => 0,
+      :user => User.find(4),
+      :sign_date => Date.new(2013, 1, 15),
+      :price => 120000
+    ),
+    OpenStruct.new(
+      :contract_id => '55103030422AC',
+      :man_per_day => 13,
+      :class_per_day => 1,
+      :courses => Course.find([2, 3, 5]),
+      :finished_course_number => 0,
+      :user => User.find(4),
+      :sign_date => Date.new(2013, 1, 15),
+      :price => 120000
+    ),
+    OpenStruct.new(
+      :contract_id => '55103030422AC',
+      :man_per_day => 13,
+      :class_per_day => 1,
+      :courses => Course.find([2, 3, 5]),
+      :finished_course_number => 0,
+      :user => User.find(4),
+      :sign_date => Date.new(2013, 1, 15),
+      :price => 120000
+    ),
+    OpenStruct.new(
+      :contract_id => '55103030422AC',
+      :man_per_day => 13,
+      :class_per_day => 1,
+      :courses => Course.find([2, 3, 5]),
+      :finished_course_number => 0,
+      :user => User.find(4),
+      :sign_date => Date.new(2013, 1, 15),
+      :price => 120000
+    ),
+    OpenStruct.new(
+      :contract_id => '55103030422AC',
+      :man_per_day => 13,
+      :class_per_day => 1,
+      :courses => Course.find([2, 3, 5]),
+      :finished_course_number => 0,
+      :user => User.find(4),
+      :sign_date => Date.new(2013, 1, 15),
+      :price => 120000
+    ),
+    OpenStruct.new(
+      :contract_id => '55103030422AC',
+      :man_per_day => 13,
+      :class_per_day => 1,
+      :courses => Course.find([2, 3, 5]),
+      :finished_course_number => 0,
+      :user => User.find(4),
+      :sign_date => Date.new(2013, 1, 15),
+      :price => 120000
+    ),
+    OpenStruct.new(
+      :contract_id => '55103030422AC',
+      :man_per_day => 13,
+      :class_per_day => 1,
+      :courses => Course.find([2, 3, 5]),
+      :finished_course_number => 0,
       :user => User.find(4),
       :sign_date => Date.new(2013, 1, 15),
       :price => 120000
@@ -17,8 +98,49 @@ class Contract
       :man_per_day => 13,
       :class_per_day => 1,
       :courses => Course.find([12, 14, 15, 17, 19, 20]),
+      :finished_course_number => 2,
       :user => User.find(5),
-      :sign_date => Date.new(2013, 1, 15),
+      :sign_date => Date.new(2013, 3, 12),
+      :price => 350000
+    ),
+    OpenStruct.new(
+      :contract_id => '51993233184022',
+      :man_per_day => 13,
+      :class_per_day => 1,
+      :courses => Course.find([12, 14, 15, 17, 19, 20]),
+      :finished_course_number => 2,
+      :user => User.find(5),
+      :sign_date => Date.new(2013, 3, 12),
+      :price => 350000
+    ),
+    OpenStruct.new(
+      :contract_id => '51993233184022',
+      :man_per_day => 13,
+      :class_per_day => 1,
+      :courses => Course.find([12, 14, 15, 17, 19, 20]),
+      :finished_course_number => 2,
+      :user => User.find(5),
+      :sign_date => Date.new(2013, 3, 12),
+      :price => 350000
+    ),
+    OpenStruct.new(
+      :contract_id => '51993233184022',
+      :man_per_day => 13,
+      :class_per_day => 1,
+      :courses => Course.find([12, 14, 15, 17, 19, 20]),
+      :finished_course_number => 2,
+      :user => User.find(5),
+      :sign_date => Date.new(2013, 3, 12),
+      :price => 350000
+    ),
+    OpenStruct.new(
+      :contract_id => '51993233184022',
+      :man_per_day => 13,
+      :class_per_day => 1,
+      :courses => Course.find([12, 14, 15, 17, 19, 20]),
+      :finished_course_number => 2,
+      :user => User.find(5),
+      :sign_date => Date.new(2013, 3, 12),
       :price => 350000
     )
   ]

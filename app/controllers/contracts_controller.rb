@@ -14,7 +14,7 @@ class ContractsController < ApplicationController
     @menu_category = current_user.is_admin? ? 'admin' : 'user'
     @menu_active = 'contract'
 
-    @contracts = Contract.find(params[:id]) unless params[:id]
+    @contract = Contract.find(params[:id]) unless params[:id]
 
     respond_to do |format|
       format.html 
