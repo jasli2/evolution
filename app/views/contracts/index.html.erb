@@ -31,7 +31,7 @@
           <td class="center"><%= c.man_per_day %></td>
           <td class="center"><%= c.class_per_day %></td>
           <td class="center"><%= c.courses.count %></td>
-          <td class="center"><%= c.finished_course_number %></td>
+          <td class="center"><%= (c.finished_course_number * 10).to_s + "%" %></td>
           <td class="center"><%= c.sign_date %></td>
           <td class="center"><%= link_to c.user.name, user_path(c.user.id) %></td>
           <td class="center"><%= c.price %></td>
@@ -39,6 +39,8 @@
         <% end %>
       </tbody>
     </table>
+
+    <% if current_user.is_admin? %>
     <div class="pagination">
       <ul>
         <li class="active"><a href="#">1</a></li>
@@ -50,16 +52,20 @@
         <li><a href="#">末页</a></li>
       </ul>
     </div><!--pagination-->
+    <% end %>
+    
   </div>
   <div id="dashboard-right" class="span4">
+    <% if current_user.is_admin? %>
     <div class="well">
       <a title="创建新合同" href="#" class="btn btn-primary">
       <!--a href="<%= new_user_course_path(current_user) %>" class="btn btn-primary"-->
         <i class="iconfa-plus icon-white"></i> 创建新合同
       </a>
     </div>
-
     <div class="divider15"></div>
+    <% end %>
+
     <h4 class="widgettitle"> <%=t("course.all.filter") %></h4>
     <div class="widgetcontent">
       <form action="#" method="post">
